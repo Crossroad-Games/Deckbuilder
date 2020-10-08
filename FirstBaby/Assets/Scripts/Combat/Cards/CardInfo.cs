@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[CreateAssetMenu(fileName = "newCardInfo", menuName = "Data/Card/Card Info")]
 public class CardInfo : ScriptableObject
 {
-    [SerializeField] public string name { get; private set; } // name of the card
-    [SerializeField] public int ID { get; private set; }  // ID of the card
-    [SerializeField] public string Description { get; private set; }
-
+    public string name;// name of the card
+    public int ID;// ID of the card
+    public string Description;
+    public Sprite sprite;
     
 }
