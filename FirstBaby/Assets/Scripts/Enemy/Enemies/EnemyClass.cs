@@ -6,12 +6,12 @@ using System;
 
 public abstract class EnemyClass : MonoBehaviour
 {
+    // Enemy information //
     public int ID { get; protected set; }// Unique identifier of this Enemy
     public string EnemyName { get; protected set; }
     public int EnemyHP { get; protected set; } // Current HP
     public int EnemyMaxHP { get; protected set; }// Maximum HP
     public int EnemyDefense { get; protected set; } // Constant removed from incoming damage
-    public Action DeathEvent;
     // Function designed to set the initial state of all atributes
     public void setEnemyAttributes(int newID, string newEnemyName, int newEnemyHP, int newEnemyMaxHP, int newEnemyDefense)
     {
@@ -23,11 +23,16 @@ public abstract class EnemyClass : MonoBehaviour
         DeathEvent += myDeath;
 
     }
+
+    // Enemy Death Condition and Event //
+    public Action DeathEvent;
     public virtual void DeathConditionCheck()// Checks if the enemy's death condition was reached
     {
         if (EnemyHP == 0)// EnemyHP reached 0
             DeathEvent?.Invoke();// Call the enemy's death event
     }
+
+    // Enemy generic methods //
     protected virtual void LoseLife(int Amount) => EnemyHP -= Amount;// Reduce enemy HP 
     protected virtual void GainLife(int Amount) => EnemyHP += Amount;// Raises enemy HP
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject

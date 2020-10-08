@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class EnemyAction : MonoBehaviour
 {
-    public int ID { get; private set; }// Unique identifier of this Action
-    public string ActionName { get; private set; }
+    public int ActionID { get; protected set; }// Unique identifier of this Action
+    public string ActionName { get; protected set; }
+    public string Description { get; protected set; }
     public abstract void Effect();// Every Action must have an Effect
     private EnemyClass myclass;
     public EnemyClass myClass// Keeps reference to which Enemy Class has ownership over this script
