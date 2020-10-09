@@ -10,5 +10,5 @@ public class CardInfo : ScriptableObject
     public int ID;// ID of the card
     public string Description;
     public Sprite sprite;
-    
+    public GameObject cardPrefab;
 }
