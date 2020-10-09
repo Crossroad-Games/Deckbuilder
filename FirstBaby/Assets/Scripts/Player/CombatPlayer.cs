@@ -6,11 +6,11 @@ public class CombatPlayer : MonoBehaviour
 {
     [SerializeField] private CardPile deck;
     [SerializeField] private CardPile hand;
-
+    private TurnManager TurnMaster;
     // Start is called before the first frame update
     void Start()
     {
-        
+        TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
     }
 
     // Update is called once per frame
@@ -26,4 +26,6 @@ public class CombatPlayer : MonoBehaviour
             deck.Shuffle(); //shuffles the Deck
         }
     }
+    public void EndTurn()=> TurnMaster.EndPlayerTurn();
+
 }
