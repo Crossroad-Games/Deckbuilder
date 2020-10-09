@@ -12,7 +12,8 @@ public class EnemyAttack : EnemyAction
     [Space(5)]
     [Header("Action values")]
     [SerializeField] private int BaseDamage=5;
-    [SerializeField] private float Multiplier=1; // Modify this field to multiply or divide the damage
+    [SerializeField] private float Multiplier=1; // Modify this field to multiply damage
+    [SerializeField] private float Divider = 1;// Modify this field to divide damage
     [SerializeField] private int AddedDamaged = 0;// Modify this field to add damage
     [SerializeField] private int SubtractedDamage = 0;// Modify this field to subtract damage
     void Start()
@@ -25,7 +26,8 @@ public class EnemyAttack : EnemyAction
     public override void Effect()
     {
         // Deal damage to the player
-        var Damage = (int) Mathf.Ceil(BaseDamage * Multiplier) + AddedDamaged - SubtractedDamage;// Calculates the final damage
+        var Damage = (int) Mathf.Ceil((BaseDamage + AddedDamaged - SubtractedDamage)*(Multiplier/Divider));// Calculates the final damage
         throw new MissingReferenceException("Needs to have reference to the Player HP");
+        
     }
 }

@@ -42,5 +42,12 @@ public abstract class EnemyClass : MonoBehaviour
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }
-    
+
+    // Enemy Behaviour //
+    public abstract void CombatLogic(); // Logic used by the enemy to determine its actions
+    public virtual void Awake()
+    {
+        
+    }
+
 }
