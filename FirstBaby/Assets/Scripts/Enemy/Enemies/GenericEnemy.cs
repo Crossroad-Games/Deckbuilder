@@ -21,5 +21,9 @@ public class GenericEnemy : EnemyClass
     {
         
     }
+    public override void CombatLogic()
+    {
+        throw new System.NotImplementedException();
+    }
 
 }
