@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class CombatPlayer : MonoBehaviour
 {
-    [SerializeField] private CardPile deck;
-    [SerializeField] private CardPile hand;
+    #region Fields and Properties
+    [SerializeField] private Deck deck;
+    [SerializeField] private Hand hand;
+    #endregion
+
+    //-------------------------------------------
+    
+
+    private void Awake()
+    {
+        
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,5 +35,11 @@ public class CombatPlayer : MonoBehaviour
         {
             deck.Shuffle(); //shuffles the Deck
         }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            hand.SendCard(hand.cardsList[0], deck);
+        }
     }
+
+    
 }

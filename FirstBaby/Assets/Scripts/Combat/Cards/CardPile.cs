@@ -28,7 +28,7 @@ public class CardPile : MonoBehaviour
     }
 
 
-    public void SendCard(CardInfo cardToSend, CardPile target)  //Method that sends card from this card pile to another
+    public virtual void SendCard(CardInfo cardToSend, CardPile target)  //Method that sends card from this card pile to another
     {
         cardsList.Remove(cardToSend);  //Remove from this Pile's card list.
         target.ReceiveCard(cardToSend, this);

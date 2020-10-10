@@ -15,7 +15,8 @@ public class Deck : CardPile
         for(int i=0; i < 20; i++)
         {
             int n = Random.Range(1, 3);
-            cardsList.Add(cardDatabase.GameCards[n - 1]);
+            CardInfo cardInfoInstance = Object.Instantiate(cardDatabase.GameCards[n]);
+            cardsList.Add(cardInfoInstance);
         }
     }
 
