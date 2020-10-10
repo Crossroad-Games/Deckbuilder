@@ -7,6 +7,7 @@ public class Card : MonoBehaviour
     #region Reference
     public CardInfo cardInfo;
     public Hand playerHand;
+    [SerializeField] CombatProperties combatProperties;
     #endregion
 
     public bool followTarget; //true if we want card to follow target
@@ -16,7 +17,7 @@ public class Card : MonoBehaviour
 
     void Start()
     {
-        
+        gameObject.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
     }
 
     void Update()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Hand : CardPile
@@ -45,12 +46,20 @@ public class Hand : CardPile
     #endregion
 
 
+    
 
+    private void OnDisable()
+    {
+        combatPlayer.OnMouseEnterCard -= HighlightCard;
+        combatPlayer.OnMouseExitCard -= UnhighlightCard;
+    }
 
     void Start()
     {
         //Initialization
         combatPlayer = GetComponent<CombatPlayer>();
+        combatPlayer.OnMouseEnterCard += HighlightCard;
+        combatPlayer.OnMouseExitCard += UnhighlightCard;
         isDrawing = false;
     }
 
@@ -188,8 +197,71 @@ public class Hand : CardPile
         }
     }
 
+    //----------------------------------------------------------------------------------------
 
-    //TODO: When card is removed from hand and goes to other place/pile, unlink CardInfo from it, remove from physicalCardInHand list, 
-    //destroy the game object and update the targets positions and rotations.
-    
+    #region MouseHover
+    private void HighlightCard(GameObject card)
+    {
+        for (int i=0; i < physicalCardsInHand.Count; i++)
+        {
+            //Highlight the card
+            if(physicalCardsInHand[i] == card.GetComponent<Card>())
+            {
+                cardTargets[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1f);
+                card.transform.position = cardTargets[physicalCardsInHand[i]].position;
+                card.transform.localScale = new Vector3(1f,1f,1f) * combatProperties.cardHighlightScale;
+            }
+
+            //Move adjacent cards to improve highlight of the hovered card
+            if (i + 1 < physicalCardsInHand.Count)
+            {
+                if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                }
+            }
+            if (i - 1 >= 0)
+            {
+                if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
+                }
+            }
+        }
+    }
+
+    private void UnhighlightCard (GameObject card)
+    {
+        for (int i = 0; i < physicalCardsInHand.Count; i++)
+        {
+            //Unhighlight the card
+            if (physicalCardsInHand[i] == card.GetComponent<Card>())
+            {
+                cardTargets[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1f);
+                card.transform.position = cardTargets[physicalCardsInHand[i]].position;
+                card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
+            }
+
+            //undo the move of adjacent cards
+            if (i + 1 < physicalCardsInHand.Count)
+            {
+                if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
+                    Debug.Log("jogou da esquerda mais pra esquerda");
+                }
+            }
+            if (i - 1 >= 0)
+            {
+                if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                    Debug.Log("jogou da direita mais pra direita");
+                }
+            }
+        }
+    }
+
+
+    #endregion
 }
