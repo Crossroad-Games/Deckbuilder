@@ -10,9 +10,10 @@ public class GenericEnemy : EnemyClass
     [SerializeField] private readonly string name= string.Empty;
     [SerializeField] private readonly int InitialHP= 100;
     [SerializeField] private readonly int MaxHP= 100;
-    [SerializeField] private readonly int Defense= 5;  
-    void Start()
+    [SerializeField] private readonly int Defense= 5;
+    public override void Start()
     {
+        base.Start();
         setEnemyAttributes(ID, name, InitialHP, MaxHP, Defense);// Sets the initial state of this Enemy
     }
 
@@ -20,6 +21,10 @@ public class GenericEnemy : EnemyClass
     void Update()
     {
         
+    }
+    public override void CombatLogic()
+    {
+        ActionList["Enemy Attack"].Effect();// Use this action
     }
 
 }

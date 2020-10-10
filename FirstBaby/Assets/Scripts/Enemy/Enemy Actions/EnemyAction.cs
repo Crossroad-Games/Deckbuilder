@@ -17,4 +17,13 @@ public abstract class EnemyAction : MonoBehaviour
             return myclass;// Return the reference
         }
     }
+    private CombatPlayer player;
+    public CombatPlayer Player
+    {
+        get
+        {
+            player = player ?? GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Sets reference to the player object
+            return player;
+        }
+    }
 }
