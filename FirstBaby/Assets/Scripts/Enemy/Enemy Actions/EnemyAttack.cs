@@ -6,9 +6,9 @@ public class EnemyAttack : EnemyAction
 {
     // Start is called before the first frame update
     [Header("Basic Information")]
-    [SerializeField] private readonly int thisID;
-    [SerializeField] private readonly string thisName;
-    [SerializeField] private readonly string thisDescription;
+    [SerializeField] private readonly int thisID= -1;
+    [SerializeField] private readonly string thisName= "Enemy Attack";
+    [SerializeField] private readonly string thisDescription= "Most basic attack type, deals (Base Damage +- Modifiers)*Scale damage";
     [Space(5)]
     [Header("Action values")]
     [SerializeField] private int BaseDamage=5;
@@ -16,7 +16,7 @@ public class EnemyAttack : EnemyAction
     [SerializeField] private float Divider = 1;// Modify this field to divide damage
     [SerializeField] private int AddedDamaged = 0;// Modify this field to add damage
     [SerializeField] private int SubtractedDamage = 0;// Modify this field to subtract damage
-    void Start()
+    void Awake()
     {
         // Sets the information of ID, Name and Description of this Action //
         ActionID = thisID;
@@ -27,7 +27,7 @@ public class EnemyAttack : EnemyAction
     {
         // Deal damage to the player
         var Damage = (int) Mathf.Ceil((BaseDamage + AddedDamaged - SubtractedDamage)*(Multiplier/Divider));// Calculates the final damage
-        throw new MissingReferenceException("Needs to have reference to the Player HP");
+        Player.ProcessDamage(Damage);// Apply damage to the player
         
     }
 }

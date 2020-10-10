@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class CombatPlayer : MonoBehaviour
 {
+    [Header("Player Information")]
+    #region Player Information
+    [SerializeField]private int PlayerHP; // Current HP
+    [SerializeField]private int PlayerMaxHP;// Maximum HP
+    [SerializeField]private int PlayerDefense;// Player Defense stat
+    #endregion
+    [Space(5)]
     [SerializeField] private CardPile deck;
     [SerializeField] private CardPile hand;
     private TurnManager TurnMaster;
@@ -26,6 +34,17 @@ public class CombatPlayer : MonoBehaviour
             deck.Shuffle(); //shuffles the Deck
         }
     }
-    public void EndTurn()=> TurnMaster.EndPlayerTurn();
+    public void EndTurn()
+    {
+        if (TurnManager.State==CombatState.PlayerActionPhase)
+            TurnMaster.EndPlayerTurn();
+    }
+    public void ProcessDamage(int Damage)
+    {
+        Damage = Damage - PlayerDefense;// Reduce the damage by the enemy defense
+        Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        LoseLife(Damage);// Apply damage to the enemy's HP
+    }
+    private void LoseLife(int Amount) => PlayerHP -= Amount;
 
 }
