@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CardPile : MonoBehaviour
 {
-    public List<CardInfo> cardsList;    //List if cards in this CardPile
+    public List<CardInfo> cardsList = new List<CardInfo>();    //List if cards in this CardPile
 
     #region References
     protected CardDatabase cardDatabase;
+    protected CombatManager combatManager;
     #endregion
 
     private void Awake()
     {
         cardDatabase = Object.FindObjectOfType<CardDatabase>();
+        combatManager = Object.FindObjectOfType<CombatManager>();
     }
 
     void Start()
@@ -26,13 +28,13 @@ public class CardPile : MonoBehaviour
     }
 
 
-    public void SendCard(CardInfo cardToSend, CardPile target)  //Method that sends card from this card pile to another
+    public virtual void SendCard(CardInfo cardToSend, CardPile target)  //Method that sends card from this card pile to another
     {
         cardsList.Remove(cardToSend);  //Remove from this Pile's card list.
-        target.ReceiveCard(cardToSend);
+        target.ReceiveCard(cardToSend, this);
     }
 
-    public void ReceiveCard(CardInfo cardToReceive) // Method that receives a card.
+    public virtual void ReceiveCard(CardInfo cardToReceive, CardPile origin) // Method that receives a card.
     {
         cardsList.Add(cardToReceive);   //Add to this Pile's card list.
     }

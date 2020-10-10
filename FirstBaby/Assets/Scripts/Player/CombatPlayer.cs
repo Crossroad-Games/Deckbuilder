@@ -12,9 +12,10 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField]private int PlayerDefense;// Player Defense stat
     #endregion
     [Space(5)]
-    [SerializeField] private CardPile deck;
-    [SerializeField] private CardPile hand;
+    [SerializeField] private Deck deck;
+    [SerializeField] private Hand hand;
     private TurnManager TurnMaster;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,10 @@ public class CombatPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             deck.Shuffle(); //shuffles the Deck
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            hand.SendCard(hand.cardsList[0], deck);
         }
     }
     public void EndTurn()
