@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Hand : CardPile
@@ -45,18 +46,27 @@ public class Hand : CardPile
     #endregion
 
 
+    
 
+    private void OnDisable()
+    {
+        combatPlayer.OnMouseEnterCard -= HighlightCard;
+        combatPlayer.OnMouseExitCard -= UnhighlightCard;
+    }
 
     void Start()
     {
         //Initialization
         combatPlayer = GetComponent<CombatPlayer>();
+        combatPlayer.OnMouseEnterCard += HighlightCard;
+        combatPlayer.OnMouseExitCard += UnhighlightCard;
         isDrawing = false;
     }
 
     void Update()
     {
         MoveCards();
+        DragSelectedCard();
     }
 
     public override void ReceiveCard(CardInfo cardToReceive, CardPile origin)
@@ -134,11 +144,6 @@ public class Hand : CardPile
         {
             throw new Exception("trying to update targets but there's no physical cards in hand, some problem with SpawnCard method");
         }
-        /*else if(physicalCardsInHand.Count == 1)
-        {
-            cardTargets[physicalCardsInHand[0]].position = HandAnchor.position;
-            cardTargets[physicalCardsInHand[0]].rotation = Quaternion.identity;
-        }*/
         else if(physicalCardsInHand.Count > 0)
         {
             //Here we need to move and rotate the card targets
@@ -188,8 +193,87 @@ public class Hand : CardPile
         }
     }
 
+    //----------------------------------------------------------------------------------------
 
-    //TODO: When card is removed from hand and goes to other place/pile, unlink CardInfo from it, remove from physicalCardInHand list, 
-    //destroy the game object and update the targets positions and rotations.
-    
+    #region MouseHover
+    private void HighlightCard(GameObject card)
+    {
+        for (int i=0; i < physicalCardsInHand.Count; i++)
+        {
+            //Highlight the card
+            if(physicalCardsInHand[i] == card.GetComponent<Card>())
+            {
+                cardTargets[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1f);
+                card.transform.position = cardTargets[physicalCardsInHand[i]].position;
+                card.transform.localScale = new Vector3(1f,1f,1f) * combatProperties.cardHighlightScale;
+            }
+
+            //Move adjacent cards to improve highlight of the hovered card
+            if (i + 1 < physicalCardsInHand.Count)
+            {
+                if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                }
+            }
+            if (i - 1 >= 0)
+            {
+                if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
+                }
+            }
+        }
+    }
+
+    private void UnhighlightCard (GameObject card)
+    {
+        for (int i = 0; i < physicalCardsInHand.Count; i++)
+        {
+            //Unhighlight the card
+            if (physicalCardsInHand[i] == card.GetComponent<Card>())
+            {
+                cardTargets[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1f);
+                card.transform.position = cardTargets[physicalCardsInHand[i]].position;
+                card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
+            }
+
+            //undo the move of adjacent cards
+            if (i + 1 < physicalCardsInHand.Count)
+            {
+                if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
+                    Debug.Log("jogou da esquerda mais pra esquerda");
+                }
+            }
+            if (i - 1 >= 0)
+            {
+                if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
+                {
+                    cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                    Debug.Log("jogou da direita mais pra direita");
+                }
+            }
+        }
+    }
+
+    //TODO: Will move the selected card, but the atatck card will have a different behaviour than the cards such as block, heal etc.
+    //(attack will draw an arrow to the enemy and the others will have their effects once the player drops them outside the hand zone)
+    private void DragSelectedCard() 
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+        foreach (Card card in physicalCardsInHand)
+        {
+            if(card.Selected)
+            {
+                card.followTarget = false;
+                card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, 1f);
+            }
+        }
+    }
+
+
+    #endregion
 }

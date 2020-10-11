@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8942436287064100743}
   - component: {fileID: 9083567819869968682}
   - component: {fileID: 188558876064980337}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: card placeholder 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3198968608887256750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.4408436, y: 1.3108072, z: 0.6844206}
-  m_LocalScale: {x: 0.40357, y: 0.40357, z: 0.40357}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
+  combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
   followTarget: 0
 --- !u!61 &188558876064980337
 BoxCollider2D:

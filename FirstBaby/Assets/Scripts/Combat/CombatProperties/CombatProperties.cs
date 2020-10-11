@@ -10,4 +10,6 @@ public class CombatProperties : ScriptableObject
     public float offsetBetweenCards = 0.4f;
     public float cardsHeightDiff = 0.5f;
     public float angleBetweenCards = 10f;
+    public float cardHighlightScale = 0.5f;
+    public float cardNormalScale = 0.4f;
 }

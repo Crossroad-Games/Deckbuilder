@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardDrawingSpeed: 4
   cardRotationSpeed: 1
-  offsetBetweenCards: 1
+  offsetBetweenCards: 2
   cardsHeightDiff: 0.5
   angleBetweenCards: 10
+  cardHighlightScale: 0.5
+  cardNormalScale: 0.4
