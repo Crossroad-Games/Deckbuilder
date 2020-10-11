@@ -9,10 +9,7 @@ public class CombatPlayer : MonoBehaviour
 {
     [Header("Player Information")]
     #region Player Information
-    [SerializeField]private int PlayerHP; // Current HP
-    [SerializeField]private int PlayerMaxHP;// Maximum HP
-    [SerializeField]private int PlayerDefense;// Player Defense stat
-    [SerializeField] private string Name;// Could be either a username or a preset name?
+    [SerializeField]public PlayerData myData= new PlayerData();
     #endregion
     [Space(5)]
     [SerializeField] private Deck deck;
@@ -21,6 +18,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private Button EndTurnButton;
 
     private TurnManager TurnMaster;
+    
 
     #region Events
     public Action<GameObject> OnMouseEnterCard;
@@ -81,11 +79,11 @@ public class CombatPlayer : MonoBehaviour
 
     public void ProcessDamage(int Damage)
     {
-        Damage = Damage - PlayerDefense;// Reduce the damage by the enemy defense
+        Damage = Damage - myData.PlayerDefense;// Reduce the damage by the enemy defense
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }
-    private void LoseLife(int Amount) => PlayerHP -= Amount;
+    private void LoseLife(int Amount) => myData.PlayerHP -= Amount;
 
     //------------------------------
     #region Mouse Hovering
