@@ -66,6 +66,7 @@ public class Hand : CardPile
     void Update()
     {
         MoveCards();
+        DragSelectedCard();
     }
 
     public override void ReceiveCard(CardInfo cardToReceive, CardPile origin)
@@ -143,11 +144,6 @@ public class Hand : CardPile
         {
             throw new Exception("trying to update targets but there's no physical cards in hand, some problem with SpawnCard method");
         }
-        /*else if(physicalCardsInHand.Count == 1)
-        {
-            cardTargets[physicalCardsInHand[0]].position = HandAnchor.position;
-            cardTargets[physicalCardsInHand[0]].rotation = Quaternion.identity;
-        }*/
         else if(physicalCardsInHand.Count > 0)
         {
             //Here we need to move and rotate the card targets
@@ -258,6 +254,22 @@ public class Hand : CardPile
                     cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
                     Debug.Log("jogou da direita mais pra direita");
                 }
+            }
+        }
+    }
+
+    //TODO: Will move the selected card, but the atatck card will have a different behaviour than the cards such as block, heal etc.
+    //(attack will draw an arrow to the enemy and the others will have their effects once the player drops them outside the hand zone)
+    private void DragSelectedCard() 
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+        foreach (Card card in physicalCardsInHand)
+        {
+            if(card.Selected)
+            {
+                card.followTarget = false;
+                card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, 1f);
             }
         }
     }

@@ -102,6 +102,7 @@ public class CombatPlayer : MonoBehaviour
             }
             //------------------------------------------
             //Here runs every frame mouse is over a card
+            CardSelection(current);
             //------------------------------------------
         }
         else // Now mouse is pointing at null ( not to any card )
@@ -123,5 +124,22 @@ public class CombatPlayer : MonoBehaviour
     {
         Debug.Log("OnPointerExit:  " + card.name);
     }
+
+    private void CardSelection(GameObject card) //select and unselect a card.
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            card.GetComponent<Card>().Selected = true;
+            Debug.Log("Selecionada: " + card.GetComponent<Card>().Selected);
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            card.GetComponent<Card>().Selected = false;
+            card.GetComponent<Card>().followTarget = true; //TODO: When mouse up and not on available drop zone, go back to position in hand. If it is an attack card, need to have a different behaviour
+            Debug.Log("selecionada: " + card.GetComponent<Card>().Selected);
+        }
+    }
+
     #endregion
 }

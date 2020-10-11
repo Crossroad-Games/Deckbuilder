@@ -10,6 +10,8 @@ public class Card : MonoBehaviour
     [SerializeField] CombatProperties combatProperties;
     #endregion
 
+    public bool Selected;
+
     public bool followTarget; //true if we want card to follow target
 
 
