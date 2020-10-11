@@ -11,6 +11,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField]private int PlayerHP; // Current HP
     [SerializeField]private int PlayerMaxHP;// Maximum HP
     [SerializeField]private int PlayerDefense;// Player Defense stat
+    [SerializeField] private string Name;// Could be either a username or a preset name?
     #endregion
     [Space(5)]
     [SerializeField] private Deck deck;

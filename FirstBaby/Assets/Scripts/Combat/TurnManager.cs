@@ -7,19 +7,20 @@ using System;
 public enum CombatState { PlayerStartTurn, PlayerActionPhase, PlayerEndTurn, EnemyPhaseStart, EnemyStartTurn, EnemyActionPhase, EnemyEndTurn, EnemyEndPhase}
 public class TurnManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    // Event List for each turn step and phase
+    #region Event Declarations
     public static Action PlayerTurnStart;
     public static Action PlayerTurnEnd;
     public static Action EnemyPhaseStart;
     public static Action EnemyPhaseEnd;
     public static Action EnemyStartTurn;
     public static Action EnemyEndTurn;
-    //
-    [SerializeField]public static CombatState State { get; private set; }// Current combat state
-    private int StateNumber=0;
-    [SerializeField]private int TurnCount=0;
+    #endregion
+    
+    [SerializeField]private int TurnCount=0;// Which turn this combat is currently at
+
+    #region References
     private EnemyManager EnemyManager;
+    #endregion
     void Start()
     {
 
@@ -35,13 +36,11 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(HoldForPause(PlayerTurnStart));// Execute all the methods that should be called when the Player's turn start
         EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void IncrementTurn() => TurnCount++;// Count the current turn
+
+    #region State Control
+    [SerializeField] public static CombatState State { get; private set; }// Current combat state
+    private int StateNumber = 0;
     private void NextState()
     {
         if (StateNumber < 7)
@@ -50,15 +49,19 @@ public class TurnManager : MonoBehaviour
             StateNumber = 0;
         State = (CombatState)StateNumber;
     }
+    #endregion
+
     public void EndPlayerTurn()// Updates the current game state to be the end of player turn
     {
         StartCoroutine(HoldPlayerEndTurn());
     }
-    public void EndEnemyTurn(bool EndPhase)
+    public void EndEnemyTurn(bool EndPhase)//  Updates the current game state to be either the next enemy or the player
     {
         StartCoroutine(HoldEnemyEndTurn(EndPhase));
     }
-    IEnumerator HoldPlayerEndTurn()
+
+    #region Pause State Coroutines
+    IEnumerator HoldPlayerEndTurn()// This coroutine will hold the game state until the user unpauses
     {
         while (PauseGame.IsPaused)
             yield return null;
@@ -69,7 +72,7 @@ public class TurnManager : MonoBehaviour
         EnemyManager.StartEnemyPhase();// Call the method that will handle the setup for this phase
         yield break;
     }
-    IEnumerator HoldEnemyEndTurn(bool EndPhase)
+    IEnumerator HoldEnemyEndTurn(bool EndPhase)// This coroutine will hold the game state until the user unpauses
     {
         while (PauseGame.IsPaused)
             yield return null;
@@ -96,4 +99,5 @@ public class TurnManager : MonoBehaviour
         PausedAction?.Invoke();
         yield break;
     }
+    #endregion
 }

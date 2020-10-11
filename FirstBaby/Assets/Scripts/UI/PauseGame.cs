@@ -19,15 +19,19 @@ public class PauseGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))// If the user hits ESC
         {
-            IsPaused = true;
+            Pause();
             Menu.SetActive(true);
-            Player.FlipEndButton(false);
         }
+    }
+    public void Pause()
+    {
+        IsPaused = true;
+        Player.FlipEndButton(false);// The player can't end their turn
     }
     public void UnPause()
     {
         Menu.SetActive(false);
         IsPaused = false;
-        Player.FlipEndButton(true);
+        Player.FlipEndButton(true);// The player can end their turn
     }
 }
