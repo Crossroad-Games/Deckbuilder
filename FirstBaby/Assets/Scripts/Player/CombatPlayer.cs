@@ -9,10 +9,7 @@ public class CombatPlayer : MonoBehaviour
 {
     [Header("Player Information")]
     #region Player Information
-    [SerializeField]private int PlayerHP; // Current HP
-    [SerializeField]private int PlayerMaxHP;// Maximum HP
-    [SerializeField]private int PlayerDefense;// Player Defense stat
-    [SerializeField] private string Name;// Could be either a username or a preset name?
+    [SerializeField]public PlayerData myData= new PlayerData();
     #endregion
     [Space(5)]
     [SerializeField] private Deck deck;
@@ -21,6 +18,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private Button EndTurnButton;
 
     private TurnManager TurnMaster;
+    
 
     #region Events
     public Action<GameObject> OnMouseEnterCard;
@@ -32,17 +30,24 @@ public class CombatPlayer : MonoBehaviour
     #endregion
 
     // Start is called before the first frame update
+    public void LoadSaveData() => myData = GameData.Current.PlayerData;
+    private void Awake()
+    {
+        OnMouseEnterCard += MouseStartedPointingToCard;
+        OnMouseExitCard += MouseStoppedPointingToCard;
+        SaveLoad.LoadEvent += LoadSaveData;// Subscribes this method to the load event so that the player data is synced to the save file
+    }
     void Start()
     {
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
-        OnMouseEnterCard += MouseStartedPointingToCard;
-        OnMouseExitCard += MouseStoppedPointingToCard;
+       
     }
 
     private void OnDisable()
     {
         OnMouseEnterCard -= MouseStartedPointingToCard;
         OnMouseExitCard -= MouseStoppedPointingToCard;
+        SaveLoad.LoadEvent -= LoadSaveData;
     }
 
     // Update is called once per frame
@@ -67,7 +72,7 @@ public class CombatPlayer : MonoBehaviour
         //Mouse detection, what card is mouse hovering
         HoverMouse();
     }
-
+    #region Turn System
     public void FlipEndButton(bool Interactable)
     {
         EndTurnButton.interactable = Interactable;// Toggle the button
@@ -78,14 +83,15 @@ public class CombatPlayer : MonoBehaviour
         if (TurnManager.State==CombatState.PlayerActionPhase)
             TurnMaster.EndPlayerTurn();
     }
+    #endregion
 
     public void ProcessDamage(int Damage)
     {
-        Damage = Damage - PlayerDefense;// Reduce the damage by the enemy defense
+        Damage = Damage - myData.PlayerDefense;// Reduce the damage by the enemy defense
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }
-    private void LoseLife(int Amount) => PlayerHP -= Amount;
+    private void LoseLife(int Amount) => myData.PlayerHP -= Amount;
 
     //------------------------------
     #region Mouse Hovering
