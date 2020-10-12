@@ -10,4 +10,5 @@ public class EnemyData
     public int EnemyHP;// Current HP
     public int EnemyMaxHP;// Maximum HP
     public int EnemyDefense;// Constant removed from incoming damage
+    public int EnemyShield;// Pool spent to reduce incoming damage
 }

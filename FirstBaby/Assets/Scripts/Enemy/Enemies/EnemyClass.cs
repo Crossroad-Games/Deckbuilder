@@ -32,12 +32,25 @@ public abstract class EnemyClass : MonoBehaviour
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
     #endregion
 
-    #region Generic Methods
+    #region Generic Combat Methods
     protected virtual void LoseLife(int Amount) => myData.EnemyHP -= Amount;// Reduce enemy HP 
     protected virtual void GainLife(int Amount) => myData.EnemyHP += Amount;// Raises enemy HP
-    public virtual void ProcessDamage(int Damage)
+    public void GainShield(int ShieldAmount)// This function will modify the player's shield amount
     {
-        Damage = Damage - myData.EnemyDefense;// Reduce the damage by the enemy defense
+        // Any other methods that should be called when adding shield to the player's shield pool
+        myData.EnemyShield += ShieldAmount;// Adds this amount to the player's shield pool
+    }
+    protected virtual int SpendShield(int Amount)// Spend an Amount of shield
+    {
+        int CurrentShield = myData.EnemyShield;// Current shield pool
+        myData.EnemyShield -= Amount;// Reduce the pool by the amount of damage being applied
+        myData.EnemyShield = myData.EnemyShield <= 0 ? 0 : myData.EnemyShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        return CurrentShield;
+    }
+    public virtual void ProcessDamage(int Damage)// Modifies the incoming damage before applying it to the HP
+    {
+        Damage -= myData.EnemyDefense;// Reduce the damage by the enemy defense
+        Damage -= SpendShield(Damage);// Spend the shield pool to reduce the incoming damage
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }

@@ -12,13 +12,15 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField]public PlayerData myData= new PlayerData();
     #endregion
     [Space(5)]
-    [SerializeField] private Deck deck;
-    [SerializeField] private Hand hand;
-    [SerializeField] private LayerMask cardLayer;
-    [SerializeField] private Button EndTurnButton;
-
+    #region References
+    [SerializeField] private Deck deck=null;
+    [SerializeField] private Hand hand=null;
+    [SerializeField] private LayerMask cardLayer=0;
+    [SerializeField] private Button EndTurnButton=null;
     private TurnManager TurnMaster;
-    
+    #endregion
+
+
 
     #region Events
     public Action<GameObject> OnMouseEnterCard;
@@ -29,7 +31,7 @@ public class CombatPlayer : MonoBehaviour
     GameObject previousHoverObject;
     #endregion
 
-    // Start is called before the first frame update
+    #region Player startup methods
     public void LoadSaveData() => myData = GameData.Current.PlayerData;
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class CombatPlayer : MonoBehaviour
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
        
     }
+    #endregion
 
     private void OnDisable()
     {
@@ -84,10 +87,24 @@ public class CombatPlayer : MonoBehaviour
             TurnMaster.EndPlayerTurn();
     }
     #endregion
-
+    private int SpendShield(int Amount)// Spend an Amount of shield
+    {
+        if (Amount <= 0)// If whatever incoming amount is already below or equal than 0
+            return 0;// Return 0, as no shield was spent
+        int CurrentShield = myData.PlayerShield;// Current shield pool
+        myData.PlayerShield -= Amount;// Reduce the pool by the amount of damage being applied
+        myData.PlayerShield = myData.PlayerShield <= 0 ? 0 : myData.PlayerShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        return CurrentShield;
+    }
+    public void GainShield(int ShieldAmount)// This function will modify the player's shield amount
+    {
+        // Any other methods that should be called when adding shield to the player's shield pool
+        myData.PlayerShield += ShieldAmount;// Adds this amount to the player's shield pool
+    }
     public void ProcessDamage(int Damage)
     {
-        Damage = Damage - myData.PlayerDefense;// Reduce the damage by the enemy defense
+        Damage -= myData.PlayerDefense;// Reduce the damage by the enemy defense
+        Damage -= SpendShield(Damage);// Spend the shield pool to reduce the incoming damage
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }
