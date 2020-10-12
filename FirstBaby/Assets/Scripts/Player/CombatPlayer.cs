@@ -30,17 +30,24 @@ public class CombatPlayer : MonoBehaviour
     #endregion
 
     // Start is called before the first frame update
+    public void LoadSaveData() => myData = GameData.Current.PlayerData;
+    private void Awake()
+    {
+        OnMouseEnterCard += MouseStartedPointingToCard;
+        OnMouseExitCard += MouseStoppedPointingToCard;
+        SaveLoad.LoadEvent += LoadSaveData;// Subscribes this method to the load event so that the player data is synced to the save file
+    }
     void Start()
     {
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
-        OnMouseEnterCard += MouseStartedPointingToCard;
-        OnMouseExitCard += MouseStoppedPointingToCard;
+       
     }
 
     private void OnDisable()
     {
         OnMouseEnterCard -= MouseStartedPointingToCard;
         OnMouseExitCard -= MouseStoppedPointingToCard;
+        SaveLoad.LoadEvent -= LoadSaveData;
     }
 
     // Update is called once per frame
@@ -65,7 +72,7 @@ public class CombatPlayer : MonoBehaviour
         //Mouse detection, what card is mouse hovering
         HoverMouse();
     }
-
+    #region Turn System
     public void FlipEndButton(bool Interactable)
     {
         EndTurnButton.interactable = Interactable;// Toggle the button
@@ -76,6 +83,7 @@ public class CombatPlayer : MonoBehaviour
         if (TurnManager.State==CombatState.PlayerActionPhase)
             TurnMaster.EndPlayerTurn();
     }
+    #endregion
 
     public void ProcessDamage(int Damage)
     {

@@ -655,12 +655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eb47d4cae334a4d9839c1950d1560b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Current:
-    PlayerData:
-      PlayerHP: 0
-      PlayerMaxHP: 0
-      PlayerDefense: 0
-      Name: 
 --- !u!4 &556936321
 Transform:
   m_ObjectHideFlags: 0
@@ -722,6 +716,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9081be98b0539e04ca0785e24aaf9b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myData:
+    ID: 0
+    EnemyName: 
+    EnemyHP: 0
+    EnemyMaxHP: 0
+    EnemyDefense: 0
 --- !u!4 &611122646
 Transform:
   m_ObjectHideFlags: 0
@@ -783,6 +783,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9081be98b0539e04ca0785e24aaf9b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myData:
+    ID: 0
+    EnemyName: 
+    EnemyHP: 0
+    EnemyMaxHP: 0
+    EnemyDefense: 0
 --- !u!4 &629189223
 Transform:
   m_ObjectHideFlags: 0
@@ -827,6 +833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CombatEnemies: []
+  EnemyData: []
 --- !u!4 &645282469
 Transform:
   m_ObjectHideFlags: 0
@@ -1032,7 +1039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continue
+  m_text: Save
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

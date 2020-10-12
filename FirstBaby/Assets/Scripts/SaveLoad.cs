@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class SaveLoad : MonoBehaviour
 {
@@ -9,15 +10,18 @@ public class SaveLoad : MonoBehaviour
     private string dataPath;// Where it will be saved to in PC
     private CombatPlayer Player;
     private EnemyManager EnemyManager;
-    public GameData Current= new GameData();
-    void Start()
+    public static Action LoadEvent;
+    private void Awake()
+    {
+       
+    }
+    private void Start()
     {
         dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName");// Saves the information at this location
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
-        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is defined, Save function will pull the information from this script to save it on a json file
+        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is defined, Save function will pull the enemy data stored
         Load();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -25,9 +29,9 @@ public class SaveLoad : MonoBehaviour
     }
     public void SaveGame()// This will save all the information on this script to the file
     {
-        Current.PlayerData = Player.myData;
-        Current.EnemyData = EnemyManager.EnemyData;// Copies this array
-        string jsonString = JsonUtility.ToJson(Current,true);// Transforms the Data to Json format
+        GameData.Current.PlayerData = Player.myData;
+        GameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this array
+        string jsonString = JsonUtility.ToJson(GameData.Current,true);// Transforms the Data to Json format
         Debug.Log(Application.persistentDataPath);
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
@@ -41,8 +45,9 @@ public class SaveLoad : MonoBehaviour
             //FileStream file = File.Open(Application.persistentDataPath + "/PlaceholderFileName", FileMode.Open);
             string JSONString = File.ReadAllText(Application.persistentDataPath + "/PlaceholderFileName");
             //Current = JsonUtility.FromJson<GameData>(file.ToString());
-            Current = JsonUtility.FromJson<GameData>(JSONString);
-           // file.Close();
+            GameData.Current = JsonUtility.FromJson<GameData>(JSONString);
+            // file.Close();
+            LoadEvent?.Invoke();// Calls all the methods subscribed to this event
         }
     }
 }
