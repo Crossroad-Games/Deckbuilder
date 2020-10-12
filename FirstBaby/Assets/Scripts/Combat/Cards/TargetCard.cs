@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballCard : TargetCard
+public class TargetCard : Card
 {
-    // Start is called before the first frame update
+
+    private void OnEnable()
+    {
+        this.type = "TargetCard";
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

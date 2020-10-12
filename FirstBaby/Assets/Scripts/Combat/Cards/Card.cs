@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +11,10 @@ public class Card : MonoBehaviour
     [SerializeField] CombatProperties combatProperties;
     #endregion
 
-    public bool Selected;
+    public bool selected;
+    public string type = "none";
 
-    public bool followTarget; //true if we want card to follow target
+    public bool followCardPositionToFollow; //true if we want card to follow target
 
 
     

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Hand : CardPile
 {
-    #region Properties
+    #region Fields and Properties
     [SerializeField] private Transform handAnchor; //Pivot for card positions in hand
     public Transform HandAnchor //Getter
     {
@@ -23,7 +23,7 @@ public class Hand : CardPile
             return cardDrawPosition;
         }
     }
-    public Dictionary<Card, CardTarget> cardTargets = new Dictionary<Card, CardTarget>();    //Entity that cards follows
+    public Dictionary<Card, CardPositionToFollow> cardPositionsToFollow = new Dictionary<Card, CardPositionToFollow>();    //Entity that cards follows
     public List<Card> physicalCardsInHand = new List<Card>();
 
     [SerializeField] private CombatProperties combatProperties;
@@ -38,8 +38,13 @@ public class Hand : CardPile
     //-------------------------------------------------
 
     #region Booleans
-    private bool isDrawing { get; set; } = false;
+    public bool isDrawing { get; set; } = false;
+    public bool isDragging { get; set; } = false;
+    private bool createdArrow = false;
+    public bool isAiming = false;
     #endregion
+
+    private LineRenderer arrowRenderer;
 
     #region Events
     public Action playerDrawFromDeck;   //Event that gets called when player draws a card from deck.
@@ -56,11 +61,20 @@ public class Hand : CardPile
 
     void Start()
     {
-        //Initialization
+        //////////Initialization of event /////////////
         combatPlayer = GetComponent<CombatPlayer>();
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
+        combatPlayer.OnCardSelected += DisableHoverEffects;
+        combatPlayer.OnCardUnselected += ReenableHoverEffects;
+        combatPlayer.OnCardUnselected += UnhighlightCard;
+        combatPlayer.OnCardUnselected += UndoAimAtTarget;
+        combatPlayer.OnTargetCardUsed += UndoAimAtTarget;
+        //////////////////////////////////////////////////
         isDrawing = false;
+        isDragging = false;
+        createdArrow = false;
+        isAiming = false;
     }
 
     void Update()
@@ -108,7 +122,7 @@ public class Hand : CardPile
     {
         GameObject cardSpawned =  GameObject.Instantiate(cardToSpawn.cardPrefab, cardDrawPosition.position, Quaternion.identity, handAnchor); //Spawn card when drawn from deck
         cardSpawned.GetComponent<Card>().cardInfo = cardToSpawn;  //Link the Card with it's respective CardInfo
-        cardSpawned.GetComponent<Card>().followTarget = true;   //Allow card to follow the target and go to it's right position in hand
+        cardSpawned.GetComponent<Card>().followCardPositionToFollow = true;   //Allow card to follow the target and go to it's right position in hand
         cardToSpawn.MyPhysicalCard = cardSpawned.GetComponent<Card>();
         physicalCardsInHand.Add(cardSpawned.GetComponent<Card>()); //Adds the Card to the list of physical cards in hand
         return cardSpawned.GetComponent<Card>();
@@ -118,23 +132,23 @@ public class Hand : CardPile
     {
         foreach (Card card in physicalCardsInHand)
         {
-            if (card.followTarget && isDrawing)
+            if (card.followCardPositionToFollow && isDrawing)
             {
-                card.transform.position = Vector3.Lerp(card.transform.position, cardTargets[card].position, Time.deltaTime * combatProperties.cardDrawingSpeed);
-                card.transform.rotation = Quaternion.Slerp(card.transform.rotation, cardTargets[card].rotation, Time.deltaTime * combatProperties.cardRotationSpeed);
+                card.transform.position = Vector3.Lerp(card.transform.position, cardPositionsToFollow[card].position, Time.deltaTime * combatProperties.cardDrawingSpeed);
+                card.transform.rotation = Quaternion.Slerp(card.transform.rotation, cardPositionsToFollow[card].rotation, Time.deltaTime * combatProperties.cardRotationSpeed);
             }
         }
     }
 
     private void AddCardTarget(Card card)     //Adds a target to the card being drawn
     {
-        CardTarget target = new CardTarget(HandAnchor.transform.position, Quaternion.identity);
-        cardTargets.Add(card, target);
+        CardPositionToFollow target = new CardPositionToFollow(HandAnchor.transform.position, Quaternion.identity);
+        cardPositionsToFollow.Add(card, target);
     }
 
     private void RemoveCardTarget(Card targetCard)
     {
-        cardTargets.Remove(targetCard);
+        cardPositionsToFollow.Remove(targetCard);
     }
 
     private void UpdateTargets()
@@ -153,31 +167,31 @@ public class Hand : CardPile
 
     private void MoveAndRotateTargets()
     {
-        int numberOfTargets = cardTargets.Count;
-        if (cardTargets.Count % 2 == 0) //numero par de targets
+        int numberOfTargets = cardPositionsToFollow.Count;
+        if (cardPositionsToFollow.Count % 2 == 0) //numero par de targets
         {
             int firstRightIndex = physicalCardsInHand.Count / 2;
             for (int i = 0; i < physicalCardsInHand.Count; i++)
             {
                 if(i == firstRightIndex)
                 {
-                    cardTargets[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(0.5f * combatProperties.offsetBetweenCards, 0f, -0.1f);
-                    cardTargets[physicalCardsInHand[i]].rotation = Quaternion.identity;
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(0.5f * combatProperties.offsetBetweenCards, 0f, -0.1f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                 }
                 else if(i == firstRightIndex - 1)
                 {
-                    cardTargets[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-0.5f * combatProperties.offsetBetweenCards, 0f, +0.1f);
-                    cardTargets[physicalCardsInHand[i]].rotation = Quaternion.identity;
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-0.5f * combatProperties.offsetBetweenCards, 0f, +0.1f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                 }
                 else if(i < firstRightIndex - 1)
                 {
-                    cardTargets[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex + 2) * combatProperties.offsetBetweenCards, (i - firstRightIndex + 1) * combatProperties.cardsHeightDiff, Mathf.Abs(i - firstRightIndex) * 0.1f);
-                    cardTargets[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f, 0f, 0f - (i-firstRightIndex + 1) * combatProperties.angleBetweenCards);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex + 2) * combatProperties.offsetBetweenCards, (i - firstRightIndex + 1) * combatProperties.cardsHeightDiff, Mathf.Abs(i - firstRightIndex) * 0.1f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f, 0f, 0f - (i-firstRightIndex + 1) * combatProperties.angleBetweenCards);
                 }
                 else if(i > firstRightIndex)
                 {
-                    cardTargets[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex - 1) * combatProperties.offsetBetweenCards, -(i - firstRightIndex) * combatProperties.cardsHeightDiff, -(i - firstRightIndex + 1) * 0.1f);
-                    cardTargets[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f, 0f, 0f - (i-firstRightIndex) * combatProperties.angleBetweenCards);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex - 1) * combatProperties.offsetBetweenCards, -(i - firstRightIndex) * combatProperties.cardsHeightDiff, -(i - firstRightIndex + 1) * 0.1f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f, 0f, 0f - (i-firstRightIndex) * combatProperties.angleBetweenCards);
                 }
             }
         }
@@ -187,8 +201,8 @@ public class Hand : CardPile
             //Sets the central card position to center of hand and rotation to identity and other cards change according to their index
             for(int i=0; i < physicalCardsInHand.Count; i++)
             {
-                cardTargets[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3((i - centralCardIndex) * combatProperties.offsetBetweenCards, -Mathf.Abs(i - centralCardIndex) * combatProperties.cardsHeightDiff, (i - centralCardIndex) * (-0.1f));
-                cardTargets[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f,0f,0f - (i - centralCardIndex) * combatProperties.angleBetweenCards);
+                cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3((i - centralCardIndex) * combatProperties.offsetBetweenCards, -Mathf.Abs(i - centralCardIndex) * combatProperties.cardsHeightDiff, (i - centralCardIndex) * (-0.1f));
+                cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f,0f,0f - (i - centralCardIndex) * combatProperties.angleBetweenCards);
             }
         }
     }
@@ -203,8 +217,8 @@ public class Hand : CardPile
             //Highlight the card
             if(physicalCardsInHand[i] == card.GetComponent<Card>())
             {
-                cardTargets[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1f);
-                card.transform.position = cardTargets[physicalCardsInHand[i]].position;
+                cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1f);
+                card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
                 card.transform.localScale = new Vector3(1f,1f,1f) * combatProperties.cardHighlightScale;
             }
 
@@ -213,14 +227,14 @@ public class Hand : CardPile
             {
                 if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
                 {
-                    cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
                 }
             }
             if (i - 1 >= 0)
             {
                 if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())
                 {
-                    cardTargets[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
                 }
             }
         }
@@ -233,8 +247,8 @@ public class Hand : CardPile
             //Unhighlight the card
             if (physicalCardsInHand[i] == card.GetComponent<Card>())
             {
-                cardTargets[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1f);
-                card.transform.position = cardTargets[physicalCardsInHand[i]].position;
+                cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1f);
+                card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
                 card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
             }
 
@@ -243,7 +257,7 @@ public class Hand : CardPile
             {
                 if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
                 {
-                    cardTargets[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
                     Debug.Log("jogou da esquerda mais pra esquerda");
                 }
             }
@@ -251,7 +265,7 @@ public class Hand : CardPile
             {
                 if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
                 {
-                    cardTargets[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
                     Debug.Log("jogou da direita mais pra direita");
                 }
             }
@@ -266,14 +280,88 @@ public class Hand : CardPile
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
         foreach (Card card in physicalCardsInHand)
         {
-            if(card.Selected)
+            if(card.selected)
             {
-                card.followTarget = false;
-                card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, 1f);
+                if (card.type == "TargetCard")
+                {
+                    if (combatPlayer.IsMouseInHandZone() && !createdArrow)  //if card is of type TargetCard and is not aiming at target yet, just drag card
+                    {
+                        card.followCardPositionToFollow = false;
+                        card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, combatProperties.zAxisOffsetWhenCardDrag); // Makes the card follow the mouse position, but with offset of 1 in the Z axis so the card is exposed in front of other objects in the scene
+                        card.transform.rotation = Quaternion.identity;
+                        
+                    }
+                    else //if( card is not in hand zone anymore, it means you want to aim at target
+                    {
+                        card.transform.position = Vector3.Lerp(card.transform.position, HandAnchor.position + new Vector3(0f,0f,-1f), Time.deltaTime * combatProperties.cardDrawingSpeed); // Makes card go to the hand's center position smoothly and with an offset in the z axis
+                        card.transform.rotation = Quaternion.identity;
+                        //Draw arrow
+                        AimAtTarget(card, mousePos2D);
+                        
+                    }
+                }
+                else if(card.type == "NonTargetCard")
+                {
+                    if(combatPlayer.IsMouseInHandZone())
+                    {
+                        card.followCardPositionToFollow = false;
+                        card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, combatProperties.zAxisOffsetWhenCardDrag); // Makes the card follow the mouse position, but with offset of 1 in the Z axis so the card is exposed in front of other objects in the scene
+                        card.transform.rotation = Quaternion.identity;
+                    }
+                }
+                else
+                {
+                    throw new Exception("this card doesn't have a valid type");
+                }
             }
         }
     }
 
+    private void AimAtTarget(Card card, Vector2 mousePos2D)   //draws the arrow for when player is aiming at a target with TargetCard
+    {
+        isAiming = true; //To tell the game that the player is aiming a Target card at someone
+        //Draw Arrow
+        if(!createdArrow)
+        {
+            GameObject line = new GameObject();
+            line.transform.position = card.transform.position;
+            line.AddComponent<LineRenderer>();
+            arrowRenderer = line.GetComponent<LineRenderer>();
+            createdArrow = true;
+        }
+        arrowRenderer.SetPosition(0, card.transform.position);
+        arrowRenderer.SetPosition(1, new Vector3(mousePos2D.x, mousePos2D.y, 1f));
+    }
 
+    private void UndoAimAtTarget(GameObject card)
+    {
+        if (card.GetComponent<Card>().type == "TargetCard")
+        {
+            if (arrowRenderer != null)
+            {
+                GameObject.Destroy(arrowRenderer.gameObject);
+                createdArrow = false;
+            }
+        }
+    }
+
+    private void DisableHoverEffects(GameObject card)
+    {
+        combatPlayer.OnMouseEnterCard -= HighlightCard;
+        combatPlayer.OnMouseExitCard -= UnhighlightCard;
+    }
+
+    private void ReenableHoverEffects(GameObject card)
+    {
+        StartCoroutine("Wait");           //COROUTINE NOT WORKING
+        Debug.Log("chamou corrotina?");
+        combatPlayer.OnMouseEnterCard += HighlightCard;
+        combatPlayer.OnMouseExitCard += UnhighlightCard;
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(4f);
+    }
     #endregion
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealingTouchCard : Card
+public class HealingTouchCard : NonTargetCard
 {
     // Start is called before the first frame update
     void Start()
