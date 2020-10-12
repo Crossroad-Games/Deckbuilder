@@ -8,11 +8,13 @@ public class SaveLoad : MonoBehaviour
     // Start is called before the first frame update
     private string dataPath;// Where it will be saved to in PC
     private CombatPlayer Player;
+    private EnemyManager EnemyManager;
     public GameData Current= new GameData();
     void Start()
     {
         dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName");// Saves the information at this location
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
+        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
         Load();
     }
 
@@ -24,6 +26,7 @@ public class SaveLoad : MonoBehaviour
     public void SaveGame()// This will save all the information on this script to the file
     {
         Current.PlayerData = Player.myData;
+        Current.EnemyData = EnemyManager.EnemyData;// Copies this array
         string jsonString = JsonUtility.ToJson(Current,true);// Transforms the Data to Json format
         Debug.Log(Application.persistentDataPath);
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path

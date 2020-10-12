@@ -11,10 +11,12 @@ public class EnemyManager : MonoBehaviour
     private int CurrentEnemyIndex = 0;// Start at the first enemy on the array
     private EnemyClass CurrentEnemyClass;// Reference to the enemy currently active
     [SerializeField] private EnemyClass[] CombatEnemies;// Array of enemies with their class reference
+    [SerializeField] public EnemyData[] EnemyData;// Array of enemy datas
     private TurnManager TurnMaster;// Reference to the TurnManager script to access its methods
     private void Awake()
     {
-        CombatEnemies = new EnemyClass[5];// Initialize the array of enemies to have a max size
+        CombatEnemies = new EnemyClass[MaxEnemies];// Initialize the array of enemies to have a max size
+        EnemyData = new EnemyData[MaxEnemies];
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
     }
     void Start()
@@ -35,6 +37,7 @@ public class EnemyManager : MonoBehaviour
             if (Enemy == null)// Check if the slot is free
             {
                 CombatEnemies[Iterator] = newEnemy;// Add this enemy to that slot
+                EnemyData[Iterator] = newEnemy.myData;// Stores that enemy's data in this array slot
                 return;// End this function
             }
             else
@@ -56,7 +59,7 @@ public class EnemyManager : MonoBehaviour
     }
     public void EndEnemyTurn()
     {
-        if (CurrentEnemyIndex < 4)// If it is not the last possible enemy
+        if (CurrentEnemyIndex < MaxEnemies-1)// If it is not the last possible enemy
         {
             if (CombatEnemies[CurrentEnemyIndex + 1] != null)// If there is another enemy that needs to do its turn logic
             {
