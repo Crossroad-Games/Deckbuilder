@@ -1304,7 +1304,7 @@ MonoBehaviour:
   Player: {fileID: 1436856644}
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
-  TargetEnemy: {fileID: 0}
+  TargetEnemy: {fileID: 629189222}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
   CardCD: 2
   CurrentCD: 0
