@@ -31,6 +31,8 @@ public class SaveLoad : MonoBehaviour
     {
         GameData.Current.PlayerData = Player.myData;
         GameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this array
+        GameData.Current.TurnCount = TurnManager.TurnCount;// Stores the current turn count
+        GameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state
         string jsonString = JsonUtility.ToJson(GameData.Current,true);// Transforms the Data to Json format
         Debug.Log(Application.persistentDataPath);
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path

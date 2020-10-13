@@ -16,11 +16,19 @@ public class TurnManager : MonoBehaviour
     public static Action EnemyEndTurn;
     #endregion
     
-    [SerializeField]private int TurnCount=0;// Which turn this combat is currently at
+    [SerializeField]public static int TurnCount=0;// Which turn this combat is currently at
 
     #region References
     private EnemyManager EnemyManager;
     #endregion
+    private void Awake()
+    {
+        SaveLoad.LoadEvent += LoadState;// Subscribe to this event in order to load the turn state when the player loads their information
+    }
+    private void OnDisable()
+    {
+        SaveLoad.LoadEvent -= LoadState;// Unsubscribe to this event when disabled
+    }
     void Start()
     {
 
@@ -36,9 +44,9 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(HoldForPause(PlayerTurnStart));// Execute all the methods that should be called when the Player's turn start
         EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
     }
-    private void IncrementTurn() => TurnCount++;// Count the current turn
+   
 
-    #region State Control
+    #region Turn State Control
     [SerializeField] public static CombatState State { get; private set; }// Current combat state
     private int StateNumber = 0;
     private void NextState()
@@ -48,6 +56,12 @@ public class TurnManager : MonoBehaviour
         else
             StateNumber = 0;
         State = (CombatState)StateNumber;
+    }
+    private void IncrementTurn() => TurnCount++;// Count the current turn
+    public void LoadState()// Loads the turn state information to match that which was stored on the saved file
+    {
+        State = GameData.Current.whichCombatState;
+        TurnCount = GameData.Current.TurnCount;
     }
     #endregion
 

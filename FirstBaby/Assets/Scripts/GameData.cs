@@ -8,6 +8,8 @@ public class GameData
     public static GameData Current;
     public PlayerData PlayerData;
     public EnemyData[] EnemyData;
+    public int TurnCount;
+    public CombatState whichCombatState;
     public GameData()
     {
         PlayerData = new PlayerData();
