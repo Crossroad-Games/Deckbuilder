@@ -30,6 +30,7 @@ public abstract class Card : MonoBehaviour
     public virtual void Start()
     {
         gameObject.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
         highlighted = false;
     }
     public void ExecuteAction()
@@ -38,6 +39,15 @@ public abstract class Card : MonoBehaviour
         CurrentCD = CardCD;// Apply this card's CD
         //Send it to the CD pile
     }
+
+    public void ExecuteAction(EnemyClass targetEnemy)
+    {
+        this.TargetEnemy = targetEnemy;
+        CardEffect();// Execute the card's effect
+        CurrentCD = CardCD;// Apply this card's CD
+        //Send it to the CD pile
+    }
+
     public abstract void CardEffect();// This is the field used by the card to describe and execute its action
 
     

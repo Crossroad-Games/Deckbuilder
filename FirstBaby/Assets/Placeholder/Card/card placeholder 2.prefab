@@ -96,10 +96,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a7e22184144c043a34f48c694cc32f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 8940200078548064850, guid: 82b8a8c25805f0d42b07317487e9bffc, type: 3}
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
+  TargetEnemy: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
-  followTarget: 0
+  selected: 0
+  highlighted: 0
+  beingDrawn: 0
+  returningToHand: 0
+  beingHovered: 0
+  type: none
+  CardCD: 0
+  CurrentCD: 0
+  followCardPositionToFollow: 0
 --- !u!61 &7963367926223209395
 BoxCollider2D:
   m_ObjectHideFlags: 0

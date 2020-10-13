@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcaneMissileCard : Card
+public class ArcaneMissileCard : TargetCard
 {
     private int BaseDamage = 10;// Damage value that will be applied to the Enemy
     private int AddValue = 0, SubtractValue = 0;// Values that modify the base value

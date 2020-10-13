@@ -20,7 +20,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private MouseOnEnemy enemyDetector=null;
     [SerializeField] private LayerMask cardLayer=0;
     [SerializeField] private LayerMask handZoneLayer=0;
-    [SerializeField] private Button EndTurnButton=null;
+    private Button EndTurnButton=null;
     private TurnManager TurnMaster;
     #endregion
 
@@ -50,7 +50,6 @@ public class CombatPlayer : MonoBehaviour
     private void Awake()
     {
         //Initialization
-        TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
         OnMouseEnterCard += MouseStartedPointingToCard;
         OnMouseExitCard += MouseStoppedPointingToCard;
         SaveLoad.LoadEvent += LoadSaveData;// Subscribes this method to the load event so that the player data is synced to the save file
@@ -60,6 +59,7 @@ public class CombatPlayer : MonoBehaviour
     void Start()
     {
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
+        EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();
     }
     #endregion
 
@@ -221,8 +221,8 @@ public class CombatPlayer : MonoBehaviour
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
                             hand.SendCard(SelectedCard.cardInfo, cdPile);
+                            SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
                             SelectedCard = null;
-                            Debug.Log("Call card Action here");
                         }
                         else // mouse released but not on any enemy
                         {
@@ -282,8 +282,8 @@ public class CombatPlayer : MonoBehaviour
                             OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
                         }
                         hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                        SelectedCard.ExecuteAction();
                         SelectedCard = null; //update selected card to null
-                        Debug.Log("Call NonTargetCard Action here");
                     }
                 }
                 else if (Input.GetMouseButtonDown(0))

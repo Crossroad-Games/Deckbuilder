@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
-  m_Name: Healing Touch
+  m_Name: Arcane Missile
   m_EditorClassIdentifier: 
-  name: Healing Touch
-  ID: 2
-  Description: Heals X points
-  sprite: {fileID: 0}
-  cardPrefab: {fileID: 3198968608887256750, guid: 993a7f613fac00d489f9d23e8843c0e3, type: 3}
+  Name: Arcane Missile
+  ID: 3
+  Description: Deal damage
+  sprite: {fileID: 21300000, guid: 43fdc9a048a0fcb4f8e6c8186483f029, type: 3}
+  cardPrefab: {fileID: 3198968608887256750, guid: bd2225d726b664b43b4bb4f8a4a8baea, type: 3}
+  myPhysicalCard: {fileID: 0}

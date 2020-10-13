@@ -14,7 +14,7 @@ public class Deck : CardPile
         // Initialize Deck randomly for testing porpuses
         for(int i=0; i < 20; i++)
         {
-            int n = Random.Range(1, 3);
+            int n = Random.Range(0, 3);
             CardInfo cardInfoInstance = Object.Instantiate(cardDatabase.GameCards[n]);
             cardsList.Add(cardInfoInstance);
         }

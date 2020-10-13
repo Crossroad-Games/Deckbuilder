@@ -10,13 +10,6 @@ public class TargetCard : Card
         this.type = "TargetCard";
     }
 
-    void Start()
-    {
-        
-    }
+    public override void CardEffect() { }// This is the field used by the card to describe and execute its action 
 
-    void Update()
-    {
-        
-    }
 }

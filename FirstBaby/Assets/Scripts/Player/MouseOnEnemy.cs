@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseOnEnemy : MonoBehaviour
 {
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask enemyLayer=0;
     public bool mouseOverEnemy;
 
     

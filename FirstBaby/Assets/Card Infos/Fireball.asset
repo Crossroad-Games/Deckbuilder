@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
-  name: Fireball
+  Name: Fireball
   ID: 1
   Description: Casts fireball and deal damage
-  sprite: {fileID: 21300000, guid: 43fdc9a048a0fcb4f8e6c8186483f029, type: 3}
+  sprite: {fileID: 21300000, guid: af0be782ea488d548bedd71c2d3e4715, type: 3}
   cardPrefab: {fileID: 3198968608887256750, guid: be8aaca7e1aa6674a83fdc2cb9a57efb, type: 3}
+  myPhysicalCard: {fileID: 0}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BarrierCard : Card
+public class BarrierCard : NonTargetCard
 {
     private int BaseShield=10;// Shield value that will be subtracted and depleted from the enemy's attack
     private int AddValue=0, SubtractValue=0;// Values that modify the base value

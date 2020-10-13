@@ -10,15 +10,7 @@ public class NonTargetCard : Card
         this.type = "NonTargetCard";
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    public override void CardEffect(){ }// This is the field used by the card to describe and execute its action
 }
