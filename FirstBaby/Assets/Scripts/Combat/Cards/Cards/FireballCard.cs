@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballCard : Card
+public class FireballCard : TargetCard
 {
     private int BaseDamage = 20;// Damage value that will be applied to the Enemy
     private int AddValue = 0, SubtractValue = 0;// Values that modify the base value
