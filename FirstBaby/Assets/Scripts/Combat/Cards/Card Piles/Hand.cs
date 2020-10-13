@@ -69,7 +69,9 @@ public class Hand : CardPile
         combatPlayer.OnCardUnselected += ReenableHoverEffects;
         combatPlayer.OnCardUnselected += UnhighlightCard;
         combatPlayer.OnCardUnselected += UndoAimAtTarget;
+        combatPlayer.OnTargetCardUsed += ReenableHoverEffects;
         combatPlayer.OnTargetCardUsed += UndoAimAtTarget;
+        combatPlayer.OnNonTargetCardUsed += ReenableHoverEffects;
         //////////////////////////////////////////////////
         isDrawing = false;
         isDragging = false;
@@ -132,7 +134,7 @@ public class Hand : CardPile
     {
         foreach (Card card in physicalCardsInHand)
         {
-            if (card.followCardPositionToFollow && isDrawing)
+            if (card.followCardPositionToFollow)
             {
                 card.transform.position = Vector3.Lerp(card.transform.position, cardPositionsToFollow[card].position, Time.deltaTime * combatProperties.cardDrawingSpeed);
                 card.transform.rotation = Quaternion.Slerp(card.transform.rotation, cardPositionsToFollow[card].rotation, Time.deltaTime * combatProperties.cardRotationSpeed);
@@ -212,29 +214,36 @@ public class Hand : CardPile
     #region MouseHover
     private void HighlightCard(GameObject card)
     {
-        for (int i=0; i < physicalCardsInHand.Count; i++)
+        if (!card.GetComponent<Card>().highlighted)
         {
-            //Highlight the card
-            if(physicalCardsInHand[i] == card.GetComponent<Card>())
+            card.GetComponent<Card>().highlighted = true;
+            for (int i = 0; i < physicalCardsInHand.Count; i++)
             {
-                cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1f);
-                card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
-                card.transform.localScale = new Vector3(1f,1f,1f) * combatProperties.cardHighlightScale;
-            }
-
-            //Move adjacent cards to improve highlight of the hovered card
-            if (i + 1 < physicalCardsInHand.Count)
-            {
-                if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                //Highlight the card
+                if (physicalCardsInHand[i] == card.GetComponent<Card>())
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1.5f);
+                    if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 2f)
+                    {
+                        card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
+                    }
+                    card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardHighlightScale;
                 }
-            }
-            if (i - 1 >= 0)
-            {
-                if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())
+
+                //Move adjacent cards to improve highlight of the hovered card
+                if (i + 1 < physicalCardsInHand.Count)
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
+                    if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                    {
+                        cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                    }
+                }
+                if (i - 1 >= 0)
+                {
+                    if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())
+                    {
+                        cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
+                    }
                 }
             }
         }
@@ -242,31 +251,38 @@ public class Hand : CardPile
 
     private void UnhighlightCard (GameObject card)
     {
-        for (int i = 0; i < physicalCardsInHand.Count; i++)
+        if (card.GetComponent<Card>().highlighted)
         {
-            //Unhighlight the card
-            if (physicalCardsInHand[i] == card.GetComponent<Card>())
+            card.GetComponent<Card>().highlighted = false;
+            for (int i = 0; i < physicalCardsInHand.Count; i++)
             {
-                cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1f);
-                card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
-                card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
-            }
-
-            //undo the move of adjacent cards
-            if (i + 1 < physicalCardsInHand.Count)
-            {
-                if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                //Unhighlight the card
+                if (physicalCardsInHand[i] == card.GetComponent<Card>())
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
-                    Debug.Log("jogou da esquerda mais pra esquerda");
+                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1.5f);
+                    if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 2f)
+                    {
+                        card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
+                    }
+                    card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
                 }
-            }
-            if (i - 1 >= 0)
-            {
-                if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
+
+                //undo the move of adjacent cards
+                if (i + 1 < physicalCardsInHand.Count)
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
-                    Debug.Log("jogou da direita mais pra direita");
+                    if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                    {
+                        cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
+                        Debug.Log("jogou da esquerda mais pra esquerda");
+                    }
+                }
+                if (i - 1 >= 0)
+                {
+                    if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
+                    {
+                        cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
+                        Debug.Log("jogou da direita mais pra direita");
+                    }
                 }
             }
         }
@@ -302,7 +318,13 @@ public class Hand : CardPile
                 }
                 else if(card.type == "NonTargetCard")
                 {
-                    if(combatPlayer.IsMouseInHandZone())
+                    if(combatPlayer.IsMouseInHandZone()) //When Non Target Card is inside hand zone , just drag
+                    {
+                        card.followCardPositionToFollow = false;
+                        card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, combatProperties.zAxisOffsetWhenCardDrag); // Makes the card follow the mouse position, but with offset of 1 in the Z axis so the card is exposed in front of other objects in the scene
+                        card.transform.rotation = Quaternion.identity;
+                    }
+                    else //When Non Target Card is inside hand zone , just drag as well
                     {
                         card.followCardPositionToFollow = false;
                         card.transform.position = new Vector3(mousePos2D.x, mousePos2D.y, combatProperties.zAxisOffsetWhenCardDrag); // Makes the card follow the mouse position, but with offset of 1 in the Z axis so the card is exposed in front of other objects in the scene

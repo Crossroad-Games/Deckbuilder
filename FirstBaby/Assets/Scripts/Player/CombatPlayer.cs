@@ -33,6 +33,7 @@ public class CombatPlayer : MonoBehaviour
     public Action<GameObject> OnCardSelected;
     public Action<GameObject> OnCardUnselected;
     public Action<GameObject> OnTargetCardUsed;
+    public Action<GameObject> OnNonTargetCardUsed;
     #endregion
 
     #region Fields and Properties
@@ -43,6 +44,7 @@ public class CombatPlayer : MonoBehaviour
 
     #region Booleans
     public bool isHoveringCard = false;
+    public bool releasedMouseNotOnEnemy = false;
     #endregion
 
     // Start is called before the first frame update
@@ -53,6 +55,7 @@ public class CombatPlayer : MonoBehaviour
         OnMouseEnterCard += MouseStartedPointingToCard;
         OnMouseExitCard += MouseStoppedPointingToCard;
         isHoveringCard = false;
+        releasedMouseNotOnEnemy = false;
     }
 
     private void OnDisable()
@@ -158,61 +161,160 @@ public class CombatPlayer : MonoBehaviour
     private void CardSelection() //select and unselect a card.
     {
         //Selection
-        if(Input.GetMouseButtonDown(0))
+        if (SelectedCard == null)
         {
-            if (hitInfo.collider != null && isHoveringCard) //If mouse is over a card when it is pressed
+            if (Input.GetMouseButtonDown(0))
             {
-                Card card = hitInfo.collider.gameObject.GetComponent<Card>();
-                card.selected = true;
-                SelectedCard = card;
-                if (OnCardSelected != null)
+                if (hitInfo.collider != null && isHoveringCard) //If mouse is over a card when it is pressed
                 {
-                    OnCardSelected(card.gameObject);
+                    Card card = hitInfo.collider.gameObject.GetComponent<Card>();
+                    card.selected = true;
+                    SelectedCard = card;
+                    if (OnCardSelected != null)
+                    {
+                        OnCardSelected(card.gameObject);
+                    }
+
+                    Debug.Log("Selecionada: " + card.selected);
                 }
 
-                Debug.Log("Selecionada: " + card.selected);
             }
-
         }
-        //Unselection ---------- Right now, whenever you release the mouse button, you unselect
-        if(Input.GetMouseButtonUp(0))
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+        //Once Selected Card, be able to unselect Card or Select enemy
+        else if(SelectedCard != null)
         {
-
-            EnemyClass enemy;
-            if(enemyDetector.isMouseOnEnemy() != null)
+            if(SelectedCard.type == "TargetCard")
             {
-                enemy = enemyDetector.isMouseOnEnemy();
-                TargetCard targetCard = (SelectedCard as TargetCard);
-                if(targetCard != null)
+                if(Input.GetMouseButtonUp(0)) //when release mouse button
                 {
-                    //TODO: targetCard.PerformAction(enemy);
-                    /////// targetCard.Selected = false;
-                    /////// Remove a CardPositionToFollow
-                    /////// hand.SendCard(hand, CDPile);
-                    /// Fazer a carta chamar a ação , mandar ela pra pilha de cooldown e atualizar a mão
-                    Debug.Log("Perform Action , update hand and send card to CD Pile");
-                    if (OnTargetCardUsed != null)
+                    if (!releasedMouseNotOnEnemy) //if released mouse outside of any enemy, then will only select enemy if mouseButtonDown
                     {
-                        OnTargetCardUsed(targetCard.gameObject);
+                        if (enemyDetector.isMouseOnEnemy()) //Mouse over enemy -> enemy selected
+                        {
+                            //Send card to cdPile -> Update SelectedCard to null -> TODO:callAction
+                            EnemyClass enemyToUseAction = enemyDetector.isMouseOnEnemy();
+                            if (OnTargetCardUsed != null)
+                            {
+                                OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
+                            }
+                            hand.SendCard(SelectedCard.cardInfo, cdPile);
+                            SelectedCard = null;
+                            Debug.Log("Call card Action here");
+                        }
+                        else // mouse released but not on any enemy
+                        {
+                            releasedMouseNotOnEnemy = true;
+                        }
                     }
-                    hand.SendCard(targetCard.cardInfo, cdPile); //Sends the card from hand to discard pile after calling the event of when the targetCard is used
-                    SelectedCard.selected = false;
-                    SelectedCard = null;
+                }
+                else if(releasedMouseNotOnEnemy) //if released mouse but not on enemy, begin checking if player will click the enemy
+                {
+                    if(Input.GetMouseButtonDown(0))
+                    {
+                        if(enemyDetector.isMouseOnEnemy())
+                        {
+                            //Send card to cdPile -> Update SelectedCard to null -> TODO:callAction
+                            EnemyClass enemyToUseAction = enemyDetector.isMouseOnEnemy();
+                            if (OnTargetCardUsed != null)
+                            {
+                                OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
+                            }
+                            hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                            SelectedCard = null; //Update selectedCard
+                            Debug.Log("Call TargetCard Action here"); //Here will go the action call
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    //Now the Unselection of the card option
+                    else if(Input.GetMouseButtonDown(1))
+                    {
+                        SelectedCard.selected = false; //card no longer selected
+                        SelectedCard.followCardPositionToFollow = true; //Card should return to it's spot in hand
+                        if(OnCardUnselected != null)
+                        {
+                            OnCardUnselected(SelectedCard.gameObject); //Event of when card is unselected
+                        }
+                        SelectedCard = null;
+                        releasedMouseNotOnEnemy = false;
+                    }
+                }
+                
+
+            }
+            else if(SelectedCard.type == "NonTargetCard")
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (IsMouseInHandZone()) // if release in hand zone do nothing (keep dragging)
+                    {
+                        return;
+                    }
+                    else //if release not in hand zone -> do action
+                    {
+                        if (OnNonTargetCardUsed != null)
+                        {
+                            OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
+                        }
+                        hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                        SelectedCard = null; //update selected card to null
+                        Debug.Log("Call NonTargetCard Action here");
+                    }
+                }
+                else if (Input.GetMouseButtonDown(0))
+                {
+                    if (IsMouseInHandZone()) // if click in hand zone with card being dragged -> unselect card
+                    {
+                        SelectedCard.selected = false; //card no longer selected
+                        SelectedCard.followCardPositionToFollow = true; //Card should return to it's spot in hand
+                        if (OnCardUnselected != null)
+                        {
+                            OnCardUnselected(SelectedCard.gameObject); //Event of when card is unselected
+                        }
+                        SelectedCard = null;
+                    }
+                    else //if click not in hand zone -> do action
+                    {
+                        if (OnNonTargetCardUsed != null)
+                        {
+                            OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
+                        }
+                        hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                        SelectedCard = null; //update selected card to null
+                        Debug.Log("Call NonTargetCard Action here");
+                    }
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    if (IsMouseInHandZone()) // if click with right mouse button in hand zone with card being dragged -> unselect card
+                    {
+                        SelectedCard.selected = false; //card no longer selected
+                        SelectedCard.followCardPositionToFollow = true; //Card should return to it's spot in hand
+                        if (OnCardUnselected != null)
+                        {
+                            OnCardUnselected(SelectedCard.gameObject); //Event of when card is unselected
+                        }
+                        SelectedCard = null;
+                    }
+                    else
+                    {
+                        SelectedCard.selected = false; //card no longer selected
+                        SelectedCard.followCardPositionToFollow = true; //Card should return to it's spot in hand
+                        if (OnCardUnselected != null)
+                        {
+                            OnCardUnselected(SelectedCard.gameObject); //Event of when card is unselected
+                        }
+                        SelectedCard = null;
+                    }
                 }
             }
             else
             {
-                if (SelectedCard != null)
-                {
-                    Card unselectedCard = SelectedCard;
-                    SelectedCard.selected = false;
-                    SelectedCard.followCardPositionToFollow = true;
-                    if (SelectedCard != null)
-                    {
-                        OnCardUnselected(unselectedCard.gameObject);
-                    }
-                    SelectedCard = null;
-                }
+                return;
             }
         }
     }
