@@ -7,20 +7,16 @@ using System;
 public abstract class EnemyClass : MonoBehaviour
 {
     #region Enemy Information
-    public int ID { get; protected set; }// Unique identifier of this Enemy
-    public string EnemyName { get; protected set; }
-    public int EnemyHP { get; protected set; } // Current HP
-    public int EnemyMaxHP { get; protected set; }// Maximum HP
-    public int EnemyDefense { get; protected set; } // Constant removed from incoming damage
+    [SerializeField] public EnemyData myData = new EnemyData();
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
     // Function designed to set the initial state of all atributes
     public void setEnemyAttributes(int newID, string newEnemyName, int newEnemyHP, int newEnemyMaxHP, int newEnemyDefense)
     {
-        ID = newID;
-        EnemyName = newEnemyName;
-        EnemyHP = newEnemyHP;
-        EnemyMaxHP = newEnemyMaxHP;
-        EnemyDefense = newEnemyDefense;
+        myData.ID = newID;
+        myData.EnemyName = newEnemyName;
+        myData.EnemyHP = newEnemyHP;
+        myData.EnemyMaxHP = newEnemyMaxHP;
+        myData.EnemyDefense = newEnemyDefense;
         DeathEvent += myDeath;
 
     }
@@ -30,18 +26,31 @@ public abstract class EnemyClass : MonoBehaviour
     public Action DeathEvent;
     public virtual void DeathConditionCheck()// Checks if the enemy's death condition was reached
     {
-        if (EnemyHP == 0)// EnemyHP reached 0
+        if (myData.EnemyHP == 0)// EnemyHP reached 0
             DeathEvent?.Invoke();// Call the enemy's death event
     }
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
     #endregion
 
-    #region Generic Methods
-    protected virtual void LoseLife(int Amount) => EnemyHP -= Amount;// Reduce enemy HP 
-    protected virtual void GainLife(int Amount) => EnemyHP += Amount;// Raises enemy HP
-    public virtual void ProcessDamage(int Damage)
+    #region Generic Combat Methods
+    protected virtual void LoseLife(int Amount) => myData.EnemyHP -= Amount;// Reduce enemy HP 
+    protected virtual void GainLife(int Amount) => myData.EnemyHP += Amount;// Raises enemy HP
+    public void GainShield(int ShieldAmount)// This function will modify the player's shield amount
     {
-        Damage = Damage - EnemyDefense;// Reduce the damage by the enemy defense
+        // Any other methods that should be called when adding shield to the player's shield pool
+        myData.EnemyShield += ShieldAmount;// Adds this amount to the player's shield pool
+    }
+    protected virtual int SpendShield(int Amount)// Spend an Amount of shield
+    {
+        int CurrentShield = myData.EnemyShield;// Current shield pool
+        myData.EnemyShield -= Amount;// Reduce the pool by the amount of damage being applied
+        myData.EnemyShield = myData.EnemyShield <= 0 ? 0 : myData.EnemyShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        return CurrentShield;
+    }
+    public virtual void ProcessDamage(int Damage)// Modifies the incoming damage before applying it to the HP
+    {
+        Damage -= myData.EnemyDefense;// Reduce the damage by the enemy defense
+        Damage -= SpendShield(Damage);// Spend the shield pool to reduce the incoming damage
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }

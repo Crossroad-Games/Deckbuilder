@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class Hand : CardPile
 {
+
     #region Fields and Properties
-    [SerializeField] private Transform handAnchor; //Pivot for card positions in hand
+    [SerializeField] private Transform handAnchor=null; //Pivot for card positions in hand
+    
     public Transform HandAnchor //Getter
     {
         get
@@ -15,7 +17,7 @@ public class Hand : CardPile
             return handAnchor;
         }
     }
-    [SerializeField] private Transform cardDrawPosition; //Point where cards are created when drawn
+    [SerializeField] private Transform cardDrawPosition=null; //Point where cards are created when drawn
     public Transform CardDrawPosition  //Getter
     {
         get
@@ -26,7 +28,7 @@ public class Hand : CardPile
     public Dictionary<Card, CardPositionToFollow> cardPositionsToFollow = new Dictionary<Card, CardPositionToFollow>();    //Entity that cards follows
     public List<Card> physicalCardsInHand = new List<Card>();
 
-    [SerializeField] private CombatProperties combatProperties;
+    [SerializeField] private CombatProperties combatProperties = null;
     #endregion
 
     //--------------------------------------------------
