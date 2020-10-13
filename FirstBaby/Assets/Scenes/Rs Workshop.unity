@@ -722,6 +722,7 @@ MonoBehaviour:
     EnemyHP: 0
     EnemyMaxHP: 0
     EnemyDefense: 0
+    EnemyShield: 0
 --- !u!4 &611122646
 Transform:
   m_ObjectHideFlags: 0
@@ -789,6 +790,7 @@ MonoBehaviour:
     EnemyHP: 0
     EnemyMaxHP: 0
     EnemyDefense: 0
+    EnemyShield: 0
 --- !u!4 &629189223
 Transform:
   m_ObjectHideFlags: 0
@@ -1241,6 +1243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1436856645}
   - component: {fileID: 1436856644}
+  - component: {fileID: 1436856646}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1264,6 +1267,7 @@ MonoBehaviour:
     PlayerHP: 0
     PlayerMaxHP: 0
     PlayerDefense: 0
+    PlayerShield: 0
     Name: 
   deck: {fileID: 0}
   hand: {fileID: 0}
@@ -1285,6 +1289,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1436856646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436856643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00415589a7a49f45b22175c357eaf6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 1436856644}
+  cardInfo: {fileID: 0}
+  playerHand: {fileID: 0}
+  TargetEnemy: {fileID: 629189222}
+  combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
+  CardCD: 2
+  CurrentCD: 0
+  Selected: 0
+  followTarget: 0
 --- !u!1 &1759527235
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,8 +7,8 @@ public class PauseGame : MonoBehaviour
 {
     // Start is called before the first frame update
     public static bool IsPaused { get; private set; }
-    [SerializeField] private GameObject Menu;// Reference to the Menu script is set on the inspector
-    [SerializeField] private CombatPlayer Player;
+    [SerializeField] private GameObject Menu=null;// Reference to the Menu script is set on the inspector
+    [SerializeField] private CombatPlayer Player=null;
     void Start()
     {
         IsPaused = false;// Starts as a false
