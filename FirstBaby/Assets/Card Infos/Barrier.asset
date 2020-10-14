@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Barrier
   m_EditorClassIdentifier: 
   Name: Barrier
-  ID: 2
+  ID: 1
   Description: add shield
   sprite: {fileID: 21300000, guid: 858fc2b50a6693f4d9d6d8f1ea12dc64, type: 3}
   cardPrefab: {fileID: 3198968608887256750, guid: 993a7f613fac00d489f9d23e8843c0e3, type: 3}
-  myPhysicalCard: {fileID: 0}
+  myPhysicalCard: {fileID: 7899246455987068110, guid: 993a7f613fac00d489f9d23e8843c0e3, type: 3}
