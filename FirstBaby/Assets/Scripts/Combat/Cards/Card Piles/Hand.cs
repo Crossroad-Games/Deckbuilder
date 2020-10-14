@@ -30,12 +30,16 @@ public class Hand : CardPile
     public List<Card> physicalCardsInHand = new List<Card>();
 
     [SerializeField] private CombatProperties combatProperties = null;
+    [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
+    [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
+    private LineRenderer arrowRenderer;
     #endregion
 
     //--------------------------------------------------
 
     #region References
     private CombatPlayer combatPlayer;
+    private Deck Deck;// Reference the deck script to access its list of cards to draw every start of turn
     #endregion
 
     //-------------------------------------------------
@@ -47,29 +51,33 @@ public class Hand : CardPile
     public bool isAiming = false;
     #endregion
 
-    private LineRenderer arrowRenderer;
+   
 
     #region Events
     public Action playerDrawFromDeck;   //Event that gets called when player draws a card from deck.
     #endregion
 
 
-    
 
+    #region Event Subscription and Unsubscription and Variable Initialization
     private void OnDisable()
     {
         combatPlayer.OnMouseEnterCard -= HighlightCard;
         combatPlayer.OnMouseExitCard -= UnhighlightCard;
+        SaveLoad.LoadEvent -= LoadHand;
+        TurnManager.PlayerTurnStart -= DrawHand;
     }
     public override void Awake()
     {
         base.Awake();
         SaveLoad.LoadEvent += LoadHand;// Subscribes this method to the event to load the hand state stored on the save file
+        TurnManager.PlayerTurnStart += DrawHand;// Subscribes thid method to the beginning of the player turn to draw up to five cards when called
     }
     void Start()
     {
-        //////////Initialization of event /////////////
         combatPlayer = GetComponent<CombatPlayer>();
+        Deck = GetComponent<Deck>();// Reference is defined
+        //////////Initialization of event /////////////
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
         combatPlayer.OnCardSelected += DisableHoverEffects;
@@ -86,12 +94,14 @@ public class Hand : CardPile
         createdArrow = false;
         isAiming = false;
     }
-    void Update()
+    #endregion
+
+    void Update()// Moves cards every frame depending on the situation
     {
         MoveCards();
         DragSelectedCard();
     }
-    public void LoadHand()
+    public void LoadHand()// Load the data stored on the save file into the hand card list
     {
         List<int> IDList = GameData.Current.CardsinHandID;// Pulls the information from the loaded save
         List<CardInfo> TemporaryList = cardDatabase.GameCards;// Copies the card database list of card
@@ -107,7 +117,28 @@ public class Hand : CardPile
             }
         }
     }
+    #region Draw Methods
 
+    public void DrawHand()// Draw a set of cards at the start of every plyer turn to get back to a maximum given value
+    {
+        var Amount = MaxHandDraw - physicalCardsInHand.Count;// Draw cards based on how many cards you need 
+        Debug.Log(Amount);
+        DrawCards(Amount);
+    }
+    public void DrawCards(int Amount)=> StartCoroutine(DrawCardDelay(Amount));// Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards
+    IEnumerator DrawCardDelay(int Amount)// Add card has a small delay between each card to ensure a visual effec
+    {
+        while (Amount > 0)// While there are cards to be drawn
+        {
+            Deck.SendCard(Deck.cardsList[0], this);// Draw the first card on the deck card list
+            Amount--;
+            yield return new WaitForSeconds(DrawDelay);// Apply delay
+        }
+        yield break;
+    }
+    #endregion
+
+    #region Receive and Send Card from and to Hand
     public override void ReceiveCard(CardInfo cardToReceive, CardPile origin)
     {
         base.ReceiveCard(cardToReceive, origin);
@@ -153,7 +184,9 @@ public class Hand : CardPile
         physicalCardsInHand.Add(cardSpawned.GetComponent<Card>()); //Adds the Card to the list of physical cards in hand
         return cardSpawned.GetComponent<Card>();
     }
+    #endregion
 
+    #region Card movement in Hand
     private void MoveCards()    // Moves the cards torward their targets smoothly
     {
         foreach (Card card in physicalCardsInHand)
@@ -234,6 +267,7 @@ public class Hand : CardPile
     }
 
     //----------------------------------------------------------------------------------------
+    #endregion
 
     #region MouseHover
     private void HighlightCard(GameObject card)
@@ -297,7 +331,6 @@ public class Hand : CardPile
                     if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
                     {
                         cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
-                        Debug.Log("jogou da esquerda mais pra esquerda");
                     }
                 }
                 if (i - 1 >= 0)
@@ -305,7 +338,6 @@ public class Hand : CardPile
                     if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
                     {
                         cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
-                        Debug.Log("jogou da direita mais pra direita");
                     }
                 }
             }
