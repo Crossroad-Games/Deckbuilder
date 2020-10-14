@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 public class Hand : CardPile
 {
@@ -60,7 +61,11 @@ public class Hand : CardPile
         combatPlayer.OnMouseEnterCard -= HighlightCard;
         combatPlayer.OnMouseExitCard -= UnhighlightCard;
     }
-
+    public override void Awake()
+    {
+        base.Awake();
+        SaveLoad.LoadEvent += LoadHand;// Subscribes this method to the event to load the hand state stored on the save file
+    }
     void Start()
     {
         //////////Initialization of event /////////////
@@ -74,17 +79,33 @@ public class Hand : CardPile
         combatPlayer.OnTargetCardUsed += ReenableHoverEffects;
         combatPlayer.OnTargetCardUsed += UndoAimAtTarget;
         combatPlayer.OnNonTargetCardUsed += ReenableHoverEffects;
+       
         //////////////////////////////////////////////////
         isDrawing = false;
         isDragging = false;
         createdArrow = false;
         isAiming = false;
     }
-
     void Update()
     {
         MoveCards();
         DragSelectedCard();
+    }
+    public void LoadHand()
+    {
+        List<int> IDList = GameData.Current.CardsinHandID;// Pulls the information from the loaded save
+        List<CardInfo> TemporaryList = cardDatabase.GameCards;// Copies the card database list of card
+        CardInfo CardToReceive=null;// Initializes the card to receive to be an empty class
+        foreach(int ID in IDList)// Go through each stored card on the save
+        {
+            if (ID>=0)// If it is not a null card
+            {
+                CardToReceive = TemporaryList[ID];// Receives a card info based on its ID
+                CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(CardToReceive);// Creates a copy of that card info
+               // cardsList.Add(cardInfoInstance);
+                ReceiveCard(cardInfoInstance, this);// Add this card to the hand
+            }
+        }
     }
 
     public override void ReceiveCard(CardInfo cardToReceive, CardPile origin)
@@ -105,6 +126,7 @@ public class Hand : CardPile
 
     public override void SendCard(CardInfo cardToSend, CardPile target)
     {
+        Debug.Log(cardsList[0]);
         base.SendCard(cardToSend, target);
         OnCardRemoved(cardToSend);
     }

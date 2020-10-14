@@ -11,7 +11,7 @@ public class CardPile : MonoBehaviour
     protected CombatManager combatManager;
     #endregion
 
-    private void Awake()
+    public virtual void Awake()
     {
         cardDatabase = Object.FindObjectOfType<CardDatabase>();
         combatManager = Object.FindObjectOfType<CombatManager>();

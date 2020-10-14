@@ -16,7 +16,7 @@ public class TurnManager : MonoBehaviour
     public static Action EnemyEndTurn;
     #endregion
     
-    [SerializeField]public static int TurnCount=0;// Which turn this combat is currently at
+    [SerializeField]public int TurnCount=0;// Which turn this combat is currently at
 
     #region References
     private EnemyManager EnemyManager;
