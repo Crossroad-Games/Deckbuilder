@@ -27,10 +27,10 @@ public class DungeonPlayer : MonoBehaviour
     }
     public void NearInteractable()
     {
-
+        Debug.Log("Near Interactable");
     }
     public void Interacting()
     {
-
+        Debug.Log("Interacted");
     }
 }

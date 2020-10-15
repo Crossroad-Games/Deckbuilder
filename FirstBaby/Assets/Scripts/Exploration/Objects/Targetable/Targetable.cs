@@ -2,21 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Targetable : MonoBehaviour
+public abstract class Targetable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void ExecuteAction()
-    {
-
-    }
+    public abstract void ExecuteAction();
 }

@@ -22,12 +22,13 @@ public abstract class Interactable : MonoBehaviour
     private void Update() => DetectPlayer();// Check if the player is near every frame
     public virtual void DetectPlayer()// Function designed to detect if the player is withing interactable distance from the object
     {
-        if (Player != null)// If there is a reference to the player
+        if (Player != null && !Used)// If there is a reference to the player
             if ((Player.transform.position - transform.position).magnitude <= InteractableDistance)// If player is within interactable distance
             {
-                NearInteractable.Invoke();// Calls all functions tied to  being near an interactable object
-                if (Input.GetButtonDown("Interact") && !Used)// If the player presses the interact button and is able to use it
+                NearInteractable?.Invoke();// Calls all functions tied to  being near an interactable object
+                if (Input.GetButtonDown("Interact"))// If the player presses the interact button and is able to use it
                 {
+                    Interacting?.Invoke();// Calls all function subscribed to interacting with an object
                     Actuated();// Function that will do something when actuated(Animation, specific effects...)
                     if (!Reusable)// If it is not reusable
                         Used = true;// Can't use it again

@@ -28,7 +28,7 @@ public class Deck : CardPile
     }
     public void LoadDeck()// Loads the deck from data on the save file
     {
-        List<int> IDList = GameData.Current.CardsinDeckID;// Pulls the information from the loaded save
+        List<int> IDList = CombatGameData.Current.CardsinDeckID;// Pulls the information from the loaded save
         List<CardInfo> TemporaryList = cardDatabase.GameCards;// Copies the card database list of card
         CardInfo CardToReceive = null;// Initializes the card to receive to be an empty class
         foreach (int ID in IDList)// Go through each stored card on the save

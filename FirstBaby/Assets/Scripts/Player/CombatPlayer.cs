@@ -46,7 +46,7 @@ public class CombatPlayer : MonoBehaviour
     #endregion
 
     #region Player startup methods
-    public void LoadSaveData() => myData = GameData.Current.PlayerData;
+    public void LoadSaveData() => myData = CombatGameData.Current.PlayerData;
     private void Awake()
     {
         //Initialization

@@ -85,7 +85,7 @@ public class EnemyManager : MonoBehaviour
     }
     public void LoadData()// Loads the Data stored on the save file into the enemies
     {
-        EnemyData = GameData.Current.EnemyData;// Loads the information from the save file
+        EnemyData = CombatGameData.Current.EnemyData;// Loads the information from the save file
         GameObject EnemyToSpawn=null;// Creates a temporary gameobject to store the enemies as they are spawned
         foreach (EnemyData Data in EnemyData)// Go through the list of saved enemy data
             if (Data != null)// If data is not null

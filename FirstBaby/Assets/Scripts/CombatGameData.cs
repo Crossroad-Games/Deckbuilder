@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class GameData
+public class CombatGameData
 {
-    public static GameData Current;
+    public static CombatGameData Current;
     public PlayerData PlayerData;
     public List<int> CardsinHandID;
     public List<int> CardsinDeckID;
     public List<EnemyData> EnemyData;
     public int TurnCount;
     public CombatState whichCombatState;
-    public GameData()
+    public CombatGameData()
     {
         PlayerData = new PlayerData();
         CardsinHandID = new List<int>();
