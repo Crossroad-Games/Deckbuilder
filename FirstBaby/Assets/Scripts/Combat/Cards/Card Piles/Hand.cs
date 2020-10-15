@@ -32,7 +32,7 @@ public class Hand : CardPile
     [SerializeField] private CombatProperties combatProperties = null;
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
-    private LineRenderer arrowRenderer;
+    private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
     #endregion
 
     //--------------------------------------------------
@@ -48,8 +48,8 @@ public class Hand : CardPile
     #region Booleans
     public bool isDrawing { get; set; } = false;
     public bool isDragging { get; set; } = false;
-    private bool createdArrow = false;
-    public bool isAiming = false;
+    private bool createdArrow = false; //if arrow is created right now
+    public bool isAiming = false; //if player is aiming with a TargetCard
     #endregion
 
    
@@ -152,7 +152,7 @@ public class Hand : CardPile
         if(origin.name == "Combat Player")
         {
             playerDrawFromDeck?.Invoke();   // Raise the player drawn event
-            isDrawing = true;
+            isDrawing = true; // turn isDrawing true
             //Spawn card
             Card cardSpawned = SpawnCardFromDeck(cardToReceive);
             //Add target for card to follow
@@ -173,12 +173,13 @@ public class Hand : CardPile
     {
         if(cardBeingRemoved != null)
         {
-            physicalCardsInHand.Remove(cardBeingRemoved.MyPhysicalCard);
-            RemoveCardTarget(cardBeingRemoved.MyPhysicalCard);
-            GameObject.Destroy(cardBeingRemoved.MyPhysicalCard.gameObject);
+            physicalCardsInHand.Remove(cardBeingRemoved.MyPhysicalCard); //When the card is removed from hand, remove it from the list of physical cards in hand
+            RemoveCardTarget(cardBeingRemoved.MyPhysicalCard); //Remove the card's PositionToFollow
+            //TODO: Should probably happen an animation before destroying the card, like it going to the CD Pile, as in slay the spire
+            GameObject.Destroy(cardBeingRemoved.MyPhysicalCard.gameObject); //Destroy the card gameObject
             if(physicalCardsInHand.Count > 0)
-                UpdateTargets();
-            cardBeingRemoved.MyPhysicalCard = null;
+                UpdateTargets(); //Update the targets in hand if there is any
+            cardBeingRemoved.MyPhysicalCard = null; // turn the myPhysicalCard field from the cardInfo null
         }
     }
 
@@ -198,7 +199,7 @@ public class Hand : CardPile
     {
         foreach (Card card in physicalCardsInHand)
         {
-            if (card.followCardPositionToFollow)
+            if (card.followCardPositionToFollow) //The movement of the cards: They follow the cardPositionToFollow with interpolation method, so the movement is smooth. These "targets" are changed in other places
             {
                 card.transform.position = Vector3.Lerp(card.transform.position, cardPositionsToFollow[card].position, Time.deltaTime * combatProperties.cardDrawingSpeed);
                 card.transform.rotation = Quaternion.Slerp(card.transform.rotation, cardPositionsToFollow[card].rotation, Time.deltaTime * combatProperties.cardRotationSpeed);
@@ -206,9 +207,11 @@ public class Hand : CardPile
         }
     }
 
+    //The default position of any created PositionToFollow is the center of the hand.
+    //As the PositionsToFollow are updated in hand every time a card is drawn in the drawn method, the position will automatically be adjusted to the right position
     private void AddCardTarget(Card card)     //Adds a target to the card being drawn
     {
-        CardPositionToFollow target = new CardPositionToFollow(HandAnchor.transform.position, Quaternion.identity);
+        CardPositionToFollow target = new CardPositionToFollow(HandAnchor.transform.position, Quaternion.identity); 
         cardPositionsToFollow.Add(card, target);
     }
 
@@ -231,6 +234,14 @@ public class Hand : CardPile
         }
     }
 
+    //----------------------------------------------------------------------------------------------------------
+    //Explanation: 
+    //For even number of PositionsToFollow:
+    //gets the firstRightIndex, which from [0,1,2,3,4,5] would be 3. then the 3 and 2 would have to move half the distance betweencards but in opposite directions,
+    //and the other cards need to move 1,5 + (multiples of 1, increasing with the distance from the center index of it's side).
+    //----------------------------------------------
+    //For odd number of PositionsToFollow:
+    //The central card stays in the center of the hand. The other cards move to the sides with multiples of the distance between cards
     private void MoveAndRotateTargets()
     {
         int numberOfTargets = cardPositionsToFollow.Count;
@@ -277,6 +288,8 @@ public class Hand : CardPile
     #endregion
 
     #region MouseHover
+    //Function that highlights the card when hovered over. It is called in the event onMouseEnter that was created in the combatPlayer script.
+    //It takes the card from the call and exposes it in front of others and upscale it, as well as move the adjacent cards apart from the highlighted, for a neat effect. Subscription in the initialization region
     private void HighlightCard(GameObject card)
     {
         if (!card.GetComponent<Card>().highlighted)
@@ -314,6 +327,7 @@ public class Hand : CardPile
         }
     }
 
+    //Function that undo what highlightCard did. This is called in the event OnMouseExit that was created in the combatPlayer script. Subscription in the initialization region
     private void UnhighlightCard (GameObject card)
     {
         if (card.GetComponent<Card>().highlighted)
@@ -414,11 +428,11 @@ public class Hand : CardPile
             arrowRenderer = line.GetComponent<LineRenderer>();
             createdArrow = true;
         }
-        arrowRenderer.SetPosition(0, card.transform.position);
-        arrowRenderer.SetPosition(1, new Vector3(mousePos2D.x, mousePos2D.y, 1f));
+        arrowRenderer.SetPosition(0, card.transform.position); // sets the origin position of the line renderer to be the card transform position. TODO: put this origin position in the top of the card
+        arrowRenderer.SetPosition(1, new Vector3(mousePos2D.x, mousePos2D.y, 1f)); // sets the end position of the line renderer to be in the mouse pointer position.
     }
 
-    private void UndoAimAtTarget(GameObject card)
+    private void UndoAimAtTarget(GameObject card) //Destroy the arrow
     {
         if (card.GetComponent<Card>().type == "TargetCard")
         {

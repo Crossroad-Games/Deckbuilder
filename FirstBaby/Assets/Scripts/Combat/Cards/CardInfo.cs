@@ -8,10 +8,10 @@ public class CardInfo : ScriptableObject
 {
     public string Name;// name of the card
     public int ID;// ID of the card
-    public string Description;
+    public string Description; 
     public Sprite sprite;
     public GameObject cardPrefab;
-    [SerializeField] private Card myPhysicalCard;
+    [SerializeField] private Card myPhysicalCard; //Card this cardInfo is  attached to when in hand
     public Card MyPhysicalCard
     {
         get
