@@ -11,4 +11,5 @@ public class EnemyData
     public int EnemyMaxHP;// Maximum HP
     public int EnemyDefense;// Constant removed from incoming damage
     public int EnemyShield;// Pool spent to reduce incoming damage
+    public int Position;// Which position this enemy was assigned when spawned
 }

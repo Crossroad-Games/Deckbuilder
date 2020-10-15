@@ -40,6 +40,7 @@ public class Hand : CardPile
     #region References
     private CombatPlayer combatPlayer;
     private Deck Deck;// Reference the deck script to access its list of cards to draw every start of turn
+    private CDPile CDPile;
     #endregion
 
     //-------------------------------------------------
@@ -77,6 +78,7 @@ public class Hand : CardPile
     {
         combatPlayer = GetComponent<CombatPlayer>();
         Deck = GetComponent<Deck>();// Reference is defined
+        CDPile = transform.Find("CDPile").GetComponent<CDPile>();
         //////////Initialization of event /////////////
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
@@ -116,6 +118,11 @@ public class Hand : CardPile
                 ReceiveCard(cardInfoInstance, this);// Add this card to the hand
             }
         }
+    }
+    public void DiscardHand()
+    {
+        while (cardsList.Count > 0)
+            SendCard(cardsList[0], CDPile);
     }
     #region Draw Methods
 

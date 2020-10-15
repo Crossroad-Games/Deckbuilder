@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4577537696564339691}
   - component: {fileID: 4577537696564339690}
   m_Layer: 10
-  m_Name: Generic Enemy
+  m_Name: ID_-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,12 +124,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myData:
-    ID: 0
-    EnemyName: 
-    EnemyHP: 0
-    EnemyMaxHP: 0
-    EnemyDefense: 0
-    EnemyShield: 0
+    ID: -1
+    EnemyName: Generic Enemy
+    EnemyHP: 10
+    EnemyMaxHP: 10
+    EnemyDefense: 2
+    EnemyShield: 5
 --- !u!114 &4577537696564339690
 MonoBehaviour:
   m_ObjectHideFlags: 0
