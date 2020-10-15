@@ -9,7 +9,7 @@ public class GameData
     public PlayerData PlayerData;
     public List<int> CardsinHandID;
     public List<int> CardsinDeckID;
-    public EnemyData[] EnemyData;
+    public List<EnemyData> EnemyData;
     public int TurnCount;
     public CombatState whichCombatState;
     public GameData()
@@ -17,7 +17,7 @@ public class GameData
         PlayerData = new PlayerData();
         CardsinHandID = new List<int>();
         CardsinDeckID = new List<int>();
-        EnemyData = new EnemyData[5];
+        EnemyData = new List<EnemyData>();
         TurnCount = 0;
         whichCombatState = new CombatState();
     }

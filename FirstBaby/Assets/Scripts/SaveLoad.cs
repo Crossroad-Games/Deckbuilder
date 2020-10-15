@@ -44,7 +44,7 @@ public class SaveLoad : MonoBehaviour
         foreach (CardInfo Card in Hand.cardsList)// Go through all cards in hand
             if (Card != null)// Check if card is not null
                 GameData.Current.CardsinHandID.Add(Card.ID); // Acquire that card's ID and store it in the save file
-        GameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this array
+        GameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this list
         GameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count
         GameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state
         string jsonString = JsonUtility.ToJson(GameData.Current,true);// Transforms the Data to Json format

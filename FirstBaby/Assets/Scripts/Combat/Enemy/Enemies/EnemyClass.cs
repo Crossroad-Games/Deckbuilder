@@ -9,31 +9,29 @@ public abstract class EnemyClass : MonoBehaviour
     #region Enemy Information
     [SerializeField] public EnemyData myData = new EnemyData();
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
-    // Function designed to set the initial state of all atributes
-    public void setEnemyAttributes(int newID, string newEnemyName, int newEnemyHP, int newEnemyMaxHP, int newEnemyDefense)
-    {
-        myData.ID = newID;
-        myData.EnemyName = newEnemyName;
-        myData.EnemyHP = newEnemyHP;
-        myData.EnemyMaxHP = newEnemyMaxHP;
-        myData.EnemyDefense = newEnemyDefense;
-        DeathEvent += myDeath;
-
-    }
     #endregion
 
     #region Death related methods
     public Action DeathEvent;
     public virtual void DeathConditionCheck()// Checks if the enemy's death condition was reached
     {
-        if (myData.EnemyHP == 0)// EnemyHP reached 0
+        if (myData.EnemyHP <= 0)// EnemyHP reached 0
+        {
             DeathEvent?.Invoke();// Call the enemy's death event
+            this.EnemyManager.RemoveEnemy(this);
+            myDeath();// Destroy this enemy
+        }
     }
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
     #endregion
 
     #region Generic Combat Methods
-    protected virtual void LoseLife(int Amount) => myData.EnemyHP -= Amount;// Reduce enemy HP 
+    protected virtual void LoseLife(int Amount)// Reduce enemy HP 
+    {
+        myData.EnemyHP -= Amount;// Reduce enemy's HP by a given Amount
+        myData.EnemyHP = myData.EnemyHP <= 0 ? 0 : myData.EnemyHP;// Check if HP is below zero
+        DeathConditionCheck();// Check if the enemy is dead;
+    }
     protected virtual void GainLife(int Amount) => myData.EnemyHP += Amount;// Raises enemy HP
     public void GainShield(int ShieldAmount)// This function will modify the player's shield amount
     {
@@ -70,10 +68,8 @@ public abstract class EnemyClass : MonoBehaviour
 
     #region Enemy Behaviour
     public abstract void CombatLogic(); // Logic used by the enemy to determine its actions
-    
     public virtual void Start()
     {
-        EnemyManager.AddEnemy(this);
         foreach(EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
         {
             if(Action!=null)// If not null
