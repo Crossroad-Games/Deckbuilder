@@ -105,7 +105,7 @@ public class Hand : CardPile
     }
     public void LoadHand()// Load the data stored on the save file into the hand card list
     {
-        List<int> IDList = GameData.Current.CardsinHandID;// Pulls the information from the loaded save
+        List<int> IDList = CombatGameData.Current.CardsinHandID;// Pulls the information from the loaded save
         List<CardInfo> TemporaryList = cardDatabase.GameCards;// Copies the card database list of card
         CardInfo CardToReceive=null;// Initializes the card to receive to be an empty class
         foreach(int ID in IDList)// Go through each stored card on the save

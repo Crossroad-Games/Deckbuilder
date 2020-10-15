@@ -60,8 +60,8 @@ public class TurnManager : MonoBehaviour
     private void IncrementTurn() => TurnCount++;// Count the current turn
     public void LoadState()// Loads the turn state information to match that which was stored on the saved file
     {
-        State = GameData.Current.whichCombatState;
-        TurnCount = GameData.Current.TurnCount;
+        State = CombatGameData.Current.whichCombatState;
+        TurnCount = CombatGameData.Current.TurnCount;
     }
     #endregion
 

@@ -26,6 +26,5 @@ public class CombatVictory : MonoBehaviour
         EndTurnButton.gameObject.SetActive(false);// Deactivates the button
         Player.gameObject.GetComponent<Hand>().DiscardHand();// Discard the cards in hand
         CardSelectionUI.SetActive(true);// Active the card selection UI
-
     }
 }
