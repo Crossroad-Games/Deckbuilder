@@ -135,6 +135,7 @@ public class Hand : CardPile
     public void DrawCards(int Amount)=> StartCoroutine(DrawCardDelay(Amount));// Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards
     IEnumerator DrawCardDelay(int Amount)// Add card has a small delay between each card to ensure a visual effec
     {
+        yield return null;
         while (Amount > 0)// While there are cards to be drawn
         {
             isDrawing = true;
@@ -166,7 +167,6 @@ public class Hand : CardPile
 
     public override void SendCard(CardInfo cardToSend, CardPile target)
     {
-        Debug.Log(cardsList[0]);
         base.SendCard(cardToSend, target);
         OnCardRemoved(cardToSend);
     }
