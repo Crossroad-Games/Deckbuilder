@@ -22,6 +22,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private LayerMask handZoneLayer=0;
     private Button EndTurnButton=null;
     private TurnManager TurnMaster;
+    private CombatManager CombatManager;
     #endregion
 
 
@@ -60,6 +61,7 @@ public class CombatPlayer : MonoBehaviour
     void Start()
     {
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
+        CombatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
         EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();
     }
     #endregion
@@ -237,7 +239,8 @@ public class CombatPlayer : MonoBehaviour
                             }
                             Debug.Log("Soltou mouse no inimigo: " + SelectedCard);
                             SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
-                            hand.SendCard(SelectedCard.cardInfo, cdPile);
+                            if(!CombatManager.Won && !CombatManager.Defeated)
+                                hand.SendCard(SelectedCard.cardInfo, cdPile);
                             
                             SelectedCard = null;
                         }
@@ -253,7 +256,7 @@ public class CombatPlayer : MonoBehaviour
                     {
                         if(enemyDetector.isMouseOnEnemy())
                         {
-                            //Send card to cdPile -> Update SelectedCard to null -> TODO:callAction
+                            //Send card to cdPile -> Update SelectedCard to null -> callAction
                             EnemyClass enemyToUseAction = enemyDetector.isMouseOnEnemy();
                             if (OnTargetCardUsed != null)
                             {
@@ -261,7 +264,8 @@ public class CombatPlayer : MonoBehaviour
                             }
                             Debug.Log("Apertou mouse no inimigo: " + SelectedCard);
                             SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
-                            hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                            if (!CombatManager.Won && !CombatManager.Defeated)
+                                hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
                             SelectedCard = null; //Update selectedCard
                             Debug.Log("Call TargetCard Action here"); //Here will go the action call
                         }
@@ -300,8 +304,9 @@ public class CombatPlayer : MonoBehaviour
                         {
                             OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
                         }
-                        hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
                         SelectedCard.ExecuteAction();
+                        if (!CombatManager.Won && !CombatManager.Defeated)
+                            hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
                         SelectedCard = null; //update selected card to null
                     }
                 }
@@ -323,7 +328,9 @@ public class CombatPlayer : MonoBehaviour
                         {
                             OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
                         }
-                        hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                        SelectedCard.ExecuteAction();
+                        if (!CombatManager.Won && !CombatManager.Defeated)
+                            hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
                         SelectedCard = null; //update selected card to null
                         Debug.Log("Call NonTargetCard Action here");
                     }
