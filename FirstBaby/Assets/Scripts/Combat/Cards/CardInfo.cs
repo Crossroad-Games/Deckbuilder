@@ -6,9 +6,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newCardInfo", menuName = "Data/Card/Card Info")]
 public class CardInfo : ScriptableObject
 {
+    public enum CardRarity { Common, Uncommon, Rare, UltraRare }
+    public CardRarity rarity;
     public string Name;// name of the card
     public int ID;// ID of the card
-    public string Description; 
+    public string Description;
+    public int Cooldown;
+    private int currentCooldownTime;
+    public int CurrentCooldownTime
+    {
+        get { return currentCooldownTime; }
+        set { currentCooldownTime = value; }
+    }
     public Sprite sprite;
     public GameObject cardPrefab;
     [SerializeField] private Card myPhysicalCard; //Card this cardInfo is  attached to when in hand
