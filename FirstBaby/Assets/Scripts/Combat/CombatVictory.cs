@@ -32,8 +32,8 @@ public class CombatVictory : MonoBehaviour
         playerVictoryEvent?.Invoke();// Calls the event for when player wins a combat
         EndTurnButton.gameObject.SetActive(false);// Deactivates the button
         Player.gameObject.GetComponent<Hand>().DiscardHand();// Discard the cards in hand
-        //TODO: Update Card Selection before activating the CardSelection UI
-        rewardManager.FillCardSelection();// Update card options to acquire new one
+        //Update Card Selection before activating the CardSelection UI
+        rewardManager.FillCombatCardSelection();// Update card options to acquire new one
         CardSelectionUI.SetActive(true);// Active the card selection UI
         combatManager.Won = true;
     }

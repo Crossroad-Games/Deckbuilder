@@ -17,6 +17,7 @@ MonoBehaviour:
   ID: 2
   Description: Casts fireball and deal damage
   Cooldown: 0
+  ResourceCost: 10
   sprite: {fileID: 21300000, guid: af0be782ea488d548bedd71c2d3e4715, type: 3}
   cardPrefab: {fileID: 3198968608887256750, guid: be8aaca7e1aa6674a83fdc2cb9a57efb, type: 3}
   myPhysicalCard: {fileID: 0}

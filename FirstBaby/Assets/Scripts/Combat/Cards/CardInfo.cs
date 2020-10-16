@@ -12,6 +12,7 @@ public class CardInfo : ScriptableObject
     public int ID;// ID of the card
     public string Description;
     public int Cooldown;
+    public int ResourceCost = 10;
     private int currentCooldownTime;
     public int CurrentCooldownTime
     {

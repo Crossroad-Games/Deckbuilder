@@ -8,7 +8,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private float InteractableDistance = .5f;// Defines the distance from which the player can interact with this
     public Action NearInteractable;// Event that is called when the player is near this interactable
     public Action Interacting;// Event that is called when the player is interacting with this object
-    private GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
+    protected GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
     [SerializeField] public List<Targetable> Targets;// Target objects reference
     [SerializeField] private bool Reusable = false;// Boolean to determine if this can be interacted with more than once
     private bool Used = false;// Boolean to determine if, if its not reusable, this has been actuated once or not
@@ -17,6 +17,11 @@ public abstract class Interactable : MonoBehaviour
         Player = GameObject.FindGameObjectWithTag("Player");// Find the player's reference
         NearInteractable += Player.GetComponent<DungeonPlayer>().NearInteractable;// Adds this to the listener
         Interacting += Player.GetComponent<DungeonPlayer>().Interacting;// Adds this to the Listener
+    }
+
+    protected virtual void Start()
+    {
+        
     }
     private void Update() => DetectPlayer();// Check if the player is near every frame
     public virtual void DetectPlayer()// Function designed to detect if the player is withing interactable distance from the object

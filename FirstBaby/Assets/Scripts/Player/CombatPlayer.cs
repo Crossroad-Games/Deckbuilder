@@ -223,9 +223,9 @@ public class CombatPlayer : MonoBehaviour
         {
             if(SelectedCard.type == "TargetCard")
             {
-                if(Input.GetMouseButtonUp(0)) //when release mouse button
+                if(!releasedMouseNotOnEnemy) //if didn't release mouse not on enemy
                 {
-                    if (!releasedMouseNotOnEnemy) //if released mouse outside of any enemy, then will only select enemy if mouseButtonDown
+                    if (Input.GetMouseButtonUp(0)) // mouse release
                     {
                         if (enemyDetector.isMouseOnEnemy()) //Mouse over enemy -> enemy selected
                         {
