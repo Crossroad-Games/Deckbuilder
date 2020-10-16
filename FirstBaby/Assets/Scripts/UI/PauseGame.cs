@@ -7,8 +7,8 @@ public class PauseGame : MonoBehaviour
 {
     // Start is called before the first frame update
     public static bool IsPaused { get; private set; }
+    public static Action<bool> PauseEvent;// Event that is called whenever the game is paused
     [SerializeField] private GameObject Menu=null;// Reference to the Menu script is set on the inspector
-    [SerializeField] private CombatPlayer Player=null;
     void Start()
     {
         IsPaused = false;// Starts as a false
@@ -26,12 +26,12 @@ public class PauseGame : MonoBehaviour
     public void Pause()
     {
         IsPaused = true;
-        Player.FlipEndButton(false);// The player can't end their turn
+        PauseEvent?.Invoke(true);
     }
     public void UnPause()
     {
         Menu.SetActive(false);
         IsPaused = false;
-        Player.FlipEndButton(true);// The player can end their turn
+        PauseEvent?.Invoke(false);
     }
 }

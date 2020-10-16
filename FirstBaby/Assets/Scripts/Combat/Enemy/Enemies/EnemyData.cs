@@ -12,4 +12,14 @@ public class EnemyData
     public int EnemyDefense;// Constant removed from incoming damage
     public int EnemyShield;// Pool spent to reduce incoming damage
     public int Position;// Which position this enemy was assigned when spawned
+    public EnemyData(int ID, string EnemyName, int EnemyHP, int EnemyMaxHP, int EnemyDefense, int EnemyShield, int Position)
+    {
+        this.ID = ID;
+        this.EnemyName = EnemyName;
+        this.EnemyHP = EnemyHP;
+        this.EnemyMaxHP = EnemyMaxHP;
+        this.EnemyDefense = EnemyDefense;
+        this.EnemyShield = EnemyShield;
+        this.Position = Position;
+    }
 }
