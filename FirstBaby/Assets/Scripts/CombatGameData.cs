@@ -12,6 +12,7 @@ public class CombatGameData
     public List<EnemyData> EnemyData;
     public int TurnCount;
     public CombatState whichCombatState;
+    public string CombatScene;
     public CombatGameData()
     {
         PlayerData = new CombatPlayerData();
@@ -20,5 +21,6 @@ public class CombatGameData
         EnemyData = new List<EnemyData>();
         TurnCount = 0;
         whichCombatState = new CombatState();
+        CombatScene = string.Empty;
     }
 }

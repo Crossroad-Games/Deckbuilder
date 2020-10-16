@@ -24,38 +24,25 @@ public class TurnManager : MonoBehaviour
     #endregion
     private void Awake()
     {
+        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
         SaveLoad.LoadEvent += LoadState;// Subscribe to this event in order to load the turn state when the player loads their information
     }
     private void OnDisable()
     {
         SaveLoad.LoadEvent -= LoadState;// Unsubscribe to this event when disabled
     }
-    void Start()
+    #region Event Subscriptions
+    private void EventSubscription()
     {
-
-        #region Event Subscriptions
         CombatStart += NextState;// Subscribe the method that will change the next state in line
         PlayerTurnStart += IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
         PlayerTurnStart += NextState;// Subscribe the method that will change the next state in line
         EnemyPhaseStart += NextState;// Subscribe the method that will change the next state in line
         EnemyPhaseEnd += NextState;// Subscribe the method that will change the next state in line
         EnemyStartTurn += NextState;// Subscribe the method that will change the next state in line
-        #endregion
-        switch(State)
-        {
-            case (CombatState)0:
-                CombatStart?.Invoke();
-                PlayerTurnStart?.Invoke();
-                break;  
-            case (CombatState)1:
-                Debug.Log("Começou aqui");
-                PlayerTurnStart?.Invoke();
-                break;
-        }
-        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
     }
-   
-
+    #endregion
+    
     #region Turn State Control
     [SerializeField] public static CombatState State { get; private set; }// Current combat state
     private int StateNumber = 0;
@@ -75,6 +62,22 @@ public class TurnManager : MonoBehaviour
         State = CombatGameData.Current.whichCombatState;
         StateNumber = (int) State;
         TurnCount = CombatGameData.Current.TurnCount;
+        EventSubscription();// Subscribe the turn phase events
+        StateCall();// Call the events on the loaded state
+    }
+    private void StateCall()
+    {
+        switch (State)
+        {
+            case (CombatState)0:
+                CombatStart?.Invoke();
+                PlayerTurnStart?.Invoke();
+                break;
+            case (CombatState)1:
+                Debug.Log("Começou aqui");
+                PlayerTurnStart?.Invoke();
+                break;
+        }
     }
     #endregion
 

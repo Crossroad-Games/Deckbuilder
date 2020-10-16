@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SaveLoad : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class SaveLoad : MonoBehaviour
         dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName.Dungeon");// Saves the information at this location
         DungeonGameData.Current.PlayerPosition = DungeonPlayer.transform.position;// Stores the player's position 
         DungeonGameData.Current.PlayerData = DungeonPlayer.myData;// Copies the player's instance of DungeonPlayerData
+        DungeonGameData.Current.DungeonScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
         string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
@@ -55,6 +57,7 @@ public class SaveLoad : MonoBehaviour
     }
     private void SaveCombat()// This will save the data pertaining the combat information on a specific .Combat file
     {
+        CombatGameData.Current = new CombatGameData { };
         dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName.Combat");// Saves the information at this location
         CombatGameData.Current.CardsinHandID.Clear();// Reset the condition to store only what is currently in hand
         CombatGameData.Current.CardsinDeckID.Clear();// Reset the condition to store only what is currently in deck
@@ -68,6 +71,7 @@ public class SaveLoad : MonoBehaviour
         CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this list
         CombatGameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count
         CombatGameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state
+        CombatGameData.Current.CombatScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
         string jsonString = JsonUtility.ToJson(CombatGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
