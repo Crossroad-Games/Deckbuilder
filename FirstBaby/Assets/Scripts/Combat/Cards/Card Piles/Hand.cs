@@ -46,7 +46,7 @@ public class Hand : CardPile
     //-------------------------------------------------
 
     #region Booleans
-    public bool isDrawing { get; set; } = false;
+    public bool isDrawing = false;
     public bool isDragging { get; set; } = false;
     private bool createdArrow = false; //if arrow is created right now
     public bool isAiming = false; //if player is aiming with a TargetCard
@@ -137,10 +137,12 @@ public class Hand : CardPile
     {
         while (Amount > 0)// While there are cards to be drawn
         {
+            isDrawing = true;
             Deck.SendCard(Deck.cardsList[0], this);// Draw the first card on the deck card list
             Amount--;
             yield return new WaitForSeconds(DrawDelay);// Apply delay
         }
+        isDrawing = false;
         yield break;
     }
     #endregion
@@ -249,28 +251,42 @@ public class Hand : CardPile
         {
             int firstRightIndex = physicalCardsInHand.Count / 2;
             for (int i = 0; i < physicalCardsInHand.Count; i++)
-            {
                 if(i == firstRightIndex)
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(0.5f * combatProperties.offsetBetweenCards, 0f, -0.1f);
+                    if (!physicalCardsInHand[i].highlighted)
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(0.5f * combatProperties.offsetBetweenCards, 0f, -0.1f);
+                    else
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(0.5f * combatProperties.offsetBetweenCards, 0f, -0.1f - 1.5f);
+
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                 }
                 else if(i == firstRightIndex - 1)
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-0.5f * combatProperties.offsetBetweenCards, 0f, +0.1f);
+                    if (!physicalCardsInHand[i].highlighted)
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-0.5f * combatProperties.offsetBetweenCards, 0f, +0.1f);
+                    else
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-0.5f * combatProperties.offsetBetweenCards, 0f, +0.1f - 1.5f);
+
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                 }
                 else if(i < firstRightIndex - 1)
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex + 2) * combatProperties.offsetBetweenCards, (i - firstRightIndex + 1) * combatProperties.cardsHeightDiff, Mathf.Abs(i - firstRightIndex) * 0.1f);
+                    if (!physicalCardsInHand[i].highlighted)
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex + 2) * combatProperties.offsetBetweenCards, (i - firstRightIndex + 1) * combatProperties.cardsHeightDiff, Mathf.Abs(i - firstRightIndex) * 0.1f);
+                    else
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(-1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex + 2) * combatProperties.offsetBetweenCards, (i - firstRightIndex + 1) * combatProperties.cardsHeightDiff, Mathf.Abs(i - firstRightIndex) * 0.1f - 1.5f);
+
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f, 0f, 0f - (i-firstRightIndex + 1) * combatProperties.angleBetweenCards);
                 }
                 else if(i > firstRightIndex)
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex - 1) * combatProperties.offsetBetweenCards, -(i - firstRightIndex) * combatProperties.cardsHeightDiff, -(i - firstRightIndex + 1) * 0.1f);
+                    if (!physicalCardsInHand[i].highlighted)
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex - 1) * combatProperties.offsetBetweenCards, -(i - firstRightIndex) * combatProperties.cardsHeightDiff, -(i - firstRightIndex + 1) * 0.1f);
+                    else
+                        cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3(1.5f * combatProperties.offsetBetweenCards + (i - firstRightIndex - 1) * combatProperties.offsetBetweenCards, -(i - firstRightIndex) * combatProperties.cardsHeightDiff, -(i - firstRightIndex + 1) * 0.1f - 1.5f);
+
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f, 0f, 0f - (i-firstRightIndex) * combatProperties.angleBetweenCards);
                 }
-            }
         }
         else //numero ímpar de targets
         {
@@ -278,7 +294,11 @@ public class Hand : CardPile
             //Sets the central card position to center of hand and rotation to identity and other cards change according to their index
             for(int i=0; i < physicalCardsInHand.Count; i++)
             {
-                cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3((i - centralCardIndex) * combatProperties.offsetBetweenCards, -Mathf.Abs(i - centralCardIndex) * combatProperties.cardsHeightDiff, (i - centralCardIndex) * (-0.1f));
+                if (!physicalCardsInHand[i].highlighted)
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3((i - centralCardIndex) * combatProperties.offsetBetweenCards, -Mathf.Abs(i - centralCardIndex) * combatProperties.cardsHeightDiff, (i - centralCardIndex) * (-0.1f));
+                else
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = HandAnchor.position + new Vector3((i - centralCardIndex) * combatProperties.offsetBetweenCards, -Mathf.Abs(i - centralCardIndex) * combatProperties.cardsHeightDiff, (i - centralCardIndex) * (-0.1f) - 1.5f);
+
                 cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.Euler(0f,0f,0f - (i - centralCardIndex) * combatProperties.angleBetweenCards);
             }
         }

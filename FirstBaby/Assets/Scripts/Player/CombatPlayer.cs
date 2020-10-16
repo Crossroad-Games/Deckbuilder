@@ -129,7 +129,20 @@ public class CombatPlayer : MonoBehaviour
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }
-    private void LoseLife(int Amount) => myData.PlayerLifeForce -= Amount;
+    
+    private void LoseLife(int Amount)
+    {
+        myData.PlayerHP -= Amount;
+        if(myData.PlayerHP <=0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        GameObject.Find("Combat Manager").GetComponent<CombatDefeat>().Defeat();
+    }
 
     //------------------------------
     #region Mouse Hovering
