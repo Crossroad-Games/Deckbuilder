@@ -21,10 +21,12 @@ public class TurnManager : MonoBehaviour
 
     #region References
     private EnemyManager EnemyManager;
+    private CombatManager combatManager;
     #endregion
     private void Awake()
     {
         EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
+        combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
         SaveLoad.LoadEvent += LoadState;// Subscribe to this event in order to load the turn state when the player loads their information
     }
     private void OnDisable()
@@ -48,13 +50,14 @@ public class TurnManager : MonoBehaviour
     private int StateNumber = 0;
     private void NextState()
     {
-        Debug.Log(StateNumber);
-        if (StateNumber < 8)
-            StateNumber++;
-        else
-            StateNumber = 1;
-        Debug.Log(StateNumber);
-        State = (CombatState)StateNumber;
+        if (!combatManager.Won && !combatManager.Defeated)
+        {
+            if (StateNumber < 8)
+                StateNumber++;
+            else
+                StateNumber = 1;
+            State = (CombatState)StateNumber;
+        }
     }
     private void IncrementTurn() => TurnCount++;// Count the current turn
     public void LoadState()// Loads the turn state information to match that which was stored on the saved file

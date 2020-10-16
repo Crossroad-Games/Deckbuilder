@@ -132,8 +132,8 @@ public class CombatPlayer : MonoBehaviour
     
     private void LoseLife(int Amount)
     {
-        myData.PlayerHP -= Amount;
-        if(myData.PlayerHP <=0)
+        myData.PlayerLifeForce -= Amount;
+        if(myData.PlayerLifeForce <=0)
         {
             Die();
         }

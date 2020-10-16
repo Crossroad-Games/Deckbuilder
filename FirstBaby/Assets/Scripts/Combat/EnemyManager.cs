@@ -17,6 +17,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] public List<EnemyData> EnemyData;// List of enemy datas
     [SerializeField] public List<Vector3> EnemyPositions;// List of enemy positions based on how many enemies there are on scene
     private TurnManager TurnMaster;// Reference to the TurnManager script to access its methods
+    private CombatManager combatManager;// Reference to the combat manager
     #endregion
 
     private void Awake()
@@ -25,6 +26,7 @@ public class EnemyManager : MonoBehaviour
         CombatEnemies = new List<EnemyClass>();// Initialize the list of enemies to have a max size
         EnemyData = new List<EnemyData>();// Initialize the listof enemy data to have a max sizes
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();// Reference to the Turnmanager script is defined
+        combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
         SaveLoad.LoadEvent += LoadData;// Subscribes this method to the load event to sync the enemies' data to the data stored on the save file
     }
     private void OnDisable()
@@ -48,17 +50,19 @@ public class EnemyManager : MonoBehaviour
     }
     public void EndEnemyTurn()
     {
-        if (CurrentEnemyIndex < CombatEnemies.Count-1)// If it is not the last enemy on the list
-        {
-            CurrentEnemyIndex++;// Cycle to the next enemy
-            TurnMaster.EndEnemyTurn(false);// End this turn without ending the enemy phase
-        }
-        else
-        {
-            TurnMaster.EndEnemyTurn(true);// End this turn and the enemy phase
-            CurrentEnemyClass = null;// Reset the current enemy
-            CurrentEnemyIndex = 0;// Reset the index
-        }
+        if(!combatManager.Defeated && !combatManager.Won) 
+            if (CurrentEnemyIndex < CombatEnemies.Count-1)// If it is not the last enemy on the list
+            {
+                CurrentEnemyIndex++;// Cycle to the next enemy
+                TurnMaster.EndEnemyTurn(false);// End this turn without ending the enemy phase
+            }
+            else
+            {
+                TurnMaster.EndEnemyTurn(true);// End this turn and the enemy phase
+                CurrentEnemyClass = null;// Reset the current enemy
+                CurrentEnemyIndex = 0;// Reset the index
+            }
+
     }
     #endregion  
 
