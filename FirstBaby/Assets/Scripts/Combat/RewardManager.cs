@@ -104,7 +104,7 @@ public class RewardManager : MonoBehaviour
                 playerDeck.cardsList.Add(cardOptions[cardOptionsButtons[0]]);// Adds card to player deck, *temporary*  TODO: Add card to player's owned card
                 combatPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[0]].ResourceCost;
                 cardOptions[cardOptionsButtons[0]] = null;
-                StopSellection();
+                StopSelection();
             }
             else
             {
@@ -124,7 +124,7 @@ public class RewardManager : MonoBehaviour
                 playerDeck.cardsList.Add(cardOptions[cardOptionsButtons[1]]);// Adds card to player deck, *temporary*  TODO: Add card to player's owned card
                 combatPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[1]].ResourceCost;
                 cardOptions[cardOptionsButtons[1]] = null;
-                StopSellection();
+                StopSelection();
             }
         }
         else
@@ -140,7 +140,7 @@ public class RewardManager : MonoBehaviour
                 playerDeck.cardsList.Add(cardOptions[cardOptionsButtons[2]]);// Adds card to player deck, *temporary*  TODO: Add card to player's owned card
                 combatPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[2]].ResourceCost;
                 cardOptions[cardOptionsButtons[2]] = null;
-                StopSellection();
+                StopSelection();
             }
         }
         else
@@ -159,7 +159,7 @@ public class RewardManager : MonoBehaviour
                 dungeonPlayer.myData.CardCollectionID.Add(cardOptions[cardOptionsButtons[0]].ID);
                 dungeonPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[0]].ResourceCost;
                 cardOptions[cardOptionsButtons[0]] = null;
-                StopSellection();
+                StopSelection();
                 dungeonPlayer.GetComponent<PlayerMovement>().canMove = true;
             }
         }
@@ -174,7 +174,7 @@ public class RewardManager : MonoBehaviour
                 dungeonPlayer.myData.CardCollectionID.Add(cardOptions[cardOptionsButtons[1]].ID);
                 dungeonPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[1]].ResourceCost;
                 cardOptions[cardOptionsButtons[1]] = null;
-                StopSellection();
+                StopSelection();
                 dungeonPlayer.GetComponent<PlayerMovement>().canMove = true;
             }
         }
@@ -189,7 +189,7 @@ public class RewardManager : MonoBehaviour
                 dungeonPlayer.myData.CardCollectionID.Add(cardOptions[cardOptionsButtons[2]].ID);
                 dungeonPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[2]].ResourceCost;
                 cardOptions[cardOptionsButtons[2]] = null;
-                StopSellection();
+                StopSelection();
                 dungeonPlayer.GetComponent<PlayerMovement>().canMove = true;
             }
         }
