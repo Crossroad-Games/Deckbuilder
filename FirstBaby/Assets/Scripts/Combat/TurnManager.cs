@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-public enum CombatState { PlayerStartTurn, PlayerActionPhase, PlayerEndTurn, EnemyPhaseStart, EnemyStartTurn, EnemyActionPhase, EnemyEndTurn, EnemyEndPhase}
+public enum CombatState { CombatStart , PlayerStartTurn, PlayerActionPhase, PlayerEndTurn, EnemyPhaseStart, EnemyStartTurn, EnemyActionPhase, EnemyEndTurn, EnemyEndPhase}
 public class TurnManager : MonoBehaviour
 {
     #region Event Declarations
+    public static Action CombatStart;
     public static Action PlayerTurnStart;
     public static Action PlayerTurnEnd;
     public static Action EnemyPhaseStart;
@@ -33,15 +34,24 @@ public class TurnManager : MonoBehaviour
     {
 
         #region Event Subscriptions
+        CombatStart += NextState;// Subscribe the method that will change the next state in line
         PlayerTurnStart += IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
         PlayerTurnStart += NextState;// Subscribe the method that will change the next state in line
         EnemyPhaseStart += NextState;// Subscribe the method that will change the next state in line
         EnemyPhaseEnd += NextState;// Subscribe the method that will change the next state in line
         EnemyStartTurn += NextState;// Subscribe the method that will change the next state in line
         #endregion
-        State = (CombatState)StateNumber;
-
-        StartCoroutine(HoldForPause(PlayerTurnStart));// Execute all the methods that should be called when the Player's turn start
+        switch(State)
+        {
+            case (CombatState)0:
+                CombatStart?.Invoke();
+                PlayerTurnStart?.Invoke();
+                break;  
+            case (CombatState)1:
+                Debug.Log("Começou aqui");
+                PlayerTurnStart?.Invoke();
+                break;
+        }
         EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
     }
    
@@ -51,16 +61,19 @@ public class TurnManager : MonoBehaviour
     private int StateNumber = 0;
     private void NextState()
     {
-        if (StateNumber < 7)
+        Debug.Log(StateNumber);
+        if (StateNumber < 8)
             StateNumber++;
         else
-            StateNumber = 0;
+            StateNumber = 1;
+        Debug.Log(StateNumber);
         State = (CombatState)StateNumber;
     }
     private void IncrementTurn() => TurnCount++;// Count the current turn
     public void LoadState()// Loads the turn state information to match that which was stored on the saved file
     {
         State = CombatGameData.Current.whichCombatState;
+        StateNumber = (int) State;
         TurnCount = CombatGameData.Current.TurnCount;
     }
     #endregion

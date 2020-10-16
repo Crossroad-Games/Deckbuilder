@@ -9,7 +9,7 @@ public class CombatPlayer : MonoBehaviour
 {
     [Header("Player Information")]
     #region Player Information
-    [SerializeField]public PlayerData myData= new PlayerData();
+    [SerializeField]public CombatPlayerData myData= new CombatPlayerData();
     #endregion
     [Space(5)]
     #region References
@@ -53,6 +53,7 @@ public class CombatPlayer : MonoBehaviour
         OnMouseEnterCard += MouseStartedPointingToCard;
         OnMouseExitCard += MouseStoppedPointingToCard;
         SaveLoad.LoadEvent += LoadSaveData;// Subscribes this method to the load event so that the player data is synced to the save file
+        PauseGame.PauseEvent += FlipEndButton;
         isHoveringCard = false;
         releasedMouseNotOnEnemy = false;
     }
@@ -68,6 +69,7 @@ public class CombatPlayer : MonoBehaviour
         OnMouseEnterCard -= MouseStartedPointingToCard;
         OnMouseExitCard -= MouseStoppedPointingToCard;
         SaveLoad.LoadEvent -= LoadSaveData;
+        PauseGame.PauseEvent -= FlipEndButton;
     }
 
     // Update is called once per frame
@@ -127,7 +129,7 @@ public class CombatPlayer : MonoBehaviour
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
     }
-    private void LoseLife(int Amount) => myData.PlayerHP -= Amount;
+    private void LoseLife(int Amount) => myData.PlayerLifeForce -= Amount;
 
     //------------------------------
     #region Mouse Hovering

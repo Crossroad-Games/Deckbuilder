@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonGameData : MonoBehaviour
+[System.Serializable]
+public class DungeonGameData
 {
-    // Start is called before the first frame update
-    void Start()
+    public static DungeonGameData Current;
+    public Vector3 PlayerPosition;// Player vector 3 position on the dungeon scene
+    public DungeonPlayerData PlayerData; // Player information
+    public string DungeonScene; // Which dungeon scene the player is currently at
+    public DungeonGameData()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayerPosition = new Vector3(0, 0, 0);
+        PlayerData = new DungeonPlayerData();
+        DungeonScene = string.Empty;
     }
 }

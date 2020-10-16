@@ -7,7 +7,7 @@ using System;
 public abstract class EnemyClass : MonoBehaviour
 {
     #region Enemy Information
-    [SerializeField] public EnemyData myData = new EnemyData();
+    [SerializeField] public EnemyData myData = new EnemyData(0,"",0,0,0,0,0);
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
     #endregion
 
