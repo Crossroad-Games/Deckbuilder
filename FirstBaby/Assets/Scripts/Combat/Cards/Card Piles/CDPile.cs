@@ -41,20 +41,6 @@ public class CDPile : CardPile
     private void UpdateCooldown()
     {
         anyCardCompletedCD = false;
-        foreach(CardInfo card in cardsList)
-        {
-            if(card.CurrentCooldownTime > 0) // if card still on cooldown
-            {
-                card.CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
-                Debug.Log(card.CurrentCooldownTime);
-            }
-            else //if any card completed it's cooldown
-            {
-                cardsCD_Completed.Add(card);// add card to list with all the cards that have completed the cooldown
-                //Raise shuffle flag
-                anyCardCompletedCD = true;
-            }
-        }
         for(int i = cardsList.Count-1; i >= 0; i--)
         {
             if (cardsList[i].CurrentCooldownTime > 0) // if card still on cooldown
@@ -75,6 +61,7 @@ public class CDPile : CardPile
     {
         for (int i = cardsCD_Completed.Count - 1; i >= 0; i--)
         {
+            Debug.Log("mandou carta");
             SendCard(cardsCD_Completed[i], playerDeck);
             cardsCD_Completed.RemoveAt(i);
         }

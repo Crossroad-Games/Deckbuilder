@@ -290,6 +290,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75ee8d70a70916f43b36e01cdf2d8f47, type: 3}
+--- !u!114 &644925492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6345171580898201489, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1062712356 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2652886762442112548, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1119299946
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,6 +550,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1643052818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7716924218725251899, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2033046188
@@ -908,6 +941,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardOptionsCosts.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: CardSelectionUI
       value: 
       objectReference: {fileID: 268312966}
@@ -923,6 +960,18 @@ PrefabInstance:
       propertyPath: cardOptionsButtons.Array.data[2]
       value: 
       objectReference: {fileID: 1446081024}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardOptionsCosts.Array.data[0]
+      value: 
+      objectReference: {fileID: 644925492}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardOptionsCosts.Array.data[1]
+      value: 
+      objectReference: {fileID: 1062712356}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardOptionsCosts.Array.data[2]
+      value: 
+      objectReference: {fileID: 1643052818}
     - target: {fileID: 4878995191953954817, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: m_Name
       value: Reward Manager
@@ -988,10 +1037,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1334210213}
+    - target: {fileID: 6210013415420736517, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Combat_ChooseCard1
+      objectReference: {fileID: 0}
     - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1334210213}
+    - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Combat_ChooseCard0
+      objectReference: {fileID: 0}
     - target: {fileID: 6210013415610004678, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -1084,6 +1141,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1334210213}
+    - target: {fileID: 6210013415761528024, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Combat_ChooseCard2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013416706217822, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6210013416743079392, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -157,6 +157,7 @@ public class Hand : CardPile
             isDrawing = true; // turn isDrawing true
             //Spawn card
             Card cardSpawned = SpawnCardFromDeck(cardToReceive);
+            cardToReceive.MyPhysicalCard = cardSpawned;
             //Add target for card to follow
             AddCardTarget(cardSpawned);
             //Update the targets positions based on how many cards/targets there are in hand right now
@@ -190,7 +191,6 @@ public class Hand : CardPile
         GameObject cardSpawned =  GameObject.Instantiate(cardToSpawn.cardPrefab, cardDrawPosition.position, Quaternion.identity, handAnchor); //Spawn card when drawn from deck
         cardSpawned.GetComponent<Card>().cardInfo = cardToSpawn;  //Link the Card with it's respective CardInfo
         cardSpawned.GetComponent<Card>().followCardPositionToFollow = true;   //Allow card to follow the target and go to it's right position in hand
-        cardToSpawn.MyPhysicalCard = cardSpawned.GetComponent<Card>();
         physicalCardsInHand.Add(cardSpawned.GetComponent<Card>()); //Adds the Card to the list of physical cards in hand
         return cardSpawned.GetComponent<Card>();
     }
