@@ -7,10 +7,13 @@ using UnityEngine.UI;
 
 public class CombatVictory : MonoBehaviour
 {
+    #region References
     private Button EndTurnButton=null;
     private CombatPlayer Player = null;
     [SerializeField]private GameObject CardSelectionUI=null;
     private RewardManager rewardManager;
+    private CombatManager combatManager = null;
+    #endregion
 
     #region Events
     public static Action playerVictoryEvent;
@@ -21,6 +24,7 @@ public class CombatVictory : MonoBehaviour
         EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();// Reference to the end button is set
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is set
         rewardManager = GameObject.Find("Reward Manager").GetComponent<RewardManager>();// Reference to the reward manager
+        combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
     }
 
     public void Victory()
@@ -31,5 +35,6 @@ public class CombatVictory : MonoBehaviour
         //TODO: Update Card Selection before activating the CardSelection UI
         rewardManager.FillCardSelection();// Update card options to acquire new one
         CardSelectionUI.SetActive(true);// Active the card selection UI
+        combatManager.Won = true;
     }
 }

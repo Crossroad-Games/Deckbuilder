@@ -11,17 +11,23 @@ public class CombatManager : MonoBehaviour
     private Deck playerDeck;
     #endregion
 
+    #region Booleans
+    public bool Won = false;
+    public bool Defeated = false;
+    #endregion
 
 
     // Start is called before the first frame update
     void Start()
     {
-        ///////////Initialization///////////////
+        ///////////Reference Initialization///////////////
         combatPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
         playerHandPile = GameObject.FindGameObjectWithTag("Player").GetComponent<Hand>();
         playerDeck = GameObject.FindGameObjectWithTag("Player").GetComponent<Deck>();
         ///////////////////////////////////////
-
+        ///////////Fields and Properties initialization///
+        Won = false;
+        Defeated = false;
         
     }
 
