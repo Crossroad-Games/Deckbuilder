@@ -126,10 +126,10 @@ MonoBehaviour:
   myData:
     ID: 0
     EnemyName: Generic Enemy
-    EnemyHP: 10
-    EnemyMaxHP: 10
-    EnemyDefense: 2
-    EnemyShield: 5
+    EnemyHP: 5
+    EnemyMaxHP: 5
+    EnemyDefense: 0
+    EnemyShield: 0
     Position: 0
 --- !u!114 &4577537696564339690
 MonoBehaviour:
