@@ -222,8 +222,10 @@ public class CombatPlayer : MonoBehaviour
                             {
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
-                            hand.SendCard(SelectedCard.cardInfo, cdPile);
+                            Debug.Log("Soltou mouse no inimigo: " + SelectedCard);
                             SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
+                            hand.SendCard(SelectedCard.cardInfo, cdPile);
+                            
                             SelectedCard = null;
                         }
                         else // mouse released but not on any enemy
@@ -244,6 +246,8 @@ public class CombatPlayer : MonoBehaviour
                             {
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
+                            Debug.Log("Apertou mouse no inimigo: " + SelectedCard);
+                            SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
                             hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
                             SelectedCard = null; //Update selectedCard
                             Debug.Log("Call TargetCard Action here"); //Here will go the action call

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.IO;
 
 public class RewardManager : MonoBehaviour
 {
@@ -69,7 +71,7 @@ public class RewardManager : MonoBehaviour
         else
             throw new Exception("there is no cardInfo attached to this button");
         cardOptions[cardOptionsButtons[0]] = null;
-        StopSellection();
+        StopSelection();
     }
     public void ChooseCard1()
     {
@@ -79,7 +81,7 @@ public class RewardManager : MonoBehaviour
         else
             throw new Exception("there is no cardInfo attached to this button");
         cardOptions[cardOptionsButtons[1]] = null;
-        StopSellection();
+        StopSelection();
     }
     public void ChooseCard2()
     {
@@ -89,12 +91,20 @@ public class RewardManager : MonoBehaviour
         else
             throw new Exception("there is no cardInfo attached to this button");
         cardOptions[cardOptionsButtons[2]] = null;
-        StopSellection();
+        StopSelection();
     }
 
-    public void StopSellection()
+    public void StopSelection()
     {
+        var dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName.Dungeon");// Saves the information at this location
         CardSelectionUI.SetActive(false);// Deactivate the card selection UI
+        DungeonGameData.Current.PlayerData.PlayerLifeForce = playerDeck.gameObject.GetComponent<CombatPlayer>().myData.PlayerLifeForce;// Updates the dungeon Life Force to be the same as the combat
+        string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
+        using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
+        {
+            streamWriter.Write(jsonString);// Writes the content in json format
+        }
+        SceneManager.LoadSceneAsync(DungeonGameData.Current.DungeonScene, LoadSceneMode.Single);// Loads the Dungeon Scene
     }
     #endregion
 

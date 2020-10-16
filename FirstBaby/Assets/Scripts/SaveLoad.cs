@@ -57,6 +57,9 @@ public class SaveLoad : MonoBehaviour
     }
     private void SaveCombat()// This will save the data pertaining the combat information on a specific .Combat file
     {
+        Debug.Log("Here");
+        if (File.Exists(Application.persistentDataPath + "/InitialState.Default"))// If there is an initial state
+            File.Delete(Application.persistentDataPath + "/InitialState.Default");// Delete it
         CombatGameData.Current = new CombatGameData { };
         dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName.Combat");// Saves the information at this location
         CombatGameData.Current.CardsinHandID.Clear();// Reset the condition to store only what is currently in hand
@@ -90,6 +93,7 @@ public class SaveLoad : MonoBehaviour
         LoadCombat();
         LoadDungeon();
         LoadEvent?.Invoke();// Calls all the methods subscribed to this event
+        SaveGame();
     }
     private void LoadCombat()
     {

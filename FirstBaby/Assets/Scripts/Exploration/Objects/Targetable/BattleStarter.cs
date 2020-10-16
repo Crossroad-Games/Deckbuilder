@@ -6,9 +6,9 @@ using System.IO;
 
 public class BattleStarter : Targetable
 {
-    [SerializeField] private string CombatSceneName;
-    [SerializeField] private CombatPlayerData CombatData;
-    [SerializeField] private List<GameObject> Enemies;
+    [SerializeField] private string CombatSceneName=string.Empty;
+    [SerializeField] private CombatPlayerData CombatData=null;
+    [SerializeField] private List<GameObject> Enemies= new List<GameObject>();
     private DungeonPlayer Player;
     private void Start()
     {
@@ -45,6 +45,7 @@ public class BattleStarter : Targetable
         {
             streamWriter.Write(jsonString);// Writes the content in json format
         }
+        GameObject.Find("Game Master").GetComponent<SaveLoad>().SaveGame();// Save the dungeon data
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(CombatSceneName, LoadSceneMode.Single);// Loads the combat scene
         while (!asyncLoad.isDone)
         {
