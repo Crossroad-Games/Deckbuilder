@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
     private int MaxEnemies = 5;// Max number of enemies in the combat scene at the same time
     private int CurrentEnemyIndex = 0;// Start at the first enemy on the list
     private EnemyClass CurrentEnemyClass;// Reference to the enemy currently active
+    private EnemyDatabase EnemyDatabase;// Reference to the enemy database will be used to load the enemy prefabs
     [SerializeField] public List<EnemyClass> CombatEnemies;// List of enemies with their class reference
     [SerializeField] public List<EnemyData> EnemyData;// List of enemy datas
     [SerializeField] public List<Vector3> EnemyPositions;// List of enemy positions based on how many enemies there are on scene
@@ -20,6 +21,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
+        EnemyDatabase = GameObject.Find("Game Master").GetComponent<EnemyDatabase>();// Reference to the database is set
         CombatEnemies = new List<EnemyClass>();// Initialize the list of enemies to have a max size
         EnemyData = new List<EnemyData>();// Initialize the listof enemy data to have a max sizes
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();// Reference to the Turnmanager script is defined
@@ -90,7 +92,7 @@ public class EnemyManager : MonoBehaviour
         foreach (EnemyData Data in EnemyData)// Go through the list of saved enemy data
             if (Data != null)// If data is not null
             {
-                EnemyToSpawn = (GameObject)Instantiate(Resources.Load("Enemy/Prefab/ID_" + Data.ID));// Instantiates the enemy
+                EnemyToSpawn = (GameObject)Instantiate(EnemyDatabase.Enemy[Data.ID]);// Instantiates the enemy
                 CombatEnemies.Add(EnemyToSpawn.GetComponent<EnemyClass>());// Store its class in the list
                 EnemyToSpawn.GetComponent<EnemyClass>().myData = Data;// Stores the saved data into the new enemy
                 EnemyToSpawn.transform.position = EnemyPositions[Data.Position];// This enemy will be sent to position it was first spawned on

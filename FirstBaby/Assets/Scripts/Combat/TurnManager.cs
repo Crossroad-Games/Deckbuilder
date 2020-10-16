@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-public enum CombatState { PlayerStartTurn, PlayerActionPhase, PlayerEndTurn, EnemyPhaseStart, EnemyStartTurn, EnemyActionPhase, EnemyEndTurn, EnemyEndPhase}
+public enum CombatState { CombatStart , PlayerStartTurn, PlayerActionPhase, PlayerEndTurn, EnemyPhaseStart, EnemyStartTurn, EnemyActionPhase, EnemyEndTurn, EnemyEndPhase}
 public class TurnManager : MonoBehaviour
 {
     #region Event Declarations
+    public static Action CombatStart;
     public static Action PlayerTurnStart;
     public static Action PlayerTurnEnd;
     public static Action EnemyPhaseStart;
@@ -23,45 +24,60 @@ public class TurnManager : MonoBehaviour
     #endregion
     private void Awake()
     {
+        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
         SaveLoad.LoadEvent += LoadState;// Subscribe to this event in order to load the turn state when the player loads their information
     }
     private void OnDisable()
     {
         SaveLoad.LoadEvent -= LoadState;// Unsubscribe to this event when disabled
     }
-    void Start()
+    #region Event Subscriptions
+    private void EventSubscription()
     {
-
-        #region Event Subscriptions
+        CombatStart += NextState;// Subscribe the method that will change the next state in line
         PlayerTurnStart += IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
         PlayerTurnStart += NextState;// Subscribe the method that will change the next state in line
         EnemyPhaseStart += NextState;// Subscribe the method that will change the next state in line
         EnemyPhaseEnd += NextState;// Subscribe the method that will change the next state in line
         EnemyStartTurn += NextState;// Subscribe the method that will change the next state in line
-        #endregion
-        State = (CombatState)StateNumber;
-
-        StartCoroutine(HoldForPause(PlayerTurnStart));// Execute all the methods that should be called when the Player's turn start
-        EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
     }
-   
-
+    #endregion
+    
     #region Turn State Control
     [SerializeField] public static CombatState State { get; private set; }// Current combat state
     private int StateNumber = 0;
     private void NextState()
     {
-        if (StateNumber < 7)
+        Debug.Log(StateNumber);
+        if (StateNumber < 8)
             StateNumber++;
         else
-            StateNumber = 0;
+            StateNumber = 1;
+        Debug.Log(StateNumber);
         State = (CombatState)StateNumber;
     }
     private void IncrementTurn() => TurnCount++;// Count the current turn
     public void LoadState()// Loads the turn state information to match that which was stored on the saved file
     {
         State = CombatGameData.Current.whichCombatState;
+        StateNumber = (int) State;
         TurnCount = CombatGameData.Current.TurnCount;
+        EventSubscription();// Subscribe the turn phase events
+        StateCall();// Call the events on the loaded state
+    }
+    private void StateCall()
+    {
+        switch (State)
+        {
+            case (CombatState)0:
+                CombatStart?.Invoke();
+                PlayerTurnStart?.Invoke();
+                break;
+            case (CombatState)1:
+                Debug.Log("Começou aqui");
+                PlayerTurnStart?.Invoke();
+                break;
+        }
     }
     #endregion
 

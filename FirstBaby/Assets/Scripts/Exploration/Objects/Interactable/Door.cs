@@ -18,6 +18,7 @@ public class Door : Interactable
             transform.position = new Vector3(transform.position.x, newHeight, transform.position.z);//  Update the transform
             yield return null;// Return next frame
         }
+        ExecuteTargetActions();// If there are any targets, execute their actions
         yield break;
     }
 }

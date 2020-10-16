@@ -6,8 +6,8 @@ using System;
 public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] private float InteractableDistance = .5f;// Defines the distance from which the player can interact with this
-    public static Action NearInteractable;// Event that is called when the player is near this interactable
-    public static Action Interacting;// Event that is called when the player is interacting with this object
+    public Action NearInteractable;// Event that is called when the player is near this interactable
+    public Action Interacting;// Event that is called when the player is interacting with this object
     private GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
     [SerializeField] public List<Targetable> Targets;// Target objects reference
     [SerializeField] private bool Reusable = false;// Boolean to determine if this can be interacted with more than once
@@ -15,9 +15,8 @@ public abstract class Interactable : MonoBehaviour
     public virtual void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");// Find the player's reference
-        foreach (Targetable Target in Targets)// Go through the list of Targetable objects
-            if (Target != null)// If not null
-                Interacting += Target.ExecuteAction;// Stores the reference to the linked object
+        NearInteractable += Player.GetComponent<DungeonPlayer>().NearInteractable;// Adds this to the listener
+        Interacting += Player.GetComponent<DungeonPlayer>().Interacting;// Adds this to the Listener
     }
     private void Update() => DetectPlayer();// Check if the player is near every frame
     public virtual void DetectPlayer()// Function designed to detect if the player is withing interactable distance from the object
@@ -28,6 +27,7 @@ public abstract class Interactable : MonoBehaviour
                 NearInteractable?.Invoke();// Calls all functions tied to  being near an interactable object
                 if (Input.GetButtonDown("Interact"))// If the player presses the interact button and is able to use it
                 {
+                    Debug.Log("Interacted with it");
                     Interacting?.Invoke();// Calls all function subscribed to interacting with an object
                     Actuated();// Function that will do something when actuated(Animation, specific effects...)
                     if (!Reusable)// If it is not reusable
@@ -38,6 +38,15 @@ public abstract class Interactable : MonoBehaviour
                     OnUnActuation();// Function designed to deal with special cases when releasing the interactive object should do something
                 }
             }
+    }
+    public virtual void ExecuteTargetActions()// Execute all actions from the targets
+    {
+        if (Targets.Count > 0)// If there is any target on the list
+        {
+            foreach (Targetable Target in Targets)// Go through the target list
+                if(Target!=null)// If target is not null
+                    Target.ExecuteAction();// Execute the target's action
+        }
     }
     public virtual void OnUnActuation()
     {
