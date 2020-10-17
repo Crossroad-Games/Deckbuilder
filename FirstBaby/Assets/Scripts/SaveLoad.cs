@@ -17,7 +17,7 @@ public class SaveLoad : MonoBehaviour
     private DungeonPlayer DungeonPlayer;// Reference to the Dungeon Player will be used to get the player's dungeon information
     private Hand Hand;// Will be used to access the list of all the cards in your hand
     private Deck Deck;// Will be used to access the list of all the cards in your deck
-    [SerializeField]private bool CombatScene=false, DungeonScene=false;// Booleans used to check if the player is either on a combat or dungeon scene 
+    public bool CombatScene=false, DungeonScene=false;// Booleans used to check if the player is either on a combat or dungeon scene 
     private EnemyManager EnemyManager;// Reference to the Enemy Manager will be used to store the enemy data
     private TurnManager TurnMaster;// Reference to the turn manager will be used to get the current combat turn and phase
     public static Action LoadEvent;// This event is called to execute all the actions waiting for the load to be done
