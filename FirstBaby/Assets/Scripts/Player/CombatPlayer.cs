@@ -7,11 +7,9 @@ using UnityEngine.UI;
 
 public class CombatPlayer : MonoBehaviour
 {
-    [Header("Player Information")]
     #region Player Information
-    [SerializeField]public CombatPlayerData myData= new CombatPlayerData();
+    public CombatPlayerData myData;
     #endregion
-    [Space(5)]
     #region References
     
     [SerializeField] private Deck deck=null;
@@ -46,7 +44,11 @@ public class CombatPlayer : MonoBehaviour
     #endregion
 
     #region Player startup methods
-    public void LoadSaveData() => myData = CombatGameData.Current.PlayerData;
+    private void LoadSaveData()
+    {
+        myData = CombatGameData.Current.PlayerData;
+        Debug.Log(myData.Name);
+    }
     private void Awake()
     {
         //Initialization

@@ -8,7 +8,6 @@ public class DungeonPlayer : MonoBehaviour
     public DungeonPlayerData myData;// Player's Dungeon information such as scene, name and resources
     private void Awake()
     {
-        
         SaveLoad.LoadEvent += LoadData;// Subscribe this method to the event
     }
     void Start()
@@ -25,6 +24,7 @@ public class DungeonPlayer : MonoBehaviour
     {
         transform.position = DungeonGameData.Current.PlayerPosition;// Syncs the player's position to the one on the save file
         myData = DungeonGameData.Current.PlayerData;// Syncs the player's information to the one on the save file
+        myData.Name = PlayerPrefs.GetString("Name");// Set the player's name to be the one on the player pref
     }
     private void OnDisable()
     {

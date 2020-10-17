@@ -4,26 +4,26 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using UnityEngine.UI;
+using TMPro;
 
 public class SaveLoad : MonoBehaviour
 {
     // Start is called before the first frame update
     private string dataPath;// Where it will be saved to in PC
-    private CombatPlayer CombatPlayer;
-    private DungeonPlayer DungeonPlayer;
+    private string PlayerName;// Name the player chose to its save
+    private CombatPlayer CombatPlayer;// Reference to the Combat Player will be used to get the player's combat information
+    private DungeonPlayer DungeonPlayer;// Reference to the Dungeon Player will be used to get the player's dungeon information
     private Hand Hand;// Will be used to access the list of all the cards in your hand
     private Deck Deck;// Will be used to access the list of all the cards in your deck
     [SerializeField]private bool CombatScene=false, DungeonScene=false;// Booleans used to check if the player is either on a combat or dungeon scene 
-    private EnemyManager EnemyManager;
-    private TurnManager TurnMaster;
-    public static Action LoadEvent;
-    private void Awake()
-    {
-       
-    }
+    private EnemyManager EnemyManager;// Reference to the Enemy Manager will be used to store the enemy data
+    private TurnManager TurnMaster;// Reference to the turn manager will be used to get the current combat turn and phase
+    public static Action LoadEvent;// This event is called to execute all the actions waiting for the load to be done
     private void Start()
     {
-       
+        
         if (CombatScene)// If the player is on a Combat Scene
         {
             CombatPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is defined, Save function will pull the information from this script to save it on a json file
@@ -36,16 +36,11 @@ public class SaveLoad : MonoBehaviour
         {
            DungeonPlayer= GameObject.FindGameObjectWithTag("Player").GetComponent<DungeonPlayer>();// Reference to the player is defined
         }
-        Load();
+        Load();// Load the save files
     }
-    // Update is called once per frame
-    void Update()
+    private void SaveDungeon()// Method called to save the player's dungeon information
     {
-        
-    }
-    private void SaveDungeon()
-    {
-        dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName.Dungeon");// Saves the information at this location
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name")+".Dungeon");// Saves the information at this location
         DungeonGameData.Current.PlayerPosition = DungeonPlayer.transform.position;// Stores the player's position 
         DungeonGameData.Current.PlayerData = DungeonPlayer.myData;// Copies the player's instance of DungeonPlayerData
         DungeonGameData.Current.DungeonScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
@@ -57,11 +52,10 @@ public class SaveLoad : MonoBehaviour
     }
     private void SaveCombat()// This will save the data pertaining the combat information on a specific .Combat file
     {
-        Debug.Log("Here");
         if (File.Exists(Application.persistentDataPath + "/InitialState.Default"))// If there is an initial state
             File.Delete(Application.persistentDataPath + "/InitialState.Default");// Delete it
-        CombatGameData.Current = new CombatGameData { };
-        dataPath = Path.Combine(Application.persistentDataPath, "PlaceholderFileName.Combat");// Saves the information at this location
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");// Saves the information at this location
+        Debug.Log(dataPath);
         CombatGameData.Current.CardsinHandID.Clear();// Reset the condition to store only what is currently in hand
         CombatGameData.Current.CardsinDeckID.Clear();// Reset the condition to store only what is currently in deck
         CombatGameData.Current.PlayerData = CombatPlayer.myData;
@@ -88,29 +82,42 @@ public class SaveLoad : MonoBehaviour
         else if (DungeonScene)// If the player is currently at a dungeon scene
             SaveDungeon();
     }
-    public void Load()
+    public void Load()// Method called to load the player's save files and call an event to handle with that information
     {
-        LoadCombat();
-        LoadDungeon();
+        LoadCombat();// Load the Combat Save file
+        LoadDungeon();// Load the Dungeon save file
         LoadEvent?.Invoke();// Calls all the methods subscribed to this event
-        SaveGame();
+        SaveGame();// Save the game after doing all the load event methods
     }
-    private void LoadCombat()
+    private void LoadCombat()// Load the Combat save file
     {
         var JSONString = string.Empty;// Initializes the variable to be an empty string
-        if (File.Exists(Application.persistentDataPath + "/PlaceholderFileName.Combat"))// If there is a save
-           JSONString = File.ReadAllText(Application.persistentDataPath + "/PlaceholderFileName.Combat");
+        if (File.Exists(Application.persistentDataPath + "/" + PlayerPrefs.GetString("Name") +".Combat"))// If there is a save
+           JSONString = File.ReadAllText(Application.persistentDataPath + "/" + PlayerPrefs.GetString("Name") +".Combat");
         else if(File.Exists(Application.persistentDataPath + "/InitialState.Default"))// If there is no save
+        {
             JSONString = File.ReadAllText(Application.persistentDataPath + "/InitialState.Default");
+        }
+        else
+        {
+            StreamReader TextFile = new StreamReader("Assets/Resources/Text/CombatSkeleton.txt");// Load a skeleton combat with no info
+            JSONString = TextFile.ReadToEnd();
+        }
         CombatGameData.Current = JsonUtility.FromJson<CombatGameData>(JSONString);
+        
+
     }
     private void LoadDungeon()
     {
         var JSONString = string.Empty;// Initializes the variable to be an empty string
-        if (File.Exists(Application.persistentDataPath + "/PlaceholderFileName.Dungeon"))// If there is a save
-            JSONString = File.ReadAllText(Application.persistentDataPath + "/PlaceholderFileName.Dungeon");
-        else if (File.Exists(Application.persistentDataPath + "/DefaultSave.Dungeon"))// If there is no save
-            JSONString = File.ReadAllText(Application.persistentDataPath + "/DefaultSave.Dungeon");
+
+        if (File.Exists(Application.persistentDataPath + "/" + PlayerPrefs.GetString("Name") +".Dungeon"))// If there is a save
+            JSONString = File.ReadAllText(Application.persistentDataPath + "/" + PlayerPrefs.GetString("Name") +".Dungeon");
+        else
+        {
+            StreamReader TextFile = new StreamReader("Assets/Resources/Text/DefaultSave.txt");  
+            JSONString = TextFile.ReadToEnd();
+        }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
     }
 }
