@@ -1039,7 +1039,15 @@ PrefabInstance:
       objectReference: {fileID: 1334210213}
     - target: {fileID: 6210013415420736517, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Combat_ChooseCard1
+      value: ChooseCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415420736517, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415420736517, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1047,7 +1055,15 @@ PrefabInstance:
       objectReference: {fileID: 1334210213}
     - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Combat_ChooseCard0
+      value: ChooseCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RewardManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6210013415610004678, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_Name
@@ -1143,7 +1159,15 @@ PrefabInstance:
       objectReference: {fileID: 1334210213}
     - target: {fileID: 6210013415761528024, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Combat_ChooseCard2
+      value: ChooseCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415761528024, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415761528024, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6210013416706217822, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_IsActive

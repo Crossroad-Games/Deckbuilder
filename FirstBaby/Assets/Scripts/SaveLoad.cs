@@ -13,7 +13,7 @@ public class SaveLoad : MonoBehaviour
     private DungeonPlayer DungeonPlayer;
     private Hand Hand;// Will be used to access the list of all the cards in your hand
     private Deck Deck;// Will be used to access the list of all the cards in your deck
-    [SerializeField]private bool CombatScene=false, DungeonScene=false;// Booleans used to check if the player is either on a combat or dungeon scene 
+    public bool CombatScene=false, DungeonScene=false;// Booleans used to check if the player is either on a combat or dungeon scene 
     private EnemyManager EnemyManager;
     private TurnManager TurnMaster;
     public static Action LoadEvent;

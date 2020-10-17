@@ -1253,18 +1253,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2041630563}
-    - target: {fileID: 4582945014781756594, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Dungeon_ChooseCard1
-      objectReference: {fileID: 0}
     - target: {fileID: 4681644742276150472, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2041630563}
-    - target: {fileID: 4681644742276150472, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Dungeon_ChooseCard0
-      objectReference: {fileID: 0}
     - target: {fileID: 5903954940611730350, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
       propertyPath: m_Name
       value: CardSelection
@@ -1273,10 +1265,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2041630563}
-    - target: {fileID: 7661282211399001496, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Dungeon_ChooseCard2
-      objectReference: {fileID: 0}
     - target: {fileID: 8839511798884798632, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
