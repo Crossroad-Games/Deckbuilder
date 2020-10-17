@@ -22,8 +22,9 @@ public class BattleStarter : Targetable
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
         var iterator = 0;
-        if (File.Exists(Application.persistentDataPath + "/" + PlayerPrefs.GetString("Name") + ".Combat"))// If there is a save
-            File.Delete(Application.persistentDataPath + "/" + PlayerPrefs.GetString("Name") + ".Combat");// Delete it
+        var dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");
+        if (File.Exists(dataPath))// If there is a save
+            File.Delete(dataPath);// Delete it
         CombatGameData.Current.PlayerData = CombatData;// Copies the value on the inspector to this 
         CombatGameData.Current.PlayerData.PlayerLifeForce = Player.myData.PlayerLifeForce;// Updates the Combat Life Force
         CombatGameData.Current.PlayerData.Name = Player.myData.Name;// Updates the Player name

@@ -11,7 +11,7 @@ public class Deck : CardPile
     public override void Awake()
     {
         base.Awake();
-        SaveLoad.LoadEvent += LoadDeck;// Subscribe to this event to load the save file deck information into this list
+        TurnManager.CombatStart += LoadDeck;// Subscribe to this event to load the save file deck information into this list
         TurnManager.CombatStart += Shuffle;// Subscribe to this event to shuffle the deck at the start of combat
     }
     void Start()
@@ -25,12 +25,14 @@ public class Deck : CardPile
     }
     private void OnDisable()
     {
-        SaveLoad.LoadEvent -= LoadDeck;// Unsubscribe
-        TurnManager.CombatStart -= Shuffle;// Subscribe to this event to shuffle the deck at the start of combat
+        TurnManager.CombatStart += LoadDeck;// Unsubscribe to this event to load the save file deck information into this list
+        TurnManager.CombatStart -= Shuffle;// Unsubscribe to this event to shuffle the deck at the start of combat
     }
     public void LoadDeck()// Loads the deck from data on the save file
     {
         List<int> IDList = CombatGameData.Current.CardsinDeckID;// Pulls the information from the loaded save
+        foreach (int ID in IDList)
+            Debug.Log(ID);
         List<CardInfo> TemporaryList = cardDatabase.GameCards;// Copies the card database list of card
         CardInfo CardToReceive = null;// Initializes the card to receive to be an empty class
         foreach (int ID in IDList)// Go through each stored card on the save
@@ -42,5 +44,6 @@ public class Deck : CardPile
                 cardsList.Add(cardInfoInstance);// Add it to the list of card infos
             }
         }
+        
     }
 }

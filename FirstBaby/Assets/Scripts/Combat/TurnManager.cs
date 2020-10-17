@@ -80,7 +80,7 @@ public class TurnManager : MonoBehaviour
                 PlayerTurnStart?.Invoke();
                 break;
         }
-        PlayerTurnStart += GameObject.Find("Game Master").GetComponent<SaveLoad>().SaveGame;// Save the game state at the end of every player turn start
+       // PlayerTurnStart += GameObject.Find("Game Master").GetComponent<SaveLoad>().SaveGame;// Save the game state at the end of every player turn start
     }
     #endregion
 

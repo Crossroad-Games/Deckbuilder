@@ -72,5 +72,6 @@ public class StartMenu : MonoBehaviour
             return;// Return
         else// If there is any information on the field
             PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
+        Debug.Log(PlayerPrefs.GetString("Name"));
     }
 }
