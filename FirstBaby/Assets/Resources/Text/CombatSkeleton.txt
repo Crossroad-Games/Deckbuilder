@@ -1,0 +1,73 @@
+{
+    "PlayerData": {
+        "PlayerLifeForce": 0,
+        "PlayerDefense": 0,
+        "PlayerShield": 0,
+        "Name": ""
+    },
+    "CardsinHandID": [],
+    "CardsinDeckID": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2,
+        2
+    ],
+    "EnemyData": [
+        {
+            "ID": 0,
+            "EnemyName": "Generic Enemy",
+            "EnemyHP": 5,
+            "EnemyMaxHP": 5,
+            "EnemyDefense": 0,
+            "EnemyShield": 0,
+            "Position": 0
+        },
+        {
+            "ID": 0,
+            "EnemyName": "Generic Enemy",
+            "EnemyHP": 5,
+            "EnemyMaxHP": 5,
+            "EnemyDefense": 0,
+            "EnemyShield": 0,
+            "Position": 1
+        },
+        {
+            "ID": 0,
+            "EnemyName": "Generic Enemy",
+            "EnemyHP": 5,
+            "EnemyMaxHP": 5,
+            "EnemyDefense": 0,
+            "EnemyShield": 0,
+            "Position": 2
+        },
+        {
+            "ID": 0,
+            "EnemyName": "Generic Enemy",
+            "EnemyHP": 5,
+            "EnemyMaxHP": 5,
+            "EnemyDefense": 0,
+            "EnemyShield": 0,
+            "Position": 3
+        },
+        {
+            "ID": 0,
+            "EnemyName": "Generic Enemy",
+            "EnemyHP": 5,
+            "EnemyMaxHP": 5,
+            "EnemyDefense": 0,
+            "EnemyShield": 0,
+            "Position": 4
+        }
+    ],
+    "TurnCount": 0,
+    "whichCombatState": 0,
+    "CombatScene": ""
+}

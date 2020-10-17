@@ -48,15 +48,15 @@ public class TurnManager : MonoBehaviour
     #region Turn State Control
     [SerializeField] public static CombatState State { get; private set; }// Current combat state
     private int StateNumber = 0;
-    private void NextState()
+    private void NextState()// Go to the next state or the player turn start if the are no more states
     {
-        if (!combatManager.Won && !combatManager.Defeated)
+        if (!combatManager.Won && !combatManager.Defeated)// If the player hasn't won or lost
         {
-            if (StateNumber < 8)
-                StateNumber++;
+            if (StateNumber < 8)// If the State is not the enemy end phase
+                StateNumber++;// Go to the next state
             else
-                StateNumber = 1;
-            State = (CombatState)StateNumber;
+                StateNumber = 1;// Go to the player turn start
+            State = (CombatState)StateNumber;// Updates the current combat state
         }
     }
     private void IncrementTurn() => TurnCount++;// Count the current turn
@@ -70,17 +70,17 @@ public class TurnManager : MonoBehaviour
     }
     private void StateCall()
     {
-        switch (State)
+        switch (State)// Check which state the save file is currently at
         {
-            case (CombatState)0:
-                CombatStart?.Invoke();
-                PlayerTurnStart?.Invoke();
+            case (CombatState)0:// Combat Start
+                CombatStart?.Invoke();// Call all methods subscribed to the beginning of combat
+                PlayerTurnStart?.Invoke();// Call all methods subscribed to the start of the player turn
                 break;
-            case (CombatState)1:
-                Debug.Log("Começou aqui");
+            case (CombatState)1:// Player Turn Start
                 PlayerTurnStart?.Invoke();
                 break;
         }
+        PlayerTurnStart += GameObject.Find("Game Master").GetComponent<SaveLoad>().SaveGame;// Save the game state at the end of every player turn start
     }
     #endregion
 

@@ -25,6 +25,7 @@ public class DungeonPlayer : MonoBehaviour
     {
         transform.position = DungeonGameData.Current.PlayerPosition;// Syncs the player's position to the one on the save file
         myData = DungeonGameData.Current.PlayerData;// Syncs the player's information to the one on the save file
+        myData.Name = PlayerPrefs.GetString("Name");
     }
     private void OnDisable()
     {
