@@ -1167,26 +1167,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 385248410, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
-      propertyPath: Enemies.Array.data[0]
-      value: 
-      objectReference: {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-    - target: {fileID: 385248410, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
-      propertyPath: Enemies.Array.data[1]
-      value: 
-      objectReference: {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-    - target: {fileID: 385248410, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
-      propertyPath: Enemies.Array.data[2]
-      value: 
-      objectReference: {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-    - target: {fileID: 385248410, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
-      propertyPath: Enemies.Array.data[3]
-      value: 
-      objectReference: {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-    - target: {fileID: 385248410, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
-      propertyPath: Enemies.Array.data[4]
-      value: 
-      objectReference: {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
     - target: {fileID: 1075731737, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: CardSelectionUI
       value: 
@@ -1239,8 +1219,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6263418733816555145, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
 --- !u!1001 &4704483539338013207
 PrefabInstance:

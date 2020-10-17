@@ -138,7 +138,7 @@ public class RewardManager : MonoBehaviour
     {
         if (thisSceneSaveLoad.CombatScene)
         {
-            var dataPath = Path.Combine(Application.persistentDataPath, "/" + PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this location
+            var dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this locationn
             CardSelectionUI.SetActive(false);// Deactivate the card selection UI
             DungeonGameData.Current.PlayerData.PlayerLifeForce = combatPlayer.GetComponent<CombatPlayer>().myData.PlayerLifeForce;// Updates the dungeon Life Force to be the same as the combat
             string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
