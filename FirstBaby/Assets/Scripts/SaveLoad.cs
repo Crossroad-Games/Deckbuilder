@@ -4,11 +4,15 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using UnityEngine.UI;
+using TMPro;
 
 public class SaveLoad : MonoBehaviour
 {
     // Start is called before the first frame update
     private string dataPath;// Where it will be saved to in PC
+    private string PlayerName;// Name the player chose to its save
     private CombatPlayer CombatPlayer;// Reference to the Combat Player will be used to get the player's combat information
     private DungeonPlayer DungeonPlayer;// Reference to the Dungeon Player will be used to get the player's dungeon information
     private Hand Hand;// Will be used to access the list of all the cards in your hand
