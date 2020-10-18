@@ -38,6 +38,12 @@ public class SaveLoad : MonoBehaviour
     }
     private void SaveDungeon()// Method called to save the player's dungeon information
     {
+        string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
+        dataPath= Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Previous");// Path to a copy of your current state to be stored as a previous save points, accessed in case of player death
+        using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
+        {
+            streamWriter.Write(jsonString);// Writes the content in json format
+        }
         DungeonGameData.Current.InterectablesUsed.Clear(); //Clear the list so it doesn't just stack up
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this location
         Debug.Log("Save file path: "+ dataPath);
@@ -49,7 +55,7 @@ public class SaveLoad : MonoBehaviour
         {
             DungeonGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
         }
-        string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
+        jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
             streamWriter.Write(jsonString);// Writes the content in json format
