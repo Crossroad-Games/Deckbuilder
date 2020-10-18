@@ -25,6 +25,9 @@ public class BattleStarter : Targetable
         var dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");
         if (File.Exists(dataPath))// If there is a save
             File.Delete(dataPath);// Delete it
+        TextAsset myFile = Resources.Load<TextAsset>("Text/CombatSkeleton");
+        var JSONString = myFile.text;
+        CombatGameData.Current = JsonUtility.FromJson<CombatGameData>(JSONString);
         CombatGameData.Current.PlayerData = CombatData;// Copies the value on the inspector to this 
         CombatGameData.Current.PlayerData.PlayerLifeForce = Player.myData.PlayerLifeForce;// Updates the Combat Life Force
         CombatGameData.Current.PlayerData.Name = Player.myData.Name;// Updates the Player name

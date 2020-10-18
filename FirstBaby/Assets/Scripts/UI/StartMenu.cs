@@ -35,7 +35,8 @@ public class StartMenu : MonoBehaviour
     {
         if (CombatGameData.Current != null)// If there is a combat save
         {
-            if (CombatGameData.Current.CombatScene != string.Empty)// If there is saved scene string
+            // If there is saved scene string and the save file name is the same as your name
+            if (CombatGameData.Current.CombatScene != string.Empty && CombatGameData.Current.PlayerData.Name==PlayerPrefs.GetString("Name"))
                 GameScene = CombatGameData.Current.CombatScene;// Go to this scene
         }
         else

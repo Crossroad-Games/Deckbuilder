@@ -16,8 +16,7 @@ public class CDPile : CardPile
     private void Awake()
     {
         //Event subscribing
-        TurnManager.PlayerTurnEnd += UpdateCooldown;// the card's cooldown will be updated whenever the player ends his turn
-        TurnManager.PlayerTurnStart += SendCardsBackToDeckAndShuffle; // Send the cards that have completed their cooldowns and shuffle the deck if so
+    
     }
 
     // Start is called before the first frame update
@@ -38,7 +37,7 @@ public class CDPile : CardPile
         cardToReceive.CurrentCooldownTime = cardToReceive.Cooldown;
     }
 
-    private void UpdateCooldown()
+    public void UpdateCooldown()
     {
         anyCardCompletedCD = false;
         for(int i = cardsList.Count-1; i >= 0; i--)
@@ -57,7 +56,7 @@ public class CDPile : CardPile
         }
     }
 
-    private void SendCardsBackToDeckAndShuffle()
+    public void SendCardsBackToDeckAndShuffle()
     {
         for (int i = cardsCD_Completed.Count - 1; i >= 0; i--)
         {

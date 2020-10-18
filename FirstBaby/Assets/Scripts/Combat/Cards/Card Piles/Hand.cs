@@ -33,6 +33,7 @@ public class Hand : CardPile
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
     private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
+
     #endregion
 
     //--------------------------------------------------
@@ -41,6 +42,7 @@ public class Hand : CardPile
     private CombatPlayer combatPlayer;
     private Deck Deck;// Reference the deck script to access its list of cards to draw every start of turn
     private CDPile CDPile;
+    private SaveLoad Saver;
     #endregion
 
     //-------------------------------------------------
@@ -72,13 +74,13 @@ public class Hand : CardPile
     {
         base.Awake();
         SaveLoad.LoadEvent += LoadHand;// Subscribes this method to the event to load the hand state stored on the save file
-        TurnManager.PlayerTurnStart += DrawHand;// Subscribes thid method to the beginning of the player turn to draw up to five cards when called
     }
     void Start()
     {
         combatPlayer = GetComponent<CombatPlayer>();
         Deck = GetComponent<Deck>();// Reference is defined
         CDPile = transform.Find("CDPile").GetComponent<CDPile>();
+        Saver = GameObject.Find("Game Master").GetComponent<SaveLoad>();
         //////////Initialization of event /////////////
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
@@ -143,6 +145,7 @@ public class Hand : CardPile
             Amount--;
             yield return new WaitForSeconds(DrawDelay);// Apply delay
         }
+        Saver.SaveGame();// Save the game state at the end of every player turn start
         isDrawing = false;
         yield break;
     }
