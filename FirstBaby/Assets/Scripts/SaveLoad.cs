@@ -36,11 +36,17 @@ public class SaveLoad : MonoBehaviour
     }
     private void SaveDungeon()// Method called to save the player's dungeon information
     {
+        DungeonGameData.Current.InterectablesUsed.Clear(); //Clear the list so it doesn't just stack up
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this location
         Debug.Log("Save file path: "+ dataPath);
         DungeonGameData.Current.PlayerPosition = DungeonPlayer.transform.position;// Stores the player's position 
         DungeonGameData.Current.PlayerData = DungeonPlayer.myData;// Copies the player's instance of DungeonPlayerData
         DungeonGameData.Current.DungeonScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
+        List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;
+        foreach(Interactable inter in dungeonInteractables)
+        {
+            DungeonGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
+        }
         string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
@@ -114,5 +120,13 @@ public class SaveLoad : MonoBehaviour
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
+        List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;
+        if(dungeonInteractables.Count == DungeonGameData.Current.InterectablesUsed.Count)
+        {
+            for(int i=0; i < dungeonInteractables.Count; i++)
+            {
+                dungeonInteractables[i].Used = DungeonGameData.Current.InterectablesUsed[i]; // Go through all interactables and scene and convert get from data file the used infos
+            }
+        }
     }
 }

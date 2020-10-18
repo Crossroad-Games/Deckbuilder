@@ -21,4 +21,10 @@ public class Door : Interactable
         ExecuteTargetActions();// If there are any targets, execute their actions
         yield break;
     }
+
+    public override void LoadDungeonState()
+    {
+        if(Used)
+            transform.position = new Vector3(transform.position.x, -4.535f, transform.position.z);
+    }
 }
