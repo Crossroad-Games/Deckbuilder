@@ -146,6 +146,9 @@ public class RewardManager : MonoBehaviour
             {
                 streamWriter.Write(jsonString);// Writes the content in json format
             }
+            dataPath=Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");// Acquires the path to the combat file
+            if (File.Exists(dataPath))// If there is an initial state
+                File.Delete(dataPath);// Delete it
             SceneManager.LoadSceneAsync(DungeonGameData.Current.DungeonScene, LoadSceneMode.Single);// Loads the Dungeon Scene
         }
         else if (thisSceneSaveLoad.DungeonScene)

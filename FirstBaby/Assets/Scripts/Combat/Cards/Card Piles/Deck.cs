@@ -11,7 +11,8 @@ public class Deck : CardPile
     public override void Awake()
     {
         base.Awake();
-        
+        SaveLoad.LoadEvent += LoadDeck;// Subscribe to this event to load the save file deck information into this list
+        SaveLoad.LoadEvent += Shuffle;// Subscribe to this event to shuffle the deck at the start of combat
     }
     void Start()
     {
@@ -24,8 +25,8 @@ public class Deck : CardPile
     }
     private void OnDisable()
     {
-        TurnManager.CombatStart -= LoadDeck;// Unsubscribe to this event to load the save file deck information into this list
-        TurnManager.CombatStart -= Shuffle;// Unsubscribe to this event to shuffle the deck at the start of combat
+        SaveLoad.LoadEvent -= LoadDeck;// Unsubscribe to this event to load the save file deck information into this list
+        SaveLoad.LoadEvent -= Shuffle;// Unsubscribe to this event to shuffle the deck at the start of combat
     }
     public void LoadDeck()// Loads the deck from data on the save file
     {
@@ -42,6 +43,7 @@ public class Deck : CardPile
                 CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(CardToReceive);// Creates an instance of that card info
                 cardsList.Add(cardInfoInstance);// Add it to the list of card infos
             }
+            Debug.Log(ID);
         }
         
     }
