@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Checks
     private bool isGrounded;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask groundLayer=0;
     #endregion
 
     #region Booleans
