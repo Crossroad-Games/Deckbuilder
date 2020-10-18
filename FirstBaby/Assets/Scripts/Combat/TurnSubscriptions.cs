@@ -25,8 +25,6 @@ public class TurnSubscriptions : MonoBehaviour
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();// Reference to the Turnmanager script is defined
         #endregion
         #region Subscriptions
-        TurnManager.CombatStart += PlayerDeck.LoadDeck;// Subscribe to this event to load the save file deck information into this list
-        TurnManager.CombatStart += PlayerDeck.Shuffle;// Subscribe to this event to shuffle the deck at the start of combat
         TurnManager.CombatStart += TurnMaster.NextState;// Subscribe the method that will change the next state in line
         TurnManager.PlayerTurnStart += TurnMaster.IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
         TurnManager.PlayerTurnStart += PlayerHand.DrawHand;

@@ -67,6 +67,7 @@ public class TurnManager : MonoBehaviour
         switch (State)// Check which state the save file is currently at
         {
             case (CombatState)0:// Combat Start
+                Debug.Log("Começou o combate");
                 CombatStart?.Invoke();// Call all methods subscribed to the beginning of combat
                 PlayerTurnStart?.Invoke();// Call all methods subscribed to the start of the player turn
                 break;

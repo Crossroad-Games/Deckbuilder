@@ -101,7 +101,7 @@ public class CombatPlayer : MonoBehaviour
     #region Turn System
     public void FlipEndButton(bool Interactable)
     {
-        EndTurnButton.interactable = Interactable;// Toggle the button
+        EndTurnButton.interactable = !Interactable;// Toggle the button
     }
 
     public void EndTurn()
