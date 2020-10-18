@@ -9,9 +9,4 @@ public class BarrierCard : NonTargetCard
     private float Multiplier=1, Divider=1;// Values that multiply or divide the modified base value
     // This effect creates a shield that will protect the player by this amount
     public override void CardEffect() => Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
-    public override void Start()
-    {
-        base.Start();
-        CardCD = 1;// This card's CD
-    }
 }

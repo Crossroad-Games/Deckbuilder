@@ -13,12 +13,16 @@ public class CDPile : CardPile
     [SerializeField] private bool anyCardCompletedCD; // this is also the shuffle flag
     #endregion
 
-    private void Awake()
+    public override void Awake()
     {
-        //Event subscribing
+        base.Awake();
+        SaveLoad.LoadEvent += LoadSave;// Subscribe to the load event from the saveload script
     
     }
-
+    private void OnDisable()
+    {
+        SaveLoad.LoadEvent -= LoadSave;// Subscribe to the load event from the saveload script
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +72,24 @@ public class CDPile : CardPile
         if(anyCardCompletedCD)
         {
             Shuffle();
+        }
+    }
+    public void LoadSave()// Process the saved information in the save file
+    {
+        List<int> IDList = CombatGameData.Current.CardsinCD;// Pulls the information from the loaded save
+        List<CardInfo> TemporaryList = cardDatabase.GameCards;// Copies the card database list of card
+        CardInfo CardToReceive = null;// Initializes the card to receive to be an empty class
+        var iterator = 0;
+        foreach (int ID in IDList)// Go through each stored card on the save
+        {
+            if (ID >= 0)// If it is not a null card
+            {
+                CardToReceive = TemporaryList[ID];// Cardinfo is chosen based on its ID
+                CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(CardToReceive);// Creates an instance of that card info
+                cardInfoInstance.CurrentCooldownTime = CombatGameData.Current.CardsCD[iterator];// Pairs the card info to its CD
+                cardsList.Add(cardInfoInstance);// Add it to the list of card infos
+                iterator++;// Increment the iterator
+            }
         }
     }
 }

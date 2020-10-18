@@ -10,12 +10,6 @@ public class ArcaneMissileCard : TargetCard
     // This effect deals damage to a single enemy
     public override void CardEffect()
     {
-        Debug.Log("Usou o efeito da carta, dano base: " + BaseDamage);
         TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
-    }
-    public override void Start()
-    {
-        base.Start();
-        CardCD = 0;// This card's CD
     }
 }

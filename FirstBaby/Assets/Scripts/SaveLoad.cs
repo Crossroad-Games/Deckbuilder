@@ -13,6 +13,7 @@ public class SaveLoad : MonoBehaviour
     private DungeonPlayer DungeonPlayer;// Reference to the Dungeon Player will be used to get the player's dungeon information
     private Hand Hand;// Will be used to access the list of all the cards in your hand
     private Deck Deck;// Will be used to access the list of all the cards in your deck
+    private CDPile CDPile;// Will be used to access the list of all the cards in your CD pile and their current CDs
     public bool CombatScene = false, DungeonScene = false;// Booleans used to check if the player is either on a combat or dungeon scene 
     private EnemyManager EnemyManager;// Reference to the Enemy Manager will be used to store the enemy data
     private TurnManager TurnMaster;// Reference to the turn manager will be used to get the current combat turn and phase
@@ -25,6 +26,7 @@ public class SaveLoad : MonoBehaviour
             CombatPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is defined, Save function will pull the information from this script to save it on a json file
             Hand = GameObject.FindGameObjectWithTag("Player").GetComponent<Hand>();// Reference to the Hand script is defined, save function will pull the information from it to store the cards that are currently at hand
             Deck = GameObject.FindGameObjectWithTag("Player").GetComponent<Deck>();// Reference to the Hand script is defined, save function will pull the information from it to store the cards that are currently at deck
+            CDPile = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<CDPile>();// Reference to the CD Pile is defined, save function will pull the information from it to store the cards that are currently at the CD Pile and their CDs on the save file
             EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is defined, Save function will pull the enemy data stored
             TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();// Reference to the turn manager is defined, save function will pull the turn count and combat state to store it on the save file
         }
@@ -61,6 +63,8 @@ public class SaveLoad : MonoBehaviour
         Debug.Log(dataPath);
         CombatGameData.Current.CardsinHandID.Clear();// Reset the condition to store only what is currently in hand
         CombatGameData.Current.CardsinDeckID.Clear();// Reset the condition to store only what is currently in deck
+        CombatGameData.Current.CardsinCD.Clear();// Reset the condition to store only what is currently in the CD Pile
+        CombatGameData.Current.CardsCD.Clear();// Reset the condition to store only the CD values of the cards currently on CD
         CombatGameData.Current.PlayerData = CombatPlayer.myData;
         foreach (CardInfo Card in Deck.cardsList)// Go through all cards in hand
             if (Card != null)// Check if card is not null
@@ -68,6 +72,12 @@ public class SaveLoad : MonoBehaviour
         foreach (CardInfo Card in Hand.cardsList)// Go through all cards in hand
             if (Card != null)// Check if card is not null
                 CombatGameData.Current.CardsinHandID.Add(Card.ID); // Acquire that card's ID and store it in the save file
+        foreach(CardInfo Card in CDPile.cardsList)// Go through all the cards in the CD Pile
+            if(Card!=null)// Check if card is not null
+            {
+                CombatGameData.Current.CardsinCD.Add(Card.ID);// Acquire that card's ID and store it in the save file
+                CombatGameData.Current.CardsCD.Add(Card.CurrentCooldownTime);// Acquire that card's CD and store it
+            }
         CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this list
         CombatGameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count
         CombatGameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state

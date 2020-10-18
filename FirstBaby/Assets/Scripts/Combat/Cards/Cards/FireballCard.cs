@@ -9,9 +9,4 @@ public class FireballCard : TargetCard
     private float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
     // This effect deals damage to a single enemy
     public override void CardEffect() => TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
-    public override void Start()
-    {
-        base.Start();
-        CardCD = 2;// This card's CD
-    }
 }
