@@ -9,6 +9,7 @@ public class CombatDefeat : MonoBehaviour
 {
     #region References
     private Button EndTurnButton = null;
+    private GameObject DefeatScreen = null;
     private CombatPlayer Player = null;
     private CombatManager combatManager = null;
     #endregion
@@ -23,6 +24,7 @@ public class CombatDefeat : MonoBehaviour
         EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();// Reference to the end button is set
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is set
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
+        DefeatScreen = GameObject.Find("Defeat Screen");
     }
 
 
@@ -31,7 +33,13 @@ public class CombatDefeat : MonoBehaviour
         playerDefeatEvent?.Invoke();// Calls the event for when player loses a combat
         EndTurnButton.gameObject.SetActive(false);// Deactivates the button
         Player.gameObject.GetComponent<Hand>().DiscardHand();// Discard the cards in hand
+        DefeatScreen.SetActive(true);
         combatManager.Defeated = true;
+
+    }
+
+    public void Retry()
+    {
 
     }
 }
