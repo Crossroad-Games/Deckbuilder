@@ -20,8 +20,6 @@ public abstract class Card : MonoBehaviour
     public bool returningToHand; // when card is returning to hand
     public bool beingHovered; // when card is being hovered by mouse
     public string type = "none";
-    [SerializeField] protected int CardCD;// This card's CD
-    [SerializeField] protected int CurrentCD;// This card's current CD which will decrement every turn until it reached 0
     // Once it reaches 0, it will be moved from the CD pile to the Deck and shuffle it during the beginning of the player's turn
 
     public bool followCardPositionToFollow; //true if we want card to follow target
@@ -36,7 +34,6 @@ public abstract class Card : MonoBehaviour
     public void ExecuteAction()
     {
         CardEffect();// Execute the card's effect
-        CurrentCD = CardCD;// Apply this card's CD
         //Send it to the CD pile
     }
 
@@ -44,7 +41,6 @@ public abstract class Card : MonoBehaviour
     {
         this.TargetEnemy = targetEnemy;
         CardEffect();// Execute the card's effect
-        CurrentCD = CardCD;// Apply this card's CD
         //Send it to the CD pile
     }
 

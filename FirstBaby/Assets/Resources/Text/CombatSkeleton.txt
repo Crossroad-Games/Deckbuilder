@@ -1,1 +1,16 @@
-{"PlayerData":{"PlayerLifeForce": 0,"PlayerDefense": 0,"PlayerShield": 0,"Name": ""},"CardsinHandID": [],"CardsinDeckID": [],"EnemyData": [{},{}],"TurnCount": 0,"whichCombatState": 0,"CombatScene": ""}
+{
+    "PlayerData": {
+        "PlayerLifeForce": 0,
+        "PlayerDefense": 0,
+        "PlayerShield": 0,
+        "Name": ""
+    },
+    "CardsinHandID": [],
+    "CardsinDeckID": [],
+    "CardsinCD": [],
+    "CardsCD": [],
+    "EnemyData": [],
+    "TurnCount": 0,
+    "whichCombatState": 0,
+    "CombatScene": ""
+}
