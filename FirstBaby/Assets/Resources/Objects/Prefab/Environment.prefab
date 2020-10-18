@@ -113,6 +113,7 @@ MonoBehaviour:
   Targets:
   - {fileID: 943587661139503543}
   Reusable: 0
+  Used: 0
   SlideSpeed: 5
 --- !u!114 &943587661139503543
 MonoBehaviour:
@@ -885,6 +886,7 @@ MonoBehaviour:
   InteractableDistance: 2
   Targets: []
   Reusable: 0
+  Used: 0
   CardSelectionUI: {fileID: 0}
 --- !u!1 &2342303118234585218
 GameObject:
@@ -1092,6 +1094,7 @@ MonoBehaviour:
   InteractableDistance: 5
   Targets: []
   Reusable: 0
+  Used: 0
   SlideSpeed: 5
 --- !u!114 &1533753544
 MonoBehaviour:
@@ -1108,6 +1111,7 @@ MonoBehaviour:
   InteractableDistance: 2
   Targets: []
   Reusable: 0
+  Used: 0
   CardSelectionUI: {fileID: 0}
 --- !u!1 &5196980615749322156
 GameObject:
@@ -1332,7 +1336,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 254563507010877657, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
 --- !u!4 &7748848575786671882 stripped
 Transform:
