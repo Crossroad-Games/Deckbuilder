@@ -41,6 +41,7 @@ public class CardPile : MonoBehaviour
 
     public void Shuffle()
     {
+        Debug.Log("Shuffled the deck");
         int numberOfCards = cardsList.Count;       //Take the number of cards in deck and put build a list with this number of elements as ints in ascending order
         List<int> cardsIndex = new List<int>();         // Auxiliar list for randomizing new positions for the cards
         List<CardInfo> cardsListCopy = new List<CardInfo>(cardsList);      //Creates a copy of the Deck info
