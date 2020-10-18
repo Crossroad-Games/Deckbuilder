@@ -11,8 +11,7 @@ public class Deck : CardPile
     public override void Awake()
     {
         base.Awake();
-        TurnManager.CombatStart += LoadDeck;// Subscribe to this event to load the save file deck information into this list
-        TurnManager.CombatStart += Shuffle;// Subscribe to this event to shuffle the deck at the start of combat
+        
     }
     void Start()
     {
@@ -25,7 +24,7 @@ public class Deck : CardPile
     }
     private void OnDisable()
     {
-        TurnManager.CombatStart += LoadDeck;// Unsubscribe to this event to load the save file deck information into this list
+        TurnManager.CombatStart -= LoadDeck;// Unsubscribe to this event to load the save file deck information into this list
         TurnManager.CombatStart -= Shuffle;// Unsubscribe to this event to shuffle the deck at the start of combat
     }
     public void LoadDeck()// Loads the deck from data on the save file

@@ -85,7 +85,7 @@ public class SaveLoad : MonoBehaviour
         LoadCombat();// Load the Combat Save file
         LoadDungeon();// Load the Dungeon save file
         LoadEvent?.Invoke();// Calls all the methods subscribed to this event
-        SaveGame();// Save the game after doing all the load event methods
+        //SaveGame();// Save the game after doing all the load event methods
     }
     private void LoadCombat()// Load the Combat save file
     {
@@ -97,11 +97,6 @@ public class SaveLoad : MonoBehaviour
         {
             Debug.Log("Loaded Initial State, Deck ID List:");
             JSONString = File.ReadAllText(Application.persistentDataPath + "/InitialState.Default");
-        }
-        else
-        {
-            TextAsset myFile = Resources.Load<TextAsset>("Text/CombatSkeleton");
-            JSONString = myFile.text;
         }
         CombatGameData.Current = JsonUtility.FromJson<CombatGameData>(JSONString);
 

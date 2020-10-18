@@ -22,33 +22,28 @@ public class TurnManager : MonoBehaviour
     #region References
     private EnemyManager EnemyManager;
     private CombatManager combatManager;
+    private Deck PlayerDeck;
+    private CDPile PlayerCDPile;
+    private Hand PlayerHand;
     #endregion
     private void Awake()
     {
         EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
+        PlayerDeck = GameObject.FindGameObjectWithTag("Player").GetComponent<Deck>();// Reference to the deck
+        PlayerCDPile= GameObject.FindGameObjectWithTag("Player").transform.Find("CDPile").GetComponent<CDPile>();// Reference to the CD Pile
+        PlayerHand = GameObject.FindGameObjectWithTag("Player").GetComponent<Hand>();// Reference to the hand
         SaveLoad.LoadEvent += LoadState;// Subscribe to this event in order to load the turn state when the player loads their information
     }
     private void OnDisable()
     {
         SaveLoad.LoadEvent -= LoadState;// Unsubscribe to this event when disabled
     }
-    #region Event Subscriptions
-    private void EventSubscription()
-    {
-        CombatStart += NextState;// Subscribe the method that will change the next state in line
-        PlayerTurnStart += IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
-        PlayerTurnStart += NextState;// Subscribe the method that will change the next state in line
-        EnemyPhaseStart += NextState;// Subscribe the method that will change the next state in line
-        EnemyPhaseEnd += NextState;// Subscribe the method that will change the next state in line
-        EnemyStartTurn += NextState;// Subscribe the method that will change the next state in line
-    }
-    #endregion
     
     #region Turn State Control
     [SerializeField] public static CombatState State { get; private set; }// Current combat state
     private int StateNumber = 0;
-    private void NextState()// Go to the next state or the player turn start if the are no more states
+    public void NextState()// Go to the next state or the player turn start if the are no more states
     {
         if (!combatManager.Won && !combatManager.Defeated)// If the player hasn't won or lost
         {
@@ -59,13 +54,12 @@ public class TurnManager : MonoBehaviour
             State = (CombatState)StateNumber;// Updates the current combat state
         }
     }
-    private void IncrementTurn() => TurnCount++;// Count the current turn
+    public void IncrementTurn() => TurnCount++;// Count the current turn
     public void LoadState()// Loads the turn state information to match that which was stored on the saved file
     {
         State = CombatGameData.Current.whichCombatState;
         StateNumber = (int) State;
         TurnCount = CombatGameData.Current.TurnCount;
-        EventSubscription();// Subscribe the turn phase events
         StateCall();// Call the events on the loaded state
     }
     private void StateCall()
@@ -80,7 +74,6 @@ public class TurnManager : MonoBehaviour
                 PlayerTurnStart?.Invoke();
                 break;
         }
-       // PlayerTurnStart += GameObject.Find("Game Master").GetComponent<SaveLoad>().SaveGame;// Save the game state at the end of every player turn start
     }
     #endregion
 
