@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class CombatDefeat : MonoBehaviour
 {
@@ -19,12 +20,17 @@ public class CombatDefeat : MonoBehaviour
     #endregion
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        DefeatScreen = GameObject.Find("Defeat Screen");
+        DefeatScreen.SetActive(false);
+    }
     void Start()
     {
         EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();// Reference to the end button is set
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is set
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
-        DefeatScreen = GameObject.Find("Defeat Screen");
+       
     }
 
 
@@ -40,6 +46,20 @@ public class CombatDefeat : MonoBehaviour
 
     public void Retry()
     {
-
+        var dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Previous");// Path to the previous save
+        var JSONString = string.Empty;// Empty string will be used to read the text on the file and store the game data
+        if (File.Exists(dataPath))// If there is a save
+            JSONString = File.ReadAllText(dataPath);// Store the save file on a string
+        DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);// Converts the JSON string to a Dungeon Game Data
+        JSONString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Path to the previous save
+        using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
+        {
+            streamWriter.Write(JSONString);// Writes the content in json format
+        }
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");// Acquires the path to the combat file
+        if (File.Exists(dataPath))// If there is an initial state
+            File.Delete(dataPath);// Delete it
+        SceneManager.LoadSceneAsync(DungeonGameData.Current.DungeonScene, LoadSceneMode.Single);// Loads the Dungeon Scene
     }
 }

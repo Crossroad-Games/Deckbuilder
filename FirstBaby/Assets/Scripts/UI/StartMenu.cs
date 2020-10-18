@@ -83,6 +83,9 @@ public class StartMenu : MonoBehaviour
         dataPath = Path.Combine(Application.persistentDataPath, GameData[SaveNumber].PlayerData.Name + ".Dungeon");// Delete the information at this location
         if (File.Exists(dataPath))// If there is an initial state
             File.Delete(dataPath);// Delete it
+        dataPath = Path.Combine(Application.persistentDataPath, GameData[SaveNumber].PlayerData.Name + ".Previous");// Delete the information at this location
+        if (File.Exists(dataPath))// If there is an initial state
+            File.Delete(dataPath);// Delete it
     }
     public void UsernameInput(string Username)
     {
