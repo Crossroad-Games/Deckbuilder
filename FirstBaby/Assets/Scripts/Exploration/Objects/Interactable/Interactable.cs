@@ -11,12 +11,25 @@ public abstract class Interactable : MonoBehaviour
     protected GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
     [SerializeField] public List<Targetable> Targets;// Target objects reference
     [SerializeField] private bool Reusable = false;// Boolean to determine if this can be interacted with more than once
-    private bool Used = false;// Boolean to determine if, if its not reusable, this has been actuated once or not
+    public bool Used = false;// Boolean to determine if, if its not reusable, this has been actuated once or not
+    private SaveLoad saveLoad;
     public virtual void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");// Find the player's reference
+        saveLoad = GameObject.Find("Game Master").GetComponent<SaveLoad>();
         NearInteractable += Player.GetComponent<DungeonPlayer>().NearInteractable;// Adds this to the listener
         Interacting += Player.GetComponent<DungeonPlayer>().Interacting;// Adds this to the Listener
+        if (saveLoad.DungeonScene)
+        {
+            SaveLoad.LoadEvent += LoadDungeonState;// Subscrive on the load dungeon interectable objects states
+            Debug.Log("subscribed");
+        }
+    }
+
+    private void OnDisable()
+    {
+        SaveLoad.LoadEvent -= LoadDungeonState;// Unsubscribe on the load dungeon interectable objects states
+        Debug.Log("Unsubscribed");
     }
 
     protected virtual void Start()
@@ -58,4 +71,6 @@ public abstract class Interactable : MonoBehaviour
         // Do something//
     }
     public abstract void Actuated();// Function that will do something when actuated(Animation, specific effects...)
+
+    public abstract void LoadDungeonState();// Function that will return the interactable object to the state it was when saved game
 }

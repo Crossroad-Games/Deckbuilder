@@ -19,4 +19,9 @@ public class Chest : Interactable
         rewardManager.FillDungeonCardSelection();
         CardSelectionUI.SetActive(true);
     }
+
+    public override void LoadDungeonState()
+    {
+        
+    }
 }
