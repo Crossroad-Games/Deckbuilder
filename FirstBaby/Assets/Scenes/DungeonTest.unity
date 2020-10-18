@@ -1191,6 +1191,10 @@ PrefabInstance:
       propertyPath: CardSelectionUI
       value: 
       objectReference: {fileID: 1259859005}
+    - target: {fileID: 1533753544, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 1259859005}
     - target: {fileID: 943587661015155224, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
