@@ -64,7 +64,6 @@ public class CDPile : CardPile
     {
         for (int i = cardsCD_Completed.Count - 1; i >= 0; i--)
         {
-            Debug.Log("mandou carta");
             SendCard(cardsCD_Completed[i], playerDeck);
             cardsCD_Completed.RemoveAt(i);
         }

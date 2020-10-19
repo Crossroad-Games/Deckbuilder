@@ -63,6 +63,7 @@ MonoBehaviour:
   Enemy:
   - {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
   - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 5075110614363377447, guid: 39ba7bde4d57ce540838d5e30984afcb, type: 3}
 --- !u!114 &729727949
 MonoBehaviour:
   m_ObjectHideFlags: 0

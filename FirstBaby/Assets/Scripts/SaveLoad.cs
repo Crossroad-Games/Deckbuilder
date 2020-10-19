@@ -66,7 +66,6 @@ public class SaveLoad : MonoBehaviour
         if (File.Exists(Application.persistentDataPath + "/InitialState.Default"))// If there is an initial state
             File.Delete(Application.persistentDataPath + "/InitialState.Default");// Delete it
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");// Saves the information at this location
-        Debug.Log(dataPath);
         CombatGameData.Current.CardsinHandID.Clear();// Reset the condition to store only what is currently in hand
         CombatGameData.Current.CardsinDeckID.Clear();// Reset the condition to store only what is currently in deck
         CombatGameData.Current.CardsinCD.Clear();// Reset the condition to store only what is currently in the CD Pile
