@@ -131,7 +131,6 @@ public class Hand : CardPile
     public void DrawHand()// Draw a set of cards at the start of every plyer turn to get back to a maximum given value
     {
         var Amount = MaxHandDraw - physicalCardsInHand.Count;// Draw cards based on how many cards you need 
-        Debug.Log(Amount);
         DrawCards(Amount);
     }
     public void DrawCards(int Amount)=> StartCoroutine(DrawCardDelay(Amount));// Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards

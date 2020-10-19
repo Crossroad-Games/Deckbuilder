@@ -23,6 +23,12 @@ public abstract class EnemyClass : MonoBehaviour
         }
     }
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
+    public void KillMe()// Instantly kill this enemy
+    {
+        DeathEvent?.Invoke();// Call the enemy's death event
+        this.EnemyManager.RemoveEnemy(this);
+        myDeath();// Destroy this enemy
+    }
     #endregion
 
     #region Generic Combat Methods
@@ -62,6 +68,15 @@ public abstract class EnemyClass : MonoBehaviour
         {
             enemymanager = enemymanager ?? GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
             return enemymanager;
+        }
+    }
+    private CombatPlayer combatplayer;
+    public CombatPlayer Player
+    {
+        get
+        {
+            combatplayer = combatplayer ?? GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
+            return combatplayer;
         }
     }
     #endregion
