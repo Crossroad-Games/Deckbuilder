@@ -106,6 +106,10 @@ public class CombatPlayer : MonoBehaviour
         myData.PlayerShield = myData.PlayerShield <= 0 ? 0 : myData.PlayerShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
         return CurrentShield;
     }
+    public int LoseShield(int ShieldAmount)// Lose shield to some external effect
+    {
+        return SpendShield(ShieldAmount);// Lose this much shield and return the current amount of shield
+    }
     public void GainShield(int ShieldAmount)// This function will modify the player's shield amount
     {
         // Any other methods that should be called when adding shield to the player's shield pool

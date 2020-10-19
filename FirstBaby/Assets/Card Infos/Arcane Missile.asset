@@ -16,8 +16,8 @@ MonoBehaviour:
   Name: Arcane Missile
   ID: 0
   Description: Deal damage
-  Cooldown: 2
-  ResourceCost: 30
+  Cooldown: 0
+  ResourceCost: 5
   sprite: {fileID: 21300000, guid: 43fdc9a048a0fcb4f8e6c8186483f029, type: 3}
   cardPrefab: {fileID: 3198968608887256750, guid: bd2225d726b664b43b4bb4f8a4a8baea, type: 3}
   myPhysicalCard: {fileID: 0}

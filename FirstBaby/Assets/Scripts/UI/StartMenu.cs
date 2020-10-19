@@ -101,15 +101,20 @@ public class StartMenu : MonoBehaviour
                 if (Save != null)// Check if its null before checking its name
                     if (Save.PlayerData.Name != Username)// Verify if the user's input is not going to override any other saves
                     {
+                        Debug.Log(Save.PlayerData.Name);
                         PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
                         ConfirmNewSave.GetComponent<Button>().interactable = true;// You can't confirm your name selection
                         ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Start Save";// Display to the player that this username is already taken
-                    }   
+                    }
                     else
                     {
+                        Debug.Log(Save.PlayerData.Name);
                         ConfirmNewSave.GetComponent<Button>().interactable = false;// You can't confirm your name selection
                         ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Name taken";// Display to the player that this username is already taken
+                        break;
                     }
+                else
+                    Debug.Log("Save null: "+ Save.PlayerData.Name);
         }
            
     }
