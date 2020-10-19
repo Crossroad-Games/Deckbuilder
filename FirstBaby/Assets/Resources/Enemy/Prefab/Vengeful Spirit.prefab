@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2620611694406709040}
   - component: {fileID: -6024973297880317213}
   - component: {fileID: -890433173412119043}
+  - component: {fileID: 917238870123889863}
   m_Layer: 10
   m_Name: Vengeful Spirit
   m_TagString: Untagged
@@ -168,3 +169,21 @@ MonoBehaviour:
   Divider: 1
   AddedShield: 0
   SubtractedShield: 0
+--- !u!114 &917238870123889863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075110614363377447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c511a5c5980a74eb34776f14f10177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
+  BaseDamage: 5
+  Multiplier: 1
+  Divider: 1
+  AddedDamaged: 0
+  SubtractedDamage: 0

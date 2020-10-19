@@ -12,9 +12,16 @@ public class VengefulSpirit : EnemyClass
     }
     public override void CombatLogic()
     {
-        if((myData.EnemyHP+myData.EnemyShield)<=myData.EnemyMaxHP/2)// If at or below 25% HP
+        if ((myData.EnemyHP + myData.EnemyShield) <= myData.EnemyMaxHP / 2)// If at or below 25% HP
             ActionList["Blood Ritual"].Effect();// Attack for double damage
-        if (Player.myData.PlayerShield == 0)// If the player does not have any shield
+        else if (Player.myData.PlayerShield == 0)// If the player does not have any shield
             ActionList["Precise Attack"].Effect();// Attack for double damage
+        else
+        {
+            if(Random.value<=.25)
+                ActionList["Enemy Attack"].Effect();// Attack and a small amount of damage
+            else
+                ActionList["Precise Attack"].Effect();// Attack for double damage
+        }
     }
 }
