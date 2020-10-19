@@ -10,9 +10,10 @@ public class GenericEnemy : EnemyClass
     {
         
     }
-    public override void CombatLogic()
+    public override void EnemyIntention()
     {
-        ActionList["Enemy Attack"].Effect();// Use this action
+        IntendedActions.Clear();
+        IntendedActions.Add(ActionList["Enemy Attack"]);// Use this action
     }
 
 }
