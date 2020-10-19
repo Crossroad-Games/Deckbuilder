@@ -74,6 +74,7 @@ public abstract class EnemyClass : MonoBehaviour
         {
             if(Action!=null)// If not null
                 ActionList.Add(Action.ActionName,Action);// Adds each action on this gameobject to the dictionary
+            Debug.Log(Action.ActionName);
         }
     }
     public virtual void StartTurn()

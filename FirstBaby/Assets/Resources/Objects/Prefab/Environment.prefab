@@ -996,6 +996,7 @@ GameObject:
   - component: {fileID: 3588977369560720735}
   - component: {fileID: 6215169719468635897}
   - component: {fileID: 5406416792432119756}
+  - component: {fileID: 943587661139503547}
   m_Layer: 30
   m_Name: Door
   m_TagString: Untagged
@@ -1092,10 +1093,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractableDistance: 5
-  Targets: []
+  Targets:
+  - {fileID: 943587661139503547}
   Reusable: 0
   Used: 0
   SlideSpeed: 5
+--- !u!114 &943587661139503547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353187344762151242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac886b55c6da1d442a97e57dd215bbdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CombatSceneName: Combat
+  CombatData:
+    PlayerLifeForce: 0
+    PlayerDefense: 0
+    PlayerShield: 0
+    Name: 
+  Enemies:
+  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
 --- !u!114 &1533753544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1339,14 +1365,14 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 254563507010877657, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
---- !u!4 &7748848575786671882 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7390753622919873240, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
-  m_PrefabInstance: {fileID: 943587660769549778}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4668459120430424053 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5607536993579581991, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
+  m_PrefabInstance: {fileID: 943587660769549778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7748848575786671882 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7390753622919873240, guid: 3536d763d6de82a43bd78ad0258fa72a, type: 3}
   m_PrefabInstance: {fileID: 943587660769549778}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6153120018793012816

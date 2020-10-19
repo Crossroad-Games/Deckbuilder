@@ -6,7 +6,7 @@ public class EnemyAttack : EnemyAction
 {
     // Start is called before the first frame update
     [Header("Basic Information")]
-    [SerializeField] private readonly int thisID= -1;
+    [SerializeField] private readonly int thisID= 0;
     [SerializeField] private readonly string thisName= "Enemy Attack";
     [SerializeField] private readonly string thisDescription= "Most basic attack type, deals (Base Damage +- Modifiers)*Scale damage";
     [Space(5)]
