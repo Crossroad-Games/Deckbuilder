@@ -14,7 +14,7 @@ public class StartMenu : MonoBehaviour
     private Button[] SaveButtons = new Button[3];// Has room for 3 saves
     [SerializeField]private Button[] DeleteSaveButtons = new Button[3];// One for each save
     private SaveLoad SaveLoad;// Reference to the saveload will be used to load the chosen file when the button is clicked
-   
+    private GameObject ConfirmNewSave;// Reference to the confirm new save button
     [SerializeField] private string GameScene= string.Empty;
     public void StartGame()
     {
@@ -64,6 +64,8 @@ public class StartMenu : MonoBehaviour
             DeleteSaveButtons[iterator].gameObject.SetActive(true);// Activates this gameobject
             iterator++;// Increment iterator 
         }
+        if (iterator == 3)// If there are three saves 
+            transform.Find("New Save Button").gameObject.SetActive(false);// Can't create new saves
     }
     public void ChooseSave(int SaveNumber)// Called when clicked on the button, receiving the chosen save number as a parameter
     {
@@ -74,8 +76,10 @@ public class StartMenu : MonoBehaviour
     {
         transform.Find("Save Files").gameObject.SetActive(false);// Deactivate the Load Game menu
         transform.Find("New Save File").gameObject.SetActive(true);// Activates the Username Input Field
+        if (ConfirmNewSave == null)// If there is not reference
+            ConfirmNewSave = transform.Find("New Save File").Find("Confirm Username").gameObject;// Reference is defined
     }
-    public void DeleteGame(int SaveNumber)
+    public void DeleteGame(int SaveNumber)// Deletes all save files with that name
     {
         var dataPath = Path.Combine(Application.persistentDataPath, GameData[SaveNumber].PlayerData.Name + ".Combat");// Delete the information at this location
         if (File.Exists(dataPath))// If there is an initial state
@@ -92,8 +96,22 @@ public class StartMenu : MonoBehaviour
         if (Username == string.Empty)// If Username field is empty
             return;// Return
         else// If there is any information on the field
-            PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
-        Debug.Log(PlayerPrefs.GetString("Name"));
+        {
+            foreach (DungeonGameData Save in GameData)// Go through all the saves
+                if (Save != null)// Check if its null before checking its name
+                    if (Save.PlayerData.Name != Username)// Verify if the user's input is not going to override any other saves
+                    {
+                        PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
+                        ConfirmNewSave.GetComponent<Button>().interactable = true;// You can't confirm your name selection
+                        ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Start Save";// Display to the player that this username is already taken
+                    }   
+                    else
+                    {
+                        ConfirmNewSave.GetComponent<Button>().interactable = false;// You can't confirm your name selection
+                        ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Name taken";// Display to the player that this username is already taken
+                    }
+        }
+           
     }
     #endregion
 }

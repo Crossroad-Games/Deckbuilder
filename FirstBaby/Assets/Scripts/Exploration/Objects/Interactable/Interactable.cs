@@ -22,14 +22,12 @@ public abstract class Interactable : MonoBehaviour
         if (saveLoad.DungeonScene)
         {
             SaveLoad.LoadEvent += LoadDungeonState;// Subscrive on the load dungeon interectable objects states
-            Debug.Log("subscribed");
         }
     }
 
     private void OnDisable()
     {
         SaveLoad.LoadEvent -= LoadDungeonState;// Unsubscribe on the load dungeon interectable objects states
-        Debug.Log("Unsubscribed");
     }
 
     protected virtual void Start()

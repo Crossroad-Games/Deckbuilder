@@ -79,19 +79,6 @@ public class CombatPlayer : MonoBehaviour
     {
         if (PauseGame.IsPaused)
             return;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            deck.SendCard(deck.cardsList[0], hand); // This would be the draw, sending the first card of deck to hand
-            Debug.Log("Chamou SendCard");
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            deck.Shuffle(); //shuffles the Deck
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            hand.SendCard(hand.cardsList[0], deck);
-        }
 
         //Mouse detection, what card is mouse hovering
         HoverMouse();
