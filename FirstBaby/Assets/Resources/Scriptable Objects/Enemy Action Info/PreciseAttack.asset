@@ -15,4 +15,8 @@ MonoBehaviour:
   thisID: 2
   thisName: Precise Attack
   thisDescription: Deals extra damage when the player has no sheild
-  BaseDamage: 5
+  isAttack: 1
+  isShield: 0
+  isSpecial: 0
+  BaseDamage: 10
+  BaseShield: 0

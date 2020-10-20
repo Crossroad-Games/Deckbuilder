@@ -7,14 +7,12 @@ public class BloodRitual : EnemyAction
 {
     [Header("Action values")]
     [SerializeField] private int BaseShield = 0;
-    [SerializeField] private float Multiplier = 4; // Modify this field to multiply damage
-    [SerializeField] private float Divider = 1;// Modify this field to divide damage
-    [SerializeField] private int AddedShield = 0;// Modify this field to add damage
-    [SerializeField] private int SubtractedShield = 0;// Modify this field to subtract damage
     private Dictionary<float,EnemyClass> AlliesHPandShield;
+    [SerializeField] private float thisMultiplier=4;
     void Awake()
     {
         BaseShield = myInfo.BaseShield;
+        Multiplier = thisMultiplier;// This skill's base multiplier
     }
     public override void Effect()
     {
@@ -31,8 +29,9 @@ public class BloodRitual : EnemyAction
        }
         AlliesHPandShield.Keys.ToList().Sort();// Order the dictionary from smallest to largest keys
         AlliesHPandShield.Keys.ToList().Reverse();// The first element is now the highest
-        var Highest= AlliesHPandShield.Keys.ToList()[0];// ACquires the largest value
-        myClass.GainShield((int)(Highest+AddedShield-SubtractedShield)*(int)(Multiplier/Divider));// Gain the largest value as shield
+        var Highest=(int) AlliesHPandShield.Keys.ToList()[0];// ACquires the largest value
+        var ShieldGain = CalculateAction(Highest);
+        myClass.GainShield(ShieldGain);// Gain the largest value as shield
         AlliesHPandShield[Highest].KillMe();// Kill the chosen enemy enemy
 
     } 

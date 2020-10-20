@@ -15,4 +15,8 @@ MonoBehaviour:
   thisID: 0
   thisName: Enemy Attack
   thisDescription: Basic attack action
-  BaseDamage: 5
+  isAttack: 1
+  isShield: 0
+  isSpecial: 0
+  BaseDamage: 8
+  BaseShield: 0

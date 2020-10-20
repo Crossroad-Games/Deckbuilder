@@ -15,8 +15,8 @@ MonoBehaviour:
   thisID: 1
   thisName: Leech Shield
   thisDescription: Steal shield from the player
+  isAttack: 1
+  isShield: 1
+  isSpecial: 0
   BaseDamage: 10
-  Multiplier: 1
-  Divider: 1
-  AddedDamaged: 0
-  SubtractedDamage: 0
+  BaseShield: 0

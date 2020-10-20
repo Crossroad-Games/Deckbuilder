@@ -10,6 +10,9 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] public EnemyData myData = new EnemyData(0,"",0,0,0,0,0);
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
     public List<EnemyAction> IntendedActions = new List<EnemyAction>();// Actions the enemy plan to execute
+    [SerializeField] private GameObject AttackIcon;// Icon that will display that this enemy will attack
+    [SerializeField] private GameObject ShieldIcon;// Icon that will display taht this enemy will defend/gain shield
+    [SerializeField] private GameObject SpecialIcon;// Icon that wiill display that this enemy will use a special effect
     protected float RandomValue;// This random value is rolled every end of turn and at start
     #endregion
 
@@ -115,12 +118,19 @@ public abstract class EnemyClass : MonoBehaviour
         RandomValue= UnityEngine.Random.value;// Generates a random value every end of turn
         EnemyManager.EndEnemyTurn();
     }
-    IEnumerator CheckIntention()
+    IEnumerator CheckIntention()// Delays the intention check
     {
         while(this!=null)// While this script exists
         {
-            Debug.Log("Verificando intenção");
             EnemyIntention();// Checks what the enemy is going to do
+            foreach(EnemyAction Action in IntendedActions)// Go through the enemy intended actions
+                if(Action!=null)// If action is not null
+                {
+                    AttackIcon.SetActive(Action.myInfo.isAttack);// Activate using the type of action as a boolean
+                    ShieldIcon.SetActive(Action.myInfo.isShield);// Activate using the type of action as a boolean
+                    SpecialIcon.SetActive(Action.myInfo.isSpecial);// Activate using the type of action as a boolean
+                    Action.ShowValue();// Show that skill damage value
+                }
             yield return new WaitForSeconds(.5f);// Hold for .5 seconds
         }
     }
