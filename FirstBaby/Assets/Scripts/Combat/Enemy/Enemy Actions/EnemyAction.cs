@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public abstract class EnemyAction : MonoBehaviour
 {
@@ -26,5 +27,12 @@ public abstract class EnemyAction : MonoBehaviour
             return player;
         }
     }
-    [SerializeField]protected EnemyActionInfo myInfo;
+    public virtual void ShowValue()// Display a numeric value that will represent the potency of this attack
+    {
+        if(myInfo.isAttack)// If it is an attack action
+            GetComponentInChildren<TMP_Text>().text = myInfo.BaseDamage <= 0 ? "?": $"{myInfo.BaseDamage}";// Show its damage, if there is no base damage show a question mark
+        else if(myInfo.isShield)
+            GetComponentInChildren<TMP_Text>().text = myInfo.BaseShield<=0? "?": $"{myInfo.BaseShield}";// Show its extra shield, if there is no base shield show a question mark
+    }
+    [SerializeField]public EnemyActionInfo myInfo;
 }
