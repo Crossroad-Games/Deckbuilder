@@ -9,6 +9,8 @@ public abstract class EnemyClass : MonoBehaviour
     #region Enemy Information
     [SerializeField] public EnemyData myData = new EnemyData(0,"",0,0,0,0,0);
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
+    public List<EnemyAction> IntendedActions = new List<EnemyAction>();// Actions the enemy plan to execute
+    protected float RandomValue;// This random value is rolled every end of turn and at start
     #endregion
 
     #region Death related methods
@@ -82,34 +84,45 @@ public abstract class EnemyClass : MonoBehaviour
     #endregion
 
     #region Enemy Behaviour
-    public abstract void CombatLogic(); // Logic used by the enemy to determine its actions
-    public virtual void Start()
+    public abstract void EnemyIntention(); // Logic used by the enemy to determine its actions
+    protected virtual void Start()
     {
-        foreach(EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
+        RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns
+        foreach (EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
         {
             if(Action!=null)// If not null
                 ActionList.Add(Action.ActionName,Action);// Adds each action on this gameobject to the dictionary
-            Debug.Log(Action.ActionName);
         }
+        StartCoroutine(CheckIntention());// Check if this enemy changed its intention every .5 seconds
     }
     public virtual void StartTurn()
     {
-        //Do a bunch of stuff
-
+     // Do a bunch of stuff
     }
     public virtual void ActionPhase()
     {
         if (TurnManager.State == CombatState.EnemyActionPhase)
         {
-            CombatLogic();// Go through all of its combat logic
+            foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
+                if (Action != null)// Check if its null
+                    Action.Effect();// Executes this action's effect
             EndTurn();// End its turn
         }
     }
-   
     public virtual void EndTurn()
     {
         //Do a bunch of stuff
+        RandomValue= UnityEngine.Random.value;// Generates a random value every end of turn
         EnemyManager.EndEnemyTurn();
+    }
+    IEnumerator CheckIntention()
+    {
+        while(this!=null)// While this script exists
+        {
+            Debug.Log("Verificando intenção");
+            EnemyIntention();// Checks what the enemy is going to do
+            yield return new WaitForSeconds(.5f);// Hold for .5 seconds
+        }
     }
     #endregion
 

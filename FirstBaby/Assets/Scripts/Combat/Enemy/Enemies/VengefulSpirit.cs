@@ -4,24 +4,14 @@ using UnityEngine;
 
 public class VengefulSpirit : EnemyClass
 {
-
-    // Update is called once per frame
-    void Update()
+    public override void EnemyIntention()
     {
-        
-    }
-    public override void CombatLogic()
-    {
-        if ((myData.EnemyHP + myData.EnemyShield) <= myData.EnemyMaxHP / 2)// If at or below 25% HP
-            ActionList["Blood Ritual"].Effect();// Attack for double damage
-        else if (Player.myData.PlayerShield == 0)// If the player does not have any shield
-            ActionList["Precise Attack"].Effect();// Attack for double damage
+        IntendedActions.Clear();// Clears this enemy's intend action list
+        if (((myData.EnemyHP + myData.EnemyShield) <= myData.EnemyMaxHP / 2) && EnemyManager.CombatEnemies.Count > 1)// If at or below 25% HP
+            IntendedActions.Add(ActionList["Blood Ritual"]);// Attack for double damage
+        else if (Player.myData.PlayerShield == 0)// If the player does not have any shield or 75% from random behaviour
+            IntendedActions.Add(ActionList["Precise Attack"]);// Attack for double damage
         else
-        {
-            if(Random.value<=.25)
-                ActionList["Enemy Attack"].Effect();// Attack and a small amount of damage
-            else
-                ActionList["Precise Attack"].Effect();// Attack for double damage
-        }
+            IntendedActions.Add(ActionList["Enemy Attack"]);// Attack and a small amount of damage
     }
 }

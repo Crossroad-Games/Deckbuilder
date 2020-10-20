@@ -12,22 +12,17 @@ public class MischievousSpirit : EnemyClass
     {
         
     }
-    public override void CombatLogic()
+    public override void EnemyIntention()
     {
-        if (myData.Position == 0 && (EnemyManager.CombatEnemies.Count) >= 3)// If there are 3 enemies and this is the first one: Steal the player shield
+        IntendedActions.Clear();// Clears this enemy's intend action list
+        if ((myData.Position == 0 && (EnemyManager.CombatEnemies.Count) >= 3) || RandomValue>.7)// If there are 3 enemies and this is the first one: Steal the player shield
         {
-            Debug.Log("Leeched");
-            ActionList["Leech Shield"].Effect();// Use this action 
+            // If it is not 100% set to leech shield, 30% chance to leech shield
+            IntendedActions.Add(ActionList["Leech Shield"]);// Use this action 
         }
-        else if (Random.value <= .7)
+        else if (RandomValue <= .7)// If it is not 100% set to leech shield, 70% chance to attack
         {
-            Debug.Log("Attacked");
-            ActionList["Enemy Attack"].Effect();// Use this action 
-        }
-        else
-        {
-            Debug.Log("Leeched");
-            ActionList["Leech Shield"].Effect();// Use this action 
+            IntendedActions.Add(ActionList["Enemy Attack"]);// Use this action 
         }
     }
 }
