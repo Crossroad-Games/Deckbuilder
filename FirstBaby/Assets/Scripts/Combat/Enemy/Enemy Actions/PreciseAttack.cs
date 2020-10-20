@@ -19,6 +19,6 @@ public class PreciseAttack : EnemyAction
         var Damage = (int)Mathf.Ceil((myInfo.BaseDamage + AddedDamaged - SubtractedDamage) * (Multiplier / Divider));// Calculates the final damage
         if (Player.myData.PlayerShield == 0)// If the player doesnt have any shield
             Damage *= 2;// Double its damage
-        Player.ProcessDamage(Damage);// Apply damage to the player
+        Player.ProcessDamage(myClass,Damage);// Apply damage to the player
     }
 }
