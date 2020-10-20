@@ -9,6 +9,8 @@ public abstract class EnemyAction : MonoBehaviour
     public string ActionName { get { return myInfo.thisName; } protected set { } }
     public string Description { get { return myInfo.thisDescription; } protected set { } }
     public abstract void Effect();// Every Action must have an Effect
+    protected int AddValue=0, SubtractValue=0;
+    protected float Multiplier = 1, Divider=1;
     private EnemyClass myclass;
     public EnemyClass myClass// Keeps reference to which Enemy Class has ownership over this script
     {
@@ -30,9 +32,13 @@ public abstract class EnemyAction : MonoBehaviour
     public virtual void ShowValue()// Display a numeric value that will represent the potency of this attack
     {
         if(myInfo.isAttack)// If it is an attack action
-            GetComponentInChildren<TMP_Text>().text = myInfo.BaseDamage <= 0 ? "?": $"{myInfo.BaseDamage}";// Show its damage, if there is no base damage show a question mark
+            GetComponentInChildren<TMP_Text>().text = myInfo.BaseDamage <= 0 ? "?": $"{CalculateAction(myInfo.BaseDamage)}";// Show its damage, if there is no base damage show a question mark
         else if(myInfo.isShield)
-            GetComponentInChildren<TMP_Text>().text = myInfo.BaseShield<=0? "?": $"{myInfo.BaseShield}";// Show its extra shield, if there is no base shield show a question mark
+            GetComponentInChildren<TMP_Text>().text = myInfo.BaseShield<=0? "?": $"{CalculateAction(myInfo.BaseShield)}";// Show its extra shield, if there is no base shield show a question mark
+    }
+    protected virtual int CalculateAction(int ActionValue)
+    {
+        return (int)Mathf.Ceil((ActionValue + AddValue - SubtractValue) * (Multiplier / Divider));// Calculates the final damage
     }
     [SerializeField]public EnemyActionInfo myInfo;
 }

@@ -18,5 +18,5 @@ MonoBehaviour:
   isAttack: 1
   isShield: 0
   isSpecial: 0
-  BaseDamage: 5
+  BaseDamage: 8
   BaseShield: 0

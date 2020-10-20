@@ -12,22 +12,20 @@ public class EnemyAttack : EnemyAction
     [Space(5)]
     [Header("Action values")]
     [SerializeField] private int BaseDamage=5;
-    [SerializeField] private float Multiplier=1; // Modify this field to multiply damage
-    [SerializeField] private float Divider = 1;// Modify this field to divide damage
-    [SerializeField] private int AddedDamaged = 0;// Modify this field to add damage
-    [SerializeField] private int SubtractedDamage = 0;// Modify this field to subtract damage
     void Awake()
     {
         // Sets the information of ID, Name and Description of this Action //
         ActionID = thisID;
         ActionName = thisName;
         Description = thisDescription;
+        BaseDamage = myInfo.BaseDamage;
     }
     public override void Effect()
     {
         // Deal damage to the player
-        var Damage = (int) Mathf.Ceil((BaseDamage + AddedDamaged - SubtractedDamage)*(Multiplier/Divider));// Calculates the final damage
+        var Damage = CalculateAction(BaseDamage);
         Player.ProcessDamage(Damage);// Apply damage to the player
         
     }
+    
 }
