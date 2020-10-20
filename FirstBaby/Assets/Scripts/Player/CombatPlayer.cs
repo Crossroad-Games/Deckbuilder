@@ -33,6 +33,7 @@ public class CombatPlayer : MonoBehaviour
     public Action<GameObject> OnCardUnselected;
     public Action<GameObject> OnTargetCardUsed;
     public Action<GameObject> OnNonTargetCardUsed;
+    public Action<EnemyClass, int> OnPlayerProcessDamage;
     #endregion
 
     #region Fields and Properties
@@ -115,12 +116,16 @@ public class CombatPlayer : MonoBehaviour
         // Any other methods that should be called when adding shield to the player's shield pool
         myData.PlayerShield += ShieldAmount;// Adds this amount to the player's shield pool
     }
-    public void ProcessDamage(int Damage)
+    public void ProcessDamage(EnemyClass attackingEnemy, int RawDamageTaken)
     {
-        Damage -= myData.PlayerDefense;// Reduce the damage by the enemy defense
-        Damage -= SpendShield(Damage);// Spend the shield pool to reduce the incoming damage
-        Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
-        LoseLife(Damage);// Apply damage to the enemy's HP
+        if(OnPlayerProcessDamage != null)
+        {
+            OnPlayerProcessDamage(attackingEnemy, RawDamageTaken);
+        }
+        RawDamageTaken -= myData.PlayerDefense;// Reduce the damage by the enemy defense
+        RawDamageTaken -= SpendShield(RawDamageTaken);// Spend the shield pool to reduce the incoming damage
+        RawDamageTaken = RawDamageTaken <= 0 ? 0 : RawDamageTaken;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        LoseLife(RawDamageTaken);// Apply damage to the enemy's HP
     }
     
     private void LoseLife(int Amount)

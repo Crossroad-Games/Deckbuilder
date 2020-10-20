@@ -27,7 +27,7 @@ public class EnemyAttack : EnemyAction
     {
         // Deal damage to the player
         var Damage = (int) Mathf.Ceil((BaseDamage + AddedDamaged - SubtractedDamage)*(Multiplier/Divider));// Calculates the final damage
-        Player.ProcessDamage(Damage);// Apply damage to the player
+        Player.ProcessDamage(myClass, Damage);// Apply damage to the player
         
     }
 }

@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00415589a7a49f45b22175c357eaf6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 8940200078548064850, guid: 82b8a8c25805f0d42b07317487e9bffc, type: 3}
+  Player: {fileID: 0}
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
@@ -107,8 +107,6 @@ MonoBehaviour:
   returningToHand: 0
   beingHovered: 0
   type: none
-  CardCD: 0
-  CurrentCD: 0
   followCardPositionToFollow: 0
 --- !u!61 &188558876064980337
 BoxCollider2D:
