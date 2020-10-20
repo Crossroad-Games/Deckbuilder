@@ -134,11 +134,9 @@ MonoBehaviour:
     PlayerShield: 0
     Name: 
   Enemies:
-  - {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-  - {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-  - {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-  - {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
-  - {fileID: 4577537696564339694, guid: 51945e83610b2ca4d8af297f447c6051, type: 3}
+  - {fileID: 5075110614363377447, guid: aab832475b5cc2946a943bcbde9eb8f0, type: 3}
+  - {fileID: 5075110614363377447, guid: aab832475b5cc2946a943bcbde9eb8f0, type: 3}
+  - {fileID: 5075110614363377447, guid: 39ba7bde4d57ce540838d5e30984afcb, type: 3}
 --- !u!1 &870595290
 GameObject:
   m_ObjectHideFlags: 0

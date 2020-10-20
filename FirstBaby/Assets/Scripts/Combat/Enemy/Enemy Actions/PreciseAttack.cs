@@ -14,7 +14,7 @@ public class PreciseAttack : EnemyAction
     {
         var Damage = CalculateAction(myInfo.BaseDamage);// Calculates the final damage
         
-        Player.ProcessDamage(Damage);// Apply damage to the player
+        Player.ProcessDamage(myClass,Damage);// Apply damage to the player
     }
     public override void ShowValue()
     {
