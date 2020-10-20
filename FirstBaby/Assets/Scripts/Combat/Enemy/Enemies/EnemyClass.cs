@@ -10,9 +10,9 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] public EnemyData myData = new EnemyData(0,"",0,0,0,0,0);
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
     public List<EnemyAction> IntendedActions = new List<EnemyAction>();// Actions the enemy plan to execute
-    [SerializeField] private GameObject AttackIcon;// Icon that will display that this enemy will attack
-    [SerializeField] private GameObject ShieldIcon;// Icon that will display taht this enemy will defend/gain shield
-    [SerializeField] private GameObject SpecialIcon;// Icon that wiill display that this enemy will use a special effect
+    [SerializeField] private GameObject AttackIcon=null;// Icon that will display that this enemy will attack
+    [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
+    [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
     protected float RandomValue;// This random value is rolled every end of turn and at start
     #endregion
 
