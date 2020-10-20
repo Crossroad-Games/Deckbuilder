@@ -870,6 +870,54 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[0].x
+      value: 430
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[0].y
+      value: 345
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[1].x
+      value: 645
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[1].y
+      value: 345
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[2].x
+      value: 540
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[2].y
+      value: 185
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[3].x
+      value: 430
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[4].x
+      value: 645
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[3].y
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[3].z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123955207076091542, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
+      propertyPath: HPPositions.Array.data[4].y
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4123955207076091543, guid: 660ccfd7f8fb5da499045e0e8489beba, type: 3}
       propertyPath: m_Name
       value: Enemy Manager

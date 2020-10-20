@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.UI;
 
 public abstract class EnemyClass : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
     protected float RandomValue;// This random value is rolled every end of turn and at start
+    private Image HPBarFill;
     #endregion
 
     #region Death related methods
@@ -41,6 +43,7 @@ public abstract class EnemyClass : MonoBehaviour
     {
         myData.EnemyHP -= Amount;// Reduce enemy's HP by a given Amount
         myData.EnemyHP = myData.EnemyHP <= 0 ? 0 : myData.EnemyHP;// Check if HP is below zero
+        HPBarFill.fillAmount = (float) myData.EnemyHP / myData.EnemyMaxHP;
         DeathConditionCheck();// Check if the enemy is dead;
     }
     protected virtual void GainLife(int Amount) => myData.EnemyHP += Amount;// Raises enemy HP
@@ -90,6 +93,12 @@ public abstract class EnemyClass : MonoBehaviour
     public abstract void EnemyIntention(); // Logic used by the enemy to determine its actions
     protected virtual void Start()
     {
+        #region HP Bar Setup
+        GameObject hpUI = Instantiate(Resources.Load("UI/EnemyUI/HP Bar Anchor"), EnemyManager.HPPositions[myData.Position], Quaternion.identity) as GameObject;
+        hpUI.transform.SetParent(transform.Find("Enemy Canvas"),false);
+        HPBarFill = hpUI.transform.Find("Bar Fill").GetComponent<Image>();
+        HPBarFill.fillAmount = (float)myData.EnemyHP / myData.EnemyMaxHP;
+        #endregion
         RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns
         foreach (EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
         {
