@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 public abstract class EnemyClass : MonoBehaviour
 {
@@ -14,8 +15,14 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private GameObject AttackIcon=null;// Icon that will display that this enemy will attack
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
+    [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
     protected float RandomValue;// This random value is rolled every end of turn and at start
     private Image HPBarFill;
+    #endregion
+
+    #region Events
+    public Action OnEnemyGainShield;
+    public Action OnEnemySpendShield;
     #endregion
 
     #region Death related methods
@@ -51,12 +58,14 @@ public abstract class EnemyClass : MonoBehaviour
     {
         // Any other methods that should be called when adding shield to the player's shield pool
         myData.EnemyShield += ShieldAmount;// Adds this amount to the player's shield pool
+        OnEnemyGainShield?.Invoke();// Event called when enemy has gained shield
     }
     protected virtual int SpendShield(int Amount)// Spend an Amount of shield
     {
         int CurrentShield = myData.EnemyShield;// Current shield pool
         myData.EnemyShield -= Amount;// Reduce the pool by the amount of damage being applied
         myData.EnemyShield = myData.EnemyShield <= 0 ? 0 : myData.EnemyShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        OnEnemySpendShield?.Invoke();// Event called when enemy has spent shield
         return CurrentShield;
     }
     public virtual void ProcessDamage(int Damage)// Modifies the incoming damage before applying it to the HP
@@ -91,6 +100,19 @@ public abstract class EnemyClass : MonoBehaviour
 
     #region Enemy Behaviour
     public abstract void EnemyIntention(); // Logic used by the enemy to determine its actions
+
+    protected virtual void Awake()
+    {
+        OnEnemyGainShield += UpdateShield;
+        OnEnemySpendShield += UpdateShield;
+    }
+
+    private void OnDisable()
+    {
+        OnEnemyGainShield -= UpdateShield;
+        OnEnemySpendShield -= UpdateShield;
+    }
+
     protected virtual void Start()
     {
         #region HP Bar Setup
@@ -99,6 +121,11 @@ public abstract class EnemyClass : MonoBehaviour
         HPBarFill = hpUI.transform.Find("Bar Fill").GetComponent<Image>();
         HPBarFill.fillAmount = (float)myData.EnemyHP / myData.EnemyMaxHP;
         #endregion
+
+        #region UI Update
+        UpdateShield();
+        #endregion
+
         RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns
         foreach (EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
         {
@@ -142,6 +169,13 @@ public abstract class EnemyClass : MonoBehaviour
                 }
             yield return new WaitForSeconds(.5f);// Hold for .5 seconds
         }
+    }
+    #endregion
+
+    #region UI Update
+    public void UpdateShield()
+    {
+        ShieldAmount.text = "Shield : " + myData.EnemyShield;
     }
     #endregion
 

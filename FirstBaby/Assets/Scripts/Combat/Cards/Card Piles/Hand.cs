@@ -33,6 +33,8 @@ public class Hand : CardPile
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
     private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
+    private Quaternion highlightPreviousRotation;
+    private float highlightPreviousHeight;
 
     #endregion
 
@@ -322,10 +324,14 @@ public class Hand : CardPile
                 //Highlight the card
                 if (physicalCardsInHand[i] == card.GetComponent<Card>())
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, -1.5f);
-                    if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 2f)
+                    highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, -0.9f, cardPositionsToFollow[physicalCardsInHand[i]].position.z - 1.5f);
+                    highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
+                    if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)
                     {
                         card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
+                        card.transform.rotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
                     }
                     card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardHighlightScale;
                 }
@@ -360,10 +366,12 @@ public class Hand : CardPile
                 //Unhighlight the card
                 if (physicalCardsInHand[i] == card.GetComponent<Card>())
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0f, 0f, 1.5f);
-                    if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 2f)
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, highlightPreviousHeight, cardPositionsToFollow[physicalCardsInHand[i]].position.z + 1.5f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = highlightPreviousRotation;
+                    if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)
                     {
                         card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
+                        card.transform.rotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
                     }
                     card.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
                 }

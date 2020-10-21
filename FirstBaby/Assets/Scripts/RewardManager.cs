@@ -133,6 +133,10 @@ public class RewardManager : MonoBehaviour
             throw new Exception("not in combat scene neither in dungeon scene");
     }
     
+    public void SkipSelection()
+    {
+        StopSelection(); // Stop the selection
+    }
 
     public void StopSelection()
     {
