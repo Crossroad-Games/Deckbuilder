@@ -23,6 +23,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private LayerMask cardLayer=0;
     [SerializeField] private LayerMask handZoneLayer=0;
     [SerializeField] private Image HPBarFill=null;
+    [SerializeField] private TMP_Text HPBarValue = null;
     private int InitialHP;// HP at the start of combat
     private Button EndTurnButton=null;
     private TurnManager TurnMaster;
@@ -58,6 +59,7 @@ public class CombatPlayer : MonoBehaviour
     {
         myData = CombatGameData.Current.PlayerData;
         InitialHP = myData.PlayerLifeForce;// Sets the initial HP value when entering combat
+        HPBarValue.text = myData.PlayerLifeForce + "/" + InitialHP;
     } 
     private void Awake()
     {
@@ -148,7 +150,8 @@ public class CombatPlayer : MonoBehaviour
     {
         myData.PlayerLifeForce -= Amount;
         HPBarFill.fillAmount = ((float)myData.PlayerLifeForce / InitialHP) <= 1? ((float)myData.PlayerLifeForce / InitialHP) : 1;// Fill ball is based on the current amount of HP over initial amount of HP
-        if(myData.PlayerLifeForce <=0)
+        HPBarValue.text = myData.PlayerLifeForce + "/" + InitialHP;
+        if (myData.PlayerLifeForce <=0)
         {
             Die();
         }

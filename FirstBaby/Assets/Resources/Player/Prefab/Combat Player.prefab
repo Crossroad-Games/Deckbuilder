@@ -340,6 +340,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   HPBarFill: {fileID: 1105143534307692816}
+  HPBarValue: {fileID: 3342731464244187231}
   isHoveringCard: 0
   releasedMouseNotOnEnemy: 0
 --- !u!114 &8940200078548064849
@@ -425,6 +426,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8940200078548064851}
     m_Modifications:
+    - target: {fileID: 4129718167303024832, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129718167303024832, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4129718167303024832, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5541967512841535236, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5541967513514148674, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
@@ -553,6 +570,22 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5541967514318043246, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916343710401394978, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_text
+      value: 100/100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916343710401394978, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916343710401394978, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
 --- !u!224 &1105143534418301931 stripped
@@ -569,5 +602,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3342731464244187231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7916343710401394978, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+  m_PrefabInstance: {fileID: 4881695455850047869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
