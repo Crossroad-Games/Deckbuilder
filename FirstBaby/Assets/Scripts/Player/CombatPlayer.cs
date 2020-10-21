@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using TMPro;
 
 public class CombatPlayer : MonoBehaviour
 {
     [Header("Player Information")]
     #region Player Information
     [SerializeField]public CombatPlayerData myData= new CombatPlayerData();
+    [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the player has
     #endregion
     [Space(5)]
     #region References
@@ -36,6 +38,8 @@ public class CombatPlayer : MonoBehaviour
     public Action<GameObject> OnTargetCardUsed;
     public Action<GameObject> OnNonTargetCardUsed;
     public Action<EnemyClass, int> OnPlayerProcessDamage;
+    public Action OnPlayerSpendShield;
+    public Action OnPlayerGainShield;
     #endregion
 
     #region Fields and Properties
@@ -60,6 +64,8 @@ public class CombatPlayer : MonoBehaviour
         //Initialization
         OnMouseEnterCard += MouseStartedPointingToCard;
         OnMouseExitCard += MouseStoppedPointingToCard;
+        OnPlayerGainShield += UpdateShield;
+        OnPlayerSpendShield += UpdateShield;
         SaveLoad.LoadEvent += LoadSaveData;// Subscribes this method to the load event so that the player data is synced to the save file
         PauseGame.PauseEvent += FlipEndButton;
         isHoveringCard = false;
@@ -77,6 +83,8 @@ public class CombatPlayer : MonoBehaviour
     {
         OnMouseEnterCard -= MouseStartedPointingToCard;
         OnMouseExitCard -= MouseStoppedPointingToCard;
+        OnPlayerGainShield -= UpdateShield;
+        OnPlayerSpendShield -= UpdateShield;
         SaveLoad.LoadEvent -= LoadSaveData;
         PauseGame.PauseEvent -= FlipEndButton;
     }
@@ -111,6 +119,7 @@ public class CombatPlayer : MonoBehaviour
         int CurrentShield = myData.PlayerShield;// Current shield pool
         myData.PlayerShield -= Amount;// Reduce the pool by the amount of damage being applied
         myData.PlayerShield = myData.PlayerShield <= 0 ? 0 : myData.PlayerShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        OnPlayerSpendShield?.Invoke();
         return CurrentShield;
     }
     public int LoseShield(int ShieldAmount)// Lose shield to some external effect
@@ -121,6 +130,7 @@ public class CombatPlayer : MonoBehaviour
     {
         // Any other methods that should be called when adding shield to the player's shield pool
         myData.PlayerShield += ShieldAmount;// Adds this amount to the player's shield pool
+        OnPlayerGainShield?.Invoke();
     }
     public void ProcessDamage(EnemyClass attackingEnemy, int RawDamageTaken)
     {
@@ -381,5 +391,12 @@ public class CombatPlayer : MonoBehaviour
         return false;
     }
 
+    #endregion
+
+    #region UI Update
+    public void UpdateShield()
+    {
+        ShieldAmount.text = "Shield : " + myData.PlayerShield;
+    }
     #endregion
 }
