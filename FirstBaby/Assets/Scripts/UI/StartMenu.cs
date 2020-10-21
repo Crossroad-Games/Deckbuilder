@@ -81,15 +81,9 @@ public class StartMenu : MonoBehaviour
     }
     public void DeleteGame(int SaveNumber)// Deletes all save files with that name
     {
-        var dataPath = Path.Combine(Application.persistentDataPath, GameData[SaveNumber].PlayerData.Name + ".Combat");// Delete the information at this location
-        if (File.Exists(dataPath))// If there is an initial state
-            File.Delete(dataPath);// Delete it
-        dataPath = Path.Combine(Application.persistentDataPath, GameData[SaveNumber].PlayerData.Name + ".Dungeon");// Delete the information at this location
-        if (File.Exists(dataPath))// If there is an initial state
-            File.Delete(dataPath);// Delete it
-        dataPath = Path.Combine(Application.persistentDataPath, GameData[SaveNumber].PlayerData.Name + ".Previous");// Delete the information at this location
-        if (File.Exists(dataPath))// If there is an initial state
-            File.Delete(dataPath);// Delete it
+        DirectoryInfo SaveFolder = new DirectoryInfo(Application.persistentDataPath);// Folder path
+        foreach(FileInfo SaveFile in SaveFolder.GetFiles(GameData[SaveNumber].PlayerData.Name+".*"))
+            File.Delete(SaveFile.FullName);
         GameData.RemoveAt(SaveNumber);
     }
     public void UsernameInput(string Username)
@@ -100,25 +94,15 @@ public class StartMenu : MonoBehaviour
         {
             foreach (DungeonGameData Save in GameData)// Go through all the saves
                 if (Save != null)// Check if its null before checking its name
-                    if (Save.PlayerData.Name != Username)// Verify if the user's input is not going to override any other saves
+                    if (Save.PlayerData.Name == Username)// Verify if the user's input is not going to override any other saves
                     {
-                        PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
-                        ConfirmNewSave.GetComponent<Button>().interactable = true;// You can't confirm your name selection
-                        ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Start Save";// Display to the player that this username is already taken
-                    }
-                    else
-                    {
-                        Debug.Log(Save.PlayerData.Name);
                         ConfirmNewSave.GetComponent<Button>().interactable = false;// You can't confirm your name selection
                         ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Name taken";// Display to the player that this username is already taken
-                        break;
+                        return;
                     }
-                else
-                {
-                    PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
-                    ConfirmNewSave.GetComponent<Button>().interactable = true;// You can't confirm your name selection
-                    ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Start Save";// Display to the player that this username is already taken
-                }
+            PlayerPrefs.SetString("Name", Username);// Set the Player Name based on the user input
+            ConfirmNewSave.GetComponent<Button>().interactable = true;// You can't confirm your name selection
+            ConfirmNewSave.GetComponentInChildren<TMP_Text>().text = "Start Save";// Display to the player that this username is already taken
         }
            
     }

@@ -38,28 +38,39 @@ public class SaveLoad : MonoBehaviour
     }
     private void SaveDungeon()// Method called to save the player's dungeon information
     {
+        #region Checkpoint save
         string jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         dataPath= Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Previous");// Path to a copy of your current state to be stored as a previous save points, accessed in case of player death
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
             streamWriter.Write(jsonString);// Writes the content in json format
         }
-        DungeonGameData.Current.InterectablesUsed.Clear(); //Clear the list so it doesn't just stack up
+        #endregion
+        #region Current Dungeon Player save
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this location
         Debug.Log("Save file path: "+ dataPath);
         DungeonGameData.Current.PlayerPosition = DungeonPlayer.transform.position;// Stores the player's position 
         DungeonGameData.Current.PlayerData = DungeonPlayer.myData;// Copies the player's instance of DungeonPlayerData
         DungeonGameData.Current.DungeonScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
         List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;
-        foreach(Interactable inter in dungeonInteractables)
-        {
-            DungeonGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
-        }
         jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
             streamWriter.Write(jsonString);// Writes the content in json format
         }
+        #endregion
+        #region Current Scene Objects save
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") +"."+ DungeonGameData.Current.DungeonScene);// Type of file for each dungeon scene
+        LevelGameData.Current.InterectablesUsed.Clear();// Clear the list before adding all the information
+        foreach (Interactable inter in dungeonInteractables)
+            LevelGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
+        jsonString = JsonUtility.ToJson(LevelGameData.Current, true);// Transforms the Data to Json format
+        using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
+        {
+            Debug.Log("Saving objects");
+            streamWriter.Write(jsonString);// Writes the content in json format
+        }
+        #endregion
     }
     private void SaveCombat()// This will save the data pertaining the combat information on a specific .Combat file
     {
@@ -135,12 +146,24 @@ public class SaveLoad : MonoBehaviour
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
-        List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;
-        if(dungeonInteractables.Count == DungeonGameData.Current.InterectablesUsed.Count)
+        if (DungeonGameData.Current.DungeonScene != string.Empty)// If there is a dungeon scene attached to this save
         {
-            for(int i=0; i < dungeonInteractables.Count; i++)
+            dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + DungeonGameData.Current.DungeonScene);// Locate that dungeon's save
+            if (File.Exists(dataPath))// If there is a save
+                JSONString = File.ReadAllText(dataPath);// Read the dungeon scene objects save
+        }
+        else
+        {
+            TextAsset myFile = Resources.Load<TextAsset>("Text/DefaultDungeon");
+            JSONString = myFile.text;
+        }
+        LevelGameData.Current = JsonUtility.FromJson<LevelGameData>(JSONString);// Load it into this object
+        List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;// Reference to the list of interactables on that scene
+        if (dungeonInteractables.Count == LevelGameData.Current.InterectablesUsed.Count)// Verify if information matches
+        {
+            for (int i = 0; i < dungeonInteractables.Count; i++)// Updates all values
             {
-                dungeonInteractables[i].Used = DungeonGameData.Current.InterectablesUsed[i]; // Go through all interactables and scene and convert get from data file the used infos
+                dungeonInteractables[i].Used = LevelGameData.Current.InterectablesUsed[i]; // Go through all interactables and scene and convert get from data file the used infos
             }
         }
     }
