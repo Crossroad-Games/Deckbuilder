@@ -18,18 +18,24 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private string GameScene= string.Empty;
     public void StartGame()
     {
+        Debug.Log(GameScene);
         if (CombatGameData.Current != null)// If there is a combat save
         {
+            Debug.Log(GameScene);
             // If there is saved scene string and the save file name is the same as your name
             if (CombatGameData.Current.CombatScene != string.Empty && CombatGameData.Current.PlayerData.Name==PlayerPrefs.GetString("Name"))
                 GameScene = CombatGameData.Current.CombatScene;// Go to this scene
+            Debug.Log(GameScene);
         }
         else
         {
+            Debug.Log(GameScene);
             if (DungeonGameData.Current != null)// If there is a dungeon save
-                if (DungeonGameData.Current.DungeonScene != string.Empty)// If there is a saved scene string
+                if (DungeonGameData.Current.DungeonScene != string.Empty && DungeonGameData.Current.PlayerData.Name == PlayerPrefs.GetString("Name"))// If there is a saved scene string
                     GameScene = DungeonGameData.Current.DungeonScene;// Go to this scene
+            Debug.Log(GameScene);
         }
+        Debug.Log(GameScene);
         SceneManager.LoadSceneAsync(GameScene, LoadSceneMode.Single);// Loads the Dungeon Scene
 
     }
@@ -81,10 +87,25 @@ public class StartMenu : MonoBehaviour
     }
     public void DeleteGame(int SaveNumber)// Deletes all save files with that name
     {
-        DirectoryInfo SaveFolder = new DirectoryInfo(Application.persistentDataPath);// Folder path
-        foreach(FileInfo SaveFile in SaveFolder.GetFiles(GameData[SaveNumber].PlayerData.Name+".*"))
-            File.Delete(SaveFile.FullName);
-        GameData.RemoveAt(SaveNumber);
+        if (GameData[SaveNumber] != null)
+        {
+            DirectoryInfo SaveFolder = new DirectoryInfo(Application.persistentDataPath);// Folder path
+            foreach (FileInfo SaveFile in SaveFolder.GetFiles(GameData[SaveNumber].PlayerData.Name + ".*"))
+                File.Delete(SaveFile.FullName);
+            GameData.RemoveAt(SaveNumber);
+            var JSONString = string.Empty;// Empty string will store all the text in the save file
+            var iterator = 0;// Iterator will be used to link the data information to the save button text
+            foreach (FileInfo SaveFile in SaveFolder.GetFiles().Where(File => File.Name.EndsWith(".Dungeon")))// Go through all .Dungeon Files on the folder
+            {
+                StreamReader SR = new StreamReader(SaveFile.FullName);// Creates a reading path to that file
+                JSONString = SR.ReadToEnd();// Read the whole file and store it on a string
+                GameData.Add(JsonUtility.FromJson<DungeonGameData>(JSONString));// Convert the JSON string to DungeonGameData
+                SaveButtons[iterator].gameObject.transform.Find("Username").GetComponent<TMP_Text>().text = GameData[iterator].PlayerData.Name;// Sets the button's text to be the username on the save file
+                SaveButtons[iterator].interactable = true;// You can choose this save
+                DeleteSaveButtons[iterator].gameObject.SetActive(true);// Activates this gameobject
+                iterator++;// Increment iterator 
+            }
+        }          
     }
     public void UsernameInput(string Username)
     {

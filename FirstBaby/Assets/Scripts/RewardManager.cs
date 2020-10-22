@@ -27,7 +27,7 @@ public class RewardManager : MonoBehaviour
     private void Awake()
     {
         //Initialization
-        cardDatabase = GameObject.Find("Card Database").GetComponent<CardDatabase>();
+        cardDatabase = GameObject.Find("Game Master").GetComponent<CardDatabase>();
         thisSceneSaveLoad = GameObject.Find("Game Master").GetComponent<SaveLoad>();
         //--------------------
     }
