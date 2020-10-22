@@ -18,24 +18,18 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private string GameScene= string.Empty;
     public void StartGame()
     {
-        Debug.Log(GameScene);
         if (CombatGameData.Current != null)// If there is a combat save
         {
-            Debug.Log(GameScene);
             // If there is saved scene string and the save file name is the same as your name
             if (CombatGameData.Current.CombatScene != string.Empty && CombatGameData.Current.PlayerData.Name==PlayerPrefs.GetString("Name"))
                 GameScene = CombatGameData.Current.CombatScene;// Go to this scene
-            Debug.Log(GameScene);
         }
         else
         {
-            Debug.Log(GameScene);
             if (DungeonGameData.Current != null)// If there is a dungeon save
                 if (DungeonGameData.Current.DungeonScene != string.Empty && DungeonGameData.Current.PlayerData.Name == PlayerPrefs.GetString("Name"))// If there is a saved scene string
                     GameScene = DungeonGameData.Current.DungeonScene;// Go to this scene
-            Debug.Log(GameScene);
         }
-        Debug.Log(GameScene);
         SceneManager.LoadSceneAsync(GameScene, LoadSceneMode.Single);// Loads the Dungeon Scene
 
     }

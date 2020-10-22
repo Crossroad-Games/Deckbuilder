@@ -148,12 +148,9 @@ public class SaveLoad : MonoBehaviour
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
-        if (DungeonGameData.Current.DungeonScene != string.Empty)// If there is a dungeon scene attached to this save
-        {
-            dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + DungeonGameData.Current.DungeonScene);// Locate that dungeon's save
-            if (File.Exists(dataPath))// If there is a save
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + SceneManager.GetActiveScene().name);// Locate that dungeon's save
+        if (File.Exists(dataPath))// If there is a dungeon scene attached to this save
                 JSONString = File.ReadAllText(dataPath);// Read the dungeon scene objects save
-        }
         else
         {
             TextAsset myFile = Resources.Load<TextAsset>("Text/DefaultDungeon");

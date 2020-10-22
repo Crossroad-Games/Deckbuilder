@@ -159,7 +159,9 @@ public class RewardManager : MonoBehaviour
         {
             CardSelectionUI.SetActive(false);
             dungeonPlayer.GetComponent<PlayerMovement>().canMove = true;
+            thisSceneSaveLoad.SaveGame();// Save the game
         }
+       
     }
     #endregion
 
