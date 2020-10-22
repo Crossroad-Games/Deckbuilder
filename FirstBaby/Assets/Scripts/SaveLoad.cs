@@ -48,11 +48,13 @@ public class SaveLoad : MonoBehaviour
         #endregion
         #region Current Dungeon Player save
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this location
-        Debug.Log("Save file path: "+ dataPath);
         DungeonGameData.Current.PlayerPosition = DungeonPlayer.transform.position;// Stores the player's position 
         DungeonGameData.Current.PlayerData = DungeonPlayer.myData;// Copies the player's instance of DungeonPlayerData
         DungeonGameData.Current.DungeonScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
         List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;
+        DungeonGameData.Current.InterectablesUsed.Clear();// Clear the list before adding all the information
+        foreach (Interactable inter in dungeonInteractables)
+            DungeonGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
         jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
@@ -61,13 +63,13 @@ public class SaveLoad : MonoBehaviour
         #endregion
         #region Current Scene Objects save
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") +"."+ DungeonGameData.Current.DungeonScene);// Type of file for each dungeon scene
+        Debug.Log("Save file path: " + dataPath);
         LevelGameData.Current.InterectablesUsed.Clear();// Clear the list before adding all the information
         foreach (Interactable inter in dungeonInteractables)
             LevelGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
         jsonString = JsonUtility.ToJson(LevelGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
-            Debug.Log("Saving objects");
             streamWriter.Write(jsonString);// Writes the content in json format
         }
         #endregion
@@ -146,12 +148,9 @@ public class SaveLoad : MonoBehaviour
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
-        if (DungeonGameData.Current.DungeonScene != string.Empty)// If there is a dungeon scene attached to this save
-        {
-            dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + DungeonGameData.Current.DungeonScene);// Locate that dungeon's save
-            if (File.Exists(dataPath))// If there is a save
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + SceneManager.GetActiveScene().name);// Locate that dungeon's save
+        if (File.Exists(dataPath))// If there is a dungeon scene attached to this save
                 JSONString = File.ReadAllText(dataPath);// Read the dungeon scene objects save
-        }
         else
         {
             TextAsset myFile = Resources.Load<TextAsset>("Text/DefaultDungeon");

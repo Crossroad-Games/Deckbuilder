@@ -386,7 +386,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2179629997331758591, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
         m_TargetAssemblyTypeName: SaveLoad, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 1

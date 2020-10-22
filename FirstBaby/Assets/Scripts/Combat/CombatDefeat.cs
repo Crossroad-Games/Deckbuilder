@@ -57,6 +57,12 @@ public class CombatDefeat : MonoBehaviour
         {
             streamWriter.Write(JSONString);// Writes the content in json format
         }
+        dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + DungeonGameData.Current.DungeonScene);// Type of file for each dungeon scene
+        LevelGameData.Current.InterectablesUsed = DungeonGameData.Current.InterectablesUsed;// Copies the previous state of the interactables
+        using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
+        {
+            streamWriter.Write(JSONString);// Writes the content in json format
+        }
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Combat");// Acquires the path to the combat file
         if (File.Exists(dataPath))// If there is an initial state
             File.Delete(dataPath);// Delete it

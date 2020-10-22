@@ -27,7 +27,7 @@ public class StartMenu : MonoBehaviour
         else
         {
             if (DungeonGameData.Current != null)// If there is a dungeon save
-                if (DungeonGameData.Current.DungeonScene != string.Empty)// If there is a saved scene string
+                if (DungeonGameData.Current.DungeonScene != string.Empty && DungeonGameData.Current.PlayerData.Name == PlayerPrefs.GetString("Name"))// If there is a saved scene string
                     GameScene = DungeonGameData.Current.DungeonScene;// Go to this scene
         }
         SceneManager.LoadSceneAsync(GameScene, LoadSceneMode.Single);// Loads the Dungeon Scene
@@ -81,10 +81,13 @@ public class StartMenu : MonoBehaviour
     }
     public void DeleteGame(int SaveNumber)// Deletes all save files with that name
     {
-        DirectoryInfo SaveFolder = new DirectoryInfo(Application.persistentDataPath);// Folder path
-        foreach(FileInfo SaveFile in SaveFolder.GetFiles(GameData[SaveNumber].PlayerData.Name+".*"))
-            File.Delete(SaveFile.FullName);
-        GameData.RemoveAt(SaveNumber);
+        if (GameData[SaveNumber] != null)
+        {
+            DirectoryInfo SaveFolder = new DirectoryInfo(Application.persistentDataPath);// Folder path
+            foreach (FileInfo SaveFile in SaveFolder.GetFiles(GameData[SaveNumber].PlayerData.Name + ".*"))
+                File.Delete(SaveFile.FullName);
+            GameData[SaveNumber] = null;
+        }          
     }
     public void UsernameInput(string Username)
     {
