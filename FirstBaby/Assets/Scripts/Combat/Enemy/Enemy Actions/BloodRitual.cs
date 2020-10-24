@@ -8,7 +8,7 @@ public class BloodRitual : EnemyAction
     [Header("Action values")]
     [SerializeField] private int BaseShield = 0;
     private Dictionary<float,EnemyClass> AlliesHPandShield;
-    [SerializeField] private float thisMultiplier=4;
+    [SerializeField] private float thisMultiplier=2.5f;
     void Awake()
     {
         BaseShield = myInfo.BaseShield;

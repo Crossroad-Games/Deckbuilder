@@ -14,11 +14,12 @@ public class RewardManager : MonoBehaviour
     [SerializeField] private GameObject CardSelectionUI = null;
     [SerializeField] private List<Button> cardOptionsButtons = null;
     [SerializeField] private List<TMP_Text> cardOptionsCosts = null;// Text that will show the card's cost in resources
-
+    [Space(5)]
     #region References
     private CombatPlayer combatPlayer;// Reference to the combat player
     private DungeonPlayer dungeonPlayer; //Reference to the player in the dungeon
     private SaveLoad thisSceneSaveLoad;// Reference to the SaveLoad present in the current scene 
+    [SerializeField] private int AnimaGain=0;
     #endregion
 
     private Dictionary<Button, CardInfo> cardOptions = new Dictionary<Button, CardInfo>();
@@ -135,6 +136,10 @@ public class RewardManager : MonoBehaviour
     
     public void SkipSelection()
     {
+        if(thisSceneSaveLoad.CombatScene)
+            combatPlayer.myData.PlayerLifeForce += AnimaGain;// Recover a preset amount of Anima
+        else
+            dungeonPlayer.myData.PlayerLifeForce += AnimaGain;// Recover a preset amount of Anima
         StopSelection(); // Stop the selection
     }
 
