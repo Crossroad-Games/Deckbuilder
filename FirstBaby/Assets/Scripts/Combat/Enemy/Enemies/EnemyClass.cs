@@ -16,8 +16,9 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
     [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
-    protected float RandomValue;// This random value is rolled every end of turn and at start
+    [SerializeField]protected float RandomValue;// This random value is rolled every end of turn and at start
     private Image HPBarFill;
+    [Range(0,1)][SerializeField] protected float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
     #endregion
 
     #region Events
@@ -136,7 +137,7 @@ public abstract class EnemyClass : MonoBehaviour
     }
     public virtual void StartTurn()
     {
-     // Do a bunch of stuff
+        SpendShield((int)Mathf.Ceil((myData.EnemyShield * (ShieldDecay))));
     }
     public virtual void ActionPhase()
     {

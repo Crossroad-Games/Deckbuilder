@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisID: 4
   thisName: Protection
-  thisDescription: Gain 10 shield
+  thisDescription: Gain 12 shield
   isAttack: 0
   isShield: 1
   isSpecial: 0

@@ -11,12 +11,14 @@ public class TurnSubscriptions : MonoBehaviour
     private CDPile PlayerCDPile;
     private Hand PlayerHand;
     private TurnManager TurnMaster;
+    private CombatPlayer Player;
     #endregion
     // Start is called before the first frame update
     void Awake()
     {
         Debug.Log("Ocorreu o Awake");
         #region References
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is stored
         EnemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();// Reference to the enemy manager is stored
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
         PlayerDeck = GameObject.FindGameObjectWithTag("Player").GetComponent<Deck>();// Reference to the deck
@@ -29,6 +31,7 @@ public class TurnSubscriptions : MonoBehaviour
         TurnManager.PlayerTurnStart += TurnMaster.IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
         TurnManager.PlayerTurnStart += PlayerHand.DrawHand;
         TurnManager.PlayerTurnStart += PlayerCDPile.SendCardsBackToDeckAndShuffle;
+        TurnManager.PlayerTurnStart += Player.StartTurn;// All data manipulation on the combat player is execute here
         TurnManager.PlayerTurnStart += TurnMaster.NextState;// Subscribe the method that will change the next state in line
         TurnManager.PlayerTurnEnd += PlayerCDPile.UpdateCooldown;
         TurnManager.EnemyPhaseStart += TurnMaster.NextState;// Subscribe the method that will change the next state in line
