@@ -29,6 +29,20 @@ public class RewardManager : MonoBehaviour
         //Initialization
         cardDatabase = GameObject.Find("Game Master").GetComponent<CardDatabase>();
         thisSceneSaveLoad = GameObject.Find("Game Master").GetComponent<SaveLoad>();
+
+        Button[] cardSelectionButtonsUI = CardSelectionUI.GetComponentsInChildren<Button>();
+        TMP_Text[] cardSelectionTextsUI = CardSelectionUI.GetComponentsInChildren<TMP_Text>();
+
+        foreach(Button button in cardSelectionButtonsUI)
+        {
+            if(button.tag == "Card Selection Button")
+                cardOptionsButtons.Add(button);
+        }
+        foreach(TMP_Text text in cardSelectionTextsUI)
+        {
+            if (text.tag == "Card Selection Button")
+                cardOptionsCosts.Add(text);
+        }
         //--------------------
     }
 
