@@ -178,6 +178,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardSelection
       objectReference: {fileID: 0}
+    - target: {fileID: 6989466420546897327, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989466420546897327, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -300
+      objectReference: {fileID: 0}
     - target: {fileID: 7661282211399001496, guid: 6fe61e8e96a6446498fb9e0a105347e9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

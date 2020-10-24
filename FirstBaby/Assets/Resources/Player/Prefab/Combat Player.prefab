@@ -329,6 +329,7 @@ MonoBehaviour:
     PlayerShield: 0
     Name: robertinho
   ShieldAmount: {fileID: 7116495510788635199}
+  ShieldDecay: 0.5
   deck: {fileID: 8940200078548064844}
   hand: {fileID: 8940200078548064845}
   cdPile: {fileID: 8940200077993053062}

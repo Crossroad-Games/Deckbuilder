@@ -12,6 +12,7 @@ public class CombatPlayer : MonoBehaviour
     #region Player Information
     [SerializeField]public CombatPlayerData myData= new CombatPlayerData();
     [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the player has
+    [Range(0,1)][SerializeField] private float ShieldDecay=0.5f;// % by which the shield will decay every turn
     #endregion
     [Space(5)]
     #region References
@@ -107,7 +108,10 @@ public class CombatPlayer : MonoBehaviour
     {
         EndTurnButton.interactable = !Interactable;// Toggle the button
     }
-
+    public void StartTurn()
+    {
+        SpendShield((int)Mathf.Ceil((myData.PlayerShield * (ShieldDecay))));
+    }
     public void EndTurn()
     {
         if (TurnManager.State==CombatState.PlayerActionPhase)
@@ -136,6 +140,7 @@ public class CombatPlayer : MonoBehaviour
     }
     public void ProcessDamage(EnemyClass attackingEnemy, int RawDamageTaken)
     {
+        Debug.Log("Incoming "+RawDamageTaken+" Damage from: " + attackingEnemy);
         if(OnPlayerProcessDamage != null)
         {
             OnPlayerProcessDamage(attackingEnemy, RawDamageTaken);
