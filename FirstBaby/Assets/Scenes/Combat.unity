@@ -941,7 +941,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: cardOptionsCosts.Array.size
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardOptionsButtons.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: CardSelectionUI
@@ -1028,6 +1032,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1244660540135867709, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_TagString
+      value: Card Selection Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996890970299653601, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_TagString
+      value: Card Selection Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505370795785479094, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_TagString
+      value: Card Selection Button
+      objectReference: {fileID: 0}
     - target: {fileID: 4772266257818288518, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1088,6 +1104,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2081821158}
+    - target: {fileID: 6210013415420736515, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_TagString
+      value: Card Selection Button
+      objectReference: {fileID: 0}
     - target: {fileID: 6210013415420736517, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1103,6 +1123,10 @@ PrefabInstance:
     - target: {fileID: 6210013415420736517, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415517053213, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_TagString
+      value: Card Selection Button
       objectReference: {fileID: 0}
     - target: {fileID: 6210013415517053215, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1223,6 +1247,10 @@ PrefabInstance:
     - target: {fileID: 6210013415761528024, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6210013415761528614, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+      propertyPath: m_TagString
+      value: Card Selection Button
       objectReference: {fileID: 0}
     - target: {fileID: 6210013416706217822, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
       propertyPath: m_IsActive

@@ -482,8 +482,6 @@ public class Hand : CardPile
 
     private void ReenableHoverEffects(GameObject card)
     {
-        StartCoroutine("Wait");           //COROUTINE NOT WORKING
-        Debug.Log("chamou corrotina?");
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
     }
