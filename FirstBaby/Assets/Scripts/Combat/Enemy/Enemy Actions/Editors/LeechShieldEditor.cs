@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-[CustomEditor(typeof(Protection))]
+[CustomEditor(typeof(LeechShield))]
 [CanEditMultipleObjects]
 public class LeechShieldEditor : EnemyActionEditor
 {
