@@ -40,5 +40,17 @@ public abstract class EnemyAction : MonoBehaviour
     {
         return (int)Mathf.Ceil((ActionValue + AddValue - SubtractValue) * (Multiplier / Divider));// Calculates the final damage
     }
+    protected virtual void Start()
+    {
+        if(Customizable)// If an enemy requires a slightly different inspector
+        {
+            if (CustomDamage)// Customize this action's damage
+                myInfo.BaseDamage = newBaseDamage;
+            if (CustomShield)// Customize this action's shield
+                myInfo.BaseShield = newBaseShield;
+        }
+    }
     [SerializeField]public EnemyActionInfo myInfo;
+    [SerializeField] public bool Customizable, CustomDamage, CustomShield;
+    [SerializeField] public int newBaseDamage, newBaseShield;
 }

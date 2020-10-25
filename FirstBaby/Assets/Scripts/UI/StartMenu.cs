@@ -45,6 +45,7 @@ public class StartMenu : MonoBehaviour
     #region Save Manager
     private void Awake()
     {
+        PlayerPrefs.SetString("Name", string.Empty);
         SaveLoad = GameObject.Find("Game Master").GetComponent<SaveLoad>();// Reference is defined
         SaveButtons = transform.Find("Save Files").GetComponentsInChildren<Button>();// Acquires all the buttons that will be used to display and choose all the save files
         DeleteSaveButtons= transform.Find("Delete Saves").GetComponentsInChildren<Button>();// Acquire all the buttons that will destroy the save files
