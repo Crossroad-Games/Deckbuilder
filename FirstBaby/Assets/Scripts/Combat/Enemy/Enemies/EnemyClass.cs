@@ -25,6 +25,7 @@ public abstract class EnemyClass : MonoBehaviour
     #region Events
     public Action OnEnemyGainShield;
     public Action OnEnemySpendShield;
+    public Action thisEnemyStartTurn;// An event tied specifically to this enemy
     #endregion
 
     #region Death related methods
@@ -138,7 +139,8 @@ public abstract class EnemyClass : MonoBehaviour
     }
     public virtual void StartTurn()
     {
-        SpendShield((int)Mathf.Ceil((myData.EnemyShield * (ShieldDecay))));
+        thisEnemyStartTurn?.Invoke();
+        SpendShield((int)Mathf.Ceil((myData.EnemyShield * (ShieldDecay))));    
     }
     public virtual void ActionPhase()
     {

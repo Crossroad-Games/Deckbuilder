@@ -8,11 +8,11 @@ public class DefenseUpEffect : EnemyLastingEffect
     {
         base.Start();
         myClass.myData.EnemyDefense += BaseValue;
-        TurnManager.EnemyStartTurn += Effect;
+        myClass.thisEnemyStartTurn += Effect;
     }
     protected override void OnDisable()
     {
         myClass.myData.EnemyDefense -= BaseValue;
-        TurnManager.EnemyStartTurn -= Effect;
+        myClass.thisEnemyStartTurn -= Effect;
     }
 }
