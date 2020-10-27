@@ -23,15 +23,15 @@ public class EnemyActionEditor : Editor
                 using (var Value = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myScript.CustomDamage)))
                     if (Value.visible != false)
                     {
-                        EditorGUILayout.PrefixLabel("Base Damage");
-                        myScript.newBaseDamage = EditorGUILayout.IntField(myScript.newBaseDamage);
+                        EditorGUILayout.PrefixLabel("Damage Multiplier");
+                        myScript.BaseDamageMultiplier = EditorGUILayout.FloatField(myScript.BaseDamageMultiplier);
                     }
                 myScript.CustomShield = GUILayout.Toggle(myScript.CustomShield, "Custom Shield");
                 using (var Value = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myScript.CustomShield)))
                     if (Value.visible != false)
                     {
-                        EditorGUILayout.PrefixLabel("Base Shield");
-                        myScript.newBaseShield = EditorGUILayout.IntField(myScript.newBaseShield);
+                        EditorGUILayout.PrefixLabel("Shield Multiplier");
+                        myScript.BaseShieldMultiplier = EditorGUILayout.FloatField(myScript.BaseShieldMultiplier);
                     }
                 EditorGUI.indentLevel--;
             }

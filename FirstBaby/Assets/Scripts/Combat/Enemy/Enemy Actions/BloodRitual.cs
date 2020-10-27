@@ -16,7 +16,7 @@ public class BloodRitual : EnemyAction
     }
     public override void Effect()
     {
-        AlliesHPandShield = new Dictionary<float, EnemyClass>();
+       AlliesHPandShield = new Dictionary<float, EnemyClass>();
        foreach(EnemyClass Allies in myClass.EnemyManager.CombatEnemies)// Go through all enemies in the scene
        {
             if (Allies != null && Allies != myClass)// If the enemy is not null and not itself
@@ -27,9 +27,10 @@ public class BloodRitual : EnemyAction
             }
                 
        }
-        AlliesHPandShield.Keys.ToList().Sort();// Order the dictionary from smallest to largest keys
-        AlliesHPandShield.Keys.ToList().Reverse();// The first element is now the highest
-        var Highest=(int) AlliesHPandShield.Keys.ToList()[0];// ACquires the largest value
+        var List = AlliesHPandShield.Keys.ToList();// Order the dictionary from smallest to largest keys
+        List.Sort();
+        List.Reverse();// The first element is now the highest
+        var Highest=(int) List[0];// ACquires the largest value
         var ShieldGain = CalculateAction(Highest);
         myClass.GainShield(ShieldGain);// Gain the largest value as shield
         AlliesHPandShield[Highest].KillMe();// Kill the chosen enemy enemy
