@@ -11,7 +11,11 @@ public class SoulMaggot : EnemyClass
     public override void EnemyIntention()
     {
         IntendedActions.Clear();
-        if(myData.EnemyShield>=20 && ConsumedEnemy)
+        if(Cocooned)
+        {
+            IntendedActions.Add(ActionList["Enemy Transformation"]);// This enemy becomes another one
+        }
+        else if(myData.EnemyShield>=20 && ConsumedEnemy)
         {
             IntendedActions.Add(ActionList["Cocoon"]);// Hide inside a cocoon to gain extra shield and defense
         }

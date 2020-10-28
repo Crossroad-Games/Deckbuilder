@@ -180,14 +180,10 @@ GameObject:
   - component: {fileID: 4577537696564339689}
   - component: {fileID: 4577537696564339688}
   - component: {fileID: 4577537696564339695}
-  - component: {fileID: 1892402031358986793}
-  - component: {fileID: 721174286660727575}
-  - component: {fileID: 230818142184204517}
-  - component: {fileID: 3441416108897374545}
-  - component: {fileID: 7276913645812084770}
-  - component: {fileID: 1398653381013804467}
+  - component: {fileID: 4577537696564339690}
+  - component: {fileID: 6648935764484172716}
   m_Layer: 10
-  m_Name: Soul Maggot
+  m_Name: Tainted Soul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +250,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.35301718, g: 0.4056604, b: 0.31917053, a: 1}
+  m_Color: {r: 0.3679245, g: 0.15064079, b: 0.15064079, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -290,54 +286,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
---- !u!114 &1892402031358986793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4577537696564339694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef3844e7206c9547a67bf14e33db117, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myData:
-    ID: 5
-    EnemyName: Soul Maggot
-    EnemyHP: 12
-    EnemyMaxHP: 12
-    EnemyDefense: 0
-    EnemyShield: 40
-    Position: 0
-  IntendedActions: []
-  AttackIcon: {fileID: 2046030281019901365}
-  ShieldIcon: {fileID: 4916031741207641289}
-  SpecialIcon: {fileID: 8585733622926855706}
-  ShieldAmount: {fileID: 454244739705049970}
-  RandomValue: 0
-  Incapacitated: 0
-  ShieldDecay: 0.5
-  ConsumeThreshold: 0.25
---- !u!114 &721174286660727575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4577537696564339694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9b8439a2dfea224192e3b89f0a5ef75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myInfo: {fileID: 11400000, guid: 905f80f9d9747a241a044465c6776487, type: 2}
-  Customizable: 1
-  CustomDamage: 1
-  CustomShield: 0
-  BaseDamageMultiplier: 0.8
-  BaseShieldMultiplier: 0
---- !u!114 &230818142184204517
+--- !u!114 &4577537696564339690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,13 +299,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  Customizable: 1
-  CustomDamage: 1
+  Customizable: 0
+  CustomDamage: 0
   CustomShield: 0
-  BaseDamageMultiplier: 1.2
+  BaseDamageMultiplier: 0
   BaseShieldMultiplier: 0
   BaseDamage: 5
---- !u!114 &3441416108897374545
+--- !u!114 &6648935764484172716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -365,59 +314,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 4577537696564339694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b66bcb44e1faf174ca4181c059cd07ca, type: 3}
+  m_Script: {fileID: 11500000, guid: bcfd881fe6f51644a944e1d4ed41a38f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInfo: {fileID: 11400000, guid: 7df47aa926df65e4fab062bd7c36b033, type: 2}
-  Customizable: 0
-  CustomDamage: 0
-  CustomShield: 0
-  BaseDamageMultiplier: 0
-  BaseShieldMultiplier: 0
-  newShieldMultiplier: 0
---- !u!114 &7276913645812084770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4577537696564339694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f219f232c5760b345b325b5059e34e77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myInfo: {fileID: 11400000, guid: a5fe7bba8adc13a47b4c28b60b27ae44, type: 2}
-  Customizable: 0
-  CustomDamage: 0
-  CustomShield: 0
-  BaseDamageMultiplier: 0
-  BaseShieldMultiplier: 0
-  newBaseValue: 2
-  TurnCount: 2
-  newTurnCount: 0
-  newDefenseMultiplier: 0
-  CustomDefense: 0
-  CustomDuration: 0
---- !u!114 &1398653381013804467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4577537696564339694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98e6495ba8b9514588869b749993da9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myInfo: {fileID: 0}
-  Customizable: 0
-  CustomDamage: 0
-  CustomShield: 0
-  BaseDamageMultiplier: 0
-  BaseShieldMultiplier: 0
-  EnemyTransformationTarget: {fileID: 0}
+  myData:
+    ID: 6
+    EnemyName: Tainted Soul
+    EnemyHP: 30
+    EnemyMaxHP: 20
+    EnemyDefense: 0
+    EnemyShield: 20
+    Position: 0
+  IntendedActions: []
+  AttackIcon: {fileID: 2046030281019901365}
+  ShieldIcon: {fileID: 4916031741207641289}
+  SpecialIcon: {fileID: 8585733622926855706}
+  ShieldAmount: {fileID: 454244739705049970}
+  RandomValue: 0
+  Incapacitated: 0
+  ShieldDecay: 0.5
 --- !u!1 &7371917002680359284
 GameObject:
   m_ObjectHideFlags: 0
