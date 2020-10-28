@@ -10,7 +10,7 @@ public class PreciseAttackEditor : EnemyActionEditor
 {
     public override void OnInspectorGUI()
     {
-        var myScript = target as PreciseAttack;
+        myScript = target as PreciseAttack;
         base.OnInspectorGUI();
     }
 }

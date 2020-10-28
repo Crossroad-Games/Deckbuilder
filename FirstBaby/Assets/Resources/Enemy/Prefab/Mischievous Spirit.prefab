@@ -302,16 +302,19 @@ MonoBehaviour:
   myData:
     ID: 1
     EnemyName: Mischievous Spirit
-    EnemyHP: 8
+    EnemyHP: 15
     EnemyMaxHP: 8
     EnemyDefense: 2
-    EnemyShield: 5
+    EnemyShield: 10
     Position: 0
   IntendedActions: []
   AttackIcon: {fileID: 8361810938723301830}
   ShieldIcon: {fileID: 4317030327752346462}
   SpecialIcon: {fileID: 5489255286861143977}
   ShieldAmount: {fileID: 5640063740597492951}
+  RandomValue: 0
+  Incapacitated: 0
+  ShieldDecay: 0.5
 --- !u!114 &9224608332004685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +328,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: 905f80f9d9747a241a044465c6776487, type: 2}
-  BaseDamage: 10
+  Customizable: 0
+  CustomDamage: 0
+  CustomShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
 --- !u!114 &9198828993582419438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,7 +346,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  BaseDamage: 5
+  Customizable: 0
+  CustomDamage: 0
+  CustomShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
 --- !u!1 &6516582266498423837
 GameObject:
   m_ObjectHideFlags: 0

@@ -129,13 +129,16 @@ public abstract class EnemyClass : MonoBehaviour
         UpdateShield();
         #endregion
 
-        RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns
+        RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns 
+        StartCoroutine(CheckIntention());// Check if this enemy changed its intention every .5 seconds
+    }
+    protected void OnEnable()
+    {
         foreach (EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
         {
-            if(Action!=null)// If not null
-                ActionList.Add(Action.ActionName,Action);// Adds each action on this gameobject to the dictionary
+            if (Action != null)// If not null
+                ActionList.Add(Action.ActionName, Action);// Adds each action on this gameobject to the dictionary
         }
-        StartCoroutine(CheckIntention());// Check if this enemy changed its intention every .5 seconds
     }
     public virtual void StartTurn()
     {
