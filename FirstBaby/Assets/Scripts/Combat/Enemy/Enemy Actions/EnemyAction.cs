@@ -42,15 +42,19 @@ public abstract class EnemyAction : MonoBehaviour
     }
     protected virtual void Start()
     {
-        if(Customizable)// If an enemy requires a slightly different inspector
+        #region Enemy Info setup
+        var TempInfo = Object.Instantiate(myInfo);
+        myInfo = TempInfo;
+        #endregion
+        if (Customizable)// If an enemy requires a slightly different inspector
         {
             if (CustomDamage)// Customize this action's damage
-                myInfo.BaseDamage = newBaseDamage;
+                myInfo.BaseDamage =(int)(myInfo.BaseDamage*BaseDamageMultiplier);
             if (CustomShield)// Customize this action's shield
-                myInfo.BaseShield = newBaseShield;
+                myInfo.BaseShield = (int)(myInfo.BaseShield*BaseShieldMultiplier);
         }
     }
-    [SerializeField]public EnemyActionInfo myInfo;
+    [SerializeField] public EnemyActionInfo myInfo;
     [SerializeField] public bool Customizable, CustomDamage, CustomShield;
-    [SerializeField] public int newBaseDamage, newBaseShield;
+    [SerializeField] public float BaseDamageMultiplier, BaseShieldMultiplier;
 }

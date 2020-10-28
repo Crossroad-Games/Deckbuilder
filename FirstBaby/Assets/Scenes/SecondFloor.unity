@@ -522,7 +522,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1178091247080091135, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
       propertyPath: InsteractablesInScene.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1178091247080091135, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
       propertyPath: InsteractablesInScene.Array.data[0]
@@ -544,6 +544,14 @@ PrefabInstance:
       propertyPath: InsteractablesInScene.Array.data[4]
       value: 
       objectReference: {fileID: 380925216}
+    - target: {fileID: 1178091247080091135, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
+      propertyPath: InsteractablesInScene.Array.data[5]
+      value: 
+      objectReference: {fileID: 1598760588}
+    - target: {fileID: 1178091247080091135, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
+      propertyPath: InsteractablesInScene.Array.data[6]
+      value: 
+      objectReference: {fileID: 1598760587}
     - target: {fileID: 2179629997331758588, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
       propertyPath: m_Name
       value: Game Master
@@ -1085,6 +1093,22 @@ PrefabInstance:
       propertyPath: Targets.Array.data[0]
       value: 
       objectReference: {fileID: 1029651647}
+    - target: {fileID: 542395870, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
+    - target: {fileID: 592060909, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: Enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 4577537696564339694, guid: aee8a23037e04904fad0e6e8307d4a92, type: 3}
+    - target: {fileID: 592060909, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: Enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 4577537696564339694, guid: aee8a23037e04904fad0e6e8307d4a92, type: 3}
+    - target: {fileID: 592060909, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: Enemies.Array.data[2]
+      value: 
+      objectReference: {fileID: 4577537696564339694, guid: aee8a23037e04904fad0e6e8307d4a92, type: 3}
     - target: {fileID: 1075731737, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: CardSelectionUI
       value: 
@@ -1238,6 +1262,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DungeonSceneName: DungeonTest
   SpawnPosition: {x: 2, y: 1.5, z: 18.5}
+--- !u!114 &1598760587 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 803123670031194299, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+  m_PrefabInstance: {fileID: 1598760580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32afbed2c69fb4b4183c7f94551e1d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1598760588 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 542395870, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+  m_PrefabInstance: {fileID: 1598760580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 858de3920983b5a48b1c09a1bd8fd022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1792066740
 GameObject:
   m_ObjectHideFlags: 0

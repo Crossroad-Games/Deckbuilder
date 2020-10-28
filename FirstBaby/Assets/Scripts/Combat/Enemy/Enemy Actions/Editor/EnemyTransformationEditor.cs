@@ -1,0 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using System;
+
+[CustomEditor(typeof(EnemyTransformation))]
+[CanEditMultipleObjects]
+public class EnemyTransformationEditor : EnemyActionEditor
+{
+
+    public override void OnInspectorGUI()
+    {
+        var myChild = target as EnemyTransformation;
+        myChild.EnemyTransformationTarget = EditorGUILayout.ObjectField("Target Enemy", myChild.EnemyTransformationTarget, typeof(GameObject), false) as GameObject;
+        myScript = target as EnemyTransformation;
+        base.OnInspectorGUI();
+    }
+}
