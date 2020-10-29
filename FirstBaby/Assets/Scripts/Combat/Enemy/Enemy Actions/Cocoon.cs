@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cocoon : EnemyAction
 {
-    public int newBaseValue=2, TurnCount=2, newTurnCount=0;
+    public int newBaseValue=3, TurnCount=2, newTurnCount=0;
     public float newDefenseMultiplier;
     public bool CustomDefense, CustomDuration;
     protected override void Start()

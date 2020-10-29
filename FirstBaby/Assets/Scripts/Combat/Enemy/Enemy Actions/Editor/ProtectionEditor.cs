@@ -11,7 +11,7 @@ public class ProtectionEditor : EnemyActionEditor
 {
     public override void OnInspectorGUI()
     {
-        var myScript = target as Protection;
+        myScript = target as Protection;
         base.OnInspectorGUI();
     }
 }

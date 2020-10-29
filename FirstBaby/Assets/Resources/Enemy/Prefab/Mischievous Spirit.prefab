@@ -303,9 +303,9 @@ MonoBehaviour:
     ID: 1
     EnemyName: Mischievous Spirit
     EnemyHP: 15
-    EnemyMaxHP: 8
+    EnemyMaxHP: 15
     EnemyDefense: 2
-    EnemyShield: 10
+    EnemyShield: 20
     Position: 0
   IntendedActions: []
   AttackIcon: {fileID: 8361810938723301830}

@@ -136,7 +136,7 @@ MonoBehaviour:
     EnemyName: Vengeful Spirit
     EnemyHP: 40
     EnemyMaxHP: 40
-    EnemyDefense: 0
+    EnemyDefense: 1
     EnemyShield: 30
     Position: 0
   IntendedActions: []
@@ -145,6 +145,7 @@ MonoBehaviour:
   SpecialIcon: {fileID: 2520405101963228764}
   ShieldAmount: {fileID: 591456871903706633}
   RandomValue: 0
+  Incapacitated: 0
   ShieldDecay: 0.5
 --- !u!114 &-6024973297880317213
 MonoBehaviour:
@@ -162,8 +163,8 @@ MonoBehaviour:
   Customizable: 0
   CustomDamage: 0
   CustomShield: 0
-  newBaseDamage: 0
-  newBaseShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
   BaseDamage: 6
 --- !u!114 &-890433173412119043
 MonoBehaviour:
@@ -181,8 +182,8 @@ MonoBehaviour:
   Customizable: 0
   CustomDamage: 0
   CustomShield: 0
-  newBaseDamage: 0
-  newBaseShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
   BaseShield: 0
   thisMultiplier: 4
 --- !u!114 &917238870123889863
@@ -198,12 +199,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  Customizable: 0
-  CustomDamage: 0
+  Customizable: 1
+  CustomDamage: 1
   CustomShield: 0
-  newBaseDamage: 0
-  newBaseShield: 0
-  BaseDamage: 5
+  BaseDamageMultiplier: 1.5
+  BaseShieldMultiplier: 0
 --- !u!1 &5268102736899683337
 GameObject:
   m_ObjectHideFlags: 0
