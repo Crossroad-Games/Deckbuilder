@@ -7,11 +7,6 @@ public class EnemyTransformation : EnemyAction
     // Start is called before the first frame update
     public GameObject EnemyTransformationTarget;// Reference to the enemy this enemy will turn into
     private EnemyClass ClassTransformationTarget;// Reference to the enemy class this enemy will have
-    protected override void Start()
-    {
-        base.Start();
-        
-    }
     public override void Effect()
     {
         var EnemyToSpawn = (GameObject)Instantiate(EnemyTransformationTarget);// Instantiates the enemy

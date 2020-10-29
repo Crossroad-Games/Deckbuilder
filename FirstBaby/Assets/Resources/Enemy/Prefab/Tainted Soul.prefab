@@ -304,8 +304,8 @@ MonoBehaviour:
     ID: 6
     EnemyName: Tainted Soul
     EnemyHP: 30
-    EnemyMaxHP: 20
-    EnemyDefense: 0
+    EnemyMaxHP: 30
+    EnemyDefense: 1
     EnemyShield: 20
     Position: 0
   IntendedActions: []
@@ -332,7 +332,7 @@ MonoBehaviour:
   Customizable: 1
   CustomDamage: 1
   CustomShield: 0
-  BaseDamageMultiplier: 1.4
+  BaseDamageMultiplier: 1.7
   BaseShieldMultiplier: 0
 --- !u!114 &-1203420345386033061
 MonoBehaviour:

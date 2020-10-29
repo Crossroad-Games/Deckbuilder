@@ -280,13 +280,15 @@ MonoBehaviour:
     EnemyHP: 12
     EnemyMaxHP: 12
     EnemyDefense: 0
-    EnemyShield: 10
+    EnemyShield: 20
     Position: 0
   IntendedActions: []
   AttackIcon: {fileID: 2046030281019901365}
   ShieldIcon: {fileID: 4916031741207641289}
   SpecialIcon: {fileID: 8585733622926855706}
   ShieldAmount: {fileID: 454244739705049970}
+  RandomValue: 0
+  Incapacitated: 0
   ShieldDecay: 0.5
 --- !u!114 &4577537696564339690
 MonoBehaviour:
@@ -301,7 +303,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  BaseDamage: 5
+  Customizable: 1
+  CustomDamage: 1
+  CustomShield: 0
+  BaseDamageMultiplier: 1.2
+  BaseShieldMultiplier: 0
 --- !u!114 &3687638526352627462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +321,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: 22a29f887fb92e3448d6a14bc963f8bd, type: 2}
+  Customizable: 0
+  CustomDamage: 0
+  CustomShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
 --- !u!114 &8571994231650469161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +339,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: 905f80f9d9747a241a044465c6776487, type: 2}
-  BaseDamage: 10
+  Customizable: 0
+  CustomDamage: 0
+  CustomShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
 --- !u!61 &4577537696564339695
 BoxCollider2D:
   m_ObjectHideFlags: 0

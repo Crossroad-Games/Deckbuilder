@@ -19,4 +19,4 @@ MonoBehaviour:
   isShield: 1
   isSpecial: 0
   BaseDamage: 0
-  BaseShield: 10
+  BaseShield: 8

@@ -15,7 +15,7 @@ public class SoulMaggot : EnemyClass
         {
             IntendedActions.Add(ActionList["Enemy Transformation"]);// This enemy becomes another one
         }
-        else if(myData.EnemyShield>=20 && ConsumedEnemy)
+        else if(myData.EnemyShield>=15 && ConsumedEnemy)
         {
             IntendedActions.Add(ActionList["Cocoon"]);// Hide inside a cocoon to gain extra shield and defense
         }
@@ -25,7 +25,7 @@ public class SoulMaggot : EnemyClass
         }
         else
         {
-            if(RandomValue<=.7)
+            if(RandomValue<=.3)
                 IntendedActions.Add(ActionList["Leech Shield"]);// Steals shield from the player
             else
                 IntendedActions.Add(ActionList["Enemy Attack"]);// Deals damage to the player
