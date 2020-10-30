@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CombatManager : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class CombatManager : MonoBehaviour
     private CombatPlayer combatPlayer;
     private Hand playerHandPile;
     private Deck playerDeck;
+    public GameObject concoctUI;
+    public Button confirmConcoctButton;
+    public Button cancelConcoctButton;
     #endregion
 
     #region Booleans
@@ -16,6 +21,11 @@ public class CombatManager : MonoBehaviour
     public bool Defeated = false;
     #endregion
 
+    private void Awake()
+    {
+        concoctUI = GameObject.Find("Concoct UI");
+        concoctUI.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()

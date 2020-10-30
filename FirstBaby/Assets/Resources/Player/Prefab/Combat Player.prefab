@@ -342,6 +342,7 @@ MonoBehaviour:
     m_Bits: 512
   HPBarFill: {fileID: 1105143534307692816}
   HPBarValue: {fileID: 3342731464244187231}
+  CombatManager: {fileID: 0}
   isHoveringCard: 0
   releasedMouseNotOnEnemy: 0
 --- !u!114 &8940200078548064849
@@ -414,7 +415,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8940200079388879084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8940200078548064851}

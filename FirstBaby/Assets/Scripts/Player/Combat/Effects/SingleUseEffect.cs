@@ -35,5 +35,8 @@ public class SingleUseEffect : MonoBehaviour
         this.Divider = Divider;
     }
 
-    public virtual void Effect(EnemyClass attackingEnemy, int Damage) { }
+    public virtual void Effect(EnemyClass attackingEnemy, int Damage)
+    {
+        Destroy(this);
+    }
 }

@@ -11,6 +11,9 @@ public class CardInfo : ScriptableObject
     public string Name;// name of the card
     public int ID;// ID of the card
     public string Description;
+    public bool Attack = false;
+    public bool Defense = false;
+    public bool SpecialCard = false;
     public int Cooldown;
     public int ResourceCost = 10;
     private int currentCooldownTime;

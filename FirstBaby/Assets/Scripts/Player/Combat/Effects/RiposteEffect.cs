@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class RiposteEffect : SingleUseEffect
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        player.OnPlayerProcessDamage += Effect;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        player.OnPlayerProcessDamage -= Effect;
+    }
+
     public override void Effect(EnemyClass attackingEnemy, int Damage)
     {
         attackingEnemy.ProcessDamage((Damage/2 + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));

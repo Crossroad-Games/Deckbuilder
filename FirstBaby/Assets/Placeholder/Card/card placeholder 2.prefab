@@ -102,11 +102,14 @@ MonoBehaviour:
   TargetEnemy: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
   selected: 0
+  concocted: 0
+  selectable: 1
   highlighted: 0
   beingDrawn: 0
   returningToHand: 0
   beingHovered: 0
   type: none
+  cardPorpuse: 1
   followCardPositionToFollow: 0
 --- !u!61 &7963367926223209395
 BoxCollider2D:
@@ -125,7 +128,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.90625, y: 17.46875}
+    oldSize: {x: 8.466666, y: 12.422222}
     newSize: {x: 6.91, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

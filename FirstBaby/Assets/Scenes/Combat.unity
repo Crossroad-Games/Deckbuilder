@@ -541,9 +541,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b81092c6ceec041bb9dd69d7d79ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1346095446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1033066668155787608, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1446081024 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6210013415761528024, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1598868997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1033066668140518923, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
   m_PrefabInstance: {fileID: 6210013416666511064}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -604,6 +620,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2058125135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1033066668582989633, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2081821157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -611,14 +638,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 729727949, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
-      propertyPath: GameCards.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 729727949, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
-      propertyPath: GameCards.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 1c280f54442fece46b38d31aed5bbfa8, type: 2}
     - target: {fileID: 2179629997331758588, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
       propertyPath: m_Name
       value: Game Master
@@ -703,6 +722,18 @@ PrefabInstance:
       propertyPath: rewardManager
       value: 
       objectReference: {fileID: 1334210213}
+    - target: {fileID: 2650834548372594580, guid: 078389f6f9b897d4abbe44c8cbb586a6, type: 3}
+      propertyPath: concoctUI
+      value: 
+      objectReference: {fileID: 1346095446}
+    - target: {fileID: 2650834548372594580, guid: 078389f6f9b897d4abbe44c8cbb586a6, type: 3}
+      propertyPath: confirmConcoctButton
+      value: 
+      objectReference: {fileID: 2058125135}
+    - target: {fileID: 2650834548372594580, guid: 078389f6f9b897d4abbe44c8cbb586a6, type: 3}
+      propertyPath: cancelConcoctButton
+      value: 
+      objectReference: {fileID: 1598868997}
     - target: {fileID: 2650834548372594581, guid: 078389f6f9b897d4abbe44c8cbb586a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3478197

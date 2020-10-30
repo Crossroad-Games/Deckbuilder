@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
-  m_Name: Arcane Missile
+  m_Name: Alchemist Fire
   m_EditorClassIdentifier: 
   rarity: 0
-  Name: Arcane Missile
+  Name: Alchemist Fire
   ID: 0
   Description: Deal damage
+  Attack: 0
+  Defense: 0
+  SpecialCard: 0
   Cooldown: 0
   ResourceCost: 5
   sprite: {fileID: 21300000, guid: 4f68a1161891d1042ad2a628dc34a050, type: 3}

@@ -33,8 +33,6 @@ public class Hand : CardPile
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
     private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
-    private Quaternion highlightPreviousRotation;
-    private float highlightPreviousHeight;
 
     #endregion
 
@@ -69,6 +67,13 @@ public class Hand : CardPile
     {
         combatPlayer.OnMouseEnterCard -= HighlightCard;
         combatPlayer.OnMouseExitCard -= UnhighlightCard;
+        combatPlayer.OnCardSelected -= DisableHoverEffects;
+        combatPlayer.OnCardUnselected -= ReenableHoverEffects;
+        combatPlayer.OnCardUnselected -= UnhighlightCard;
+        combatPlayer.OnCardUnselected -= UndoAimAtTarget;
+        combatPlayer.OnTargetCardUsed -= ReenableHoverEffects;
+        combatPlayer.OnTargetCardUsed -= UndoAimAtTarget;
+        combatPlayer.OnNonTargetCardUsed -= ReenableHoverEffects;
         SaveLoad.LoadEvent -= LoadHand;
         TurnManager.PlayerTurnStart -= DrawHand;
     }
@@ -316,7 +321,7 @@ public class Hand : CardPile
     //It takes the card from the call and exposes it in front of others and upscale it, as well as move the adjacent cards apart from the highlighted, for a neat effect. Subscription in the initialization region
     private void HighlightCard(GameObject card)
     {
-        if (!card.GetComponent<Card>().highlighted)
+        if (!card.GetComponent<Card>().highlighted && !card.GetComponent<Card>().concocted)
         {
             card.GetComponent<Card>().highlighted = true;
             for (int i = 0; i < physicalCardsInHand.Count; i++)
@@ -324,9 +329,10 @@ public class Hand : CardPile
                 //Highlight the card
                 if (physicalCardsInHand[i] == card.GetComponent<Card>())
                 {
-                    highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
+                    card.GetComponent<Card>().highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
+                    Debug.Log(card.GetComponent<Card>().highlightPreviousHeight);
                     cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, -0.9f, cardPositionsToFollow[physicalCardsInHand[i]].position.z - 1.5f);
-                    highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
+                    card.GetComponent<Card>().highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                     if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)
                     {
@@ -358,7 +364,8 @@ public class Hand : CardPile
     //Function that undo what highlightCard did. This is called in the event OnMouseExit that was created in the combatPlayer script. Subscription in the initialization region
     private void UnhighlightCard (GameObject card)
     {
-        if (card.GetComponent<Card>().highlighted)
+        Debug.Log("Unhighlighted : " + card.name);
+        if (card.GetComponent<Card>().highlighted && !card.GetComponent<Card>().concocted)
         {
             card.GetComponent<Card>().highlighted = false;
             for (int i = 0; i < physicalCardsInHand.Count; i++)
@@ -366,8 +373,8 @@ public class Hand : CardPile
                 //Unhighlight the card
                 if (physicalCardsInHand[i] == card.GetComponent<Card>())
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, highlightPreviousHeight, cardPositionsToFollow[physicalCardsInHand[i]].position.z + 1.5f);
-                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = highlightPreviousRotation;
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, card.GetComponent<Card>().highlightPreviousHeight, cardPositionsToFollow[physicalCardsInHand[i]].position.z + 1.5f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = card.GetComponent<Card>().highlightPreviousRotation;
                     if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)
                     {
                         card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
@@ -456,6 +463,7 @@ public class Hand : CardPile
             line.transform.position = card.transform.position;
             line.AddComponent<LineRenderer>();
             arrowRenderer = line.GetComponent<LineRenderer>();
+            Debug.Log("createdArrow");
             createdArrow = true;
         }
         arrowRenderer.SetPosition(0, card.transform.position); // sets the origin position of the line renderer to be the card transform position. TODO: put this origin position in the top of the card
@@ -468,6 +476,8 @@ public class Hand : CardPile
         {
             if (arrowRenderer != null)
             {
+                Debug.Log("destruiuArrow");
+                Debug.Log(arrowRenderer.gameObject);
                 GameObject.Destroy(arrowRenderer.gameObject);
                 createdArrow = false;
             }
@@ -476,14 +486,22 @@ public class Hand : CardPile
 
     private void DisableHoverEffects(GameObject card)
     {
-        combatPlayer.OnMouseEnterCard -= HighlightCard;
-        combatPlayer.OnMouseExitCard -= UnhighlightCard;
+        if (card.GetComponent<Card>().hoverEffectsEnabled)
+        {
+            combatPlayer.OnMouseEnterCard -= HighlightCard;
+            combatPlayer.OnMouseExitCard -= UnhighlightCard;
+            card.GetComponent<Card>().hoverEffectsEnabled = false;
+        }
     }
 
     private void ReenableHoverEffects(GameObject card)
     {
-        combatPlayer.OnMouseEnterCard += HighlightCard;
-        combatPlayer.OnMouseExitCard += UnhighlightCard;
+        if (!card.GetComponent<Card>().hoverEffectsEnabled)
+        {
+            combatPlayer.OnMouseEnterCard += HighlightCard;
+            combatPlayer.OnMouseExitCard += UnhighlightCard;
+            card.GetComponent<Card>().hoverEffectsEnabled = true;
+        }
     }
 
     IEnumerator Wait()
