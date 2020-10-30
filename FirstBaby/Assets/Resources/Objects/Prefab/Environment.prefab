@@ -117,7 +117,7 @@ MonoBehaviour:
   - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
   - {fileID: 8273353822081955733, guid: aee8a23037e04904fad0e6e8307d4a92, type: 3}
   - {fileID: 5075110614363377447, guid: aab832475b5cc2946a943bcbde9eb8f0, type: 3}
-  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 4577537696564339694, guid: d8542f9a9f1e611459ae868a7b2c899b, type: 3}
 --- !u!1 &870595290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,10 +1291,9 @@ MonoBehaviour:
     Name: 
   Enemies:
   - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
-  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
-  - {fileID: 5075110614363377447, guid: 39ba7bde4d57ce540838d5e30984afcb, type: 3}
-  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
-  - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 4577537696564339694, guid: d8542f9a9f1e611459ae868a7b2c899b, type: 3}
+  - {fileID: 4577537696564339694, guid: d8542f9a9f1e611459ae868a7b2c899b, type: 3}
+  - {fileID: 8273353822081955733, guid: aee8a23037e04904fad0e6e8307d4a92, type: 3}
 --- !u!114 &190408893223895206
 MonoBehaviour:
   m_ObjectHideFlags: 0
