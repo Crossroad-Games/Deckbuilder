@@ -10,6 +10,9 @@ public class TargetCard : Card
         this.type = "TargetCard";
     }
 
-    public override void CardEffect() { }// This is the field used by the card to describe and execute its action 
+    public override IEnumerator CardEffect() // This is the field used by the card to describe and execute its action 
+    {
+        yield return StartCoroutine(base.CardEffect());
+    }
 
 }

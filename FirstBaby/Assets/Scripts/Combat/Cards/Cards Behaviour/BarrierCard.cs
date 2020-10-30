@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class BarrierCard : NonTargetCard
 {
-    private int BaseShield=8;// Shield value that will be subtracted and depleted from the enemy's attack
-    private int AddValue=0, SubtractValue=0;// Values that modify the base value
-    private float Multiplier=1, Divider=1;// Values that multiply or divide the modified base value
+    public override void Start()
+    {
+        base.Start();
+        BaseShield = 8; // Shield value that will be subtracted and depleted from the enemy's attack
+    }
+
     // This effect creates a shield that will protect the player by this amount
-    public override void CardEffect() => Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
+    public override IEnumerator CardEffect()
+    {
+        Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider))); 
+        effectFinished = true;
+        yield return StartCoroutine(base.CardEffect());
+    }
 }

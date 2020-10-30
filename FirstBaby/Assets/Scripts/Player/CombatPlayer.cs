@@ -20,6 +20,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private Deck deck=null;
     [SerializeField] private Hand hand=null;
     [SerializeField] private CDPile cdPile=null;
+    public CDPile CdPile { get { return cdPile; } }
     [SerializeField] private MouseOnEnemy enemyDetector=null;
     [SerializeField] private LayerMask cardLayer=0;
     [SerializeField] private LayerMask handZoneLayer=0;
@@ -28,7 +29,7 @@ public class CombatPlayer : MonoBehaviour
     private int InitialHP;// HP at the start of combat
     private Button EndTurnButton=null;
     private TurnManager TurnMaster;
-    private CombatManager CombatManager;
+    public CombatManager CombatManager;
     #endregion
 
 
@@ -47,7 +48,7 @@ public class CombatPlayer : MonoBehaviour
     #region Fields and Properties
     private GameObject previousHoverObject; //What mouse was pointing at when begin pointing somethingelse
     private Card SelectedCard; //Currently selected card
-    private RaycastHit2D hitInfo; //What mouse is pointing at
+    public RaycastHit2D hitInfo; //What mouse is pointing at
     #endregion
 
     #region Booleans
@@ -227,14 +228,17 @@ public class CombatPlayer : MonoBehaviour
                 if (hitInfo.collider != null && isHoveringCard) //If mouse is over a card when it is pressed
                 {
                     Card card = hitInfo.collider.gameObject.GetComponent<Card>();
-                    card.selected = true;
-                    SelectedCard = card;
-                    if (OnCardSelected != null)
+                    if (card.selectable)
                     {
-                        OnCardSelected(card.gameObject);
-                    }
+                        card.selected = true;
+                        SelectedCard = card;
+                        if (OnCardSelected != null)
+                        {
+                            OnCardSelected(card.gameObject);
+                        }
 
-                    Debug.Log("Selecionada: " + card.selected);
+                        Debug.Log("Selecionada: " + card.selected);
+                    }
                 }
 
             }
@@ -252,6 +256,7 @@ public class CombatPlayer : MonoBehaviour
                     {
                         if (enemyDetector.isMouseOnEnemy()) //Mouse over enemy -> enemy selected
                         {
+                            SelectedCard.selected = false; //card no longer selected
                             //Send card to cdPile -> Update SelectedCard to null -> TODO:callAction
                             EnemyClass enemyToUseAction = enemyDetector.isMouseOnEnemy();
                             if (OnTargetCardUsed != null)
@@ -259,10 +264,7 @@ public class CombatPlayer : MonoBehaviour
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
                             Debug.Log("Soltou mouse no inimigo: " + SelectedCard);
-                            SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
-                            if(!CombatManager.Won && !CombatManager.Defeated)
-                                hand.SendCard(SelectedCard.cardInfo, cdPile);
-                            
+                            StartCoroutine(SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction));
                             SelectedCard = null;
                         }
                         else // mouse released but not on any enemy
@@ -277,6 +279,7 @@ public class CombatPlayer : MonoBehaviour
                     {
                         if(enemyDetector.isMouseOnEnemy())
                         {
+                            SelectedCard.selected = false; //card no longer selected
                             //Send card to cdPile -> Update SelectedCard to null -> callAction
                             EnemyClass enemyToUseAction = enemyDetector.isMouseOnEnemy();
                             if (OnTargetCardUsed != null)
@@ -284,11 +287,8 @@ public class CombatPlayer : MonoBehaviour
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
                             Debug.Log("Apertou mouse no inimigo: " + SelectedCard);
-                            SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction);
-                            if (!CombatManager.Won && !CombatManager.Defeated)
-                                hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                            StartCoroutine(SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction));
                             SelectedCard = null; //Update selectedCard
-                            Debug.Log("Call TargetCard Action here"); //Here will go the action call
                         }
                         else
                         {
@@ -321,13 +321,12 @@ public class CombatPlayer : MonoBehaviour
                     }
                     else //if release not in hand zone -> do action
                     {
+                        SelectedCard.selected = false; //card no longer selected
                         if (OnNonTargetCardUsed != null)
                         {
                             OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
                         }
-                        SelectedCard.ExecuteAction();
-                        if (!CombatManager.Won && !CombatManager.Defeated)
-                            hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                        StartCoroutine(SelectedCard.ExecuteAction());
                         SelectedCard = null; //update selected card to null
                     }
                 }
@@ -345,13 +344,12 @@ public class CombatPlayer : MonoBehaviour
                     }
                     else //if click not in hand zone -> do action
                     {
+                        SelectedCard.selected = false; //card no longer selected
                         if (OnNonTargetCardUsed != null)
                         {
                             OnNonTargetCardUsed(SelectedCard.gameObject); //Call event of when nonTargetCard is used
                         }
-                        SelectedCard.ExecuteAction();
-                        if (!CombatManager.Won && !CombatManager.Defeated)
-                            hand.SendCard(SelectedCard.cardInfo, cdPile); //Send cardInfo to CDPile
+                        StartCoroutine(SelectedCard.ExecuteAction());
                         SelectedCard = null; //update selected card to null
                         Debug.Log("Call NonTargetCard Action here");
                     }

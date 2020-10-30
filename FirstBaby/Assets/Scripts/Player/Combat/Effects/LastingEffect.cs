@@ -15,12 +15,11 @@ public class LastingEffect : MonoBehaviour
     protected virtual void Awake()
     {
         player = GetComponent<CombatPlayer>();
-        player.OnPlayerProcessDamage += Effect;
     }
 
     protected virtual void OnDisable()
     {
-        player.OnPlayerProcessDamage -= Effect;
+        
     }
 
     // Start is called before the first frame update
@@ -35,7 +34,7 @@ public class LastingEffect : MonoBehaviour
         
     }
 
-    public virtual void InitializeRiposte(int AddValue, int SubtractValue, float Multiplier, float Divider, int turnCounter)
+    public virtual void InitializeEffect(int AddValue, int SubtractValue, float Multiplier, float Divider, int turnCounter)
     {
         this.AddValue = AddValue;
         this.SubtractValue = SubtractValue;
@@ -44,10 +43,12 @@ public class LastingEffect : MonoBehaviour
         this.turnCounter = turnCounter;
     }
 
-    public virtual void Effect(EnemyClass attackingEnemy, int Damage)
+    public virtual void Effect(EnemyClass attackingEnemy, int Damage) //This overload is used when the effect is called when the player suffered damage
     {
         turnCounter--;
         if (turnCounter == 0)
             Destroy(this);
     }
+
+    
 }

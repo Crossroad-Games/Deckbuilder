@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballCard : TargetCard
+public class AlchemistFireCard : TargetCard
 {
-    public override void Start()
+
+    protected override void Awake()
     {
-        base.Start();
-        BaseDamage = 20;
+        base.Awake();
+        BaseDamage = 5;
     }
     // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()
