@@ -305,7 +305,7 @@ MonoBehaviour:
     EnemyHP: 15
     EnemyMaxHP: 15
     EnemyDefense: 2
-    EnemyShield: 20
+    EnemyShield: 15
     Position: 0
   IntendedActions: []
   AttackIcon: {fileID: 8361810938723301830}
@@ -346,10 +346,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  Customizable: 0
-  CustomDamage: 0
+  Customizable: 1
+  CustomDamage: 1
   CustomShield: 0
-  BaseDamageMultiplier: 0
+  BaseDamageMultiplier: 0.8
   BaseShieldMultiplier: 0
 --- !u!1 &6516582266498423837
 GameObject:
