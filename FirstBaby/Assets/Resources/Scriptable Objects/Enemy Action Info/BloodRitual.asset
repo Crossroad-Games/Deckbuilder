@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff95d977db7f2f14a8a5553eb805335c, type: 3}
   m_Name: BloodRitual
   m_EditorClassIdentifier: 
-  thisID: 4
+  thisID: 3
   thisName: Blood Ritual
   thisDescription: Sacrifices an Ally to gain Shield
   isAttack: 0

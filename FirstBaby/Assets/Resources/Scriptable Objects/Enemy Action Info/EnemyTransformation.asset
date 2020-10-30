@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff95d977db7f2f14a8a5553eb805335c, type: 3}
-  m_Name: Protection
+  m_Name: EnemyTransformation
   m_EditorClassIdentifier: 
-  thisID: 4
-  thisName: Protection
-  thisDescription: Gain 8 shield
+  thisID: 7
+  thisName: Enemy Transformation
+  thisDescription: Transforms into another enemy
   isAttack: 0
-  isShield: 1
-  isSpecial: 0
+  isShield: 0
+  isSpecial: 1
   BaseDamage: 0
-  BaseShield: 8
+  BaseShield: 20

@@ -16,7 +16,8 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
     [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
-    [SerializeField]protected float RandomValue;// This random value is rolled every end of turn and at start
+    [SerializeField] protected float RandomValue;// This random value is rolled every end of turn and at start
+    [SerializeField] public bool Incapacitated=false;// Is this enemy able to act?
     private Image HPBarFill;
     [Range(0,1)][SerializeField] protected float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
     #endregion
@@ -24,6 +25,7 @@ public abstract class EnemyClass : MonoBehaviour
     #region Events
     public Action OnEnemyGainShield;
     public Action OnEnemySpendShield;
+    public Action thisEnemyStartTurn;// An event tied specifically to this enemy
     #endregion
 
     #region Death related methods
@@ -127,24 +129,29 @@ public abstract class EnemyClass : MonoBehaviour
         UpdateShield();
         #endregion
 
-        RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns
+        RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns 
+        StartCoroutine(CheckIntention());// Check if this enemy changed its intention every .5 seconds
+    }
+    protected void OnEnable()
+    {
         foreach (EnemyAction Action in GetComponents<EnemyAction>())// Go through all the EnemyAction components on this object
         {
-            if(Action!=null)// If not null
-                ActionList.Add(Action.ActionName,Action);// Adds each action on this gameobject to the dictionary
+            if (Action != null)// If not null
+                ActionList.Add(Action.ActionName, Action);// Adds each action on this gameobject to the dictionary
         }
-        StartCoroutine(CheckIntention());// Check if this enemy changed its intention every .5 seconds
     }
     public virtual void StartTurn()
     {
-        SpendShield((int)Mathf.Ceil((myData.EnemyShield * (ShieldDecay))));
+        thisEnemyStartTurn?.Invoke();
+        SpendShield((int)Mathf.Ceil((myData.EnemyShield * (ShieldDecay))));    
     }
     public virtual void ActionPhase()
     {
         if (TurnManager.State == CombatState.EnemyActionPhase)
         {
+            EnemyIntention();// Checks what the enemy is going to do
             foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
-                if (Action != null)// Check if its null
+                if (Action != null && !Incapacitated)// Check if its null
                     Action.Effect();// Executes this action's effect
             EndTurn();// End its turn
         }
@@ -159,15 +166,28 @@ public abstract class EnemyClass : MonoBehaviour
     {
         while(this!=null)// While this script exists
         {
-            EnemyIntention();// Checks what the enemy is going to do
-            foreach(EnemyAction Action in IntendedActions)// Go through the enemy intended actions
-                if(Action!=null)// If action is not null
-                {
-                    AttackIcon.SetActive(Action.myInfo.isAttack);// Activate using the type of action as a boolean
-                    ShieldIcon.SetActive(Action.myInfo.isShield);// Activate using the type of action as a boolean
-                    SpecialIcon.SetActive(Action.myInfo.isSpecial);// Activate using the type of action as a boolean
-                    Action.ShowValue();// Show that skill damage value
-                }
+            if (!Incapacitated)// If this enemy can act
+                EnemyIntention();// Checks what the enemy is going to do
+            else if (IntendedActions.Count != 0)
+                IntendedActions.Clear();
+            if (!Incapacitated)// If this enemy can act
+            {
+                foreach (EnemyAction Action in IntendedActions)// Go through the enemy intended actions
+                    if (Action != null)// If action is not null
+                    {
+                        AttackIcon.SetActive(Action.myInfo.isAttack);// Activate using the type of action as a boolean
+                        ShieldIcon.SetActive(Action.myInfo.isShield);// Activate using the type of action as a boolean
+                        SpecialIcon.SetActive(Action.myInfo.isSpecial);// Activate using the type of action as a boolean
+                        Action.ShowValue();// Show that skill damage value
+                    }
+            }
+            else// If this enemy can't act
+            {
+                AttackIcon.SetActive(false);// Deactivate using the type of action as a boolean
+                ShieldIcon.SetActive(false);// Deactivate using the type of action as a boolean
+                SpecialIcon.SetActive(false);// Deactivate using the type of action as a boolean
+                GetComponentInChildren<TMP_Text>().text = string.Empty;// Show no value
+            }
             yield return new WaitForSeconds(.5f);// Hold for .5 seconds
         }
     }
