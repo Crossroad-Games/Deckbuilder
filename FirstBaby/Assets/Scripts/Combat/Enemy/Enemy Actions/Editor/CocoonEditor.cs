@@ -17,8 +17,10 @@ public class CocoonEditor : EnemyActionEditor
         var CustomizableProperty = serializedObject.FindProperty("Customizable");
         EditorGUILayout.PropertyField(CustomizableProperty);
         var CustomDefense = serializedObject.FindProperty("CustomDefense");
-        var CustomDuration = serializedObject.FindProperty("CustomDefense");
+        var CustomDuration = serializedObject.FindProperty("CustomDuration");
+        var CustomShieldMultiplier = serializedObject.FindProperty("CustomShieldMultiplier");
         var newDefenseMultiplier = serializedObject.FindProperty("newDefenseMultiplier");
+        var newShieldMultiplier = serializedObject.FindProperty("newShieldMultiplier");
         var newTurnCount = serializedObject.FindProperty("newTurnCount");
         using (var group = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myCocoon.Customizable)))
         {
@@ -32,6 +34,13 @@ public class CocoonEditor : EnemyActionEditor
                         EditorGUILayout.PrefixLabel("Defense Multiplier");
                         newDefenseMultiplier.floatValue = EditorGUILayout.FloatField(myCocoon.newDefenseMultiplier);
                     }
+                EditorGUILayout.PropertyField(CustomShieldMultiplier);
+                using (var Value = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myCocoon.CustomShieldMultiplier)))
+                    if (Value.visible != false)
+                    {
+                        EditorGUILayout.PrefixLabel("Shield Multiplier");
+                        newShieldMultiplier.floatValue = EditorGUILayout.FloatField(myCocoon.newShieldMultiplier);
+                    }
                 EditorGUILayout.PropertyField(CustomDuration);
                 using (var Value = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myCocoon.CustomDuration)))
                     if (Value.visible != false)
@@ -42,5 +51,6 @@ public class CocoonEditor : EnemyActionEditor
                 EditorGUI.indentLevel--;
             }
         }
+        serializedObject.ApplyModifiedProperties();
     }
 }

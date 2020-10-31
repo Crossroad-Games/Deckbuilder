@@ -9,7 +9,7 @@ public class DisruptiveBlow : EnemyAction
     public int newTurnCount;
     public bool CustomShieldDepletion = false, CustomDuration=false;
     public float newDepletion;
-    private int TurnDuration=2;
+    private int TurnDuration=3;
     private void Awake()
     {
         if (Customizable)

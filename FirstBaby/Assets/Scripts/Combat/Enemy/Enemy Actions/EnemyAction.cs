@@ -9,8 +9,8 @@ public abstract class EnemyAction : MonoBehaviour
     public string ActionName { get { return myInfo.thisName; } protected set { } }
     public string Description { get { return myInfo.thisDescription; } protected set { } }
     public abstract void Effect();// Every Action must have an Effect
-    protected int AddValue = 0, SubtractValue = 0;
-    protected float Multiplier = 1, Divider = 1;
+    public int AddValue = 0, SubtractValue = 0;
+    public float Multiplier = 1, Divider = 1;
     private EnemyClass myclass;
     public EnemyClass myClass// Keeps reference to which Enemy Class has ownership over this script
     {

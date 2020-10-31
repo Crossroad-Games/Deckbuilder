@@ -147,7 +147,8 @@ public class Hand : CardPile
         while (Amount > 0)// While there are cards to be drawn
         {
             isDrawing = true;
-            Deck.SendCard(Deck.cardsList[0], this);// Draw the first card on the deck card list
+            if(Deck.cardsList.Count>0)// If there are cards in deck
+                Deck.SendCard(Deck.cardsList[0], this);// Draw the first card on the deck card list
             Amount--;
             yield return new WaitForSeconds(DrawDelay);// Apply delay
         }
