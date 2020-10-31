@@ -39,7 +39,6 @@ public class Concoct : MonoBehaviour
         {
             DoConcoct();
         }
-        Debug.Log(myCard.cardInfo);
     }
 
     public void DoConcoct()

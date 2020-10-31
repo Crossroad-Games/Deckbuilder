@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyLastingEffect : MonoBehaviour
+public abstract class EnemySingleEffect : MonoBehaviour
 {
-    [SerializeField]protected int BaseValue = 0;// Damage value that will be applied to the Player
+    [SerializeField] protected int BaseValue = 0;// Damage value that will be applied to the Player
     protected int AddValue = 0, SubtractValue = 0;// Values that modify the base value
     protected float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
     public int turnCounter = 1;
@@ -46,15 +46,11 @@ public abstract class EnemyLastingEffect : MonoBehaviour
 
     public virtual void Effect(EnemyClass attackingEnemy, int Damage)
     {
-        turnCounter--;
-        if (turnCounter == 0)
-            Destroy(this);
+        Destroy(this);
     }
+
     public virtual void Effect()
     {
-        turnCounter--;
-        if (turnCounter == 0)
-            Destroy(this);
+        Destroy(this);
     }
 }
-
