@@ -16,7 +16,7 @@ public class CardInfo : ScriptableObject
     public bool SpecialCard = false;
     public int Cooldown;
     public int ResourceCost = 10;
-    private int currentCooldownTime;
+    [SerializeField]private int currentCooldownTime;
     public int CurrentCooldownTime
     {
         get { return currentCooldownTime; }

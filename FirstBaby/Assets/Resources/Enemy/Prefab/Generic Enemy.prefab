@@ -312,6 +312,7 @@ MonoBehaviour:
   SpecialIcon: {fileID: 8585733622926855706}
   ShieldAmount: {fileID: 454244739705049970}
   RandomValue: 0
+  Incapacitated: 0
   ShieldDecay: 0.5
 --- !u!114 &4577537696564339690
 MonoBehaviour:
@@ -326,12 +327,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  Customizable: 0
-  CustomDamage: 0
+  Customizable: 1
+  CustomDamage: 1
   CustomShield: 0
-  newBaseDamage: 0
-  newBaseShield: 0
-  BaseDamage: 5
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
 --- !u!1 &7371917002680359284
 GameObject:
   m_ObjectHideFlags: 0

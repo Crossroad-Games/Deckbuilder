@@ -12,26 +12,32 @@ public class CocoonEditor : EnemyActionEditor
     public override void OnInspectorGUI()
     {
         var myCocoon = target as Cocoon;
-        myCocoon.myInfo = EditorGUILayout.ObjectField("My Info", myCocoon.myInfo, typeof(ScriptableObject), false) as EnemyActionInfo;
-        myCocoon.Customizable = GUILayout.Toggle(myCocoon.Customizable, "Customize");
+        var myInfoProperty = serializedObject.FindProperty("myInfo");
+        EditorGUILayout.PropertyField(myInfoProperty);
+        var CustomizableProperty = serializedObject.FindProperty("Customizable");
+        EditorGUILayout.PropertyField(CustomizableProperty);
+        var CustomDefense = serializedObject.FindProperty("CustomDefense");
+        var CustomDuration = serializedObject.FindProperty("CustomDefense");
+        var newDefenseMultiplier = serializedObject.FindProperty("newDefenseMultiplier");
+        var newTurnCount = serializedObject.FindProperty("newTurnCount");
         using (var group = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myCocoon.Customizable)))
         {
             if (group.visible != false)
             {
                 EditorGUI.indentLevel++;
-                myCocoon.CustomDefense = GUILayout.Toggle(myCocoon.CustomDefense, "Custom Defense");
+                EditorGUILayout.PropertyField(CustomDefense);
                 using (var Value = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myCocoon.CustomDefense)))
                     if (Value.visible != false)
                     {
                         EditorGUILayout.PrefixLabel("Defense Multiplier");
-                        myCocoon.newDefenseMultiplier = EditorGUILayout.FloatField(myCocoon.newDefenseMultiplier);
+                        newDefenseMultiplier.floatValue = EditorGUILayout.FloatField(myCocoon.newDefenseMultiplier);
                     }
-                myCocoon.CustomDuration = GUILayout.Toggle(myCocoon.CustomDuration, "Custom Duration");
+                EditorGUILayout.PropertyField(CustomDuration);
                 using (var Value = new EditorGUILayout.FadeGroupScope(Convert.ToSingle(myCocoon.CustomDuration)))
                     if (Value.visible != false)
                     {
                         EditorGUILayout.PrefixLabel("New Duration");
-                        myCocoon.newTurnCount = EditorGUILayout.IntField(myCocoon.newTurnCount);
+                        newTurnCount.intValue = EditorGUILayout.IntField(myCocoon.newTurnCount);
                     }
                 EditorGUI.indentLevel--;
             }

@@ -54,6 +54,7 @@ public class CombatPlayer : MonoBehaviour
     #region Booleans
     public bool isHoveringCard = false;
     public bool releasedMouseNotOnEnemy = false;
+    public bool Disrupted = false;
     #endregion
 
     #region Player startup methods

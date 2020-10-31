@@ -7,6 +7,7 @@ public class CDPile : CardPile
     [SerializeField] private List<CardInfo> cardsCD_Completed = new List<CardInfo>(); // list of cards with cooldown completed
     #region References
     private Deck playerDeck;
+    private CombatPlayer Player;
     #endregion
 
     #region Booleans
@@ -17,7 +18,7 @@ public class CDPile : CardPile
     {
         base.Awake();
         SaveLoad.LoadEvent += LoadSave;// Subscribe to the load event from the saveload script
-    
+        Player = transform.parent.gameObject.GetComponent<CombatPlayer>();// Reference to the player
     }
     private void OnDisable()
     {
@@ -44,20 +45,22 @@ public class CDPile : CardPile
     public void UpdateCooldown()
     {
         anyCardCompletedCD = false;
-        for(int i = cardsList.Count-1; i >= 0; i--)
-        {
-            if (cardsList[i].CurrentCooldownTime > 0) // if card still on cooldown
+        Debug.Log(Player.Disrupted);
+        if(!Player.Disrupted)// If not disrupted, card's CD's are updated 
+            for(int i = cardsList.Count-1; i >= 0; i--)
             {
-                cardsList[i].CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
+                if (cardsList[i].CurrentCooldownTime > 0) // if card still on cooldown
+                {
+                    cardsList[i].CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
+                }
+                else //if any card completed it's cooldown
+                {
+                    cardsCD_Completed.Add(cardsList[i]);// add card to list with all the cards that have completed the cooldown
+                    cardsList.RemoveAt(i);
+                    //Raise shuffle flag
+                    anyCardCompletedCD = true;
+                }
             }
-            else //if any card completed it's cooldown
-            {
-                cardsCD_Completed.Add(cardsList[i]);// add card to list with all the cards that have completed the cooldown
-                cardsList.RemoveAt(i);
-                //Raise shuffle flag
-                anyCardCompletedCD = true;
-            }
-        }
     }
 
     public void SendCardsBackToDeckAndShuffle()
