@@ -1201,6 +1201,10 @@ PrefabInstance:
       propertyPath: Enemies.Array.data[2]
       value: 
       objectReference: {fileID: 4577537696564339694, guid: 9f3ff7a95fc8d20418e51747f2ba2dbc, type: 3}
+    - target: {fileID: 190408893223895206, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
     - target: {fileID: 943587661015155224, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1265,6 +1269,10 @@ PrefabInstance:
       propertyPath: Enemies.Array.data[3]
       value: 
       objectReference: {fileID: 8273353822081955733, guid: aee8a23037e04904fad0e6e8307d4a92, type: 3}
+    - target: {fileID: 1989786325411497328, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
     - target: {fileID: 2131390464793247460, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Targets.Array.size
       value: 1
@@ -1285,6 +1293,10 @@ PrefabInstance:
       propertyPath: Enemies.Array.data[0]
       value: 
       objectReference: {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+    - target: {fileID: 2942006543564089205, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
     - target: {fileID: 3666383296846670923, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.size
       value: 3
@@ -1327,16 +1339,16 @@ PrefabInstance:
       objectReference: {fileID: 4577537696564339694, guid: 9f3ff7a95fc8d20418e51747f2ba2dbc, type: 3}
     - target: {fileID: 5602588494451876675, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.size
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5602588494451876675, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+      objectReference: {fileID: 2398455620489820319, guid: b1b6a3f370c3f3f4ba486f80102ba8ed, type: 3}
     - target: {fileID: 5602588494451876675, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+      objectReference: {fileID: 4577537696564339694, guid: 9f3ff7a95fc8d20418e51747f2ba2dbc, type: 3}
     - target: {fileID: 5602588494451876675, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.data[2]
       value: 
@@ -1349,6 +1361,10 @@ PrefabInstance:
       propertyPath: Enemies.Array.data[4]
       value: 
       objectReference: {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+    - target: {fileID: 6000561673762474257, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
     - target: {fileID: 6431216275811729657, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.data[0]
       value: 
@@ -1365,6 +1381,10 @@ PrefabInstance:
       propertyPath: Enemies.Array.data[3]
       value: 
       objectReference: {fileID: 4577537696564339694, guid: 9f3ff7a95fc8d20418e51747f2ba2dbc, type: 3}
+    - target: {fileID: 7003142736139218419, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
     - target: {fileID: 8256559402512072828, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Targets.Array.size
       value: 1
@@ -1373,6 +1393,10 @@ PrefabInstance:
       propertyPath: Targets.Array.data[0]
       value: 
       objectReference: {fileID: 1598760586}
+    - target: {fileID: 9146917694343301546, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 81718523}
     - target: {fileID: 9210389169379755028, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: Enemies.Array.data[0]
       value: 
@@ -1444,7 +1468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0413845c56bd3c64fa80c1f300c9ae5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DungeonSceneName: DungeonTest
+  DungeonSceneName: FirstFloor
   SpawnPosition: {x: 2, y: 1.5, z: 18.5}
 --- !u!114 &1598760587 stripped
 MonoBehaviour:
