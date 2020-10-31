@@ -65,15 +65,22 @@ public abstract class EnemyClass : MonoBehaviour
     }
     protected virtual int SpendShield(int Amount)// Spend an Amount of shield
     {
+        Debug.Log(myData.EnemyShield);
         int CurrentShield = myData.EnemyShield;// Current shield pool
         myData.EnemyShield -= Amount;// Reduce the pool by the amount of damage being applied
+        Debug.Log(myData.EnemyShield);
         myData.EnemyShield = myData.EnemyShield <= 0 ? 0 : myData.EnemyShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
+        Debug.Log(myData.EnemyShield);
         OnEnemySpendShield?.Invoke();// Event called when enemy has spent shield
+        Debug.Log(myData.EnemyShield);
         return CurrentShield;
     }
     public virtual void ProcessDamage(int Damage)// Modifies the incoming damage before applying it to the HP
     {
+        Debug.Log(Damage);
+        Debug.Log(myData.EnemyShield);
         Damage -= myData.EnemyDefense;// Reduce the damage by the enemy defense
+        Debug.Log(myData.EnemyShield);
         Damage -= SpendShield(Damage);// Spend the shield pool to reduce the incoming damage
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
