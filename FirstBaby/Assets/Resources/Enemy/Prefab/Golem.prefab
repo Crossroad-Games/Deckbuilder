@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 4343844635240541117}
   - component: {fileID: 1231004964494564130}
   - component: {fileID: 5060628426692435844}
+  - component: {fileID: -2016646832438071373}
   m_Layer: 10
   m_Name: Golem
   m_TagString: Untagged
@@ -376,6 +377,7 @@ MonoBehaviour:
   ShieldDecay: 0.5
   DisruptiveCD: 3
   CurrentDisruptiveCD: 0
+  Cocooned: 0
 --- !u!61 &1813333774078704658
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -461,6 +463,32 @@ MonoBehaviour:
   CustomShieldDepletion: 0
   CustomDuration: 0
   newDepletion: 2
+--- !u!114 &-2016646832438071373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2398455620489820319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f219f232c5760b345b325b5059e34e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myInfo: {fileID: 11400000, guid: a5fe7bba8adc13a47b4c28b60b27ae44, type: 2}
+  Customizable: 1
+  CustomDamage: 0
+  CustomShield: 0
+  BaseDamageMultiplier: 0
+  BaseShieldMultiplier: 0
+  newBaseValue: 3
+  TurnCount: 2
+  newTurnCount: 0
+  newDefenseMultiplier: 2
+  newShieldMultiplier: 2
+  CustomDefense: 1
+  CustomDuration: 0
+  CustomShieldMultiplier: 1
 --- !u!1 &4107114898037147732
 GameObject:
   m_ObjectHideFlags: 0

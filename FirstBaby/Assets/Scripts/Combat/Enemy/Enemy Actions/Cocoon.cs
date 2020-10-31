@@ -5,8 +5,8 @@ using UnityEngine;
 public class Cocoon : EnemyAction
 {
     public int newBaseValue=3, TurnCount=2, newTurnCount=0;
-    public float newDefenseMultiplier;
-    public bool CustomDefense, CustomDuration;
+    public float newDefenseMultiplier, newShieldMultiplier;
+    public bool CustomDefense, CustomDuration, CustomShieldMultiplier;
     protected override void Start()
     {
         base.Start();
@@ -16,6 +16,8 @@ public class Cocoon : EnemyAction
                 newBaseValue =(int)(newBaseValue * newDefenseMultiplier);
             if (CustomDuration)
                 TurnCount = newTurnCount;// Custom Duration
+            if (CustomShieldMultiplier)
+                myInfo.BaseShield = (int)(myInfo.BaseShield * newShieldMultiplier);// New shield value
         }
     }
     public override void Effect()
