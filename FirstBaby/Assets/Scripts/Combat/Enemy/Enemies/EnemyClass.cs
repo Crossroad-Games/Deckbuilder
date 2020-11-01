@@ -19,7 +19,7 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] protected float RandomValue;// This random value is rolled every end of turn and at start
     [SerializeField] public bool Incapacitated=false;// Is this enemy able to act?
     private Image HPBarFill;
-    [Range(0,1)][SerializeField] protected float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
+    [Range(0,1)][SerializeField] public float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
     #endregion
 
     #region Events
@@ -29,12 +29,12 @@ public abstract class EnemyClass : MonoBehaviour
     #endregion
 
     #region Death related methods
-    public Action DeathEvent;
+    public Action<EnemyClass> DeathEvent;
     public virtual void DeathConditionCheck()// Checks if the enemy's death condition was reached
     {
         if (myData.EnemyHP <= 0)// EnemyHP reached 0
         {
-            DeathEvent?.Invoke();// Call the enemy's death event
+            DeathEvent?.Invoke(this);// Call the enemy's death event
             this.EnemyManager.RemoveEnemy(this);
             myDeath();// Destroy this enemy
         }
@@ -42,9 +42,13 @@ public abstract class EnemyClass : MonoBehaviour
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
     public void KillMe()// Instantly kill this enemy
     {
-        DeathEvent?.Invoke();// Call the enemy's death event
+        DeathEvent?.Invoke(this);// Call the enemy's death event
         this.EnemyManager.RemoveEnemy(this);
         myDeath();// Destroy this enemy
+    }
+    public void RemoveMe()// Instantly removes this enemy from combat without triggering death events
+    {
+        this.EnemyManager.RemoveEnemy(this);
     }
     #endregion
 

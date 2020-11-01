@@ -14,17 +14,21 @@ public class EnemyManager : MonoBehaviour
     private EnemyClass CurrentEnemyClass;// Reference to the enemy currently active
     private EnemyDatabase EnemyDatabase;// Reference to the enemy database will be used to load the enemy prefabs
     [SerializeField] public List<EnemyClass> CombatEnemies;// List of enemies with their class reference
+    [SerializeField] public List<EnemyClass> EnemiesToAct;// A copy of the CombatEnemies that will be used to determine which enemies can act
     [SerializeField] public List<EnemyData> EnemyData;// List of enemy datas
     [SerializeField] public List<Vector3> EnemyPositions;// List of enemy positions based on how many enemies there are on scene
     [SerializeField] public List<Vector3> HPPositions;// List of enemy positions based on how many enemies there are on scene
     private TurnManager TurnMaster;// Reference to the TurnManager script to access its methods
     private CombatManager combatManager;// Reference to the combat manager
     #endregion
-
+    #region Events
+    public Action<EnemyClass> OnSpawnEnemy;// Event called when an enemy is spawned
+    #endregion
     private void Awake()
     {
         EnemyDatabase = GameObject.Find("Game Master").GetComponent<EnemyDatabase>();// Reference to the database is set
         CombatEnemies = new List<EnemyClass>();// Initialize the list of enemies to have a max size
+        EnemiesToAct = new List<EnemyClass>();// Initialize the list of enemies that will act this turn
         EnemyData = new List<EnemyData>();// Initialize the listof enemy data to have a max sizes
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();// Reference to the Turnmanager script is defined
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager
@@ -40,11 +44,12 @@ public class EnemyManager : MonoBehaviour
     public void StartEnemyPhase()
     {   
         CurrentEnemyIndex = 0;// Reset the index
+        EnemiesToAct =  new List<EnemyClass>(CombatEnemies);// Copies the combat enemies
         StartEnemyTurn();
     }
     public void StartEnemyTurn()
     {
-        CurrentEnemyClass = CombatEnemies[CurrentEnemyIndex];// Start the enemy phase with the first enemy on the array
+        CurrentEnemyClass = EnemiesToAct[CurrentEnemyIndex];// Start the enemy phase with the first enemy on the array
         CurrentEnemyClass.StartTurn();// Start the specific enemy's turn
         TurnManager.EnemyStartTurn?.Invoke();// Call all methods subscribed to the enemy's turn start
         CurrentEnemyClass.ActionPhase();// Call the method that controls the enemy's action phase
@@ -52,7 +57,7 @@ public class EnemyManager : MonoBehaviour
     public void EndEnemyTurn()
     {
         if(!combatManager.Defeated && !combatManager.Won) 
-            if (CurrentEnemyIndex < CombatEnemies.Count-1)// If it is not the last enemy on the list
+            if (CurrentEnemyIndex < EnemiesToAct.Count-1)// If it is not the last enemy on the list
             {
                 CurrentEnemyIndex++;// Cycle to the next enemy
                 TurnMaster.EndEnemyTurn(false);// End this turn without ending the enemy phase
@@ -82,6 +87,7 @@ public class EnemyManager : MonoBehaviour
         {
             CombatEnemies.Add(newEnemy);// Add a new enemy
             EnemyData.Add(newEnemy.myData);// Store its data
+            OnSpawnEnemy?.Invoke(newEnemy);// Invoke this event and pass as an argument the enemy that just got spawned
         }
     }
     public void RemoveEnemy(EnemyClass RemovedEnemy)// Remove this enemyclass from the list of enemies on the scene

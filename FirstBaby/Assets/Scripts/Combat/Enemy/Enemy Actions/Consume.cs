@@ -19,7 +19,7 @@ public class Consume : EnemyAction
         var EnemyToConsume = CheckForLowHP();// Acquires the enemy with the least amount of %HP
         myClass.GainShield((int)(CalculateAction(EnemyToConsume.myData.EnemyHP)*ShieldMultiplier));// Converts their HP into shield
         Debug.Log(ShieldMultiplier);
-        EnemyToConsume.KillMe();// Kill that enemy
+        EnemyToConsume.RemoveMe();// Kill that enemy without triggering its death event
     }
     private EnemyClass CheckForLowHP()// Consumes the enemy with the least amount of HP
     {
