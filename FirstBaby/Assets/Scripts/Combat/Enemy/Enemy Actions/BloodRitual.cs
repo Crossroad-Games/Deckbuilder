@@ -9,20 +9,29 @@ public class BloodRitual : EnemyAction
     [SerializeField] private int BaseShield = 0;
     private Dictionary<float,EnemyClass> AlliesHPandShield;
     [SerializeField] private float thisMultiplier=2.5f;
+    public List<EnemyClass> ImmuneClasses;// Enemy Classes that can't be targeted by this 
+    public List<string> ImmuneNames;// Names of the classes that can't be targeted by this
     void Awake()
     {
         BaseShield = myInfo.BaseShield;
         Multiplier = thisMultiplier;// This skill's base multiplier
+        foreach (EnemyClass Enemy in ImmuneClasses)// Cycle through the banned classes
+            ImmuneNames.Add(Enemy.myData.EnemyName);// Acquire their names and store
     }
     public override void Effect()
     {
        AlliesHPandShield = new Dictionary<float, EnemyClass>();
        foreach(EnemyClass Allies in myClass.EnemyManager.CombatEnemies)// Go through all enemies in the scene
        {
+            var CanSacrifice = true;
             if (Allies != null && Allies != myClass)// If the enemy is not null and not itself
             {
-                var Value = (Allies.myData.EnemyHP + Allies.myData.EnemyShield);
-                if (!AlliesHPandShield.ContainsKey(Value))// If there is a draw in value, prioritize consuming the frontliners
+                foreach (string ImmuneEnemyName in ImmuneNames)// Cycle through all the immune names
+                    if(ImmuneEnemyName!=string.Empty)// If the name is not empty
+                        if (Allies.myData.EnemyName == ImmuneEnemyName)// If it is an immune name
+                            CanSacrifice = false;// Can't sacrifice this enemy
+                var Value = (Allies.myData.EnemyHP + Allies.myData.EnemyShield);// Acquire the sum of HP and Shield
+                if (!AlliesHPandShield.ContainsKey(Value) && CanSacrifice)// If there is a draw in value, prioritize consuming the frontliners
                     AlliesHPandShield.Add(Value, Allies);// Store that enemy's HP+Shield
             }
                 

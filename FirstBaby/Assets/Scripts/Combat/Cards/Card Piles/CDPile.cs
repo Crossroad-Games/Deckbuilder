@@ -45,7 +45,6 @@ public class CDPile : CardPile
     public void UpdateCooldown()
     {
         anyCardCompletedCD = false;
-        Debug.Log(Player.Disrupted);
         if(!Player.Disrupted)// If not disrupted, card's CD's are updated 
             for(int i = cardsList.Count-1; i >= 0; i--)
             {
