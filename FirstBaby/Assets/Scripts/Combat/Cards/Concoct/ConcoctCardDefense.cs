@@ -6,11 +6,13 @@ public abstract class ConcoctCardDefense : NonTargetCard
 {
     protected Concoct myConcoct;
     public bool canceledConcoct = false;
+    public bool doEffects = true;
 
     protected override void Awake()
     {
         base.Awake();
         myConcoct = GetComponent<Concoct>();
+        isConcoct = true;
         BaseShield = 0;
     }
 
@@ -24,6 +26,10 @@ public abstract class ConcoctCardDefense : NonTargetCard
     {
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
+        if (cardPorpuse == CardPorpuse.Attack)
+            DealDamage();
+        else if (cardPorpuse == CardPorpuse.Defense)
+            GainShield_Health();
         StartCoroutine(CardEffect()); // Execute the card's effect
         yield return new WaitUntil(() => canGotoCDPile == true || canceledConcoct); //Suspends the coroutine execution until the supplied delegate evaluates to true
         if (canGotoCDPile)
@@ -42,5 +48,9 @@ public abstract class ConcoctCardDefense : NonTargetCard
 
     public abstract void BringConcoctInfo(List<Card> cardsConcocted);
 
-    public abstract void GainShield_Health();
+    public abstract void GainShield_Health(List<Card> cardsConcocted);
+
+    public abstract void DoEffects(List<Card> cardsConcocted);
+
+
 }

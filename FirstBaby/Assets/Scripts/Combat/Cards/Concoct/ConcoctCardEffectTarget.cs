@@ -11,6 +11,7 @@ public abstract class ConcoctCardEffectTarget : TargetCard
     {
         base.Awake();
         myConcoct = GetComponent<Concoct>();
+        isConcoct = true;
     }
 
     public override IEnumerator CardEffect()
@@ -41,5 +42,5 @@ public abstract class ConcoctCardEffectTarget : TargetCard
 
     public abstract void BringConcoctInfo(List<Card> cardsConcocted);
 
-    public abstract void DealEffect();
+    public abstract void DoEffect(List<Card> cardsConcocted);
 }

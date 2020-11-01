@@ -15,13 +15,13 @@ MonoBehaviour:
   rarity: 0
   Name: Alchemist Blade
   ID: 4
-  Description: Discard all Alchemist Fire cards in hand and deal all their base damage
-    + 0.5 of their total damage
+  Description: Concoct attack cards
   Attack: 0
   Defense: 0
-  SpecialCard: 0
+  SpecialCard: 1
   Cooldown: 3
   ResourceCost: 30
+  currentCooldownTime: 0
   sprite: {fileID: 21300000, guid: f3449a0ffa8bc074493bfc3450ab6688, type: 3}
   cardPrefab: {fileID: 4062164133535861827, guid: 08f9bb1bd7312e245b702109aa391fba, type: 3}
   myPhysicalCard: {fileID: 0}

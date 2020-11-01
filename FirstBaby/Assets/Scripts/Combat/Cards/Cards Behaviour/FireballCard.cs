@@ -12,7 +12,6 @@ public class FireballCard : TargetCard
     // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()
     {
-        TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
         effectFinished = true;
         yield return StartCoroutine(base.CardEffect());
     }

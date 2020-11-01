@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
-  m_Name: Alchemist Fire
+  m_Name: Equivalent Exchange
   m_EditorClassIdentifier: 
   rarity: 0
-  Name: Alchemist Fire
-  ID: 0
-  Description: Deal damage
-  Attack: 1
+  Name: Equivalent Exchange
+  ID: 6
+  Description: Discard X cards, then draw X cards
+  Attack: 0
   Defense: 0
-  SpecialCard: 0
-  Cooldown: 0
-  ResourceCost: 5
+  SpecialCard: 1
+  Cooldown: 1
+  ResourceCost: 10
   currentCooldownTime: 0
-  sprite: {fileID: 21300000, guid: 4f68a1161891d1042ad2a628dc34a050, type: 3}
-  cardPrefab: {fileID: 3198968608887256750, guid: bd2225d726b664b43b4bb4f8a4a8baea, type: 3}
+  sprite: {fileID: 21300000, guid: a09d90dd541d6fb458d991b148183b71, type: 3}
+  cardPrefab: {fileID: 8256048700885547143, guid: b6b4177ac744b194a8266c87a1205da3, type: 3}
   myPhysicalCard: {fileID: 0}

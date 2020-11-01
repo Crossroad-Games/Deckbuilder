@@ -13,7 +13,6 @@ public class BarrierCard : NonTargetCard
     // This effect creates a shield that will protect the player by this amount
     public override IEnumerator CardEffect()
     {
-        Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider))); 
         effectFinished = true;
         yield return StartCoroutine(base.CardEffect());
     }

@@ -16,8 +16,12 @@ MonoBehaviour:
   Name: Barrier
   ID: 1
   Description: add shield
+  Attack: 0
+  Defense: 1
+  SpecialCard: 0
   Cooldown: 1
   ResourceCost: 10
+  currentCooldownTime: 0
   sprite: {fileID: 21300000, guid: da6a36c407f84e84eaae57d3d97b8c19, type: 3}
   cardPrefab: {fileID: 3198968608887256750, guid: 993a7f613fac00d489f9d23e8843c0e3, type: 3}
   myPhysicalCard: {fileID: 0}
