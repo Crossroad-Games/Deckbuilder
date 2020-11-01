@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
-  m_Name: Alchemist Fire
+  m_Name: Alchemist Barrier
   m_EditorClassIdentifier: 
   rarity: 0
-  Name: Alchemist Fire
-  ID: 0
-  Description: Deal damage
-  Attack: 1
+  Name: Alchemist Barrier
+  ID: 5
+  Description: concoct defense cards
+  Attack: 0
   Defense: 0
-  SpecialCard: 0
-  Cooldown: 0
-  ResourceCost: 5
+  SpecialCard: 1
+  Cooldown: 3
+  ResourceCost: 30
   currentCooldownTime: 0
-  sprite: {fileID: 21300000, guid: 4f68a1161891d1042ad2a628dc34a050, type: 3}
-  cardPrefab: {fileID: 3198968608887256750, guid: bd2225d726b664b43b4bb4f8a4a8baea, type: 3}
+  sprite: {fileID: 21300000, guid: abdffdedaaeb2844ebf44cd14279988c, type: 3}
+  cardPrefab: {fileID: 235308949984434744, guid: 7ee16f5f75747ad449bbe83ebd2a1ff4, type: 3}
   myPhysicalCard: {fileID: 0}

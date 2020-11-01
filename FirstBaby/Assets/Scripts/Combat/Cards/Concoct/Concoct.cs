@@ -49,31 +49,59 @@ public class Concoct : MonoBehaviour
             if (combatPlayer.hitInfo.collider != null && combatPlayer.isHoveringCard) //If mouse is over a card when it is pressed
             {
                 Card card = combatPlayer.hitInfo.collider.gameObject.GetComponent<Card>();
-                if (!card.concocted && card.cardPorpuse == concoctPorpuse)
-                {
-                    if (cardsToConcoct.Count == 0)
+                if (concoctPorpuse != CardPorpuse.Any) {
+                    if (!card.concocted && card.cardPorpuse == concoctPorpuse && !card.isConcoct)
                     {
-                        Debug.Log("cardConcocted");
-                        cardsToConcoct.Add(card);
-                        card.concocted = true;
-                        Debug.Log(card.highlightPreviousHeight);
+                        if (cardsToConcoct.Count == 0)
+                        {
+                            Debug.Log("cardConcocted");
+                            cardsToConcoct.Add(card);
+                            card.concocted = true;
+                            Debug.Log(card.highlightPreviousHeight);
+                        }
+                        else
+                        {
+                            Debug.Log("há cartas no concoctlist");
+                            if (card.GetType() == cardsToConcoct[0].GetType())
+                            {
+                                cardsToConcoct.Add(card);
+                                card.concocted = true;
+                                Debug.Log(card.highlightPreviousHeight);
+                            }
+                        }
                     }
                     else
                     {
-                        Debug.Log("há cartas no concoctlist");
-                        if (card.GetType() == cardsToConcoct[0].GetType())
+                        cardsToConcoct.Remove(card);
+                        card.concocted = false;
+                        Debug.Log(card.highlightPreviousHeight);
+                    }
+                }
+                else if(concoctPorpuse == CardPorpuse.Any)
+                {
+                    if (!card.concocted)
+                    {
+                        if (cardsToConcoct.Count == 0)
                         {
+                            Debug.Log("cardConcocted");
+                            cardsToConcoct.Add(card);
+                            card.concocted = true;
+                            Debug.Log(card.highlightPreviousHeight);
+                        }
+                        else
+                        {
+                            Debug.Log("há cartas no concoctlist");
                             cardsToConcoct.Add(card);
                             card.concocted = true;
                             Debug.Log(card.highlightPreviousHeight);
                         }
                     }
-                }
-                else
-                {
-                    cardsToConcoct.Remove(card);
-                    card.concocted = false;
-                    Debug.Log(card.highlightPreviousHeight);
+                    else
+                    {
+                        cardsToConcoct.Remove(card);
+                        card.concocted = false;
+                        Debug.Log(card.highlightPreviousHeight);
+                    }
                 }
             }
 
@@ -91,9 +119,51 @@ public class Concoct : MonoBehaviour
                     if (myConcoctAttackCard != null)
                     {
                         myConcoctAttackCard.BringConcoctInfo(cardsToConcoct);
-                        FinishConcoct();
                         //TODO: Call animation here, and make an animation event that will call the DealDamage function
-                        myConcoctAttackCard.DealDamage();
+                        myConcoctAttackCard.DealDamage(cardsToConcoct);
+                        FinishConcoct();
+                    }
+                    break;
+                case CardPorpuse.Defense:
+                    ConcoctCardDefense myConcoctDefenseCard = myCard as ConcoctCardDefense;
+                    if(myConcoctDefenseCard != null)
+                    {
+                        myConcoctDefenseCard.BringConcoctInfo(cardsToConcoct);
+                        //TODO: Call animation here, and make an animation event that will call the GainShield/health function
+                        myConcoctDefenseCard.GainShield_Health(cardsToConcoct);
+                        FinishConcoct();
+                    }
+                    break;
+                case CardPorpuse.Effect:
+                    ConcoctCardEffectNonTarget myConcoctCardEffectNonTarget = myCard as ConcoctCardEffectNonTarget;
+                    ConcoctCardEffectTarget myConcoctCardEffectTarget = myCard as ConcoctCardEffectTarget;
+                    if(myConcoctCardEffectNonTarget != null) // NonTarget concoct card
+                    {
+                        myConcoctCardEffectNonTarget.BringConcoctInfo(cardsToConcoct);
+                        myConcoctCardEffectNonTarget.DoEffect(cardsToConcoct);
+                        FinishConcoct();
+                    }
+                    else if(myConcoctCardEffectTarget != null)// Target concoct card
+                    {
+                        myConcoctCardEffectTarget.BringConcoctInfo(cardsToConcoct);
+                        myConcoctCardEffectTarget.DoEffect(cardsToConcoct);
+                        FinishConcoct();
+                    }
+                    break;
+                case CardPorpuse.Any:
+                    ConcoctCardEffectNonTarget myConcoctAnyCardNonTarget = myCard as ConcoctCardEffectNonTarget;
+                    ConcoctCardEffectTarget myConcoctAnyCardTarget = myCard as ConcoctCardEffectTarget;
+                    if(myConcoctAnyCardNonTarget != null) // NonTarget concoct card
+                    {
+                        myConcoctAnyCardNonTarget.BringConcoctInfo(cardsToConcoct);
+                        myConcoctAnyCardNonTarget.DoEffect(cardsToConcoct);
+                        FinishConcoct();
+                    }
+                    else if(myConcoctAnyCardTarget != null)// Target concoct card
+                    {
+                        myConcoctAnyCardTarget.BringConcoctInfo(cardsToConcoct);
+                        myConcoctAnyCardTarget.DoEffect(cardsToConcoct);
+                        FinishConcoct();
                     }
                     break;
             }
@@ -192,5 +262,6 @@ public class Concoct : MonoBehaviour
             if (card != myCard)
                 card.selectable = true;
         }
+        cardsToConcoct.Clear();
     }
 }

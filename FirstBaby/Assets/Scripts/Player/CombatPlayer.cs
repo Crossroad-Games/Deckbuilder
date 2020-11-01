@@ -164,6 +164,13 @@ public class CombatPlayer : MonoBehaviour
         }
     }
 
+    public void GainLife(int Amount)
+    {
+        myData.PlayerLifeForce += Amount;
+        HPBarFill.fillAmount = ((float)myData.PlayerLifeForce / InitialHP) <= 1 ? ((float)myData.PlayerLifeForce / InitialHP) : 1;// Fill ball is based on the current amount of HP over initial amount of HP
+        HPBarValue.text = myData.PlayerLifeForce + "/" + InitialHP;
+    }
+
     public void Die()
     {
         GameObject.Find("Combat Manager").GetComponent<CombatDefeat>().Defeat();

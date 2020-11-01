@@ -16,8 +16,12 @@ MonoBehaviour:
   Name: Riposte
   ID: 3
   Description: Deal half damage back next time you take damage
+  Attack: 0
+  Defense: 0
+  SpecialCard: 1
   Cooldown: 2
   ResourceCost: 20
+  currentCooldownTime: 0
   sprite: {fileID: 21300000, guid: 30b1752ff43dfbf4aa4ff6933fbc55cf, type: 3}
   cardPrefab: {fileID: 9058848144534476549, guid: 7a754a10bff77184bb41ec79e0cb8816, type: 3}
   myPhysicalCard: {fileID: 0}

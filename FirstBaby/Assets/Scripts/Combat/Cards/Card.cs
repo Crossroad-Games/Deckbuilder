@@ -18,6 +18,7 @@ public abstract class Card : MonoBehaviour
     #region Booleans
     public bool selected; //when card is being selected
     public bool concocted = false; //When card is being concocted by another card
+    public bool isConcoct = false; //Wether card is a concoct card or not
     public bool selectable = true; //Determines wether card is selectable or not
     public bool highlighted; // when card is being highlighted
     public float highlightPreviousHeight; // When the card will be highlighted, stores the height of the card of when it wasn't highlighted
@@ -27,7 +28,10 @@ public abstract class Card : MonoBehaviour
     public bool returningToHand; // when card is returning to hand
     public bool beingHovered; // when card is being hovered by mouse
     protected bool canGotoCDPile = false; // Flag for when card finishes all of it's desired behaviours
-    protected bool effectFinished = false; // Flag for when should call the Effect Finished callback
+    protected bool effectFinished = false; // Flag for when should call the Effect Finished callback ( finish card behaviour )
+    protected bool dealDamageFinished = false; // Flag for when should call the dealDamage Finished callback ( go to card effect )
+    protected bool gainShield_HealthFinished = false; // Flag for when should call the dealDamage Finished callback ( go to card effect )
+    public bool doEffectWhenConcocted = true; // When card is being concocted, do it's effect or not
     #endregion
 
     public string type = "none";
@@ -71,6 +75,10 @@ public abstract class Card : MonoBehaviour
     {
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
+        if (cardPorpuse == CardPorpuse.Attack)
+            StartCoroutine(DealDamage());
+        else if (cardPorpuse == CardPorpuse.Defense)
+            StartCoroutine(GainShield_Health());
         StartCoroutine(CardEffect()); // Execute the card's effect
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the supplied delegate evaluates to true
         //Send it to the CD pile
@@ -83,6 +91,14 @@ public abstract class Card : MonoBehaviour
     {
         canGotoCDPile = true;
     }
+    public virtual void EndDealDamage()
+    {
+        dealDamageFinished = true;
+    }
+    public virtual void EndGainShield_Health()
+    {
+        canGotoCDPile = true;
+    }
 
     public virtual IEnumerator CardEffect()  // This is the field used by the card to describe and execute its action
     {
@@ -90,5 +106,18 @@ public abstract class Card : MonoBehaviour
         EndCardEffect();
     }
 
-    
+    public virtual IEnumerator DealDamage()
+    {
+        TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
+        yield return new WaitUntil(() => dealDamageFinished == true);
+        EndDealDamage();
+    }
+
+    public virtual IEnumerator GainShield_Health()
+    {
+        Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
+        Player.GainLife((BaseHeal + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
+        yield return new WaitUntil(() => gainShield_HealthFinished == true);
+        EndGainShield_Health();
+    }
 }

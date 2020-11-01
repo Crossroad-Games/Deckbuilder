@@ -31,6 +31,7 @@ public class Hand : CardPile
 
     [SerializeField] private CombatProperties combatProperties = null;
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
+    [SerializeField] private int MaxCardsInHand = 10; // Limits the number of cards in hand from all sources
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
     private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
 
@@ -140,7 +141,11 @@ public class Hand : CardPile
         var Amount = MaxHandDraw - physicalCardsInHand.Count;// Draw cards based on how many cards you need 
         DrawCards(Amount);
     }
-    public void DrawCards(int Amount)=> StartCoroutine(DrawCardDelay(Amount));// Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards
+    public void DrawCards(int Amount)
+    {
+        if(Amount + physicalCardsInHand.Count <= MaxCardsInHand)
+            StartCoroutine(DrawCardDelay(Amount)); // Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards
+    }
     IEnumerator DrawCardDelay(int Amount)// Add card has a small delay between each card to ensure a visual effec
     {
         yield return null;

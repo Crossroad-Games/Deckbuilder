@@ -11,6 +11,7 @@ public abstract class ConcoctCardEffectNonTarget : NonTargetCard
     {
         base.Awake();
         myConcoct = GetComponent<Concoct>();
+        isConcoct = true;
     }
 
     public override IEnumerator CardEffect()
@@ -23,6 +24,10 @@ public abstract class ConcoctCardEffectNonTarget : NonTargetCard
     {
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
+        if (cardPorpuse == CardPorpuse.Attack)
+            DealDamage();
+        else if (cardPorpuse == CardPorpuse.Defense)
+            GainShield_Health();
         StartCoroutine(CardEffect()); // Execute the card's effect
         yield return new WaitUntil(() => canGotoCDPile == true || canceledConcoct); //Suspends the coroutine execution until the supplied delegate evaluates to true
         if (canGotoCDPile)
@@ -41,5 +46,5 @@ public abstract class ConcoctCardEffectNonTarget : NonTargetCard
 
     public abstract void BringConcoctInfo(List<Card> cardsConcocted);
 
-    public abstract void DealEffect();
+    public abstract void DoEffect(List<Card> cardsConcocted);
 }

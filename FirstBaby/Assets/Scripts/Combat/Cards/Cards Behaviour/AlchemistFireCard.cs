@@ -13,12 +13,10 @@ public class AlchemistFireCard : TargetCard
     // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()
     {
+        Debug.Log("alchemist fire effect");
         AlchemistFireEffect preExistantFireEffect = TargetEnemy.GetComponent<AlchemistFireEffect>();
         if (preExistantFireEffect == null)
         {
-            Debug.Log(BaseDamage + " " + Divider);
-            TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
-
             AlchemistFireEffect effectToAdd = TargetEnemy.gameObject.AddComponent<AlchemistFireEffect>() as AlchemistFireEffect;
 
             effectToAdd.InitializeEffect(0, 0, 0, 0, 0, 1);
@@ -29,7 +27,6 @@ public class AlchemistFireCard : TargetCard
             {
                 AddValue = preExistantFireEffect.turnCounter / 2;
             }
-            TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
             preExistantFireEffect.turnCounter += 1;
         }
         effectFinished = true;
