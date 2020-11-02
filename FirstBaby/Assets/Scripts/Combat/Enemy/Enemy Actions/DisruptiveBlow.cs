@@ -22,9 +22,10 @@ public class DisruptiveBlow : EnemyAction
     }
     public override void Effect()
     {
-        Debug.Log("Used this skill");
-        Debug.Log(TurnDuration);
         Player.LoseShield(CalculateAction(Mathf.FloorToInt(Player.myData.PlayerShield * ShieldDepletion)));// Deplete the player's shield by a preset amount
+        DisruptedEffect preExistantEffect = Player.GetComponent<DisruptedEffect>();// Get the player's Decay Effect
+        if (preExistantEffect != null)// If there is a disrupt effect
+            Destroy(preExistantEffect);// Remove it
         DisruptedEffect DisruptToAdd = Player.gameObject.AddComponent<DisruptedEffect>() as DisruptedEffect;// Apply Disrupted status to the player, messing with their CD pile
         DisruptToAdd.InitializeEffect(0, 0, 0, 1, 1,TurnDuration);// Duration of the effect
     }

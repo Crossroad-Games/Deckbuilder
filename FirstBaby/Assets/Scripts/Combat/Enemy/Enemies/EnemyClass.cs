@@ -26,6 +26,7 @@ public abstract class EnemyClass : MonoBehaviour
     public Action OnEnemyGainShield;
     public Action OnEnemySpendShield;
     public Action thisEnemyStartTurn;// An event tied specifically to this enemy
+    public Action thisEnemyEndTurn;// An event tied specifically to this enemy
     #endregion
 
     #region Death related methods
@@ -155,7 +156,10 @@ public abstract class EnemyClass : MonoBehaviour
     {
         if (TurnManager.State == CombatState.EnemyActionPhase)
         {
-            EnemyIntention();// Checks what the enemy is going to do
+            if (!Incapacitated)// If not incapacitaded
+                EnemyIntention();// Checks what the enemy is going to do
+            else
+                IntendedActions.Clear();// Clear intended action
             foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
                 if (Action != null && !Incapacitated)// Check if its null
                     Action.Effect();// Executes this action's effect
@@ -166,6 +170,7 @@ public abstract class EnemyClass : MonoBehaviour
     {
         //Do a bunch of stuff
         RandomValue= UnityEngine.Random.value;// Generates a random value every end of turn
+        thisEnemyEndTurn?.Invoke();// Invoke all methods subscribed to this event
         EnemyManager.EndEnemyTurn();
     }
     IEnumerator CheckIntention()// Delays the intention check

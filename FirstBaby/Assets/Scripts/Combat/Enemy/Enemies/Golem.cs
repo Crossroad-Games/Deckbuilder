@@ -7,6 +7,7 @@ public class Golem : EnemyClass
     [SerializeField]private int DisruptiveCD = 5;// How many turns the golem will wait before using Disruptive Blow again
     [SerializeField] private int CurrentDisruptiveCD = 0;// Current Disruptive value
     [SerializeField] private bool Cocooned=false;
+    [SerializeField] private int CocoonDuration;
     public override void EnemyIntention()
     {
         IntendedActions.Clear();
@@ -21,24 +22,36 @@ public class Golem : EnemyClass
     }
     public override void ActionPhase()
     {
-        if (!Incapacitated && Cocooned)// When this enemy is no longer incapacitated
-        {
-            ActionList["Enemy Attack"].Multiplier += 1;// Add one to the damage multiplier
-            Cocooned = false;// No longer cocooned
-        }
+        
         base.ActionPhase();
         foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
             if (Action != null)// Check if its null
             {
                 if (Action.ActionName == "Disruptive Blow")// If this enemy used Disruptive Blow this turn
                     CurrentDisruptiveCD = DisruptiveCD;// Apply CD
-                if(Action.ActionName=="Cocoon")
-                    Cocooned = true;
+                if (Action.ActionName == "Cocoon")// If this enemy used Cocoon this turn
+                {
+                    CocoonDuration = GetComponent<Cocoon>().TurnCount;// Acquire how many turns this enemy will stay in the cocoon
+                    Cocooned = true;// Raise flag
+                }
             }
+    }
+    public override void StartTurn()
+    {
+        CurrentDisruptiveCD = CurrentDisruptiveCD >= 1 ? CurrentDisruptiveCD-1 : 0;// CD countdown
+        base.StartTurn();
     }
     public override void EndTurn()
     {
-        CurrentDisruptiveCD = CurrentDisruptiveCD - 1 <= 0 ? 0 : CurrentDisruptiveCD - 1;// CD countdown
-        base.EndTurn();
+        RandomValue = Random.value;// Generates a random value every end of turn
+        thisEnemyEndTurn?.Invoke();// Invoke all methods subscribed to this event
+        CocoonDuration = CocoonDuration >= 1 ? CocoonDuration - 1 : 0;// Countdown
+        if (CocoonDuration == 0 && Cocooned)// When the cocoon duration is over
+        {
+            if (!Incapacitated)// Loses the effect if incapacitated
+                ActionList["Enemy Attack"].Multiplier += 1;// Add one to the damage multiplier
+            Cocooned = false;// No longer cocooned
+        }      
+        EnemyManager.EndEnemyTurn();
     }
 }

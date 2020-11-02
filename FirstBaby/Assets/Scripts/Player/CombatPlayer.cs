@@ -12,7 +12,7 @@ public class CombatPlayer : MonoBehaviour
     #region Player Information
     [SerializeField]public CombatPlayerData myData= new CombatPlayerData();
     [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the player has
-    [Range(0,1)][SerializeField] private float ShieldDecay=0.5f;// % by which the shield will decay every turn
+    [Range(0,Mathf.Infinity)][SerializeField] public float ShieldDecay=0.5f;// % by which the shield will decay every turn
     #endregion
     [Space(5)]
     #region References
@@ -143,10 +143,8 @@ public class CombatPlayer : MonoBehaviour
     public void ProcessDamage(EnemyClass attackingEnemy, int RawDamageTaken)
     {
         Debug.Log("Incoming "+RawDamageTaken+" Damage from: " + attackingEnemy);
-        if(OnPlayerProcessDamage != null)
-        {
-            OnPlayerProcessDamage(attackingEnemy, RawDamageTaken);
-        }
+        if (attackingEnemy != null)// If there is an attacking enemy
+            OnPlayerProcessDamage?.Invoke(attackingEnemy, RawDamageTaken);
         RawDamageTaken -= myData.PlayerDefense;// Reduce the damage by the enemy defense
         RawDamageTaken -= SpendShield(RawDamageTaken);// Spend the shield pool to reduce the incoming damage
         RawDamageTaken = RawDamageTaken <= 0 ? 0 : RawDamageTaken;// If the damage went beyond 0, set it to be 0, if not: keep the value
