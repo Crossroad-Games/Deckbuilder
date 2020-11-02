@@ -46,7 +46,7 @@ public class LastingEffect : MonoBehaviour
     private void Countdown()
     {
         turnCounter--;
-        if (turnCounter == 0)
+        if (turnCounter <= 0)
             Destroy(this);
     }
     public virtual void Effect(EnemyClass attackingEnemy, int Damage) //This overload is used when the effect is called when the player suffered damage
