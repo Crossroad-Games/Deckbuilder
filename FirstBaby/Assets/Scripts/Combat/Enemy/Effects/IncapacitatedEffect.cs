@@ -8,12 +8,12 @@ public class IncapacitatedEffect : EnemyLastingEffect
     {
         base.Start();
         myClass.Incapacitated = true;// Enemy can't act
-        myClass.thisEnemyEndTurn += Effect;
+        myClass.thisEnemyStartTurn += Effect;
     }
     protected override void OnDisable()
     {
         base.OnDisable();
         myClass.Incapacitated = false;// Enemy can act
-        myClass.thisEnemyEndTurn -= Effect;
+        myClass.thisEnemyStartTurn -= Effect;
     }
 }

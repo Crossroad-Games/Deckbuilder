@@ -17,21 +17,6 @@ public class CurseBearer : EnemyClass
         else if (RandomValue<=1)
             IntendedActions.Add(ActionList["Cocoon"]);
     }
-    public override void ActionPhase()
-    {
-        base.ActionPhase();
-        foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
-            if (Action != null)// Check if its null
-            {
-                if (Action.ActionName == "Decaying Breath")// If this enemy used Disruptive Blow this turn
-                    CurrentBreathCD = BreathCD;// Apply CD
-                if (Action.ActionName == "Cocoon")// If this enemy used Cocoon this turn
-                {
-                    CocoonDuration = GetComponent<Cocoon>().TurnCount;// Get the duration of the cocoon
-                    Cocooned = true;
-                }
-            }
-    }
     public override void StartTurn()
     {
         CurrentBreathCD = CurrentBreathCD >= 1 ? CurrentBreathCD-1 : 0;// Update the CD
@@ -45,9 +30,24 @@ public class CurseBearer : EnemyClass
         if (CocoonDuration <= 0 && Cocooned)// When the cocoon duration is over
         {
             if (!Incapacitated)// Loses the effect if incapacitated
-                ActionList["Miasma"].Effect();// Use this action
+                StartCoroutine(ActionList["Miasma"].Effect());// Use this action
             Cocooned = false;// No longer cocooned
         }
         EnemyManager.EndEnemyTurn();
+    }
+    public override IEnumerator ActionPhaseCoroutine()
+    {
+        yield return StartCoroutine(base.ActionPhaseCoroutine());
+        foreach (EnemyAction Action in TurnActions)// Go through all the actions the enemy intends to perform
+            if (Action != null)// Check if its null
+            {
+                if (Action.ActionName == "Decaying Breath")// If this enemy used Disruptive Blow this turn
+                    CurrentBreathCD = BreathCD;// Apply CD
+                if (Action.ActionName == "Cocoon")// If this enemy used Cocoon this turn
+                {
+                    CocoonDuration = GetComponent<Cocoon>().TurnCount;// Get the duration of the cocoon
+                    Cocooned = true;
+                }
+            }
     }
 }

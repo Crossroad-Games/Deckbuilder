@@ -8,10 +8,10 @@ public abstract class EnemyAction : MonoBehaviour
     public int ActionID { get { return myInfo.thisID; } protected set { } }// Unique identifier of this Action
     public string ActionName { get { return myInfo.thisName; } protected set { } }
     public string Description { get { return myInfo.thisDescription; } protected set { } }
-    public abstract void Effect();// Every Action must have an Effect
     public int AddValue = 0, SubtractValue = 0;
     public float Multiplier = 1, Divider = 1;
     private EnemyClass myclass;
+    public bool ActionDone = false;// Wheter this action is done doing its effect and animation or not
     public EnemyClass myClass// Keeps reference to which Enemy Class has ownership over this script
     {
         get
@@ -66,4 +66,5 @@ public abstract class EnemyAction : MonoBehaviour
     [SerializeField] public EnemyActionInfo myInfo;
     [SerializeField] public bool Customizable, CustomDamage, CustomShield;
     [SerializeField] public float BaseDamageMultiplier, BaseShieldMultiplier;
+    public abstract IEnumerator Effect();
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEditor;
+using System.Linq;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -65,6 +66,11 @@ public class EnemyManager : MonoBehaviour
             else
             {
                 TurnMaster.EndEnemyTurn(true);// End this turn and the enemy phase
+                foreach(EnemyClass Enemy in CombatEnemies)
+                {
+                    Enemy.StopChecking();
+                    Enemy.StartChecking();
+                }
                 CurrentEnemyClass = null;// Reset the current enemy
                 CurrentEnemyIndex = 0;// Reset the index
             }
@@ -87,12 +93,14 @@ public class EnemyManager : MonoBehaviour
         {
             CombatEnemies.Add(newEnemy);// Add a new enemy
             EnemyData.Add(newEnemy.myData);// Store its data
+            SortByPosition();
             OnSpawnEnemy?.Invoke(newEnemy);// Invoke this event and pass as an argument the enemy that just got spawned
         }
     }
     public void RemoveEnemy(EnemyClass RemovedEnemy)// Remove this enemyclass from the list of enemies on the scene
     {
         CombatEnemies.Remove(RemovedEnemy);// Remove this enemy from the list of combat enemies
+        EnemiesToAct.Remove(RemovedEnemy);// Remove this enemy from the turn list
         EnemyData.Remove(RemovedEnemy.myData);// Remove this enemy data from the list of combat enemies
         EnemyDefeatCheck();// Checks if the condition for defeat was reached
     }
@@ -108,6 +116,18 @@ public class EnemyManager : MonoBehaviour
                 EnemyToSpawn.GetComponent<EnemyClass>().myData = Data;// Stores the saved data into the new enemy
                 EnemyToSpawn.transform.position = EnemyPositions[Data.Position];// This enemy will be sent to position it was first spawned on
             }
+       SortByPosition();
+    }
+    public void SortByPosition()
+    {
+        var Dictionary = new Dictionary<int, EnemyClass>();// Temporary Dictionary
+        foreach (EnemyClass Enemy in CombatEnemies)// Cycle through all the enemies on the combat scene
+            Dictionary.Add(Enemy.myData.Position, Enemy);// Store their values
+        var ListToSort = new List<int>(Dictionary.Keys.ToList());// Copies the keys to a list
+        ListToSort.Sort();// Sort this list
+        CombatEnemies.Clear();// Clears the combat enemies list
+        foreach (int Position in ListToSort)// For each sorted position
+            CombatEnemies.Add(Dictionary[Position]);// Sort the combat enemies list
     }
     #endregion
 }

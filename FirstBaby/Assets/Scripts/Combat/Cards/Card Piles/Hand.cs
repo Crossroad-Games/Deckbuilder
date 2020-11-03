@@ -157,7 +157,6 @@ public class Hand : CardPile
             Amount--;
             yield return new WaitForSeconds(DrawDelay);// Apply delay
         }
-        Saver.SaveGame();// Save the game state at the end of every player turn start
         isDrawing = false;
         yield break;
     }

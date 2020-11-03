@@ -108,7 +108,7 @@ public class SaveLoad : MonoBehaviour
     }
     public void SaveGame()// This will save all the information on json files
     {
-       
+        Debug.Log("Saved");
         if (CombatScene)// If the player is currently at a combat scene
             SaveCombat();
         else if (DungeonScene)// If the player is currently at a dungeon scene
@@ -143,8 +143,16 @@ public class SaveLoad : MonoBehaviour
             JSONString = File.ReadAllText(dataPath);
         else
         {
-
-            TextAsset myFile = Resources.Load<TextAsset>("Text/DefaultSave");
+            TextAsset myFile = null;
+            switch(PlayerPrefs.GetString("Name"))
+            {
+                case "Alchemist":
+                    myFile = Resources.Load<TextAsset>("Text/AlchemistSave");
+                    break;
+                default:
+                    myFile = Resources.Load<TextAsset>("Text/DefaultSave");
+                    break;
+            }
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);

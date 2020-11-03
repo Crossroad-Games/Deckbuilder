@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,12 +20,6 @@ public class Miasma : EnemyAction
             if (CustomBurnStacks)// If this property is customized
                 AmountofBurnStacks = newAmountofBurnStacks;// Update the new amount of burn stacks
         }
-    }
-    public override void Effect()
-    {
-        ApplyDecay();// Apply decay to the player
-        ApplyDisrupt();// Apply Disrupt to the player
-        ApplyBurn();// Appluy burn to the player
     }
     #region Apply Effects
     private void ApplyDecay()
@@ -58,6 +53,19 @@ public class Miasma : EnemyAction
         }
         else// If there is a decay effect
             preExistantEffect.turnCounter += AmountofBurnStacks;// Add more stacks
+    }
+
+    public override IEnumerator Effect()
+    {
+        ApplyDecay();// Apply decay to the player
+        ApplyDisrupt();// Apply Disrupt to the player
+        ApplyBurn();// Appluy burn to the player
+        while (!ActionDone)
+        {
+            yield return new WaitForSeconds(1f);
+            ActionDone = true;
+            Debug.LogWarning("Needs to update this part to get ActionDone from animator and change the delay");
+        }
     }
     #endregion
 }

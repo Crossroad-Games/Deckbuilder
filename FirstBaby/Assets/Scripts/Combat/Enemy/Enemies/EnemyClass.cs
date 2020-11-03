@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public abstract class EnemyClass : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] public EnemyData myData = new EnemyData(0,"",0,0,0,0,0);
     public Dictionary<string,EnemyAction> ActionList = new Dictionary<string, EnemyAction>();// List of Actions this Enemy has
     public List<EnemyAction> IntendedActions = new List<EnemyAction>();// Actions the enemy plan to execute
+    protected List<EnemyAction> TurnActions = new List<EnemyAction>();// Copy of the actions during the action phase
     [SerializeField] private GameObject AttackIcon=null;// Icon that will display that this enemy will attack
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
@@ -19,6 +21,7 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] protected float RandomValue;// This random value is rolled every end of turn and at start
     [SerializeField] public bool Incapacitated=false;// Is this enemy able to act?
     private Image HPBarFill;
+    public IEnumerator CheckIntentionCoroutine;
     [Range(0,1)][SerializeField] public float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
     #endregion
 
@@ -49,7 +52,9 @@ public abstract class EnemyClass : MonoBehaviour
     }
     public void RemoveMe()// Instantly removes this enemy from combat without triggering death events
     {
+        Debug.Log("Removed this enemy: " + this.gameObject.name);
         this.EnemyManager.RemoveEnemy(this);
+        myDeath();
     }
     #endregion
 
@@ -137,7 +142,8 @@ public abstract class EnemyClass : MonoBehaviour
         #endregion
 
         RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns 
-        StartCoroutine(CheckIntention());// Check if this enemy changed its intention every .5 seconds
+        CheckIntentionCoroutine = CheckIntention();
+        StartChecking();
     }
     protected void OnEnable()
     {
@@ -152,20 +158,9 @@ public abstract class EnemyClass : MonoBehaviour
         thisEnemyStartTurn?.Invoke();
         SpendShield((int)Mathf.Ceil((myData.EnemyShield * (ShieldDecay))));    
     }
-    public virtual void ActionPhase()
-    {
-        if (TurnManager.State == CombatState.EnemyActionPhase)
-        {
-            if (!Incapacitated)// If not incapacitaded
-                EnemyIntention();// Checks what the enemy is going to do
-            else
-                IntendedActions.Clear();// Clear intended action
-            foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
-                if (Action != null && !Incapacitated)// Check if its null
-                    Action.Effect();// Executes this action's effect
-            EndTurn();// End its turn
-        }
-    }
+    public virtual void StopChecking() => StopCoroutine(CheckIntentionCoroutine);// Check if this enemy changed its intention every .5 seconds
+    public virtual void StartChecking() => StartCoroutine(CheckIntentionCoroutine);// Check if this enemy changed its intention every .5 seconds
+    public virtual void ActionPhase() => StartCoroutine(ActionPhaseCoroutine());
     public virtual void EndTurn()
     {
         //Do a bunch of stuff
@@ -175,8 +170,10 @@ public abstract class EnemyClass : MonoBehaviour
     }
     IEnumerator CheckIntention()// Delays the intention check
     {
-        while(this!=null)// While this script exists
+        Debug.Log("Started to Check");
+        while (this!=null)// While this script exists
         {
+            Debug.Log("Checking Intention");
             if (!Incapacitated)// If this enemy can act
                 EnemyIntention();// Checks what the enemy is going to do
             else if (IntendedActions.Count != 0)
@@ -203,7 +200,45 @@ public abstract class EnemyClass : MonoBehaviour
         }
     }
     #endregion
-
+    public virtual IEnumerator ActionPhaseCoroutine()
+    {
+        var ActionDone = false;
+        AttackIcon.SetActive(false);// Deactivate using the type of action as a boolean
+        ShieldIcon.SetActive(false);// Deactivate using the type of action as a boolean
+        SpecialIcon.SetActive(false);// Deactivate using the type of action as a boolean
+        GetComponentInChildren<TMP_Text>().text = string.Empty;// Show no value
+        StopChecking();
+        if (TurnManager.State == CombatState.EnemyActionPhase)
+        {
+            if (!Incapacitated)// If not incapacitaded
+                EnemyIntention();// Checks what the enemy is going to do
+            else
+            {
+                IntendedActions.Clear();// Clear intended action
+                ActionDone = true;
+            }
+            TurnActions = new List<EnemyAction>(IntendedActions);
+            StopChecking();
+            foreach (EnemyAction Action in TurnActions)// Go through all the actions the enemy intends to perform
+                if (Action != null && !Incapacitated)// Check if its null
+                    StartCoroutine(Action.Effect());// Executes this action's effect
+            while (!ActionDone)
+            {
+                foreach (EnemyAction Action in TurnActions)
+                    if (Action.ActionDone)// If this action has already done its effect
+                        ActionDone = true;// Action effect is over
+                    else// If any action is still supposed to do its effect
+                    {
+                        ActionDone = false;// Action is not over
+                        break;// Stop verifying
+                    }
+                yield return null;
+            }
+            foreach (EnemyAction Action in TurnActions)// Cycle through all the actions this enemy has
+                Action.ActionDone = false;// Change all the action states to be not done   
+            EndTurn();// End its turn
+        }
+    }
     #region UI Update
     public void UpdateShield()
     {

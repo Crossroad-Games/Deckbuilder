@@ -43,10 +43,10 @@ public class SpiritCaller : EnemyClass
         else if(RandomValue<=1)
             IntendedActions.Add(ActionList["Protection"]);// Gain shield
     }
-    public override void ActionPhase()
+    public override IEnumerator ActionPhaseCoroutine()
     {
-        base.ActionPhase();
-        foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
+        yield return StartCoroutine(base.ActionPhaseCoroutine());
+        foreach (EnemyAction Action in TurnActions)// Go through all the actions the enemy intends to perform
             if (Action != null)// Check if its null
             {
                 if (Action.ActionName == "Summon Enemy")// If this enemy used Summon Enemy this turn
@@ -56,7 +56,7 @@ public class SpiritCaller : EnemyClass
     public override void StartTurn()
     {
         base.StartTurn();
-        CurrentSummonCD = CurrentSummonCD > 0 ? CurrentSummonCD-- : 0;// If greater than 0, reduce, if not equals to 0
+        CurrentSummonCD = CurrentSummonCD > 0 ? CurrentSummonCD-1 : 0;// If greater than 0, reduce, if not equals to 0
     }
     #region HandleSummons
     public void HandleSpiritSpawn(EnemyClass SpawnedEnemy)// Acquires the enemy that just got spawned
