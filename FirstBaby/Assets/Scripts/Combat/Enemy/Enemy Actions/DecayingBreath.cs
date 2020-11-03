@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class DecayingBreath : EnemyAction
@@ -13,7 +14,8 @@ public class DecayingBreath : EnemyAction
             if (CustomStacks)// If this action's stacks are customized
                 AmountofStacks = newAmountofStacks;// Update the amount of stacks this action will apply
     }
-    public override void Effect()
+
+    public override IEnumerator Effect()
     {
         DecayEffect preExistantEffect = Player.GetComponent<DecayEffect>();// Get the player's Decay Effect
         if (preExistantEffect == null)// If there is no decay effect yet
@@ -24,6 +26,12 @@ public class DecayingBreath : EnemyAction
         }
         else// If there is a decay effect
             preExistantEffect.AddStacks(AmountofStacks);// Add more stacks
-        Player.ProcessDamage(myClass,CalculateAction(myInfo.BaseDamage));// Deal damage to the player
+        Player.ProcessDamage(myClass, CalculateAction(myInfo.BaseDamage));// Deal damage to the player
+        while(!ActionDone)
+        {
+            yield return new WaitForSeconds(1f);
+            ActionDone = true;
+            Debug.LogWarning("Needs to update this part to get ActionDone from animator and change the delay");
+        }
     }
 }

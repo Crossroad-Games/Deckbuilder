@@ -20,22 +20,6 @@ public class Golem : EnemyClass
         else if (RandomValue <= 1)
             IntendedActions.Add(ActionList["Cocoon"]);// Incapacitates itself and gain defense
     }
-    public override void ActionPhase()
-    {
-        
-        base.ActionPhase();
-        foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
-            if (Action != null)// Check if its null
-            {
-                if (Action.ActionName == "Disruptive Blow")// If this enemy used Disruptive Blow this turn
-                    CurrentDisruptiveCD = DisruptiveCD;// Apply CD
-                if (Action.ActionName == "Cocoon")// If this enemy used Cocoon this turn
-                {
-                    CocoonDuration = GetComponent<Cocoon>().TurnCount;// Acquire how many turns this enemy will stay in the cocoon
-                    Cocooned = true;// Raise flag
-                }
-            }
-    }
     public override void StartTurn()
     {
         CurrentDisruptiveCD = CurrentDisruptiveCD >= 1 ? CurrentDisruptiveCD-1 : 0;// CD countdown
@@ -53,5 +37,20 @@ public class Golem : EnemyClass
             Cocooned = false;// No longer cocooned
         }      
         EnemyManager.EndEnemyTurn();
+    }
+    public override IEnumerator ActionPhaseCoroutine()
+    {
+        yield return StartCoroutine(base.ActionPhaseCoroutine());
+        foreach (EnemyAction Action in TurnActions)// Go through all the actions the enemy intends to perform
+            if (Action != null)// Check if its null
+            {
+                if (Action.ActionName == "Disruptive Blow")// If this enemy used Disruptive Blow this turn
+                    CurrentDisruptiveCD = DisruptiveCD;// Apply CD
+                if (Action.ActionName == "Cocoon")// If this enemy used Cocoon this turn
+                {
+                    CocoonDuration = GetComponent<Cocoon>().TurnCount;// Acquire how many turns this enemy will stay in the cocoon
+                    Cocooned = true;// Raise flag
+                }
+            }
     }
 }

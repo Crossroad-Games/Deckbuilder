@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -13,13 +14,6 @@ public class Consume : EnemyAction
         if(Customizable)
             if(CustomShield)
                 ShieldMultiplier *= newShieldMultiplier;// Increase or decrease the multiplier on the custom editor
-    }
-    public override void Effect()
-    {
-        var EnemyToConsume = CheckForLowHP();// Acquires the enemy with the least amount of %HP
-        myClass.GainShield((int)(CalculateAction(EnemyToConsume.myData.EnemyHP)*ShieldMultiplier));// Converts their HP into shield
-        Debug.Log(ShieldMultiplier);
-        EnemyToConsume.RemoveMe();// Kill that enemy without triggering its death event
     }
     private EnemyClass CheckForLowHP()// Consumes the enemy with the least amount of HP
     {
@@ -38,5 +32,19 @@ public class Consume : EnemyAction
         List.Sort();
         Debug.Log(List[0]);
         return AlliesHP[List[0]];// Acquire the enemy this attack will consume
+    }
+
+    public override IEnumerator Effect()
+    {
+        var EnemyToConsume = CheckForLowHP();// Acquires the enemy with the least amount of %HP
+        myClass.GainShield((int)(CalculateAction(EnemyToConsume.myData.EnemyHP) * ShieldMultiplier));// Converts their HP into shield
+        Debug.Log(ShieldMultiplier);
+        EnemyToConsume.KillMe();// Kill that enemy and trigger its death event
+        while (!ActionDone)
+        {
+            yield return new WaitForSeconds(1f);
+            ActionDone = true;
+            Debug.LogWarning("Needs to update this part to get ActionDone from animator and change the delay");
+        }
     }
 }

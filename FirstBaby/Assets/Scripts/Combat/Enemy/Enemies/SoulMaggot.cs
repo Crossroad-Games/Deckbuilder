@@ -8,14 +8,12 @@ public class SoulMaggot : EnemyClass
 {
     [SerializeField] private float ConsumeThreshold=.25f;// How much %HP is required to consume another enemy
     private bool ConsumedEnemy = false, Cocooned=false;
+    private int ConsumedEnemyDuration = 0;
+    private int CocoonDuration=0;
     public override void EnemyIntention()
     {
         IntendedActions.Clear();
-        if(Cocooned)
-        {
-            IntendedActions.Add(ActionList["Enemy Transformation"]);// This enemy becomes another one
-        }
-        else if(myData.EnemyShield>=15 && ConsumedEnemy)
+        if(myData.EnemyShield>=15 && ConsumedEnemy)
         {
             IntendedActions.Add(ActionList["Cocoon"]);// Hide inside a cocoon to gain extra shield and defense
         }
@@ -32,24 +30,21 @@ public class SoulMaggot : EnemyClass
         }
            
     }
-    public override void ActionPhase()
+    public override void EndTurn()
     {
-        if (TurnManager.State == CombatState.EnemyActionPhase)
+        ConsumedEnemyDuration = ConsumedEnemyDuration >= 1 ? ConsumedEnemyDuration - 1 : 0;// Countdown
+        ConsumedEnemy = ConsumedEnemyDuration <= 0;// True if Consumed enemy is equal or less than 0
+        Debug.Log("Cocoon Duration: " + CocoonDuration);
+        CocoonDuration = CocoonDuration >= 1 ? CocoonDuration - 1 : 0;// Countdown
+        Debug.Log("Cocoon Duration: " + CocoonDuration);
+        if (CocoonDuration <= 0 && Cocooned)// When the cocoon duration is over
         {
-            EnemyIntention();// Checks what the enemy is going to do
-            if (ConsumedEnemy)// If the maggot has consumed a unit in the previous turn
-                ConsumedEnemy = false;// No longer considered able to cocoon
-            foreach (EnemyAction Action in IntendedActions)// Go through all the actions the enemy intends to perform
-                if (Action != null && !Incapacitated)// Check if its null
-                {
-                    Action.Effect();// Executes this action's effect
-                    if (Action.ActionName == "Consume")
-                        ConsumedEnemy = true;
-                    if (Action.ActionName == "Cocoon")
-                        Cocooned = true;
-                }
-            EndTurn();// End its turn
+            Debug.Log("Incapacitated: " + Incapacitated);
+            if (!Incapacitated)// Loses the effect if incapacitated
+                StartCoroutine(ActionList["Enemy Transformation"].Effect());// Use this action
+            Cocooned = false;// No longer cocooned
         }
+        base.EndTurn();
     }
     private bool CheckForLowHP()
     {
@@ -70,5 +65,22 @@ public class SoulMaggot : EnemyClass
         var Highest = List[0];// Acquires the smallest value
         return Highest <= ConsumeThreshold ? true : false;
        
+    }
+    public override IEnumerator ActionPhaseCoroutine()
+    {
+        yield return StartCoroutine(base.ActionPhaseCoroutine());
+        Debug.Log("Stuff after the action");
+        foreach (EnemyAction Action in TurnActions)// Go through all the actions the enemy intends to perform
+            if (Action != null)// Check if its null
+            {
+                if (Action.ActionName == "Consume")
+                    ConsumedEnemy = true;
+                if (Action.ActionName == "Cocoon")
+                {
+                    CocoonDuration = GetComponent<Cocoon>().TurnCount;// Get the duration of the cocoon
+                    Debug.Log("Cocoon Duration: "+ CocoonDuration);
+                    Cocooned = true;
+                }
+            }
     }
 }

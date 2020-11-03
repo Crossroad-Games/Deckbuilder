@@ -65,6 +65,10 @@ public abstract class Card : MonoBehaviour
     {
         Debug.Log("chamou executeAction coroutine");
         StartCoroutine(CardEffect());// Execute the card's effect
+        if (cardPorpuse == CardPorpuse.Attack)
+            StartCoroutine(DealDamage());
+        else if (cardPorpuse == CardPorpuse.Defense)
+            StartCoroutine(GainShield_Health());
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the canGoToCDPile flag is set to true
         //Send it to the CD pile
         if (!Player.CombatManager.Won && !Player.CombatManager.Defeated)

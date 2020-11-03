@@ -41,7 +41,8 @@ public class TurnManager : MonoBehaviour
     }
     
     #region Turn State Control
-    [SerializeField] public static CombatState State { get; private set; }// Current combat state
+    public static CombatState State { get; private set; }// Current combat state
+    [SerializeField] private CombatState CurrentState;
     private int StateNumber = 0;
     public void NextState()// Go to the next state or the player turn start if the are no more states
     {
@@ -52,6 +53,7 @@ public class TurnManager : MonoBehaviour
             else
                 StateNumber = 1;// Go to the player turn start
             State = (CombatState)StateNumber;// Updates the current combat state
+            CurrentState = State;// Which combat state the turn manager is currently at
         }
     }
     public void IncrementTurn() => TurnCount++;// Count the current turn
