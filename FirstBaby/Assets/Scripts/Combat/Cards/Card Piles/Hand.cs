@@ -26,8 +26,8 @@ public class Hand : CardPile
             return cardDrawPosition;
         }
     }
-    public Dictionary<Card, CardPositionToFollow> cardPositionsToFollow = new Dictionary<Card, CardPositionToFollow>();    //Entity that cards follows
-    public List<Card> physicalCardsInHand = new List<Card>();
+    public Dictionary<PhysicalCard, CardPositionToFollow> cardPositionsToFollow = new Dictionary<PhysicalCard, CardPositionToFollow>();    //Entity that cards follows
+    public List<PhysicalCard> physicalCardsInHand = new List<PhysicalCard>();
 
     [SerializeField] private CombatProperties combatProperties = null;
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
@@ -44,6 +44,7 @@ public class Hand : CardPile
     private Deck Deck;// Reference the deck script to access its list of cards to draw every start of turn
     private CDPile CDPile;
     private SaveLoad Saver;
+    private CardsGallery UIManager;
     #endregion
 
     //-------------------------------------------------
@@ -75,6 +76,8 @@ public class Hand : CardPile
         combatPlayer.OnTargetCardUsed -= ReenableHoverEffects;
         combatPlayer.OnTargetCardUsed -= UndoAimAtTarget;
         combatPlayer.OnNonTargetCardUsed -= ReenableHoverEffects;
+        UIManager.OnGalleryOpen -= DisableHoverEffects;
+        UIManager.OnGalleryClose -= ReenableHoverEffects;
         SaveLoad.LoadEvent -= LoadHand;
         TurnManager.PlayerTurnStart -= DrawHand;
     }
@@ -89,6 +92,7 @@ public class Hand : CardPile
         Deck = GetComponent<Deck>();// Reference is defined
         CDPile = transform.Find("CDPile").GetComponent<CDPile>();
         Saver = GameObject.Find("Game Master").GetComponent<SaveLoad>();
+        UIManager = GameObject.Find("UI Manager").GetComponent<CardsGallery>();
         //////////Initialization of event /////////////
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
@@ -99,7 +103,8 @@ public class Hand : CardPile
         combatPlayer.OnTargetCardUsed += ReenableHoverEffects;
         combatPlayer.OnTargetCardUsed += UndoAimAtTarget;
         combatPlayer.OnNonTargetCardUsed += ReenableHoverEffects;
-       
+        UIManager.OnGalleryOpen += DisableHoverEffects;
+        UIManager.OnGalleryClose += ReenableHoverEffects;
         //////////////////////////////////////////////////
         isDrawing = false;
         isDragging = false;
@@ -122,10 +127,10 @@ public class Hand : CardPile
         {
             if (ID>=0)// If it is not a null card
             {
-                CardToReceive = TemporaryList[ID];// Receives a card info based on its ID
-                CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(CardToReceive);// Creates a copy of that card info
-               // cardsList.Add(cardInfoInstance);
-                ReceiveCard(cardInfoInstance, this);// Add this card to the hand
+                CardToReceive = TemporaryList[ID];// Cardinfo is chosen based on its ID
+                GameObject cardInstance = GameObject.Instantiate(CardToReceive.cardPrefab, cardDrawPosition.position, Quaternion.identity, handAnchor); // Creates an instance of that card prefab
+                // cardsList.Add(card prefab instance);
+                ReceiveCard(cardInstance, this);// Add this card to the hand
             }
         }
     }
@@ -164,7 +169,7 @@ public class Hand : CardPile
     #endregion
 
     #region Receive and Send Card from and to Hand
-    public override void ReceiveCard(CardInfo cardToReceive, CardPile origin)
+    public override void ReceiveCard(GameObject cardToReceive, CardPile origin)
     {
         base.ReceiveCard(cardToReceive, origin);
         if(origin.name == "Combat Player")
@@ -172,49 +177,51 @@ public class Hand : CardPile
             playerDrawFromDeck?.Invoke();   // Raise the player drawn event
             isDrawing = true; // turn isDrawing true
             //Spawn card
-            Card cardSpawned = SpawnCardFromDeck(cardToReceive);
-            cardToReceive.MyPhysicalCard = cardSpawned;
+            PhysicalCard cardSpawned = ActivateCardFromDeck(cardToReceive);
             //Add target for card to follow
             AddCardTarget(cardSpawned);
             //Update the targets positions based on how many cards/targets there are in hand right now
             UpdateTargets();
         }
+
+        cardToReceive.GetComponent<PhysicalCard>()?.ResetCardInfo();
     }
 
-    public override void SendCard(CardInfo cardToSend, CardPile target)
+    public override void SendCard(GameObject cardToSend, CardPile target)
     {
         base.SendCard(cardToSend, target);
         OnCardRemoved(cardToSend);
     }
 
-    private void OnCardRemoved(CardInfo cardBeingRemoved)
+    private void OnCardRemoved(GameObject cardBeingRemoved)
     {
         if(cardBeingRemoved != null)
         {
-            physicalCardsInHand.Remove(cardBeingRemoved.MyPhysicalCard); //When the card is removed from hand, remove it from the list of physical cards in hand
-            RemoveCardTarget(cardBeingRemoved.MyPhysicalCard); //Remove the card's PositionToFollow
+            physicalCardsInHand.Remove(cardBeingRemoved.GetComponent<PhysicalCard>()); //When the card is removed from hand, remove it from the list of physical cards in hand
+            RemoveCardTarget(cardBeingRemoved.GetComponent<PhysicalCard>()); //Remove the card's PositionToFollow
             //TODO: Should probably happen an animation before destroying the card, like it going to the CD Pile, as in slay the spire
-            GameObject.Destroy(cardBeingRemoved.MyPhysicalCard.gameObject); //Destroy the card gameObject
-            if(physicalCardsInHand.Count > 0)
+            cardBeingRemoved.GetComponent<VirtualCard>().TurnVirtual();
+            if (physicalCardsInHand.Count > 0)
                 UpdateTargets(); //Update the targets in hand if there is any
-            cardBeingRemoved.MyPhysicalCard = null; // turn the myPhysicalCard field from the cardInfo null
         }
     }
 
-    private Card SpawnCardFromDeck(CardInfo cardToSpawn)
+    private PhysicalCard ActivateCardFromDeck(GameObject cardToActivate)
     {
-        GameObject cardSpawned =  GameObject.Instantiate(cardToSpawn.cardPrefab, cardDrawPosition.position, Quaternion.identity, handAnchor); //Spawn card when drawn from deck
-        cardSpawned.GetComponent<Card>().cardInfo = cardToSpawn;  //Link the Card with it's respective CardInfo
-        cardSpawned.GetComponent<Card>().followCardPositionToFollow = true;   //Allow card to follow the target and go to it's right position in hand
-        physicalCardsInHand.Add(cardSpawned.GetComponent<Card>()); //Adds the Card to the list of physical cards in hand
-        return cardSpawned.GetComponent<Card>();
+        cardToActivate.GetComponent<VirtualCard>().TurnPhysical(); // Turn card physical enabling renderer and behaviours
+        cardToActivate.transform.position = cardDrawPosition.position; // 
+        cardToActivate.transform.rotation = Quaternion.identity;
+        cardToActivate.transform.parent = HandAnchor;
+        cardToActivate.GetComponent<PhysicalCard>().followCardPositionToFollow = true;   //Allow card to follow the target and go to it's right position in hand
+        physicalCardsInHand.Add(cardToActivate.GetComponent<PhysicalCard>()); //Adds the Card to the list of physical cards in hand
+        return cardToActivate.GetComponent<PhysicalCard>();
     }
     #endregion
 
     #region Card movement in Hand
     private void MoveCards()    // Moves the cards torward their targets smoothly
     {
-        foreach (Card card in physicalCardsInHand)
+        foreach (PhysicalCard card in physicalCardsInHand)
         {
             if (card.followCardPositionToFollow) //The movement of the cards: They follow the cardPositionToFollow with interpolation method, so the movement is smooth. These "targets" are changed in other places
             {
@@ -226,13 +233,13 @@ public class Hand : CardPile
 
     //The default position of any created PositionToFollow is the center of the hand.
     //As the PositionsToFollow are updated in hand every time a card is drawn in the drawn method, the position will automatically be adjusted to the right position
-    private void AddCardTarget(Card card)     //Adds a target to the card being drawn
+    private void AddCardTarget(PhysicalCard card)     //Adds a target to the card being drawn
     {
         CardPositionToFollow target = new CardPositionToFollow(HandAnchor.transform.position, Quaternion.identity); 
         cardPositionsToFollow.Add(card, target);
     }
 
-    private void RemoveCardTarget(Card targetCard)
+    private void RemoveCardTarget(PhysicalCard targetCard)
     {
         cardPositionsToFollow.Remove(targetCard);
     }
@@ -327,18 +334,18 @@ public class Hand : CardPile
     //It takes the card from the call and exposes it in front of others and upscale it, as well as move the adjacent cards apart from the highlighted, for a neat effect. Subscription in the initialization region
     private void HighlightCard(GameObject card)
     {
-        if (!card.GetComponent<Card>().highlighted && !card.GetComponent<Card>().concocted)
+        if (!card.GetComponent<PhysicalCard>().highlighted && !card.GetComponent<PhysicalCard>().concocted)
         {
-            card.GetComponent<Card>().highlighted = true;
+            card.GetComponent<PhysicalCard>().highlighted = true;
             for (int i = 0; i < physicalCardsInHand.Count; i++)
             {
                 //Highlight the card
-                if (physicalCardsInHand[i] == card.GetComponent<Card>())
+                if (physicalCardsInHand[i] == card.GetComponent<PhysicalCard>())
                 {
-                    card.GetComponent<Card>().highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
-                    Debug.Log(card.GetComponent<Card>().highlightPreviousHeight);
+                    card.GetComponent<PhysicalCard>().highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
+                    Debug.Log(card.GetComponent<PhysicalCard>().highlightPreviousHeight);
                     cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, -0.9f, cardPositionsToFollow[physicalCardsInHand[i]].position.z - 1.5f);
-                    card.GetComponent<Card>().highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
+                    card.GetComponent<PhysicalCard>().highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                     if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)
                     {
@@ -351,14 +358,14 @@ public class Hand : CardPile
                 //Move adjacent cards to improve highlight of the hovered card
                 if (i + 1 < physicalCardsInHand.Count)
                 {
-                    if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                    if (physicalCardsInHand[i + 1] == card.GetComponent<PhysicalCard>()) // i é o index da carta da esquerda nesse caso
                     {
                         cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
                     }
                 }
                 if (i - 1 >= 0)
                 {
-                    if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())
+                    if (physicalCardsInHand[i - 1] == card.GetComponent<PhysicalCard>())
                     {
                         cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(0.3f, 0f, 0f);
                     }
@@ -371,16 +378,16 @@ public class Hand : CardPile
     private void UnhighlightCard (GameObject card)
     {
         Debug.Log("Unhighlighted : " + card.name);
-        if (card.GetComponent<Card>().highlighted && !card.GetComponent<Card>().concocted)
+        if (card.GetComponent<PhysicalCard>().highlighted && !card.GetComponent<PhysicalCard>().concocted)
         {
-            card.GetComponent<Card>().highlighted = false;
+            card.GetComponent<PhysicalCard>().highlighted = false;
             for (int i = 0; i < physicalCardsInHand.Count; i++)
             {
                 //Unhighlight the card
-                if (physicalCardsInHand[i] == card.GetComponent<Card>())
+                if (physicalCardsInHand[i] == card.GetComponent<PhysicalCard>())
                 {
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, card.GetComponent<Card>().highlightPreviousHeight, cardPositionsToFollow[physicalCardsInHand[i]].position.z + 1.5f);
-                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = card.GetComponent<Card>().highlightPreviousRotation;
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, card.GetComponent<PhysicalCard>().highlightPreviousHeight, cardPositionsToFollow[physicalCardsInHand[i]].position.z + 1.5f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].rotation = card.GetComponent<PhysicalCard>().highlightPreviousRotation;
                     if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)
                     {
                         card.transform.position = cardPositionsToFollow[physicalCardsInHand[i]].position;
@@ -392,14 +399,14 @@ public class Hand : CardPile
                 //undo the move of adjacent cards
                 if (i + 1 < physicalCardsInHand.Count)
                 {
-                    if (physicalCardsInHand[i + 1] == card.GetComponent<Card>()) // i é o index da carta da esquerda nesse caso
+                    if (physicalCardsInHand[i + 1] == card.GetComponent<PhysicalCard>()) // i é o index da carta da esquerda nesse caso
                     {
                         cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(+0.3f, 0f, 0f);
                     }
                 }
                 if (i - 1 >= 0)
                 {
-                    if (physicalCardsInHand[i - 1] == card.GetComponent<Card>())    // i é o index da carta da direita nesse caso
+                    if (physicalCardsInHand[i - 1] == card.GetComponent<PhysicalCard>())    // i é o index da carta da direita nesse caso
                     {
                         cardPositionsToFollow[physicalCardsInHand[i]].position += new Vector3(-0.3f, 0f, 0f);
                     }
@@ -414,7 +421,7 @@ public class Hand : CardPile
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-        foreach (Card card in physicalCardsInHand)
+        foreach (PhysicalCard card in physicalCardsInHand)
         {
             if(card.selected)
             {
@@ -459,7 +466,7 @@ public class Hand : CardPile
         }
     }
 
-    private void AimAtTarget(Card card, Vector2 mousePos2D)   //draws the arrow for when player is aiming at a target with TargetCard
+    private void AimAtTarget(PhysicalCard card, Vector2 mousePos2D)   //draws the arrow for when player is aiming at a target with TargetCard
     {
         isAiming = true; //To tell the game that the player is aiming a Target card at someone
         //Draw Arrow
@@ -478,7 +485,7 @@ public class Hand : CardPile
 
     private void UndoAimAtTarget(GameObject card) //Destroy the arrow
     {
-        if (card.GetComponent<Card>().type == "TargetCard")
+        if (card.GetComponent<PhysicalCard>().type == "TargetCard")
         {
             if (arrowRenderer != null)
             {
@@ -492,27 +499,45 @@ public class Hand : CardPile
 
     private void DisableHoverEffects(GameObject card)
     {
-        if (card.GetComponent<Card>().hoverEffectsEnabled)
+        if (card.GetComponent<PhysicalCard>().hoverEffectsEnabled)
         {
             combatPlayer.OnMouseEnterCard -= HighlightCard;
             combatPlayer.OnMouseExitCard -= UnhighlightCard;
-            card.GetComponent<Card>().hoverEffectsEnabled = false;
+            card.GetComponent<PhysicalCard>().hoverEffectsEnabled = false;
         }
     }
 
     private void ReenableHoverEffects(GameObject card)
     {
-        if (!card.GetComponent<Card>().hoverEffectsEnabled)
+        if (!card.GetComponent<PhysicalCard>().hoverEffectsEnabled)
         {
             combatPlayer.OnMouseEnterCard += HighlightCard;
             combatPlayer.OnMouseExitCard += UnhighlightCard;
-            card.GetComponent<Card>().hoverEffectsEnabled = true;
+            card.GetComponent<PhysicalCard>().hoverEffectsEnabled = true;
         }
     }
 
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(4f);
+    }
+    #endregion
+
+    #region Utilities
+    public void DisableCards()
+    {
+        foreach(PhysicalCard card in physicalCardsInHand)
+        {
+            card.selectable = false;
+        }
+    }
+
+    public void EnableCards()
+    {
+        foreach (PhysicalCard card in physicalCardsInHand)
+        {
+            card.selectable = true;
+        }
     }
     #endregion
 }

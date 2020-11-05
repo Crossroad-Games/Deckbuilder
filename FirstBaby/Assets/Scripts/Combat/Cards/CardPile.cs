@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardPile : MonoBehaviour
 {
-    public List<CardInfo> cardsList = new List<CardInfo>();    //List if cards in this CardPile
+    public List<GameObject> cardsList = new List<GameObject>();    //List of cards in this CardPile
 
     #region References
     protected CardDatabase cardDatabase;
@@ -28,13 +28,13 @@ public class CardPile : MonoBehaviour
     }
 
 
-    public virtual void SendCard(CardInfo cardToSend, CardPile target)  //Method that sends card from this card pile to another
+    public virtual void SendCard(GameObject cardToSend, CardPile target)  //Method that sends card from this card pile to another
     {
         cardsList.Remove(cardToSend);  //Remove from this Pile's card list.
         target.ReceiveCard(cardToSend, this); //Makes the target cardPile receive the card
     }
 
-    public virtual void ReceiveCard(CardInfo cardToReceive, CardPile origin) // Method that receives a card.
+    public virtual void ReceiveCard(GameObject cardToReceive, CardPile origin) // Method that receives a card.
     {
         cardsList.Add(cardToReceive);   //Add to this Pile's card list.
     }
@@ -44,7 +44,7 @@ public class CardPile : MonoBehaviour
         Debug.Log("Shuffled the deck");
         int numberOfCards = cardsList.Count;       //Take the number of cards in deck and put build a list with this number of elements as ints in ascending order
         List<int> cardsIndex = new List<int>();         // Auxiliar list for randomizing new positions for the cards
-        List<CardInfo> cardsListCopy = new List<CardInfo>(cardsList);      //Creates a copy of the Deck info
+        List<GameObject> cardsListCopy = new List<GameObject>(cardsList);      //Creates a copy of the Deck info
         for (int i = 0; i < numberOfCards; i++)
         {
             cardsIndex.Add(i);

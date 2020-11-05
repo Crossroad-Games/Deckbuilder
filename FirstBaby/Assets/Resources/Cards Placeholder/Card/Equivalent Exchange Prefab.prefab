@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 4743854850833949834}
   - component: {fileID: 2231890134170426158}
   - component: {fileID: 3905744974814689284}
+  - component: {fileID: 2241774614468026059}
   m_Layer: 8
   m_Name: Equivalent Exchange Prefab
   m_TagString: Untagged
@@ -262,3 +263,17 @@ MonoBehaviour:
   isConcocting: 0
   concoctPorpuse: 3
   concoctCardPosition: {x: 6.9, y: -0.8, z: 0.7}
+--- !u!114 &2241774614468026059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256048700885547143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80904a8b7a73414f9bb6b4c9490e780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: ad21497832c51604586e5cee2274063d, type: 2}
+  currentCooldownTime: 0

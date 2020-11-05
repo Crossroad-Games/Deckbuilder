@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Card : MonoBehaviour
+public abstract class PhysicalCard : MonoBehaviour
 {
     #region Reference
     public CombatPlayer Player;
@@ -47,6 +47,21 @@ public abstract class Card : MonoBehaviour
 
     public bool followCardPositionToFollow; //true if we want card to follow target
 
+    public void ResetCardInfo()
+    {
+    selected = false; 
+    concocted = false;
+    isConcoct = false;
+    selectable = true; 
+    highlighted = false; 
+    hoverEffectsEnabled = true;
+    canGotoCDPile = false; 
+    effectFinished = false;
+    dealDamageFinished = false;
+    gainShield_HealthFinished = false;
+    doEffectWhenConcocted = true;
+}
+
     protected virtual void Awake()
     {
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
@@ -64,11 +79,13 @@ public abstract class Card : MonoBehaviour
     public virtual IEnumerator ExecuteAction()
     {
         Debug.Log("chamou executeAction coroutine");
+        if (cardPorpuse == CardPorpuse.Defense)
+            StartCoroutine(GainShield_Health());
         StartCoroutine(CardEffect());// Execute the card's effect
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the canGoToCDPile flag is set to true
         //Send it to the CD pile
         if (!Player.CombatManager.Won && !Player.CombatManager.Defeated)
-            playerHand.SendCard(this.cardInfo, Player.CdPile); //Send cardInfo to CDPile
+            playerHand.SendCard(this.gameObject, Player.CdPile); //Send cardInfo to CDPile
     }
 
     public virtual IEnumerator ExecuteAction(EnemyClass targetEnemy)
@@ -84,7 +101,7 @@ public abstract class Card : MonoBehaviour
         //Send it to the CD pile
         Debug.Log("vai mandar pro cdPile");
         if (!Player.CombatManager.Won && !Player.CombatManager.Defeated)
-            playerHand.SendCard(this.cardInfo, Player.CdPile); //Send cardInfo to CDPile
+            playerHand.SendCard(this.gameObject, Player.CdPile); //Send cardInfo to CDPile
     }
 
     public virtual void EndCardEffect()

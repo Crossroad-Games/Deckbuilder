@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5288909013604886080}
   - component: {fileID: 1580507772598543705}
   - component: {fileID: 3341516105706321465}
+  - component: {fileID: 1723178360975471521}
   m_Layer: 8
   m_Name: Universal Matter Prefab
   m_TagString: Untagged
@@ -123,6 +124,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59186dbca5d75f4c8793e232683656a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1723178360975471521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169841270507246454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80904a8b7a73414f9bb6b4c9490e780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: 2cbc88e2710aaea4ebc32e312fed6bf7, type: 2}
+  currentCooldownTime: 0
 --- !u!1 &5002576497651205722
 GameObject:
   m_ObjectHideFlags: 0

@@ -159,7 +159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8940200077993053063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.16, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8940200078548064851}
@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardsList: []
   cardsCD_Completed: []
+  cardOffCDPosition: {fileID: 8940200077993053061}
   anyCardCompletedCD: 0
 --- !u!1 &8940200078102590233
 GameObject:
@@ -308,6 +309,7 @@ MonoBehaviour:
   physicalCardsInHand: []
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
   MaxHandDraw: 5
+  MaxCardsInHand: 10
   DrawDelay: 0.15
   isDrawing: 0
   isAiming: 0
@@ -345,6 +347,7 @@ MonoBehaviour:
   CombatManager: {fileID: 0}
   isHoveringCard: 0
   releasedMouseNotOnEnemy: 0
+  Disrupted: 0
 --- !u!114 &8940200078548064849
 MonoBehaviour:
   m_ObjectHideFlags: 0

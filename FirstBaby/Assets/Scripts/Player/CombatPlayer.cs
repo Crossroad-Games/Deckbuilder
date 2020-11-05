@@ -47,7 +47,7 @@ public class CombatPlayer : MonoBehaviour
 
     #region Fields and Properties
     private GameObject previousHoverObject; //What mouse was pointing at when begin pointing somethingelse
-    private Card SelectedCard; //Currently selected card
+    private PhysicalCard SelectedCard; //Currently selected card
     public RaycastHit2D hitInfo; //What mouse is pointing at
     #endregion
 
@@ -235,7 +235,7 @@ public class CombatPlayer : MonoBehaviour
             {
                 if (hitInfo.collider != null && isHoveringCard) //If mouse is over a card when it is pressed
                 {
-                    Card card = hitInfo.collider.gameObject.GetComponent<Card>();
+                    PhysicalCard card = hitInfo.collider.gameObject.GetComponent<PhysicalCard>();
                     if (card.selectable)
                     {
                         card.selected = true;
@@ -272,7 +272,7 @@ public class CombatPlayer : MonoBehaviour
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
                             Debug.Log("Soltou mouse no inimigo: " + SelectedCard);
-                            StartCoroutine(SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction));
+                            StartCoroutine(SelectedCard.GetComponent<PhysicalCard>().ExecuteAction(enemyToUseAction));
                             SelectedCard = null;
                         }
                         else // mouse released but not on any enemy
@@ -295,7 +295,7 @@ public class CombatPlayer : MonoBehaviour
                                 OnTargetCardUsed(SelectedCard.gameObject); //TargetCard used event
                             }
                             Debug.Log("Apertou mouse no inimigo: " + SelectedCard);
-                            StartCoroutine(SelectedCard.GetComponent<Card>().ExecuteAction(enemyToUseAction));
+                            StartCoroutine(SelectedCard.GetComponent<PhysicalCard>().ExecuteAction(enemyToUseAction));
                             SelectedCard = null; //Update selectedCard
                         }
                         else

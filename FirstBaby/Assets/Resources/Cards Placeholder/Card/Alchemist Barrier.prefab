@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6014923093386213948}
   - component: {fileID: 4214414567743503128}
   - component: {fileID: 5504360036749595517}
+  - component: {fileID: 2916728479004126585}
   m_Layer: 8
   m_Name: Alchemist Barrier
   m_TagString: Untagged
@@ -146,6 +147,7 @@ MonoBehaviour:
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
   selected: 0
   concocted: 0
+  isConcoct: 0
   selectable: 1
   highlighted: 0
   highlightPreviousHeight: 0
@@ -167,6 +169,20 @@ MonoBehaviour:
   followCardPositionToFollow: 0
   canceledConcoct: 0
   doEffects: 1
+--- !u!114 &2916728479004126585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235308949984434744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80904a8b7a73414f9bb6b4c9490e780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: 69884533ce7df494dbd3c5469b0a8767, type: 2}
+  currentCooldownTime: 0
 --- !u!1 &6113465945624004762
 GameObject:
   m_ObjectHideFlags: 0

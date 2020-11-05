@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetCard : Card
+public class TargetCard : PhysicalCard
 {
 
     private void OnEnable()

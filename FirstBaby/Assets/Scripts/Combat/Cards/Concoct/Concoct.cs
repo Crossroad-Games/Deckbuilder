@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum CardPorpuse { Attack, Defense, Effect, Any }
-public class Concoct : MonoBehaviour
+public class Concoct : CardExtension
 {
     #region References
-    private Card myCard;
+    private PhysicalCard myCard;
     private CombatPlayer combatPlayer;
     private CombatManager combatManager;
     private EnemyClass targetEnemy;
@@ -16,24 +16,24 @@ public class Concoct : MonoBehaviour
     #endregion
     public bool isConcocting = false; 
     public CardPorpuse concoctPorpuse;
-    private List<Card> cardsToConcoct = new List<Card>();
+    private List<PhysicalCard> cardsToConcoct = new List<PhysicalCard>();
     [SerializeField] Vector3 concoctCardPosition;
 
 
 
-    private void Awake()
+    void Awake()
     {
-        myCard = GetComponent<Card>();
+        myCard = GetComponent<PhysicalCard>();
         combatPlayer = FindObjectOfType<CombatPlayer>();
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
     }
 
-    private void Start()
+    protected override void Start()
     {
         concoctUI = combatManager.concoctUI;
     }
 
-    void Update()
+    protected override void Update()
     {
         if (isConcocting)
         {
@@ -48,7 +48,7 @@ public class Concoct : MonoBehaviour
         {
             if (combatPlayer.hitInfo.collider != null && combatPlayer.isHoveringCard) //If mouse is over a card when it is pressed
             {
-                Card card = combatPlayer.hitInfo.collider.gameObject.GetComponent<Card>();
+                PhysicalCard card = combatPlayer.hitInfo.collider.gameObject.GetComponent<PhysicalCard>();
                 if (concoctPorpuse != CardPorpuse.Any) {
                     if (!card.concocted && card.cardPorpuse == concoctPorpuse && !card.isConcoct)
                     {
@@ -184,13 +184,13 @@ public class Concoct : MonoBehaviour
         if (combatPlayer.OnCardUnselected != null)
         {
             combatPlayer.OnCardUnselected(myCard.gameObject);//Call CardUnselected event
-            foreach (Card card in cardsToConcoct)
+            foreach (PhysicalCard card in cardsToConcoct)
             {
                 card.concocted = false;
                 combatPlayer.OnCardUnselected(card.gameObject); // This is called because the concocted card is also highlighted, and the Unselected event calls unhighlight
             }
         }
-        foreach (Card card in myCard.playerHand.physicalCardsInHand)
+        foreach (PhysicalCard card in myCard.playerHand.physicalCardsInHand)
         {
             if (card != myCard)
                 card.selectable = true;
@@ -219,7 +219,7 @@ public class Concoct : MonoBehaviour
         myCard.followCardPositionToFollow = false; //Card stops following it's target in hand
         myCard.selectable = false;
         isConcocting = true; //Update isConcocting boolean
-        foreach(Card card in myCard.playerHand.physicalCardsInHand)
+        foreach(PhysicalCard card in myCard.playerHand.physicalCardsInHand)
         {
             if(card != myCard)
                 card.selectable = false;
@@ -237,7 +237,7 @@ public class Concoct : MonoBehaviour
         myCard.followCardPositionToFollow = false; //Card stops following it's target in hand
         myCard.selectable = false;
         isConcocting = true; //Update isConcocting boolean
-        foreach (Card card in myCard.playerHand.physicalCardsInHand)
+        foreach (PhysicalCard card in myCard.playerHand.physicalCardsInHand)
         {
             if (card != myCard)
                 card.selectable = false;
@@ -253,11 +253,11 @@ public class Concoct : MonoBehaviour
         Debug.Log("deu unsubscribe");
         isConcocting = false;
         concoctUI.SetActive(false);
-        foreach(Card card in cardsToConcoct)
+        foreach(PhysicalCard card in cardsToConcoct)
         {
-            myCard.playerHand.SendCard(card.cardInfo, myCard.Player.CdPile);
+            myCard.playerHand.SendCard(card.gameObject, myCard.Player.CdPile);
         }
-        foreach (Card card in myCard.playerHand.physicalCardsInHand)
+        foreach (PhysicalCard card in myCard.playerHand.physicalCardsInHand)
         {
             if (card != myCard)
                 card.selectable = true;

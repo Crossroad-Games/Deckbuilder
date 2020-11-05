@@ -37,7 +37,7 @@ public abstract class ConcoctCardAttack : TargetCard
             //Send it to the CD pile
             Debug.Log("vai mandar pro cdPile");
             if (!Player.CombatManager.Won && !Player.CombatManager.Defeated)
-                playerHand.SendCard(this.cardInfo, Player.CdPile); //Send cardInfo to CDPile
+                playerHand.SendCard(this.gameObject, Player.CdPile); //Send cardInfo to CDPile
         }
         else
         {
@@ -46,9 +46,9 @@ public abstract class ConcoctCardAttack : TargetCard
         }
     }
 
-    public abstract void BringConcoctInfo(List<Card> cardsConcocted);
+    public abstract void BringConcoctInfo(List<PhysicalCard> cardsConcocted);
 
-    public abstract void DealDamage(List<Card> cardsConcocted);
+    public abstract void DealDamage(List<PhysicalCard> cardsConcocted);
 
-    public abstract void DoEffects(List<Card> cardsConcocted);
+    public abstract void DoEffects(List<PhysicalCard> cardsConcocted);
 }
