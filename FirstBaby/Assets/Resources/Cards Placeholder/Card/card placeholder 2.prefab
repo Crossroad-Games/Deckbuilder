@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8942436287064100743}
   - component: {fileID: 7899246455987068110}
   - component: {fileID: 7963367926223209395}
+  - component: {fileID: 6518870579228646112}
   m_Layer: 8
   m_Name: card placeholder 2
   m_TagString: Untagged
@@ -103,13 +104,25 @@ MonoBehaviour:
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
   selected: 0
   concocted: 0
+  isConcoct: 0
   selectable: 1
   highlighted: 0
+  highlightPreviousHeight: 0
+  highlightPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
+  hoverEffectsEnabled: 1
   beingDrawn: 0
   returningToHand: 0
   beingHovered: 0
+  doEffectWhenConcocted: 1
   type: none
   cardPorpuse: 1
+  BaseDamage: 0
+  BaseShield: 0
+  BaseHeal: 0
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
   followCardPositionToFollow: 0
 --- !u!61 &7963367926223209395
 BoxCollider2D:
@@ -137,3 +150,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.91, y: 10.56}
   m_EdgeRadius: 0
+--- !u!114 &6518870579228646112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198968608887256750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80904a8b7a73414f9bb6b4c9490e780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: 0be9ccd4fc8c0c64fb424fb463d96af4, type: 2}
+  currentCooldownTime: 0

@@ -5,16 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(Concoct))]
 public class AlchemistBladeCard : ConcoctCardAttack
 {
-    public override void BringConcoctInfo(List<Card> cardsConcocted)
+    public override void BringConcoctInfo(List<PhysicalCard> cardsConcocted)
     {
-        foreach(Card card in cardsConcocted)
+        foreach(PhysicalCard card in cardsConcocted)
         {
             BaseDamage += card.BaseDamage + Mathf.CeilToInt(0.5f * card.BaseDamage);
             Debug.Log(BaseDamage);
         }
     }
 
-    public override void DealDamage(List<Card> cardsConcocted)
+    public override void DealDamage(List<PhysicalCard> cardsConcocted)
     {
         TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
         Debug.Log("alchemist blade deal damage");
@@ -23,10 +23,10 @@ public class AlchemistBladeCard : ConcoctCardAttack
         effectFinished = true;
     }
 
-    public override void DoEffects(List<Card> cardsConcocted)
+    public override void DoEffects(List<PhysicalCard> cardsConcocted)
     {
         Debug.Log("alchemsit blade do effects");
-        foreach(Card card in cardsConcocted)
+        foreach(PhysicalCard card in cardsConcocted)
         {
             if(card.doEffectWhenConcocted)
             {

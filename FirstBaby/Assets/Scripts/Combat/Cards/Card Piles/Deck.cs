@@ -5,7 +5,7 @@ using UnityEngine;
 public class Deck : CardPile
 {
     #region References
-    [SerializeField] private CardPile hand;
+    [SerializeField] private Hand hand;
     #endregion
 
     public override void Awake()
@@ -23,6 +23,14 @@ public class Deck : CardPile
     {
         
     }
+
+    public override void ReceiveCard(GameObject cardToReceive, CardPile origin)
+    {
+        base.ReceiveCard(cardToReceive, origin);
+        cardToReceive.transform.parent = hand.CardDrawPosition;
+        cardToReceive.GetComponent<VirtualCard>()?.TurnVirtual();
+    }
+
     private void OnDisable()
     {
         SaveLoad.LoadEvent -= LoadDeck;// Unsubscribe to this event to load the save file deck information into this list
@@ -38,8 +46,10 @@ public class Deck : CardPile
             if (ID >= 0)// If it is not a null card
             {
                 CardToReceive = TemporaryList[ID];// Cardinfo is chosen based on its ID
-                CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(CardToReceive);// Creates an instance of that card info
-                cardsList.Add(cardInfoInstance);// Add it to the list of card infos
+                GameObject cardInstance = GameObject.Instantiate(CardToReceive.cardPrefab, hand.CardDrawPosition); // Creates an instance of that card prefab
+                cardsList.Add(cardInstance);// Add it to the list of card infos
+                cardInstance.GetComponent<VirtualCard>()?.TurnVirtual();
+                Debug.Log("turned virtual");
             }
         }
         

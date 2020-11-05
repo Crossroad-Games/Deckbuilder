@@ -84,17 +84,17 @@ public class SaveLoad : MonoBehaviour
         CombatGameData.Current.CardsinCD.Clear();// Reset the condition to store only what is currently in the CD Pile
         CombatGameData.Current.CardsCD.Clear();// Reset the condition to store only the CD values of the cards currently on CD
         CombatGameData.Current.PlayerData = CombatPlayer.myData;
-        foreach (CardInfo Card in Deck.cardsList)// Go through all cards in hand
+        foreach (GameObject Card in Deck.cardsList)// Go through all cards in hand
             if (Card != null)// Check if card is not null
-                CombatGameData.Current.CardsinDeckID.Add(Card.ID); // Acquire that card's ID and store it in the save file
-        foreach (CardInfo Card in Hand.cardsList)// Go through all cards in hand
+                CombatGameData.Current.CardsinDeckID.Add(Card.GetComponent<VirtualCard>().cardInfo.ID); // Acquire that card's ID and store it in the save file
+        foreach (GameObject Card in Hand.cardsList)// Go through all cards in hand
             if (Card != null)// Check if card is not null
-                CombatGameData.Current.CardsinHandID.Add(Card.ID); // Acquire that card's ID and store it in the save file
-        foreach(CardInfo Card in CDPile.cardsList)// Go through all the cards in the CD Pile
+                CombatGameData.Current.CardsinHandID.Add(Card.GetComponent<VirtualCard>().cardInfo.ID); // Acquire that card's ID and store it in the save file
+        foreach(GameObject Card in CDPile.cardsList)// Go through all the cards in the CD Pile
             if(Card!=null)// Check if card is not null
             {
-                CombatGameData.Current.CardsinCD.Add(Card.ID);// Acquire that card's ID and store it in the save file
-                CombatGameData.Current.CardsCD.Add(Card.CurrentCooldownTime);// Acquire that card's CD and store it
+                CombatGameData.Current.CardsinCD.Add(Card.GetComponent<VirtualCard>().cardInfo.ID);// Acquire that card's ID and store it in the save file
+                CombatGameData.Current.CardsCD.Add(Card.GetComponent<VirtualCard>().CurrentCooldownTime);// Acquire that card's CD and store it
             }
         CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this list
         CombatGameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count

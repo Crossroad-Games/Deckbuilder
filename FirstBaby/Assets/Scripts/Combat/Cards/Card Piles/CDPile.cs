@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class CDPile : CardPile
 {
-    [SerializeField] private List<CardInfo> cardsCD_Completed = new List<CardInfo>(); // list of cards with cooldown completed
+    [SerializeField] private List<GameObject> cardsCD_Completed = new List<GameObject>(); // list of cards with cooldown completed
+    [SerializeField] private Transform cardOffCDPosition = null; //Point where cards are created when drawn
+    public Transform CardOffCDPosition  //Getter
+    {
+        get
+        {
+            return cardOffCDPosition;
+        }
+    }
+
     #region References
     private Deck playerDeck;
     private CombatPlayer Player;
@@ -36,10 +45,12 @@ public class CDPile : CardPile
         
     }
 
-    public override void ReceiveCard(CardInfo cardToReceive, CardPile origin)
+    public override void ReceiveCard(GameObject cardToReceive, CardPile origin)
     {
         base.ReceiveCard(cardToReceive, origin);
-        cardToReceive.CurrentCooldownTime = cardToReceive.Cooldown;
+        cardToReceive.GetComponent<VirtualCard>().CurrentCooldownTime = cardToReceive.GetComponent<VirtualCard>().cardInfo.Cooldown;
+        cardToReceive.transform.parent = cardOffCDPosition;
+        cardToReceive.GetComponent<VirtualCard>()?.TurnVirtual();
     }
 
     public void UpdateCooldown()
@@ -48,9 +59,9 @@ public class CDPile : CardPile
         if(!Player.Disrupted)// If not disrupted, card's CD's are updated 
             for(int i = cardsList.Count-1; i >= 0; i--)
             {
-                if (cardsList[i].CurrentCooldownTime > 0) // if card still on cooldown
+                if (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime > 0) // if card still on cooldown
                 {
-                    cardsList[i].CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
+                    cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
                 }
                 else //if any card completed it's cooldown
                 {
@@ -86,9 +97,10 @@ public class CDPile : CardPile
             if (ID >= 0)// If it is not a null card
             {
                 CardToReceive = TemporaryList[ID];// Cardinfo is chosen based on its ID
-                CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(CardToReceive);// Creates an instance of that card info
-                cardInfoInstance.CurrentCooldownTime = CombatGameData.Current.CardsCD[iterator];// Pairs the card info to its CD
-                cardsList.Add(cardInfoInstance);// Add it to the list of card infos
+                GameObject cardInstance = GameObject.Instantiate(CardToReceive.cardPrefab, CardOffCDPosition); // Creates an instance of that card prefab
+                cardInstance.GetComponent<VirtualCard>()?.TurnVirtual();
+                cardInstance.GetComponent<VirtualCard>().CurrentCooldownTime = CombatGameData.Current.CardsCD[iterator];// Pairs the card info to its CD
+                cardsList.Add(cardInstance);// Add it to the list of card infos
                 iterator++;// Increment the iterator
             }
         }

@@ -31,7 +31,7 @@ public abstract class ConcoctCardEffectTarget : TargetCard
             //Send it to the CD pile
             Debug.Log("vai mandar pro cdPile");
             if (!Player.CombatManager.Won && !Player.CombatManager.Defeated)
-                playerHand.SendCard(this.cardInfo, Player.CdPile); //Send cardInfo to CDPile
+                playerHand.SendCard(this.gameObject, Player.CdPile); //Send cardInfo to CDPile
         }
         else
         {
@@ -40,7 +40,7 @@ public abstract class ConcoctCardEffectTarget : TargetCard
         }
     }
 
-    public abstract void BringConcoctInfo(List<Card> cardsConcocted);
+    public abstract void BringConcoctInfo(List<PhysicalCard> cardsConcocted);
 
-    public abstract void DoEffect(List<Card> cardsConcocted);
+    public abstract void DoEffect(List<PhysicalCard> cardsConcocted);
 }
