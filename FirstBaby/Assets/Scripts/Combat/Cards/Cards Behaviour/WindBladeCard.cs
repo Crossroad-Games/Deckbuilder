@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballCard : TargetCard
+public class WindBladeCard : TargetCard
 {
     public override void Start()
     {
         base.Start();
-        BaseDamage = 18;
+        BaseDamage = 15;
     }
     // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()

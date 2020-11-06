@@ -234,6 +234,7 @@ public class Hand : CardPile
     //As the PositionsToFollow are updated in hand every time a card is drawn in the drawn method, the position will automatically be adjusted to the right position
     private void AddCardTarget(PhysicalCard card)     //Adds a target to the card being drawn
     {
+        Debug.Log(card.name);
         CardPositionToFollow target = new CardPositionToFollow(HandAnchor.transform.position, Quaternion.identity); 
         cardPositionsToFollow.Add(card, target);
     }
@@ -342,7 +343,6 @@ public class Hand : CardPile
                 if (physicalCardsInHand[i] == card.GetComponent<PhysicalCard>())
                 {
                     card.GetComponent<PhysicalCard>().highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
-                    Debug.Log(card.GetComponent<PhysicalCard>().highlightPreviousHeight);
                     cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, -0.9f, cardPositionsToFollow[physicalCardsInHand[i]].position.z - 1.5f);
                     card.GetComponent<PhysicalCard>().highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
@@ -376,7 +376,6 @@ public class Hand : CardPile
     //Function that undo what highlightCard did. This is called in the event OnMouseExit that was created in the combatPlayer script. Subscription in the initialization region
     private void UnhighlightCard (GameObject card)
     {
-        Debug.Log("Unhighlighted : " + card.name);
         if (card.GetComponent<PhysicalCard>().highlighted && !card.GetComponent<PhysicalCard>().concocted)
         {
             card.GetComponent<PhysicalCard>().highlighted = false;

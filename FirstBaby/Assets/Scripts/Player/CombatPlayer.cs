@@ -216,12 +216,10 @@ public class CombatPlayer : MonoBehaviour
 
     private void MouseStartedPointingToCard(GameObject card)
     {
-        Debug.Log("OnPointerEnter:  " + card.name);
     }
 
     private void MouseStoppedPointingToCard(GameObject card)
     {
-        Debug.Log("OnPointerExit:  " + card.name);
     }
 
     private void CardSelection() //select and unselect a card.

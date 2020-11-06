@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,43 +10,46 @@ public class VirtualCard : MonoBehaviour
     public CardInfo cardInfo;
     private PhysicalCard PhysicalCardBehaviour;
     private Collider2D cardCollider;
-    private CardExtension cardExtension;
+    public CombatPlayer Player;
+    private List<CardExtension> cardExtensions= new List<CardExtension>();
+    public Dictionary<string,VirtualCardExtension> virtualCardExtensions = new Dictionary<string, VirtualCardExtension>();
     private Renderer cardRenderer;
     private MeshRenderer cardDescription;
-
     public bool isVirtual = false;
     public bool isPhysical = false;
-    
+    #region Virtual Card Value
+    public int BaseDamage = 0;// Damage value that will be applied to the Enemy
+    public int BaseShield = 0; //Value of shield to gain
+    public int BaseHeal = 0; //Value to heal directly in life
+    public int AddValue = 0, SubtractValue = 0;// Values that modify the base value
+    public float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
+    #endregion
     [SerializeField] private int currentCooldownTime;  //Current cooldown time
     public int CurrentCooldownTime
     {
         get { return currentCooldownTime; }
         set { currentCooldownTime = value; }
     }
-
+    public int CalculateAction(int ActionValue)
+    {
+        return ((ActionValue + AddValue - SubtractValue) * Mathf.CeilToInt(Multiplier / Divider));
+    }
     private void Awake()
     {
         #region Initialization
         cardCollider = GetComponent<Collider2D>();
         PhysicalCardBehaviour = GetComponent<PhysicalCard>();
-        cardExtension = GetComponent<CardExtension>();
+        cardExtensions = GetComponents<CardExtension>().ToList();
         cardRenderer = GetComponent<Renderer>();
         cardDescription = GetComponentInChildren<MeshRenderer>();
         #endregion
     }
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        foreach (VirtualCardExtension Keyword in GetComponents<VirtualCardExtension>())// For each virtual Keyword attached to this card
+            virtualCardExtensions.Add(Keyword.Keyword, Keyword);// Store its reference
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    #region Turn Virtual/Physical
     public void TurnVirtual()
     {
         if (cardCollider != null)
@@ -54,16 +58,17 @@ public class VirtualCard : MonoBehaviour
             throw new NullReferenceException("no card collider");
         if (cardDescription != null)
             cardDescription.enabled = false; // Disable card description
-        else
-            Debug.Log("no card description");
         if (PhysicalCardBehaviour != null)
             PhysicalCardBehaviour.enabled = false; // Disable card behaviour
         else
             throw new NullReferenceException("no card behaviour");
-        if (cardExtension != null)
-            cardExtension.enabled = false; // Disable card extension script
-        else
-            Debug.Log("no card extension");
+        if (cardExtensions.Count > 0)
+            foreach (CardExtension Keyword in cardExtensions)// For each non virtual card extension
+                Keyword.enabled = false;// Deactivate it
+        if (virtualCardExtensions.Count > 0)
+            foreach (string Key in virtualCardExtensions.Keys)// Cycle through all the keywords
+                if(Key!=null)// IF its not null
+                    virtualCardExtensions[Key].enabled = true;// Activate it
         if (cardRenderer != null)
             cardRenderer.enabled = false; // Disable card behaviour
         else
@@ -80,16 +85,17 @@ public class VirtualCard : MonoBehaviour
             throw new NullReferenceException("no card collider");
         if (cardDescription != null)
             cardDescription.enabled = true; // Enable card description
-        else
-            Debug.Log("no card description");
         if (PhysicalCardBehaviour != null)
             PhysicalCardBehaviour.enabled = true; // Enable card behaviour
         else
             throw new NullReferenceException("no card behaviour");
-        if (cardExtension != null)
-            cardExtension.enabled = true; // Enable card extension script
-        else
-            Debug.Log("no card extension");
+        if (cardExtensions.Count > 0)
+            foreach (CardExtension Keyword in cardExtensions)// For each non virtual card extension
+                Keyword.enabled = true;// Activate it
+        if (virtualCardExtensions.Count > 0)
+            foreach (string Key in virtualCardExtensions.Keys)// Cycle through all the keywords
+                if (Key != null)// IF its not null
+                    virtualCardExtensions[Key].enabled = false;// Deactivate it
         if (cardRenderer != null)
             cardRenderer.enabled = true; // Enable card behaviour
         else
@@ -97,4 +103,5 @@ public class VirtualCard : MonoBehaviour
         isPhysical = true;
         isVirtual = false;
     }
+    #endregion
 }

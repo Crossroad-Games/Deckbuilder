@@ -49,7 +49,6 @@ public class Deck : CardPile
                 GameObject cardInstance = GameObject.Instantiate(CardToReceive.cardPrefab, hand.CardDrawPosition); // Creates an instance of that card prefab
                 cardsList.Add(cardInstance);// Add it to the list of card infos
                 cardInstance.GetComponent<VirtualCard>()?.TurnVirtual();
-                Debug.Log("turned virtual");
             }
         }
         

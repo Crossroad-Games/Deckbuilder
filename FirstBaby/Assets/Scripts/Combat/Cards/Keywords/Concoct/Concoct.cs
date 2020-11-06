@@ -8,10 +8,6 @@ public enum CardPorpuse { Attack, Defense, Effect, Any }
 public class Concoct : CardExtension
 {
     #region References
-    private PhysicalCard myCard;
-    private CombatPlayer combatPlayer;
-    private CombatManager combatManager;
-    private EnemyClass targetEnemy;
     private GameObject concoctUI;
     #endregion
     public bool isConcocting = false; 
@@ -21,19 +17,21 @@ public class Concoct : CardExtension
 
 
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        Keyword = "Concoct";
         myCard = GetComponent<PhysicalCard>();
         combatPlayer = FindObjectOfType<CombatPlayer>();
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
     }
 
-    protected override void Start()
+    protected void Start()
     {
         concoctUI = combatManager.concoctUI;
     }
 
-    protected override void Update()
+    protected void Update()
     {
         if (isConcocting)
         {
@@ -250,7 +248,6 @@ public class Concoct : CardExtension
     {
         combatManager.confirmConcoctButton.onClick.RemoveAllListeners();
         combatManager.cancelConcoctButton.onClick.RemoveAllListeners();
-        Debug.Log("deu unsubscribe");
         isConcocting = false;
         concoctUI.SetActive(false);
         foreach(PhysicalCard card in cardsToConcoct)
@@ -263,5 +260,10 @@ public class Concoct : CardExtension
                 card.selectable = true;
         }
         cardsToConcoct.Clear();
+    }
+
+    public override void ExtensionEffect()
+    {
+        
     }
 }

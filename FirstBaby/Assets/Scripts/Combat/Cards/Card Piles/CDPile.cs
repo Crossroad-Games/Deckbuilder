@@ -146,6 +146,12 @@ public class CDPile : CardPile
         for (int i = cardsCD_Completed.Count - 1; i >= 0; i--)
         {
             SendCard(cardsCD_Completed[i], playerDeck);
+            Debug.Log(cardsCD_Completed[i].name);
+            if (cardsCD_Completed[i].GetComponent<VirtualCard>().virtualCardExtensions.ContainsKey("Overflow"))// If this card has an Overflow effect
+            {
+                Debug.Log("Overflowing");
+                cardsCD_Completed[i].GetComponent<VirtualCard>().virtualCardExtensions["Overflow"].ExtensionEffect();// Execute its overflow effect
+            }
             cardsCD_Completed.RemoveAt(i);
         }
         //TODO: Coroutine with cards going to deck animation
