@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class CDPile : CardPile
 {
     [SerializeField] private List<GameObject> cardsCD_Completed = new List<GameObject>(); // list of cards with cooldown completed
     [SerializeField] private Transform cardOffCDPosition = null; //Point where cards are created when drawn
+    public List<GameObject> CD0 = new List<GameObject>();
+    public List<GameObject> CD1 = new List<GameObject>();
+    public List<GameObject> CD2 = new List<GameObject>();
+    public List<GameObject> CD3plus = new List<GameObject>();
     public Transform CardOffCDPosition  //Getter
     {
         get
@@ -51,6 +56,45 @@ public class CDPile : CardPile
         cardToReceive.GetComponent<VirtualCard>().CurrentCooldownTime = cardToReceive.GetComponent<VirtualCard>().cardInfo.Cooldown;
         cardToReceive.transform.parent = cardOffCDPosition;
         cardToReceive.GetComponent<VirtualCard>()?.TurnVirtual();
+        switch(cardToReceive.GetComponent<VirtualCard>()?.cardInfo.Cooldown)
+        {
+            case 0:
+                CD0.Add(cardToReceive);
+                break;
+            case 1:
+                CD1.Add(cardToReceive);
+                break;
+            case 2:
+                CD2.Add(cardToReceive);
+                break;
+            default:
+                if(cardToReceive.GetComponent<VirtualCard>().cardInfo.Cooldown >=3)
+                    CD3plus.Add(cardToReceive);
+                break;
+        }
+    }
+
+    public override void SendCard(GameObject cardToSend, CardPile target)
+    {
+        base.SendCard(cardToSend, target);
+        switch (cardToSend.GetComponent<VirtualCard>().CurrentCooldownTime)
+        {
+            case 0:
+                CD0.Remove(cardToSend);
+                break;
+            case 1:
+                CD1.Remove(cardToSend);
+                break;
+            case 2:
+                CD2.Remove(cardToSend);
+                break;
+            default:
+                if (cardToSend.GetComponent<VirtualCard>().CurrentCooldownTime >= 3)
+                {
+                    CD3plus.Remove(cardToSend);
+                }
+                break;
+        }
     }
 
     public void UpdateCooldown()
@@ -59,13 +103,37 @@ public class CDPile : CardPile
         if(!Player.Disrupted)// If not disrupted, card's CD's are updated 
             for(int i = cardsList.Count-1; i >= 0; i--)
             {
-                if (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime > 0) // if card still on cooldown
+                if (cardsList[i].GetComponent<VirtualCard>()?.CurrentCooldownTime > 0) // if card still on cooldown
                 {
+                    #region Update CD lists
+                    switch (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime)
+                    {
+                        case 0:
+                            CD0.Remove(cardsList[i]);
+                            break;
+                        case 1:
+                            CD1.Remove(cardsList[i]);
+                            CD0.Add(cardsList[i]);
+                            break;
+                        case 2:
+                            CD2.Remove(cardsList[i]);
+                            CD1.Add(cardsList[i]);
+                            break;
+                        default:
+                            if (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime >= 3)
+                            {
+                                CD3plus.Remove(cardsList[i]);
+                                CD2.Add(cardsList[i]);
+                            }
+                            break;
+                    }
+                    #endregion
                     cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
                 }
                 else //if any card completed it's cooldown
                 {
                     cardsCD_Completed.Add(cardsList[i]);// add card to list with all the cards that have completed the cooldown
+                    CD0.Remove(cardsList[i]); // Update CD list
                     cardsList.RemoveAt(i);
                     //Raise shuffle flag
                     anyCardCompletedCD = true;

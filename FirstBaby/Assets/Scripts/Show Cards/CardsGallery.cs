@@ -6,13 +6,23 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum Scene { Dungeon, Combat};
+public enum CardPileToShow { DrawPile, CD0, CD1, CD2, CD3plus, Hand};
 public class CardsGallery : MonoBehaviour
 {
     [SerializeField] Scene Scene; 
-    public GameObject CardGallery;
-    public GameObject DrawPileGallery;
+    public GameObject DeckGallery;
+    public GameObject CombatTempGallery;
     public GameObject DrawPileUI;
+    public GameObject CD0UI;
+    public GameObject CD1UI;
+    public GameObject CD2UI;
+    public GameObject CD3plusUI;
     public Button ReturnButton;
+    public Button drawPileButton;
+    public Button CD0_Button;
+    public Button CD1_Button;
+    public Button CD2_Button;
+    public Button CD3plus_Button;
     private CombatPlayer combatPlayer;
     private Hand playerHand;
     private CDPile playerCDPile;
@@ -40,20 +50,39 @@ public class CardsGallery : MonoBehaviour
         playerHand = combatPlayer.GetComponent<Hand>();
         playerCDPile = combatPlayer.GetComponentInChildren<CDPile>();
         playerDrawPile = combatPlayer.GetComponent<Deck>();
-        CardGallery = GameObject.Find("Card Gallery");
-        DrawPileGallery = GameObject.Find("Draw Pile Gallery");
+        DeckGallery = GameObject.Find("Deck Gallery");
+        CombatTempGallery = GameObject.Find("Combat Temp Gallery");
+        #region Buttons
         DrawPileUI = GameObject.Find("Draw Pile");
+        drawPileButton = GameObject.Find("Draw Pile").GetComponent<Button>();
+        //CD UI buttons
+        CD0UI = GameObject.Find("CD0");
+        CD1UI = GameObject.Find("CD1");
+        CD2UI = GameObject.Find("CD2");
+        CD3plusUI = GameObject.Find("CD3+");
+        CD0_Button = GameObject.Find("CD0").GetComponent<Button>();
+        CD1_Button = GameObject.Find("CD1").GetComponent<Button>();
+        CD2_Button = GameObject.Find("CD2").GetComponent<Button>();
+        CD3plus_Button = GameObject.Find("CD3+").GetComponent<Button>();
+        #endregion
+        //------------
         ReturnButton = GameObject.Find("Return").GetComponent<Button>();
         ReturnButton.gameObject.SetActive(false);
-        CardGallery.SetActive(false);
-        DrawPileGallery.SetActive(false);
+        //---------------
+        DeckGallery.SetActive(false);
+        CombatTempGallery.SetActive(false);
         #endregion
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("ui manager start");
+        drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList); });
+        CD0_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD0); });
+        CD1_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD1); });
+        CD2_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD2); });
+        CD3plus_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD3plus); });
     }
 
     // Update is called once per frame
@@ -62,7 +91,7 @@ public class CardsGallery : MonoBehaviour
         
     }
 
-    public void ShowDrawPileGallery()
+    public void ShowTempGallery(List<GameObject> cardsToShow)
     {
         if (!isShowingGallery)
         {
@@ -77,12 +106,12 @@ public class CardsGallery : MonoBehaviour
             }
             else
                 throw new Exception("nothing on OnGalleryOpen");
-            DrawPileGallery.SetActive(true);
+            CombatTempGallery.SetActive(true);
             ReturnButton.gameObject.SetActive(true);
             ReturnButton.onClick.AddListener(CloseDrawPileGallery);
-            foreach (GameObject card in playerDrawPile.cardsList)
+            foreach (GameObject card in cardsToShow)
             {
-                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), DrawPileGallery.transform.GetChild(0));
+                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
                 cardsDisplayed.Add(tempCard);
                 cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
@@ -92,7 +121,7 @@ public class CardsGallery : MonoBehaviour
         }
     }
 
-    public void ShowDrawPileGallery(bool combatSelection)
+    public void ShowTempGallery(List<GameObject> cardsToShow, bool combatSelection)
     {
         if (!isShowingGallery)
         {
@@ -105,12 +134,12 @@ public class CardsGallery : MonoBehaviour
                     OnGalleryOpen(card.gameObject);
                 }
             }
-            DrawPileGallery.SetActive(true);
+            CombatTempGallery.SetActive(true);
             ReturnButton.gameObject.SetActive(true);
             ReturnButton.onClick.AddListener(CloseDrawPileGallery);
-            foreach (GameObject card in playerDrawPile.cardsList)
+            foreach (GameObject card in cardsToShow)
             {
-                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), DrawPileGallery.transform.GetChild(0));
+                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
                 cardsDisplayed.Add(tempCard);
                 cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
@@ -122,7 +151,7 @@ public class CardsGallery : MonoBehaviour
         }
     }
 
-    public void ShowDrawPileGallery(bool combatSelection, int selectionAmount)
+    public void ShowTempGallery(List<GameObject> cardsToShow, bool combatSelection, int selectionAmount)
     {
         if (!isShowingGallery)
         {
@@ -135,12 +164,12 @@ public class CardsGallery : MonoBehaviour
                     OnGalleryOpen(card.gameObject);
                 }
             }
-            DrawPileGallery.SetActive(true);
+            CombatTempGallery.SetActive(true);
             ReturnButton.gameObject.SetActive(true);
             ReturnButton.onClick.AddListener(CloseDrawPileGallery);
-            foreach (GameObject card in playerDrawPile.cardsList)
+            foreach (GameObject card in cardsToShow)
             {
-                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), DrawPileGallery.transform.GetChild(0));
+                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
                 cardsDisplayed.Add(tempCard);
                 cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
@@ -162,7 +191,7 @@ public class CardsGallery : MonoBehaviour
                 Destroy(cardsDisplayed[i]);
                 cardsDisplayed.RemoveAt(i);
             }
-            DrawPileGallery.SetActive(false);
+            CombatTempGallery.SetActive(false);
             foreach (PhysicalCard card in playerHand.physicalCardsInHand)
             {
                 OnGalleryClose(card.gameObject);

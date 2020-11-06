@@ -77,7 +77,7 @@ public class Concoct : CardExtension
                         Debug.Log(card.highlightPreviousHeight);
                     }
                 }
-                else if(concoctPorpuse == CardPorpuse.Any)
+                else if(concoctPorpuse == CardPorpuse.Any && card != this.GetComponent<PhysicalCard>())
                 {
                     if (!card.concocted)
                     {
