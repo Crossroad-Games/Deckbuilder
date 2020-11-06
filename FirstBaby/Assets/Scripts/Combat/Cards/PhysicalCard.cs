@@ -12,6 +12,7 @@ public abstract class PhysicalCard : MonoBehaviour
     public Hand playerHand;
     public EnemyClass TargetEnemy;
     [SerializeField] private CombatProperties combatProperties=null;
+    public Dictionary<string, CardExtension> CardExtensions = new Dictionary<string, CardExtension>();
     public CombatProperties CombatProperties { get { return combatProperties; } }
     #endregion
 
@@ -69,6 +70,8 @@ public abstract class PhysicalCard : MonoBehaviour
 
     public virtual void Start()
     {
+        foreach (CardExtension Keyword in GetComponents<CardExtension>())// For each Keyword attached to this card
+            CardExtensions.Add(Keyword.Keyword, Keyword);// Store its reference
         gameObject.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
         playerHand = Player.GetComponent<Hand>();
@@ -78,6 +81,11 @@ public abstract class PhysicalCard : MonoBehaviour
     }
     public virtual IEnumerator ExecuteAction()
     {
+        if (CardExtensions.ContainsKey("Unstable"))// If this card has an Overflow effect
+        {
+            Debug.Log("Unstable");
+            CardExtensions["Unstable"].ExtensionEffect();// Execute its overflow effect
+        }
         Debug.Log("chamou executeAction coroutine");
         if (cardPorpuse == CardPorpuse.Defense)
             StartCoroutine(GainShield_Health());
@@ -90,6 +98,11 @@ public abstract class PhysicalCard : MonoBehaviour
 
     public virtual IEnumerator ExecuteAction(EnemyClass targetEnemy)
     {
+        if (CardExtensions.ContainsKey("Unstable"))// If this card has an Overflow effect
+        {
+            Debug.Log("Unstable");
+            CardExtensions["Unstable"].ExtensionEffect();// Execute its overflow effect
+        }
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
         if (cardPorpuse == CardPorpuse.Attack)

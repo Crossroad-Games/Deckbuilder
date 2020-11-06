@@ -170,10 +170,8 @@ public abstract class EnemyClass : MonoBehaviour
     }
     IEnumerator CheckIntention()// Delays the intention check
     {
-        Debug.Log("Started to Check");
         while (this!=null)// While this script exists
         {
-            Debug.Log("Checking Intention");
             if (!Incapacitated)// If this enemy can act
                 EnemyIntention();// Checks what the enemy is going to do
             else if (IntendedActions.Count != 0)

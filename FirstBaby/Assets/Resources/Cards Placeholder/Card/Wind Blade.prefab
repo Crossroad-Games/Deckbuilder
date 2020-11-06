@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7413727864086900067}
   - component: {fileID: 8942436287064100743}
-  - component: {fileID: 9083567819869968682}
   - component: {fileID: 188558876064980337}
   - component: {fileID: 8580478824678199342}
-  - component: {fileID: 2445951147442434167}
+  - component: {fileID: 6669601196988938533}
+  - component: {fileID: -2621084337781649941}
   m_Layer: 8
-  m_Name: card placeholder 1
+  m_Name: Wind Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,18 +75,44 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5811547901f9f1b4fa4f89042f094294, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 45478f6ea8622e04f91cdbfd6b288472, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.91, y: 10.56}
+  m_Size: {x: 2.75, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9083567819869968682
+--- !u!61 &188558876064980337
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198968608887256750}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10, y: 14.545455}
+    newSize: {x: 2.75, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.91, y: 10.56}
+  m_EdgeRadius: 0
+--- !u!114 &8580478824678199342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +121,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 3198968608887256750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a00415589a7a49f45b22175c357eaf6b, type: 3}
+  m_Script: {fileID: 11500000, guid: a80904a8b7a73414f9bb6b4c9490e780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo: {fileID: 11400000, guid: faf538c9e40c9de4c8e56b11cdebc890, type: 2}
+  Player: {fileID: 0}
+  isVirtual: 0
+  isPhysical: 0
+  BaseDamage: 20
+  BaseShield: 0
+  BaseHeal: 0
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  currentCooldownTime: 0
+--- !u!114 &6669601196988938533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3198968608887256750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 511b5915d42686c4e8d1d924a46a5c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
@@ -125,33 +175,7 @@ MonoBehaviour:
   Multiplier: 1
   Divider: 1
   followCardPositionToFollow: 0
---- !u!61 &188558876064980337
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3198968608887256750}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.466666, y: 12.422222}
-    newSize: {x: 6.91, y: 10.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.91, y: 10.56}
-  m_EdgeRadius: 0
---- !u!114 &8580478824678199342
+--- !u!114 &-2621084337781649941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,32 +184,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3198968608887256750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a80904a8b7a73414f9bb6b4c9490e780, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardInfo: {fileID: 11400000, guid: c93d56be7004cb84a9e1ed80da769edc, type: 2}
-  Player: {fileID: 0}
-  isVirtual: 0
-  isPhysical: 0
-  BaseDamage: 20
-  BaseShield: 0
-  BaseHeal: 0
-  AddValue: 0
-  SubtractValue: 0
-  Multiplier: 1
-  Divider: 1
-  currentCooldownTime: 0
---- !u!114 &2445951147442434167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3198968608887256750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34ec014a3c29de44fb26ce787565628e, type: 3}
+  m_Script: {fileID: 11500000, guid: aa882653fe6f80c469f4104c7a53fb3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Keyword: 
-  DamagePercentage: 0.33
+  UnstableIntensity: 2

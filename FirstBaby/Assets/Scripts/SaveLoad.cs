@@ -96,9 +96,9 @@ public class SaveLoad : MonoBehaviour
                 CombatGameData.Current.CardsinCD.Add(Card.GetComponent<VirtualCard>().cardInfo.ID);// Acquire that card's ID and store it in the save file
                 CombatGameData.Current.CardsCD.Add(Card.GetComponent<VirtualCard>().CurrentCooldownTime);// Acquire that card's CD and store it
             }
-        CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this list
-        CombatGameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count
-        CombatGameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state
+        CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this lis
+        /*CombatGameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count
+        CombatGameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state*/
         CombatGameData.Current.CombatScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
         string jsonString = JsonUtility.ToJson(CombatGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
@@ -119,7 +119,7 @@ public class SaveLoad : MonoBehaviour
         LoadCombat();// Load the Combat Save file
         LoadDungeon();// Load the Dungeon save file
         LoadEvent?.Invoke();// Calls all the methods subscribed to this event
-        //SaveGame();// Save the game after doing all the load event methods
+        SaveGame();// Save the game after doing all the load event methods
     }
     private void LoadCombat()// Load the Combat save file
     {
@@ -148,6 +148,9 @@ public class SaveLoad : MonoBehaviour
             {
                 case "Alchemist":
                     myFile = Resources.Load<TextAsset>("Text/AlchemistSave");
+                    break;
+                case "Elementalist":
+                    myFile = Resources.Load<TextAsset>("Text/ElementalistSave");
                     break;
                 default:
                     myFile = Resources.Load<TextAsset>("Text/DefaultSave");
