@@ -14,7 +14,7 @@ public class VirtualCard : MonoBehaviour
     private List<CardExtension> cardExtensions= new List<CardExtension>();
     public Dictionary<string,VirtualCardExtension> virtualCardExtensions = new Dictionary<string, VirtualCardExtension>();
     private Renderer cardRenderer;
-    private MeshRenderer cardDescription;
+    private GameObject cardDescription;
     public bool isVirtual = false;
     public bool isPhysical = false;
     #region Virtual Card Value
@@ -41,7 +41,7 @@ public class VirtualCard : MonoBehaviour
         PhysicalCardBehaviour = GetComponent<PhysicalCard>();
         cardExtensions = GetComponents<CardExtension>().ToList();
         cardRenderer = GetComponent<Renderer>();
-        cardDescription = GetComponentInChildren<MeshRenderer>();
+        cardDescription = transform.Find("Description").gameObject;// Reference to the child that holds both text and name
         #endregion
     }
     private void Start()
@@ -57,7 +57,7 @@ public class VirtualCard : MonoBehaviour
         else
             throw new NullReferenceException("no card collider");
         if (cardDescription != null)
-            cardDescription.enabled = false; // Disable card description
+            cardDescription.SetActive(false); // Disable card description
         if (PhysicalCardBehaviour != null)
             PhysicalCardBehaviour.enabled = false; // Disable card behaviour
         else
@@ -84,7 +84,7 @@ public class VirtualCard : MonoBehaviour
         else
             throw new NullReferenceException("no card collider");
         if (cardDescription != null)
-            cardDescription.enabled = true; // Enable card description
+            cardDescription.SetActive(true); // Enable card description
         if (PhysicalCardBehaviour != null)
             PhysicalCardBehaviour.enabled = true; // Enable card behaviour
         else

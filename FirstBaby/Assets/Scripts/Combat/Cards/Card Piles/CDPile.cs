@@ -55,7 +55,7 @@ public class CDPile : CardPile
         base.ReceiveCard(cardToReceive, origin);
         cardToReceive.GetComponent<VirtualCard>().CurrentCooldownTime = cardToReceive.GetComponent<VirtualCard>().cardInfo.Cooldown;
         cardToReceive.transform.parent = cardOffCDPosition;
-        cardToReceive.GetComponent<VirtualCard>()?.TurnVirtual();
+        cardToReceive.GetComponent<VirtualCard>()?.TurnVirtual();       
         switch(cardToReceive.GetComponent<VirtualCard>()?.cardInfo.Cooldown)
         {
             case 0:
@@ -72,6 +72,12 @@ public class CDPile : CardPile
                     CD3plus.Add(cardToReceive);
                 break;
         }
+        if(origin.PileName=="Deck")// If this card came from the deck
+            if (cardToReceive.GetComponent<VirtualCard>().virtualCardExtensions.ContainsKey("Wildcast"))// If this card has a Wild Cast effect
+            {
+                Debug.Log("Wildcast");
+                cardToReceive.GetComponent<VirtualCard>().virtualCardExtensions["Wildcast"].ExtensionEffect();// Execute its Wild Cast effect
+            }
     }
 
     public override void SendCard(GameObject cardToSend, CardPile target)
@@ -108,9 +114,6 @@ public class CDPile : CardPile
                     #region Update CD lists
                     switch (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime)
                     {
-                        case 0:
-                            CD0.Remove(cardsList[i]);
-                            break;
                         case 1:
                             CD1.Remove(cardsList[i]);
                             CD0.Add(cardsList[i]);
@@ -120,7 +123,7 @@ public class CDPile : CardPile
                             CD1.Add(cardsList[i]);
                             break;
                         default:
-                            if (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime >= 3)
+                            if (cardsList[i].GetComponent<VirtualCard>().CurrentCooldownTime == 3)
                             {
                                 CD3plus.Remove(cardsList[i]);
                                 CD2.Add(cardsList[i]);
@@ -140,7 +143,42 @@ public class CDPile : CardPile
                 }
             }
     }
-
+    public void UpdateCooldown(VirtualCard TargetCard)
+    {
+        if (!Player.Disrupted)// If not disrupted, card's CD's are updated 
+            if(TargetCard.CurrentCooldownTime>0)// If this card has 0 CD, it won't update its CD
+            {
+                #region Update CD lists
+                switch (TargetCard.CurrentCooldownTime)// Process the card's CD to determine which list it will be 
+                {
+                    case 1:// CD reducing from 1 to 0
+                        CD1.Remove(TargetCard.gameObject);// Remove from the CD=1 List
+                        CD0.Add(TargetCard.gameObject);// Add it to the CD=0 List
+                        break;
+                    case 2:// CD Reducing from 2 to 1
+                        CD2.Remove(TargetCard.gameObject);// Remove from CD=2 List
+                        CD1.Add(TargetCard.gameObject);// Add it to the CD=1 List
+                        break;
+                    default:// CD Reducing from X to X-1, when X>=3
+                        if (TargetCard.CurrentCooldownTime == 3)// Only move to the CD=2 List if this card's CD is currently 3
+                        {
+                            CD3plus.Remove(TargetCard.gameObject);// Remove from the X List
+                            CD2.Add(TargetCard.gameObject);// Add it to the CD=2 List
+                        }
+                        break;
+                }
+                #endregion
+                TargetCard.CurrentCooldownTime -= 1; //update the cooldown reducing 1 in the currentCooldownTime
+            }
+            else
+            {
+                cardsCD_Completed.Add(TargetCard.gameObject);// add card to list with all the cards that have completed the cooldown
+                CD0.Remove(TargetCard.gameObject); // Update CD list
+                cardsList.Remove(TargetCard.gameObject);// Remove this
+                //Raise shuffle flag
+                anyCardCompletedCD = true;// If this flag is true, the deck will be shuffled at the end of the player's start turn event
+            }
+    }
     public void SendCardsBackToDeckAndShuffle()
     {
         for (int i = cardsCD_Completed.Count - 1; i >= 0; i--)

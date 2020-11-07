@@ -11,7 +11,7 @@ public abstract class CardExtension : MonoBehaviour
     protected EnemyManager enemyManager;
     protected EnemyClass targetEnemy;
     #endregion
-    public string Keyword;// This extension's keyword
+    [HideInInspector] public string Keyword;// This extension's keyword
     public abstract void ExtensionEffect();// Each Keyword will have its own effect
     protected virtual void Awake()
     {

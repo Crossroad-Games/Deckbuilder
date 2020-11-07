@@ -11,6 +11,7 @@ public class Deck : CardPile
     public override void Awake()
     {
         base.Awake();
+        PileName = "Deck";
         SaveLoad.LoadEvent += LoadDeck;// Subscribe to this event to load the save file deck information into this list
         SaveLoad.LoadEvent += Shuffle;// Subscribe to this event to shuffle the deck at the start of combat
     }

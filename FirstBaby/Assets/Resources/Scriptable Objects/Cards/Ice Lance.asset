@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
+  m_Name: Ice Lance
+  m_EditorClassIdentifier: 
+  rarity: 0
+  Name: Ice Lance
+  ID: 12
+  Description: Deal lots of damage and stun if wildcast
+  cardPorpuse: 0
+  Cooldown: 3
+  ResourceCost: 20
+  sprite: {fileID: 21300000, guid: f3449a0ffa8bc074493bfc3450ab6688, type: 3}
+  cardPrefab: {fileID: 4062164133535861827, guid: 056daefc6ee01fc409e901967e326b72, type: 3}

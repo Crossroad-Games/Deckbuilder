@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unstable : CardExtension
+public class UnstableKeyword : CardExtension
 {
     protected Deck mydeck;
     protected CDPile myCDPile;
