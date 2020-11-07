@@ -124,7 +124,7 @@ public class Concoct : CardExtension
                     break;
                 case CardPorpuse.Defense:
                     ConcoctCardDefense myConcoctDefenseCard = myCard as ConcoctCardDefense;
-                    if(myConcoctDefenseCard != null)
+                    if (myConcoctDefenseCard != null)
                     {
                         myConcoctDefenseCard.BringConcoctInfo(cardsToConcoct);
                         //TODO: Call animation here, and make an animation event that will call the GainShield/health function
@@ -135,13 +135,13 @@ public class Concoct : CardExtension
                 case CardPorpuse.Effect:
                     ConcoctCardEffectNonTarget myConcoctCardEffectNonTarget = myCard as ConcoctCardEffectNonTarget;
                     ConcoctCardEffectTarget myConcoctCardEffectTarget = myCard as ConcoctCardEffectTarget;
-                    if(myConcoctCardEffectNonTarget != null) // NonTarget concoct card
+                    if (myConcoctCardEffectNonTarget != null) // NonTarget concoct card
                     {
                         myConcoctCardEffectNonTarget.BringConcoctInfo(cardsToConcoct);
                         myConcoctCardEffectNonTarget.DoEffect(cardsToConcoct);
                         FinishConcoct();
                     }
-                    else if(myConcoctCardEffectTarget != null)// Target concoct card
+                    else if (myConcoctCardEffectTarget != null)// Target concoct card
                     {
                         myConcoctCardEffectTarget.BringConcoctInfo(cardsToConcoct);
                         myConcoctCardEffectTarget.DoEffect(cardsToConcoct);
@@ -151,13 +151,13 @@ public class Concoct : CardExtension
                 case CardPorpuse.Any:
                     ConcoctCardEffectNonTarget myConcoctAnyCardNonTarget = myCard as ConcoctCardEffectNonTarget;
                     ConcoctCardEffectTarget myConcoctAnyCardTarget = myCard as ConcoctCardEffectTarget;
-                    if(myConcoctAnyCardNonTarget != null) // NonTarget concoct card
+                    if (myConcoctAnyCardNonTarget != null) // NonTarget concoct card
                     {
                         myConcoctAnyCardNonTarget.BringConcoctInfo(cardsToConcoct);
                         myConcoctAnyCardNonTarget.DoEffect(cardsToConcoct);
                         FinishConcoct();
                     }
-                    else if(myConcoctAnyCardTarget != null)// Target concoct card
+                    else if (myConcoctAnyCardTarget != null)// Target concoct card
                     {
                         myConcoctAnyCardTarget.BringConcoctInfo(cardsToConcoct);
                         myConcoctAnyCardTarget.DoEffect(cardsToConcoct);
@@ -167,7 +167,10 @@ public class Concoct : CardExtension
             }
         }
         else
-            Debug.Log("no card concocted");
+        {
+            myCard.SetEffectFinishedTrue();
+            FinishConcoct();
+        }
     }
 
     public void CancelConcoct() //Called when canceled concoct
@@ -252,7 +255,7 @@ public class Concoct : CardExtension
         concoctUI.SetActive(false);
         foreach(PhysicalCard card in cardsToConcoct)
         {
-            myCard.playerHand.SendCard(card.gameObject, myCard.Player.CdPile);
+            myCard.playerHand.SendCard(card.gameObject, myCard.Player.CdPile,true);
         }
         foreach (PhysicalCard card in myCard.playerHand.physicalCardsInHand)
         {

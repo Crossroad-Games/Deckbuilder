@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlchemistFireEffect : EnemyLastingEffect
+public class Agony : EnemyLastingEffect
 {
     public override void Effect(EnemyClass attackingEnemy, int Damage)
     {

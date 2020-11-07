@@ -160,4 +160,11 @@ public abstract class PhysicalCard : MonoBehaviour
         yield return new WaitUntil(() => gainShield_HealthFinished == true);
         EndGainShield_Health();
     }
+
+    #region Utilities
+    public void SetEffectFinishedTrue()
+    {
+        effectFinished = true;
+    }
+    #endregion
 }

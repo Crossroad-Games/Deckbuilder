@@ -10,18 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
-  m_Name: Universal Matter
+  m_Name: Buckthorn Powder
   m_EditorClassIdentifier: 
   rarity: 0
-  Name: Universal Matter
+  Name: Buckthorn Powder
   ID: 7
-  Description: Transmute into any card from deck.
-  Attack: 0
-  Defense: 0
-  SpecialCard: 1
-  Cooldown: 3
-  ResourceCost: 25
-  currentCooldownTime: 0
-  sprite: {fileID: 0}
-  cardPrefab: {fileID: 0}
-  myPhysicalCard: {fileID: 0}
+  Description: 'Deal 10 dmg, Fallout: If agony higher than 4 deal double dmg, otherwise
+    deal 4 agony'
+  cardPorpuse: 0
+  Cooldown: 2
+  ResourceCost: 20
+  sprite: {fileID: 21300000, guid: f3449a0ffa8bc074493bfc3450ab6688, type: 3}
+  cardPrefab: {fileID: 682117706032954185, guid: 12f88aa8953f7f74aa56ed41644bb603, type: 3}

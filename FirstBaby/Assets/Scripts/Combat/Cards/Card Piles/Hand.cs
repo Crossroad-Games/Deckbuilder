@@ -173,7 +173,7 @@ public class Hand : CardPile
         base.ReceiveCard(cardToReceive, origin);
         if(origin.name == "Combat Player")
         {
-            playerDrawFromDeck?.Invoke();   // Raise the player drawn event
+            playerDrawFromDeck?.Invoke();// Raise the player drawn event
             isDrawing = true; // turn isDrawing true
             //Spawn card
             PhysicalCard cardSpawned = ActivateCardFromDeck(cardToReceive);
@@ -189,6 +189,12 @@ public class Hand : CardPile
     public override void SendCard(GameObject cardToSend, CardPile target)
     {
         base.SendCard(cardToSend, target);
+        OnCardRemoved(cardToSend);
+    }
+
+    public override void SendCard(GameObject cardToSend, CardPile target, bool sentByCard)
+    {
+        base.SendCard(cardToSend, target, sentByCard);
         OnCardRemoved(cardToSend);
     }
 

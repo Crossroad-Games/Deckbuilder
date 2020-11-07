@@ -34,6 +34,18 @@ public class CardPile : MonoBehaviour
         target.ReceiveCard(cardToSend, this); //Makes the target cardPile receive the card
     }
 
+    public virtual void SendCard(GameObject cardToSend, CardPile target, bool sentByCard)  //Method that sends card from this card pile to another
+    {
+        Debug.Log("sendcard");
+        cardsList.Remove(cardToSend);  //Remove from this Pile's card list.
+        target.ReceiveCard(cardToSend, this); //Makes the target cardPile receive the card
+        if(cardToSend.GetComponent<VirtualCard>().virtualCardExtensions.ContainsKey("Fallout"))
+        {
+            Debug.Log("Doing Fallout");
+            cardToSend.GetComponent<VirtualCard>().virtualCardExtensions["Fallout"].ExtensionEffect();// Execute its overflow effect
+        }
+    }
+
     public virtual void ReceiveCard(GameObject cardToReceive, CardPile origin) // Method that receives a card.
     {
         cardsList.Add(cardToReceive);   //Add to this Pile's card list.

@@ -14,20 +14,20 @@ public class AlchemistFireCard : TargetCard
     public override IEnumerator CardEffect()
     {
         Debug.Log("alchemist fire effect");
-        AlchemistFireEffect preExistantFireEffect = TargetEnemy.GetComponent<AlchemistFireEffect>();
-        if (preExistantFireEffect == null)
+        Agony preExistentAgony = TargetEnemy.GetComponent<Agony>();
+        if (preExistentAgony == null)
         {
-            AlchemistFireEffect effectToAdd = TargetEnemy.gameObject.AddComponent<AlchemistFireEffect>() as AlchemistFireEffect;
+            Agony effectToAdd = TargetEnemy.gameObject.AddComponent<Agony>() as Agony;
 
             effectToAdd.InitializeEffect(0, 0, 0, 0, 0, 1);
         }
         else
         {
-            if(preExistantFireEffect.turnCounter % 2 ==0)
+            if(preExistentAgony.turnCounter % 2 ==0)
             {
-                AddValue = preExistantFireEffect.turnCounter / 2;
+                AddValue = preExistentAgony.turnCounter / 2;
             }
-            preExistantFireEffect.turnCounter += 1;
+            preExistentAgony.turnCounter += 1;
         }
         effectFinished = true;
         yield return StartCoroutine(base.CardEffect());
