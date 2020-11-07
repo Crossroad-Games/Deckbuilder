@@ -17,7 +17,7 @@ public class UnstableKeyword : CardExtension
     public override void ExtensionEffect()
     {
         for (var iterator = UnstableIntensity;iterator>0;iterator--)// Do X times
-            if(mydeck.cardsList[0]!=null)// If deck is not empty
+            if(mydeck.cardsList.Count>0)// If deck is not empty
                 mydeck.SendCard(mydeck.cardsList[0], myCDPile);// Mill the first card
     }
 }

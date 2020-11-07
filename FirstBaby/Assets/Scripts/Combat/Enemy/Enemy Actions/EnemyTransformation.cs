@@ -20,6 +20,7 @@ public class EnemyTransformation : EnemyAction
         var EnemyToSpawn = (GameObject)Instantiate(EnemyTransformationTarget);// Instantiates the enemy
         ClassTransformationTarget = EnemyToSpawn.GetComponent<EnemyClass>();// Get its enemyclass
         ClassTransformationTarget.myData.Position = myClass.myData.Position;// Will spawn at the same position as this enemy
+        myClass.myData.Position = -1;// Temporary impossible position to avoid conflict 
         EnemyToSpawn.transform.position = myClass.EnemyManager.EnemyPositions[ClassTransformationTarget.myData.Position];// This enemy will be sent to position it was first spawned on
         ClassTransformationTarget.GainShield(CalculateAction(myInfo.BaseShield));// Add some shield
         myClass.EnemyManager.AddEnemy(ClassTransformationTarget);// Add this enemy to the combat scene

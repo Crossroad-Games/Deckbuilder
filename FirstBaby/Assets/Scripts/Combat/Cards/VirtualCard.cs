@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class VirtualCard : MonoBehaviour
 {
     public CardInfo cardInfo;
-    private PhysicalCard PhysicalCardBehaviour;
+    public PhysicalCard PhysicalCardBehaviour;
     private Collider2D cardCollider;
     public CombatPlayer Player;
     private List<CardExtension> cardExtensions= new List<CardExtension>();
