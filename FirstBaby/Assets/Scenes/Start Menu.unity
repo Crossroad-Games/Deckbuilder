@@ -3292,6 +3292,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 729727949, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
+      propertyPath: GameCards.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: faf538c9e40c9de4c8e56b11cdebc890, type: 2}
+    - target: {fileID: 729727949, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
+      propertyPath: GameCards.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: faf538c9e40c9de4c8e56b11cdebc890, type: 2}
     - target: {fileID: 2179629997331758588, guid: 09523ea04baf26e44a4338d4c573a815, type: 3}
       propertyPath: m_Name
       value: Game Master

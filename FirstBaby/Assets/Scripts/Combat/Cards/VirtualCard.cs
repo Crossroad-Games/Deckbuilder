@@ -17,6 +17,7 @@ public class VirtualCard : MonoBehaviour
     private MeshRenderer cardDescription;
     public bool isVirtual = false;
     public bool isPhysical = false;
+
     #region Virtual Card Value
     public int BaseDamage = 0;// Damage value that will be applied to the Enemy
     public int BaseShield = 0; //Value of shield to gain

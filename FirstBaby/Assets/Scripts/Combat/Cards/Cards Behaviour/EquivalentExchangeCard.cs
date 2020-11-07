@@ -19,10 +19,6 @@ public class EquivalentExchangeCard : ConcoctCardEffectNonTarget
 
     public override void DoEffect(List<PhysicalCard> cardsConcocted)
     {
-        for(int i = cardsConcocted.Count-1; i>=0; i--)
-        {
-            playerHand.SendCard(cardsConcocted[i].gameObject, Player.CdPile);
-        }
         playerHand.DrawCards(cardsConcocted.Count);
         effectFinished = true;
     }
