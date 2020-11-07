@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardPile : MonoBehaviour
 {
     public List<GameObject> cardsList = new List<GameObject>();    //List of cards in this CardPile
-
+    [HideInInspector] public string PileName = string.Empty;
     #region References
     protected CardDatabase cardDatabase;
     protected CombatManager combatManager;

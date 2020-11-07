@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b272321e0503b7f4aa09578d8e6fe068, type: 3}
+  m_Name: Gentle Breeze
+  m_EditorClassIdentifier: 
+  rarity: 1
+  Name: Gentle Breeze
+  ID: 11
+  Description: Reduce CD's and Draw cards
+  cardPorpuse: 2
+  Cooldown: 3
+  ResourceCost: 20
+  sprite: {fileID: 21300000, guid: 24c2618ea84e15246b6519a25e190b59, type: 3}
+  cardPrefab: {fileID: 3198968608887256750, guid: 7bf1f07b6846d114ca8e2931cac92a0f, type: 3}

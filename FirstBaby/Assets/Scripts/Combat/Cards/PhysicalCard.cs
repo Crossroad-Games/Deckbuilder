@@ -86,6 +86,11 @@ public abstract class PhysicalCard : MonoBehaviour
             Debug.Log("Unstable");
             CardExtensions["Unstable"].ExtensionEffect();// Execute its overflow effect
         }
+        if (CardExtensions.ContainsKey("Hasten"))// If this card has an Overflow effect
+        {
+            Debug.Log("Hasten");
+            CardExtensions["Hasten"].ExtensionEffect();// Execute its overflow effect
+        }
         Debug.Log("chamou executeAction coroutine");
         if (cardPorpuse == CardPorpuse.Defense)
             StartCoroutine(GainShield_Health());
@@ -102,6 +107,11 @@ public abstract class PhysicalCard : MonoBehaviour
         {
             Debug.Log("Unstable");
             CardExtensions["Unstable"].ExtensionEffect();// Execute its overflow effect
+        }
+        if (CardExtensions.ContainsKey("Hasten"))// If this card has an Overflow effect
+        {
+            Debug.Log("Hasten");
+            CardExtensions["Hasten"].ExtensionEffect();// Execute its overflow effect
         }
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
