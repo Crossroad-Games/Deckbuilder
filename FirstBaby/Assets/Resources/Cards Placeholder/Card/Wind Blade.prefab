@@ -126,10 +126,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 11400000, guid: faf538c9e40c9de4c8e56b11cdebc890, type: 2}
+  PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
   isVirtual: 0
   isPhysical: 0
-  BaseDamage: 20
+  BaseDamage: 0
   BaseShield: 0
   BaseHeal: 0
   AddValue: 0
@@ -168,7 +169,7 @@ MonoBehaviour:
   doEffectWhenConcocted: 1
   type: none
   cardPorpuse: 0
-  BaseDamage: 0
+  BaseDamage: 15
   BaseShield: 0
   BaseHeal: 0
   AddValue: 0

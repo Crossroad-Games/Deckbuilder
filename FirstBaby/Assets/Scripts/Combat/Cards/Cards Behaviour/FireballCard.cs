@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FireballCard : TargetCard
-{
-    public override void Start()
-    {
-        base.Start();
-        BaseDamage = 18;
-    }
-    // This effect deals damage to a single enemy
+{ // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()
     {
         effectFinished = true;

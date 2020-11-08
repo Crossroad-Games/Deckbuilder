@@ -8,7 +8,8 @@ public class FireballOverflow : OverflowKeyword
     public override void OverflowEffect()
     {
         Debug.Log("Overflowing");
-        var Target = enemyManager.CombatEnemies[Random.Range(0, enemyManager.CombatEnemies.Count)];// Pick a random enemy
-        Target.ProcessDamage(myCard.CalculateAction(Mathf.CeilToInt(myCard.BaseDamage*DamagePercentage)));
+        var RandomNumber = Random.Range(0, enemyManager.CombatEnemies.Count);
+        var Target = enemyManager.CombatEnemies[RandomNumber];// Pick a random enemy
+        Target.ProcessDamage(myCard.CalculateAction(Mathf.CeilToInt(myCard.PhysicalCardBehaviour.BaseDamage*DamagePercentage)));
     }
 }

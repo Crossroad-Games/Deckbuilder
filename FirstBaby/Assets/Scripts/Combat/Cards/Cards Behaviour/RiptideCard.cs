@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class RiptideCard : TargetCard
 {
-    public override void Start()
-    {
-        base.Start();
-        BaseDamage = 5;
-    }
-    // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()
     {
         effectFinished = true;
