@@ -136,7 +136,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 9, y: 14}
+    oldSize: {x: 8.181818, y: 12.727273}
     newSize: {x: 6.91, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   doEffectWhenConcocted: 1
   type: none
   cardPorpuse: 0
-  BaseDamage: 0
+  BaseDamage: 15
   BaseShield: 0
   BaseHeal: 0
   AddValue: 0
@@ -197,6 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 11400000, guid: f2e21570347dfc84d98863e0d0b9c0ad, type: 2}
+  PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
   isVirtual: 0
   isPhysical: 0

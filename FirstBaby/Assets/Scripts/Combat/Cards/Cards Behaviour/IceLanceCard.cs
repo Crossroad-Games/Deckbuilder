@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class IceLanceCard : TargetCard
 {
-    public override void Start()
-    {
-        base.Start();
-        BaseDamage = 25;
-    }
-    // This effect deals damage to a single enemy
     public override IEnumerator CardEffect()
     {
         effectFinished = true;

@@ -118,7 +118,7 @@ MonoBehaviour:
   type: none
   cardPorpuse: 1
   BaseDamage: 0
-  BaseShield: 0
+  BaseShield: 8
   BaseHeal: 0
   AddValue: 0
   SubtractValue: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 11400000, guid: 0be9ccd4fc8c0c64fb424fb463d96af4, type: 2}
+  PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
   isVirtual: 0
   isPhysical: 0
