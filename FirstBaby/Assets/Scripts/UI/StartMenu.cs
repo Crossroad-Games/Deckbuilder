@@ -77,8 +77,13 @@ public class StartMenu : MonoBehaviour
     {
         transform.Find("Save Files").gameObject.SetActive(false);// Deactivate the Load Game menu
         transform.Find("New Save File").gameObject.SetActive(true);// Activates the Username Input Field
-        if (ConfirmNewSave == null)// If there is not reference
+        if (ConfirmNewSave == null)// If there is no reference
             ConfirmNewSave = transform.Find("New Save File").Find("Confirm Username").gameObject;// Reference is defined
+    }
+    public void ReturnToSave()
+    {
+        transform.Find("Save Files").gameObject.SetActive(true);// Deactivate the Load Game menu
+        transform.Find("New Save File").gameObject.SetActive(false);// Activates the Username Input Field
     }
     public void DeleteGame(int SaveNumber)// Deletes all save files with that name
     {
