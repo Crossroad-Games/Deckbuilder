@@ -22,4 +22,11 @@ public class BurnEffect : LastingEffect
         if (turnCounter <= 0)// If there are no more stacks
             Destroy(this);// Destroy
     }
+    public override void Effect(EnemyClass attackingEnemy, int Damage)
+    {
+        player.ProcessDamage(null, BurnDamage * Mathf.CeilToInt(turnCounter / 2f));// Deals half the stacks rounded up times base burn damage
+        turnCounter -= Mathf.CeilToInt(turnCounter / 2f);// Removes half, rounded up, stacks of burn
+        if (turnCounter <= 0)// If there are no more stacks
+            Destroy(this);// Destroy
+    }
 }

@@ -56,5 +56,9 @@ public abstract class EnemyLastingEffect : MonoBehaviour
         if (turnCounter == 0)
             Destroy(this);
     }
+    public virtual void AddStacks(int Amount)
+    {
+        turnCounter += Amount;
+    }
 }
 

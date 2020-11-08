@@ -57,6 +57,10 @@ public class LastingEffect : MonoBehaviour
     {
         Countdown();
     }
+    public virtual void AddStacks(int Amount)
+    {
+        turnCounter += Amount;
+    }
 
     
 }
