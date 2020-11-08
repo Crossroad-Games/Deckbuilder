@@ -63,7 +63,7 @@ public class SoulMaggot : EnemyClass
         var List = AlliesHP.Keys.ToList();// Order the dictionary from smallest to largest keys
         List.Sort();
         var Highest = List[0];// Acquires the smallest value
-        return Highest <= ConsumeThreshold ? true : false;
+        return Highest <= ConsumeThreshold;
        
     }
     public override IEnumerator ActionPhaseCoroutine()

@@ -26,14 +26,19 @@ public class DecayEffect : LastingEffect
         player.ShieldDecay += turnCounter * DecayperStack;// Increases the player's shield decay per stack
         TurnManager.PlayerTurnStart += Effect;// Subscribes the effect
     }
-    public void AddStacks(int StacksToAdd)
+    public override void AddStacks(int StacksToAdd)
     {
+        base.AddStacks(StacksToAdd);
         player.ShieldDecay += StacksToAdd * DecayperStack;// Increases the player's shield decay per stack
-        turnCounter += StacksToAdd;// Add the stacks
     }
     public override void Effect()
     {
         player.ShieldDecay -= DecayperStack;// Removes one stack
         base.Effect();
+    }
+    public override void Effect(EnemyClass attackingEnemy, int Damage)
+    {
+        player.ShieldDecay -= DecayperStack;// Removes one stack
+        base.Effect(attackingEnemy, Damage);
     }
 }
