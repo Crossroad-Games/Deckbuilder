@@ -6,7 +6,9 @@ public class RiposteEffect : SingleUseEffect
 {
     protected override void Awake()
     {
+        EffectLabel = "Reflect";
         base.Awake();
+        
         player.OnPlayerProcessDamage += Effect;
     }
 

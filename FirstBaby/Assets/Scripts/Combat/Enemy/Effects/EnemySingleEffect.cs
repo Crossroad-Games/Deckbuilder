@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemySingleEffect : MonoBehaviour
+public abstract class EnemySingleEffect : EnemyEffect
 {
     [SerializeField] protected int BaseValue = 0;// Damage value that will be applied to the Player
     protected int AddValue = 0, SubtractValue = 0;// Values that modify the base value

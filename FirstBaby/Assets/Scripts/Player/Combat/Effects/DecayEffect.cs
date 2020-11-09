@@ -7,7 +7,9 @@ public class DecayEffect : LastingEffect
     private float DecayperStack = .1f;// How much shield decay per stack
     protected override void Awake()
     {
+        EffectLabel = "Decay";
         base.Awake();
+       
         turnCounter = 0;
     }
     protected override void Start()

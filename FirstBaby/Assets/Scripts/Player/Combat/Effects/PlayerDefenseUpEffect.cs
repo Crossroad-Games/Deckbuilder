@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerDefenseUpEffect : LastingEffect
 {
+    protected override void Awake()
+    {
+        EffectLabel = "Defense Up";
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();
@@ -12,6 +17,7 @@ public class PlayerDefenseUpEffect : LastingEffect
     }
     protected override void OnDisable()
     {
+        base.OnDisable();
         player.myData.PlayerDefense -= turnCounter;
         TurnManager.PlayerTurnStart -= Effect;
     }
