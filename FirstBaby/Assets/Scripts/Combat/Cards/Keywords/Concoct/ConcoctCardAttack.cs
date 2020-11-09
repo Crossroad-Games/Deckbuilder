@@ -13,7 +13,7 @@ public abstract class ConcoctCardAttack : TargetCard
         base.Awake();
         myConcoct = GetComponent<Concoct>();
         isConcoct = true;
-        BaseDamage = 0;
+        BaseDamage = 0; //Sets the initial baseDamage to zero, so the only damage it does is based on concocted cards
     }
 
     public override IEnumerator CardEffect()

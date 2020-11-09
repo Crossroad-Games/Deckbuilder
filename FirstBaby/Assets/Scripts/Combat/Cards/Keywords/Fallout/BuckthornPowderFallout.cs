@@ -10,17 +10,17 @@ public class BuckthornPowderFallout : FalloutKeyword
         Agony preExistentAgony = Target.GetComponent<Agony>();
         if (preExistentAgony != null)
         {
-            if (preExistentAgony.turnCounter >= 4)
+            if (preExistentAgony.turnCounter >= 4) // agony >= 4 stacks, deal double damage
             {
                 preExistentAgony.turnCounter -= 4;
                 Target.ProcessDamage(myCard.CalculateAction(Mathf.CeilToInt(myCard.BaseDamage * 2f)));
             }
-            else
+            else //otherwise, deal +4 agony
             {
                 preExistentAgony.turnCounter += 4;
             }
         }
-        else
+        else //if there was no instance of agony on the enemy, add the component then initialize it
         {
             Agony effectToAdd = Target.gameObject.AddComponent<Agony>() as Agony;
 

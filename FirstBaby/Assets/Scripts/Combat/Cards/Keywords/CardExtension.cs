@@ -15,9 +15,11 @@ public abstract class CardExtension : MonoBehaviour
     public abstract void ExtensionEffect();// Each Keyword will have its own effect
     protected virtual void Awake()
     {
+        #region References
         myCard = GetComponent<PhysicalCard>();
         combatPlayer = FindObjectOfType<CombatPlayer>();
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
         enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
+        #endregion
     }
 }

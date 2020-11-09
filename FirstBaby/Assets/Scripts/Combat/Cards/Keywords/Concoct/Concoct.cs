@@ -35,40 +35,37 @@ public class Concoct : CardExtension
     {
         if (isConcocting)
         {
-            DoConcoct();
+            DoConcoct(); //Execute the Concoct, basically the concoct selection
         }
     }
 
     public void DoConcoct()
     {
-        transform.position = Vector3.Lerp(transform.position, concoctCardPosition, myCard.CombatProperties.cardDrawingSpeed * Time.deltaTime);
-        if (Input.GetMouseButtonDown(0))
+        transform.position = Vector3.Lerp(transform.position, concoctCardPosition, myCard.CombatProperties.cardDrawingSpeed * Time.deltaTime); //Move the concoct card to the predetermined position
+        if (Input.GetMouseButtonDown(0)) // concoct selection (mouse pressed)
         {
             if (combatPlayer.hitInfo.collider != null && combatPlayer.isHoveringCard) //If mouse is over a card when it is pressed
             {
-                PhysicalCard card = combatPlayer.hitInfo.collider.gameObject.GetComponent<PhysicalCard>();
-                if (concoctPorpuse != CardPorpuse.Any) {
-                    if (!card.concocted && card.cardPorpuse == concoctPorpuse && !card.isConcoct)
+                PhysicalCard card = combatPlayer.hitInfo.collider.gameObject.GetComponent<PhysicalCard>(); // auxiliar card variable pointing to the pressed card
+                if (concoctPorpuse != CardPorpuse.Any) 
+                {
+                    if (!card.concocted && card.cardPorpuse == concoctPorpuse && !card.isConcoct)  // if card hasn't been concocted yet, if card isn't the one concocting and if the card porpuse matches the concoct porpuse
                     {
                         if (cardsToConcoct.Count == 0)
                         {
-                            Debug.Log("cardConcocted");
-                            cardsToConcoct.Add(card);
-                            card.concocted = true;
-                            Debug.Log(card.highlightPreviousHeight);
+                            cardsToConcoct.Add(card); // add pressed card to concocted cards list
+                            card.concocted = true; // turn the card concocted boolean true
                         }
                         else
                         {
-                            Debug.Log("há cartas no concoctlist");
-                            if (card.GetType() == cardsToConcoct[0].GetType())
+                            if (card.GetType() == cardsToConcoct[0].GetType()) // make sure you can only concoct the same type of cards at the same time
                             {
                                 cardsToConcoct.Add(card);
                                 card.concocted = true;
-                                Debug.Log(card.highlightPreviousHeight);
                             }
                         }
                     }
-                    else
+                    else // unconcoct a card
                     {
                         cardsToConcoct.Remove(card);
                         card.concocted = false;
@@ -168,19 +165,19 @@ public class Concoct : CardExtension
         }
         else
         {
-            myCard.SetEffectFinishedTrue();
+            myCard.SetEffectFinishedTrue(); //Utility to set the effectFinished variable to true, although this is being set directely by the cards
             FinishConcoct();
         }
     }
 
     public void CancelConcoct() //Called when canceled concoct
     {
-        combatManager.confirmConcoctButton.onClick.RemoveAllListeners();
+        combatManager.confirmConcoctButton.onClick.RemoveAllListeners(); // reset the buttons so can subscribe another card's method
         combatManager.cancelConcoctButton.onClick.RemoveAllListeners();
         Debug.Log("deu unsubscribe");
         isConcocting = false;
-        concoctUI.SetActive(false);
-        myCard.selectable = true;
+        concoctUI.SetActive(false); // disable the concoctUI
+        myCard.selectable = true; // Make the card selectable again
         myCard.followCardPositionToFollow = true; //Card restart following it's target in hand
         if (combatPlayer.OnCardUnselected != null)
         {
@@ -214,7 +211,7 @@ public class Concoct : CardExtension
 
     public void StartConcoct()
     {
-        combatManager.confirmConcoctButton.onClick.AddListener(ConfirmConcoct);
+        combatManager.confirmConcoctButton.onClick.AddListener(ConfirmConcoct); //subscribe to the button's onClick event
         combatManager.cancelConcoctButton.onClick.AddListener(CancelConcoct);
         Debug.Log("deu subscribe");
         myCard.followCardPositionToFollow = false; //Card stops following it's target in hand
