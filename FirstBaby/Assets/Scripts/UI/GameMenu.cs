@@ -10,6 +10,7 @@ public class GameMenu : MonoBehaviour
     void Start()
     {
         PauseMaster = GameObject.Find("Pause Master").GetComponent<PauseGame>();// Acquires the reference
+        this.gameObject.SetActive(false);// Deactivates itself
     }
 
     // Update is called once per frame

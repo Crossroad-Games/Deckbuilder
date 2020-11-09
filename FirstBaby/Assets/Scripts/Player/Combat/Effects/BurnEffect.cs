@@ -7,6 +7,7 @@ public class BurnEffect : LastingEffect
     [SerializeField] private int BurnDamage=5;// Burn Damage per stack 
     protected override void Awake()
     {
+        EffectLabel = "Burn";
         base.Awake();
         TurnManager.PlayerTurnEnd += Effect;// Apply damage at the end of the player's turn
     }

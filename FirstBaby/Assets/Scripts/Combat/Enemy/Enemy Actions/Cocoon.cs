@@ -20,8 +20,15 @@ public class Cocoon : EnemyAction
         }
         else// If there is a decay effect
             preExistantEffect.AddStacks(AmountofStacks);// Add more stacks
-        IncapacitatedEffect IncapacitatedtoAdd = myClass.gameObject.AddComponent<IncapacitatedEffect>() as IncapacitatedEffect;// Add a lasting effect of Curl Up that adds
-        IncapacitatedtoAdd.InitializeEffect(0, 0, 0, 1, 1, AmountofStacks);
+        IncapacitatedEffect preExistantIncapacitatedEffect = myClass.GetComponent<IncapacitatedEffect>();// Get the player's Decay Effect
+        if (preExistantEffect == null)// If there is no decay effect yet
+        {
+
+            IncapacitatedEffect effectToAdd = myClass.gameObject.AddComponent<IncapacitatedEffect>() as IncapacitatedEffect;// Apply a decay effect
+            effectToAdd.InitializeEffect(0, 0, 0, 0, 0, AmountofStacks+1);// Initialize the amount of stacks
+        }
+        else// If there is a decay effect
+            preExistantEffect.AddStacks(AmountofStacks+1);// Add more stacks
         myClass.GainShield(CalculateAction(myInfo.BaseShield));// Gain shield
         while (!ActionDone)
         {

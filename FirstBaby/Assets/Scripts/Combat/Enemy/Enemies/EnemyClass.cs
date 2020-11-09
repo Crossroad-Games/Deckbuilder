@@ -205,7 +205,7 @@ public abstract class EnemyClass : MonoBehaviour
         ShieldIcon.SetActive(false);// Deactivate using the type of action as a boolean
         SpecialIcon.SetActive(false);// Deactivate using the type of action as a boolean
         GetComponentInChildren<TMP_Text>().text = string.Empty;// Show no value
-        StopChecking();
+        StopChecking();// Stop checking for intention until the end of the enemy phase
         if (TurnManager.State == CombatState.EnemyActionPhase)
         {
             if (!Incapacitated)// If not incapacitaded
@@ -215,14 +215,13 @@ public abstract class EnemyClass : MonoBehaviour
                 IntendedActions.Clear();// Clear intended action
                 ActionDone = true;
             }
-            TurnActions = new List<EnemyAction>(IntendedActions);
-            StopChecking();
+            TurnActions = new List<EnemyAction>(IntendedActions);// Copy the actions this enemy is about to execute to be accessed after the action phase
             foreach (EnemyAction Action in TurnActions)// Go through all the actions the enemy intends to perform
                 if (Action != null && !Incapacitated)// Check if its null
                     StartCoroutine(Action.Effect());// Executes this action's effect
-            while (!ActionDone)
+            while (!ActionDone)// Hold the combat turn system until this action phase is over
             {
-                foreach (EnemyAction Action in TurnActions)
+                foreach (EnemyAction Action in TurnActions)// Check each action that were used this turn by this enemy
                     if (Action.ActionDone)// If this action has already done its effect
                         ActionDone = true;// Action effect is over
                     else// If any action is still supposed to do its effect

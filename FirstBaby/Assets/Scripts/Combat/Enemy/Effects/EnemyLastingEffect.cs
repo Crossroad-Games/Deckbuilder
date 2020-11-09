@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyLastingEffect : MonoBehaviour
+public abstract class EnemyLastingEffect : EnemyEffect
 {
     [SerializeField]protected int BaseValue = 0;// Damage value that will be applied to the Player
     protected int AddValue = 0, SubtractValue = 0;// Values that modify the base value

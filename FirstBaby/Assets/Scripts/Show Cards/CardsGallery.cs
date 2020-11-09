@@ -23,7 +23,9 @@ public class CardsGallery : MonoBehaviour
     public Button CD1_Button;
     public Button CD2_Button;
     public Button CD3plus_Button;
+    public Button ShowCollection;
     private CombatPlayer combatPlayer;
+    private DungeonPlayer dungeonPlayer;
     private Hand playerHand;
     private CDPile playerCDPile;
     private Deck playerDrawPile;
@@ -46,51 +48,93 @@ public class CardsGallery : MonoBehaviour
     private void Awake()
     {
         #region Initialization
-        combatPlayer = GameObject.Find("Combat Player").GetComponent<CombatPlayer>();
-        playerHand = combatPlayer.GetComponent<Hand>();
-        playerCDPile = combatPlayer.GetComponentInChildren<CDPile>();
-        playerDrawPile = combatPlayer.GetComponent<Deck>();
+        if (Scene == Scene.Combat)// If this is a combat scene
+        {
+            combatPlayer = GameObject.Find("Combat Player").GetComponent<CombatPlayer>();
+            playerHand = combatPlayer.GetComponent<Hand>();
+            playerCDPile = combatPlayer.GetComponentInChildren<CDPile>();
+            playerDrawPile = combatPlayer.GetComponent<Deck>();
+            CombatTempGallery = GameObject.Find("Combat Temp Gallery");
+            #region Buttons
+            DrawPileUI = GameObject.Find("Draw Pile");
+            drawPileButton = GameObject.Find("Draw Pile").GetComponent<Button>();
+            //CD UI buttons
+            CD0UI = GameObject.Find("CD0");
+            CD1UI = GameObject.Find("CD1");
+            CD2UI = GameObject.Find("CD2");
+            CD3plusUI = GameObject.Find("CD3+");
+            CD0_Button = GameObject.Find("CD0").GetComponent<Button>();
+            CD1_Button = GameObject.Find("CD1").GetComponent<Button>();
+            CD2_Button = GameObject.Find("CD2").GetComponent<Button>();
+            CD3plus_Button = GameObject.Find("CD3+").GetComponent<Button>();
+            #endregion
+            //------------
+            
+            //---------------
+            
+            CombatTempGallery.SetActive(false);
+            #endregion
+        }
+        else
+        {
+            dungeonPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<DungeonPlayer>();// Reference to the dungeon player is set
+            ShowCollection = GameObject.Find("Menu").transform.Find("ShowCollectionButton").GetComponent<Button>();// Button that will show the card collection
+        }
         DeckGallery = GameObject.Find("Deck Gallery");
-        CombatTempGallery = GameObject.Find("Combat Temp Gallery");
-        #region Buttons
-        DrawPileUI = GameObject.Find("Draw Pile");
-        drawPileButton = GameObject.Find("Draw Pile").GetComponent<Button>();
-        //CD UI buttons
-        CD0UI = GameObject.Find("CD0");
-        CD1UI = GameObject.Find("CD1");
-        CD2UI = GameObject.Find("CD2");
-        CD3plusUI = GameObject.Find("CD3+");
-        CD0_Button = GameObject.Find("CD0").GetComponent<Button>();
-        CD1_Button = GameObject.Find("CD1").GetComponent<Button>();
-        CD2_Button = GameObject.Find("CD2").GetComponent<Button>();
-        CD3plus_Button = GameObject.Find("CD3+").GetComponent<Button>();
-        #endregion
-        //------------
         ReturnButton = GameObject.Find("Return").GetComponent<Button>();
         ReturnButton.gameObject.SetActive(false);
-        //---------------
         DeckGallery.SetActive(false);
-        CombatTempGallery.SetActive(false);
-        #endregion
     }
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("ui manager start");
-        drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList); });
-        CD0_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD0); });
-        CD1_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD1); });
-        CD2_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD2); });
-        CD3plus_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD3plus); });
+        if (Scene == Scene.Combat)
+        {
+            drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList); });
+            CD0_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD0); });
+            CD1_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD1); });
+            CD2_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD2); });
+            CD3plus_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD3plus); });
+        }
+        else
+        {
+            ShowCollection.onClick.AddListener(delegate { ShowTempGallery(dungeonPlayer.myData.CardCollectionID); });
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShowTempGallery(List<int> cardsToShow)
     {
-        
+        if (!isShowingGallery)
+        {
+            // Show cards UI
+            isShowingGallery = true;
+            if(Scene==Scene.Combat)
+            {
+                if (OnGalleryOpen != null)
+                {
+                    foreach (PhysicalCard card in playerHand.physicalCardsInHand)
+                    {
+                        OnGalleryOpen(card.gameObject);
+                    }
+                }
+                else
+                    throw new Exception("nothing on OnGalleryOpen");
+            }
+            DeckGallery.SetActive(true);
+            ReturnButton.gameObject.SetActive(true);
+            ReturnButton.onClick.AddListener(CloseCollectionGallery);
+            foreach (int card in cardsToShow)
+            {
+                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
+                cardsDisplayed.Add(tempCard);
+                cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
+                Debug.Log("instanciou card UI");
+            }
+            //--------------------------------------//
+        }
     }
-
     public void ShowTempGallery(List<GameObject> cardsToShow)
     {
         if (!isShowingGallery)
@@ -201,7 +245,30 @@ public class CardsGallery : MonoBehaviour
             ReturnButton.gameObject.SetActive(false);
         }
     }
+    public void CloseCollectionGallery()
+    {
 
+        if (isShowingGallery)
+        {
+            isShowingGallery = false;
+            for (int i = cardsDisplayed.Count - 1; i >= 0; i--)
+            {
+                Destroy(cardsDisplayed[i]);
+                cardsDisplayed.RemoveAt(i);
+            }
+            DeckGallery.SetActive(false);
+            if(Scene==Scene.Combat)
+            {
+                foreach (PhysicalCard card in playerHand.physicalCardsInHand)
+                {
+                    OnGalleryClose?.Invoke(card.gameObject);
+                }
+                playerHand.EnableCards();
+            }  
+            ReturnButton.onClick.RemoveAllListeners();
+            ReturnButton.gameObject.SetActive(false);
+        }
+    }
     private void ActivateCombatSelection()
     {
         if(cardsDisplayed.Count > 0)
