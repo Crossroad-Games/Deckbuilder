@@ -37,13 +37,16 @@ public class CardsGallery : MonoBehaviour
 
     #region Temporary Lists of Cards
     private List<GameObject> cardsDisplayed = new List<GameObject>();
-    private List<Button> cardsDisplayedAsButtons = new List<Button>();
+    private Dictionary<GameObject,Button> cardsDisplayedAsButtons = new Dictionary<GameObject, Button>();
     public List<GameObject> cardsSelected = new List<GameObject>();
     #endregion
 
     #region booleans
     [SerializeField]private bool isShowingGallery = false;
     #endregion
+
+    CardCollectionComparer comparerInt = new CardCollectionComparer();
+    CardGalleryComparer comparerCardGameobject = new CardGalleryComparer();
 
     private void Awake()
     {
@@ -100,11 +103,11 @@ public class CardsGallery : MonoBehaviour
         }
         else
         {
-            ShowCollection.onClick.AddListener(delegate { ShowTempGallery(dungeonPlayer.myData.CardCollectionID); });
+            ShowCollection.onClick.AddListener(delegate { ShowDeckGallery(dungeonPlayer.myData.CardCollectionID); });
         }
     }
 
-    public void ShowTempGallery(List<int> cardsToShow)
+    public void ShowDeckGallery(List<int> cardsToShow)
     {
         if (!isShowingGallery)
         {
@@ -125,11 +128,12 @@ public class CardsGallery : MonoBehaviour
             DeckGallery.SetActive(true);
             ReturnButton.gameObject.SetActive(true);
             ReturnButton.onClick.AddListener(CloseCollectionGallery);
+            cardsToShow.Sort(comparerInt);
             foreach (int card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
                 cardsDisplayed.Add(tempCard);
-                cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
+                cardsDisplayedAsButtons.Add(tempCard,tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
             }
             //--------------------------------------//
@@ -156,8 +160,11 @@ public class CardsGallery : MonoBehaviour
             foreach (GameObject card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
+                tempCard.name = Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID).name;
                 cardsDisplayed.Add(tempCard);
-                cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
+                cardsDisplayed.Sort(comparerCardGameobject);
+                tempCard.transform.SetSiblingIndex(cardsDisplayed.IndexOf(tempCard));
+                cardsDisplayedAsButtons.Add(tempCard,tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
             }
             playerHand.DisableCards();
@@ -184,8 +191,11 @@ public class CardsGallery : MonoBehaviour
             foreach (GameObject card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
+                tempCard.name = Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID).name;
                 cardsDisplayed.Add(tempCard);
-                cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
+                cardsDisplayed.Sort(comparerCardGameobject);
+                tempCard.transform.SetSiblingIndex(cardsDisplayed.IndexOf(tempCard));
+                cardsDisplayedAsButtons.Add(tempCard,tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
             }
             playerHand.DisableCards();
@@ -214,8 +224,11 @@ public class CardsGallery : MonoBehaviour
             foreach (GameObject card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
+                tempCard.name = Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID).name;
                 cardsDisplayed.Add(tempCard);
-                cardsDisplayedAsButtons.Add(tempCard.GetComponent<Button>());
+                cardsDisplayed.Sort(comparerCardGameobject);
+                tempCard.transform.SetSiblingIndex(cardsDisplayed.IndexOf(tempCard));
+                cardsDisplayedAsButtons.Add(tempCard,tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
             }
             playerHand.DisableCards();
@@ -273,9 +286,9 @@ public class CardsGallery : MonoBehaviour
     {
         if(cardsDisplayed.Count > 0)
         {
-            foreach(Button cardButton in cardsDisplayedAsButtons)
+            foreach(KeyValuePair<GameObject,Button> cardButton in cardsDisplayedAsButtons)
             {
-                cardButton.onClick.AddListener(delegate { CardSelection(cardButton.gameObject); });
+                cardButton.Value.onClick.AddListener(delegate { CardSelection(cardButton.Key); });
             }
         }
     }
@@ -284,9 +297,9 @@ public class CardsGallery : MonoBehaviour
     {
         if (cardsDisplayed.Count > 0)
         {
-            foreach (Button cardButton in cardsDisplayedAsButtons)
+            foreach (KeyValuePair<GameObject, Button> cardButton in cardsDisplayedAsButtons)
             {
-                cardButton.onClick.AddListener(delegate { CardSelection(cardButton.gameObject, AmountToSelect); });
+                cardButton.Value.onClick.AddListener(delegate { CardSelection(cardButton.Key.gameObject, AmountToSelect); });
             }
         }
     }
@@ -317,6 +330,45 @@ public class CardsGallery : MonoBehaviour
         {
             cardsSelected.Remove(cardToBeSelected);
             cardToBeSelected.GetComponent<CardUI>().cardUISelected = false;
+        }
+    }
+}
+
+
+public class CardCollectionComparer : IComparer<int>
+{
+    public int Compare(int id1, int id2)
+    {
+        if(id1 > id2)
+        {
+            return 1;
+        }
+        else if(id1 < id2)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
+
+public class CardGalleryComparer : IComparer<GameObject>
+{
+    public int Compare(GameObject card1, GameObject card2)
+    {
+        if (int.Parse(card1.name) > int.Parse(card2.name))
+        {
+            return 1;
+        }
+        else if (int.Parse(card1.name) < int.Parse(card2.name))
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
         }
     }
 }
