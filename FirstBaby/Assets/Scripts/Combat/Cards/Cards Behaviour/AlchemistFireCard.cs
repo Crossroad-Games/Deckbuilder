@@ -21,7 +21,7 @@ public class AlchemistFireCard : TargetCard
             {
                 AddValue = preExistentAgony.turnCounter / 2;
             }
-            preExistentAgony.turnCounter += 1;
+            preExistentAgony.AddStacks(1);
         }
         effectFinished = true;
         yield return StartCoroutine(base.CardEffect());

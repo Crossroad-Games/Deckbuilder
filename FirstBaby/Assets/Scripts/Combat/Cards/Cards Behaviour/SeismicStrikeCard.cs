@@ -17,7 +17,7 @@ public class SeismicStrikeCard : TargetCard
             effectToAdd.InitializeEffect(0, 0, 0, 0, 0, IncapacitatedDuration);// Initialize the amount of stacks
         }
         else// If there is a decay effect
-            preExistantEffect.turnCounter += IncapacitatedDuration;// Extend the incapacitation effect
+            preExistantEffect.AddStacks(IncapacitatedDuration);
         yield return StartCoroutine(base.CardEffect());
     }
 }

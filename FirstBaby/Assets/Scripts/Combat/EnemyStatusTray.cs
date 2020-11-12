@@ -22,7 +22,7 @@ public class EnemyStatusTray : MonoBehaviour
         {
             var IconSpawn = Instantiate(Resources.Load("UI/StatusIcons/" + newEffect.EffectLabel)) as GameObject;// Instantiates a new icon based on the effect's label
             IconSpawn.transform.SetParent(this.transform);// Set as a child of the Enemy object
-            IconSpawn.transform.localPosition = new Vector3(FirstIcon.x + EnemyEffects.Count * .35f, FirstIcon.y, FirstIcon.z);// Set the icon's position based on how many icons are currently on the scene
+            IconSpawn.transform.localPosition = new Vector3(FirstIcon.x + EnemyEffects.Count * OffsetIcon, FirstIcon.y, FirstIcon.z);// Set the icon's position based on how many icons are currently on the scene
             EnemyEffects.Add(newEffect.EffectLabel, IconSpawn);// Add the icon to the dictionary under the key newEffect
         }
     }

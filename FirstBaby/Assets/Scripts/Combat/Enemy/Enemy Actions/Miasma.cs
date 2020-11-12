@@ -52,7 +52,7 @@ public class Miasma : EnemyAction
             effectToAdd.InitializeEffect(0, 0, 0, 1, 1, AmountofBurnStacks);// Initialize the amount of stacks
         }
         else// If there is a decay effect
-            preExistantEffect.turnCounter += AmountofBurnStacks;// Add more stacks
+            preExistantEffect.AddStacks(AmountofBurnStacks);// Add more stacks
     }
 
     public override IEnumerator Effect()
