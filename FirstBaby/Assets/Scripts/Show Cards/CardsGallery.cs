@@ -9,7 +9,8 @@ public enum Scene { Dungeon, Combat};
 public enum CardPileToShow { DrawPile, CD0, CD1, CD2, CD3plus, Hand};
 public class CardsGallery : MonoBehaviour
 {
-    [SerializeField] Scene Scene; 
+    [SerializeField] Scene Scene;
+    [SerializeField] private Vector3 TextPosition;
     public GameObject DeckGallery;
     public GameObject CombatTempGallery;
     public GameObject DrawPileUI;
@@ -29,6 +30,7 @@ public class CardsGallery : MonoBehaviour
     private Hand playerHand;
     private CDPile playerCDPile;
     private Deck playerDrawPile;
+    public Font CopiesTextFont;
 
     #region Events
     public Action<GameObject> OnGalleryOpen;
@@ -129,12 +131,44 @@ public class CardsGallery : MonoBehaviour
             ReturnButton.gameObject.SetActive(true);
             ReturnButton.onClick.AddListener(CloseCollectionGallery);
             cardsToShow.Sort(comparerInt);
+            var iterator = 0;
+            var Sequence = 0;// How many cards are equal to each other
+            Text newText = null;
+            GameObject tempCard = null;
             foreach (int card in cardsToShow)
-            {
-                GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
-                cardsDisplayed.Add(tempCard);
-                cardsDisplayedAsButtons.Add(tempCard,tempCard.GetComponent<Button>());
-                Debug.Log("instanciou card UI");
+            {      
+                if (iterator!=0)// If it is not the first card
+                    if(cardsToShow[iterator-1]!=card)// If the current card is different to the previous
+                    {
+                        Sequence = 1;// Not equal to the previous, restart counting
+                        tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
+                        cardsDisplayed.Add(tempCard);
+                        cardsDisplayedAsButtons.Add(tempCard, tempCard.GetComponent<Button>());
+                        Debug.Log("instanciou card UI");
+                    }
+                    else// If the current card is equal to the previous
+                    {
+                        Sequence++;// Counting up all equal cards
+                        if(tempCard.transform.Find("Amount of Copies")==null)// If there is no text yet
+                        {
+                            var tempObj = new GameObject("Amount of Copies");// Creates an empty game object
+                            tempObj.transform.SetParent(tempCard.transform);// Set it as a child of the card
+                            tempObj.transform.position = TextPosition;// Aligns the text with the card
+                            tempObj.AddComponent<Text>();// Creates a text component
+                            newText = tempObj.GetComponent<Text>();// Defines the reference to the text
+                            newText.font = CopiesTextFont;// Sets the appropriate font
+                        }    
+                        newText.text = $"x{Sequence}";// Shows a text to indicate how many copies of that card are currently on the collection
+                    }
+                else
+                {
+                    Sequence = 1;// Not equal to the previous, restart counting
+                    tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
+                    cardsDisplayed.Add(tempCard);
+                    cardsDisplayedAsButtons.Add(tempCard, tempCard.GetComponent<Button>());
+                    Debug.Log("instanciou card UI");
+                }  
+                iterator++;
             }
             //--------------------------------------//
         }

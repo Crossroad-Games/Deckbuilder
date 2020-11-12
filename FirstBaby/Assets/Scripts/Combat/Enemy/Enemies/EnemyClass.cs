@@ -255,7 +255,7 @@ public abstract class EnemyClass : MonoBehaviour
         {
             WardBarFill.fillAmount = (myData.EnemyShield % 100) != 0 ? ((myData.EnemyShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
             ShieldAmount.text = (myData.EnemyShield % 100) != 0 ? $"{(myData.EnemyShield % 100)}" : "100";// Uses the variable as a string
-            for (var iterator = 0; iterator < 9; iterator++)// Go through all ward overload charges
+            for (var iterator = 0; iterator < WardOverloadList.Count; iterator++)// Go through all ward overload charges
                 WardOverloadList[iterator].enabled = iterator + 1 <= (Mathf.FloorToInt(myData.EnemyShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
         }
         else
