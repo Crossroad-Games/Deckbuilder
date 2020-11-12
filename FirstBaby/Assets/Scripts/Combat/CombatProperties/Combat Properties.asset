@@ -15,7 +15,8 @@ MonoBehaviour:
   cardDrawingSpeed: 4
   cardRotationSpeed: 1
   offsetBetweenCards: 2
-  cardsHeightDiff: 0.5
-  angleBetweenCards: 10
+  cardsHeightDiff: 0.35
+  angleBetweenCards: 5
   cardHighlightScale: 0.5
-  cardNormalScale: 0.4
+  cardNormalScale: 0.35
+  zAxisOffsetWhenCardDrag: -1

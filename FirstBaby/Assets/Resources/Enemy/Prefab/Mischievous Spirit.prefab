@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 8059960637814618480}
   - component: {fileID: 9224608332004685}
   - component: {fileID: 9198828993582419438}
+  - component: {fileID: -7887785150066749720}
   m_Layer: 10
   m_Name: Mischievous Spirit
   m_TagString: Untagged
@@ -327,6 +328,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b8439a2dfea224192e3b89f0a5ef75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 905f80f9d9747a241a044465c6776487, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -345,12 +351,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c511a5c5980a74eb34776f14f10177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
   Customizable: 1
   CustomDamage: 1
   CustomShield: 0
   BaseDamageMultiplier: 0.8
   BaseShieldMultiplier: 0
+--- !u!114 &-7887785150066749720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5884808024575382391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc93799f4fc18499e648c1920fca43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstIcon: {x: -0.05, y: -0.11, z: 0}
+  OffsetIcon: 0.04
 --- !u!1 &6516582266498423837
 GameObject:
   m_ObjectHideFlags: 0

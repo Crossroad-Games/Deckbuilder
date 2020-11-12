@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 1231004964494564130}
   - component: {fileID: 5060628426692435844}
   - component: {fileID: -2016646832438071373}
+  - component: {fileID: -138300793247177838}
   m_Layer: 10
   m_Name: Golem
   m_TagString: Untagged
@@ -378,6 +379,7 @@ MonoBehaviour:
   DisruptiveCD: 3
   CurrentDisruptiveCD: 0
   Cocooned: 0
+  CocoonDuration: 0
 --- !u!61 &1813333774078704658
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -420,6 +422,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
   Customizable: 1
   CustomDamage: 1
@@ -442,6 +445,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 22a29f887fb92e3448d6a14bc963f8bd, type: 2}
   Customizable: 1
   CustomDamage: 0
@@ -464,6 +468,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: f305e3bcdf6ed6d45b177ebc7c7f61eb, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -491,20 +496,33 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: a5fe7bba8adc13a47b4c28b60b27ae44, type: 2}
   Customizable: 1
   CustomDamage: 0
   CustomShield: 0
   BaseDamageMultiplier: 0
   BaseShieldMultiplier: 0
-  newBaseValue: 3
+  AmountofStacks: 3
+  newStacksCount: 0
   TurnCount: 2
-  newTurnCount: 0
-  newDefenseMultiplier: 2
   newShieldMultiplier: 2
-  CustomDefense: 1
-  CustomDuration: 0
+  CustomStacks: 0
   CustomShieldMultiplier: 1
+--- !u!114 &-138300793247177838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2398455620489820319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc93799f4fc18499e648c1920fca43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstIcon: {x: -0.05, y: -0.11, z: 0}
+  OffsetIcon: 0.04
 --- !u!1 &4107114898037147732
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +581,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &6694161620735810098
 MonoBehaviour:

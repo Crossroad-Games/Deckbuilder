@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 3687638526352627462}
   - component: {fileID: 8571994231650469161}
   - component: {fileID: 4577537696564339695}
+  - component: {fileID: 5056989120746057152}
   m_Layer: 10
   m_Name: Cowering Shade
   m_TagString: Untagged
@@ -302,6 +303,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c511a5c5980a74eb34776f14f10177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
   Customizable: 1
   CustomDamage: 1
@@ -320,6 +326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb089de1442c4141a6489e752708b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 22a29f887fb92e3448d6a14bc963f8bd, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -338,6 +349,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b8439a2dfea224192e3b89f0a5ef75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 905f80f9d9747a241a044465c6776487, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -370,6 +386,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &5056989120746057152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4577537696564339694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc93799f4fc18499e648c1920fca43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstIcon: {x: -0.05, y: -0.11, z: 0}
+  OffsetIcon: 0.04
 --- !u!1 &7371917002680359284
 GameObject:
   m_ObjectHideFlags: 0

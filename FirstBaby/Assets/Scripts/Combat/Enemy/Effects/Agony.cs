@@ -21,6 +21,7 @@ public class Agony : EnemyLastingEffect
 
     protected override void Awake()
     {
+        EffectLabel = "Agony";
         base.Awake();
     }
 

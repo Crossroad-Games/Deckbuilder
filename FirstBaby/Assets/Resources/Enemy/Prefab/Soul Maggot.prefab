@@ -391,7 +391,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &7286686677353196243
 MonoBehaviour:
@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 3249625876330804788}
   - component: {fileID: 7285438666102321212}
   - component: {fileID: 536637368990330580}
+  - component: {fileID: 7284055967829795269}
   m_Layer: 10
   m_Name: Soul Maggot
   m_TagString: Untagged
@@ -777,6 +778,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b8439a2dfea224192e3b89f0a5ef75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 905f80f9d9747a241a044465c6776487, type: 2}
   Customizable: 1
   CustomDamage: 1
@@ -795,11 +801,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c511a5c5980a74eb34776f14f10177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
   Customizable: 1
   CustomDamage: 1
   CustomShield: 0
-  BaseDamageMultiplier: 1.2
+  BaseDamageMultiplier: 0.8
   BaseShieldMultiplier: 0
 --- !u!114 &3249625876330804788
 MonoBehaviour:
@@ -813,6 +824,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66bcb44e1faf174ca4181c059cd07ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 7df47aa926df65e4fab062bd7c36b033, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -832,18 +848,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f219f232c5760b345b325b5059e34e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: a5fe7bba8adc13a47b4c28b60b27ae44, type: 2}
   Customizable: 0
   CustomDamage: 0
   CustomShield: 0
   BaseDamageMultiplier: 0
   BaseShieldMultiplier: 0
-  newBaseValue: 2
+  AmountofStacks: 3
+  newStacksCount: 0
   TurnCount: 2
-  newTurnCount: 0
-  newDefenseMultiplier: 0
-  CustomDefense: 0
-  CustomDuration: 0
+  newShieldMultiplier: 0
+  CustomStacks: 0
+  CustomShieldMultiplier: 0
 --- !u!114 &536637368990330580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -856,6 +877,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98e6495ba8b9514588869b749993da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 384625498dadf1841b58c469a2d9ba9f, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -863,6 +889,20 @@ MonoBehaviour:
   BaseDamageMultiplier: 0
   BaseShieldMultiplier: 0
   EnemyTransformationTarget: {fileID: 4577537696564339694, guid: 9f3ff7a95fc8d20418e51747f2ba2dbc, type: 3}
+--- !u!114 &7284055967829795269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273353822081955733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc93799f4fc18499e648c1920fca43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstIcon: {x: -0.05, y: -0.11, z: 0}
+  OffsetIcon: 0.04
 --- !u!1 &8371884809921228484
 GameObject:
   m_ObjectHideFlags: 0

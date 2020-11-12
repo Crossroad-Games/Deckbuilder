@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class IncapacitatedEffect : EnemyLastingEffect
 {
+    protected override void Awake()
+    {
+        EffectLabel = "Incapacitated";
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();
