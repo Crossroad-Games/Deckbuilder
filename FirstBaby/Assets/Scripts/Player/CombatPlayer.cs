@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class CombatPlayer : MonoBehaviour
 {
@@ -25,7 +26,10 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private LayerMask cardLayer=0;
     [SerializeField] private LayerMask handZoneLayer=0;
     [SerializeField] private Image HPBarFill=null;
+    [SerializeField] private Image WardBarFill = null;
     [SerializeField] private TMP_Text HPBarValue = null;
+    [SerializeField] private GameObject WardOverloadAnchor = null;
+    private List<Image> WardOverloadList = new List<Image>();
     private int InitialHP;// HP at the start of combat
     private Button EndTurnButton=null;
     private TurnManager TurnMaster;
@@ -75,6 +79,11 @@ public class CombatPlayer : MonoBehaviour
         PauseGame.PauseEvent += FlipEndButton;
         isHoveringCard = false;
         releasedMouseNotOnEnemy = false;
+        WardBarFill.fillAmount = 0;// Start with 0 shield
+        WardOverloadList = WardOverloadAnchor.GetComponentsInChildren<Image>().ToList();// Converts all images on the children to a list of images
+        foreach (Image Overload in WardOverloadList)// For each ward overload attached to the player
+            if (Overload != null)// Check if null
+                Overload.enabled = false;// Disable it
     }
     void Start()
     {
@@ -127,7 +136,7 @@ public class CombatPlayer : MonoBehaviour
         int CurrentShield = myData.PlayerShield;// Current shield pool
         myData.PlayerShield -= Amount;// Reduce the pool by the amount of damage being applied
         myData.PlayerShield = myData.PlayerShield <= 0 ? 0 : myData.PlayerShield;// If the damage went beyond 0, set it to be 0, if not: keep the value
-        OnPlayerSpendShield?.Invoke();
+        OnPlayerSpendShield?.Invoke();    
         return CurrentShield;
     }
     public int LoseShield(int ShieldAmount)// Lose shield to some external effect
@@ -406,7 +415,22 @@ public class CombatPlayer : MonoBehaviour
     #region UI Update
     public void UpdateShield()
     {
-        ShieldAmount.text = "Shield : " + myData.PlayerShield;
+        if (myData.PlayerShield >= 100)// If there is more than 100 Ward
+        {
+            WardBarFill.fillAmount = (myData.PlayerShield % 100) != 0 ? ((myData.PlayerShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
+            ShieldAmount.text = (myData.PlayerShield % 100) != 0 ? $"{(myData.PlayerShield % 100)}" : "100";// Uses the variable as a string
+            for (var iterator = 0; iterator < 9; iterator++)// Go through all ward overload charges
+                WardOverloadList[iterator].enabled = iterator+1 <= (Mathf.FloorToInt(myData.PlayerShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
+        }
+        else
+        {
+            WardBarFill.fillAmount = (float)myData.PlayerShield / 100f;// If there is less than 100 shield, convert it directly to %
+            ShieldAmount.text = $"{myData.PlayerShield}";// Uses the variable as a string
+            foreach (Image OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
+                if (OverloadCharge != null)// If it is not null
+                    OverloadCharge.enabled = false;// Disable it
+        }
+        
     }
     #endregion
 }
