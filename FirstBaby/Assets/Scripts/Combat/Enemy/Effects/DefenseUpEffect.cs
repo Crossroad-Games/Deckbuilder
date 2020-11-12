@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class DefenseUpEffect : EnemyLastingEffect
 {
+    protected override void Awake()
+    {
+        EffectLabel = "Defense Up";
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();
@@ -12,6 +17,7 @@ public class DefenseUpEffect : EnemyLastingEffect
     }
     protected override void OnDisable()
     {
+        base.OnDisable();
         myClass.myData.EnemyDefense -= turnCounter;
         myClass.thisEnemyStartTurn -= Effect;
     }

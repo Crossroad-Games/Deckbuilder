@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: -809013895096999080}
   - component: {fileID: 6285628939798467889}
   - component: {fileID: -1720066353965077432}
+  - component: {fileID: -4327611666342568416}
   m_Layer: 10
   m_Name: Curse Bearer
   m_TagString: Untagged
@@ -335,11 +336,12 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
   Customizable: 1
   CustomDamage: 1
   CustomShield: 0
-  BaseDamageMultiplier: 2
+  BaseDamageMultiplier: 1.5
   BaseShieldMultiplier: 0
 --- !u!114 &-809013895096999080
 MonoBehaviour:
@@ -357,19 +359,18 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: a5fe7bba8adc13a47b4c28b60b27ae44, type: 2}
   Customizable: 1
   CustomDamage: 0
   CustomShield: 0
   BaseDamageMultiplier: 0
   BaseShieldMultiplier: 0
-  newBaseValue: 3
+  AmountofStacks: 3
+  newStacksCount: 0
   TurnCount: 2
-  newTurnCount: 0
-  newDefenseMultiplier: 0
   newShieldMultiplier: 2
-  CustomDefense: 0
-  CustomDuration: 0
+  CustomStacks: 0
   CustomShieldMultiplier: 1
 --- !u!114 &6285628939798467889
 MonoBehaviour:
@@ -387,6 +388,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: c6639030c3aa72c45aea2b61f6295c8b, type: 2}
   Customizable: 0
   CustomDamage: 0
@@ -411,6 +413,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: 3bc9858531c3c2045865b72e0054299c, type: 2}
   Customizable: 1
   CustomDamage: 0
@@ -423,6 +426,20 @@ MonoBehaviour:
   CustomDecayStacks: 0
   CustomDisruptDuration: 0
   CustomBurnStacks: 0
+--- !u!114 &-4327611666342568416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4577537696564339694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc93799f4fc18499e648c1920fca43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstIcon: {x: -0.05, y: -0.11, z: 0}
+  OffsetIcon: 0.04
 --- !u!1 &7371917002680359284
 GameObject:
   m_ObjectHideFlags: 0

@@ -349,7 +349,7 @@ public class Hand : CardPile
                 if (physicalCardsInHand[i] == card.GetComponent<PhysicalCard>())
                 {
                     card.GetComponent<PhysicalCard>().highlightPreviousHeight = cardPositionsToFollow[physicalCardsInHand[i]].position.y;
-                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, -0.9f, cardPositionsToFollow[physicalCardsInHand[i]].position.z - 1.5f);
+                    cardPositionsToFollow[physicalCardsInHand[i]].position = new Vector3(cardPositionsToFollow[physicalCardsInHand[i]].position.x, combatProperties.HighlightHeight, cardPositionsToFollow[physicalCardsInHand[i]].position.z - 1.5f);
                     card.GetComponent<PhysicalCard>().highlightPreviousRotation = cardPositionsToFollow[physicalCardsInHand[i]].rotation;
                     cardPositionsToFollow[physicalCardsInHand[i]].rotation = Quaternion.identity;
                     if ((card.transform.position - cardPositionsToFollow[physicalCardsInHand[i]].position).magnitude < 4f)

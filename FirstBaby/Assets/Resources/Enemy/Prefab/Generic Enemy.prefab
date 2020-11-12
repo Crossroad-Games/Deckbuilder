@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 4577537696564339695}
   - component: {fileID: 4577537696564339691}
   - component: {fileID: 4577537696564339690}
+  - component: {fileID: 7911208888689022068}
   m_Layer: 10
   m_Name: Generic Enemy
   m_TagString: Untagged
@@ -326,12 +327,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c511a5c5980a74eb34776f14f10177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  ActionDone: 0
   myInfo: {fileID: 11400000, guid: e522038f2cd8fda408c8519d0f337d55, type: 2}
-  Customizable: 1
+  Customizable: 0
   CustomDamage: 1
   CustomShield: 0
   BaseDamageMultiplier: 0
   BaseShieldMultiplier: 0
+--- !u!114 &7911208888689022068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4577537696564339694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5edc93799f4fc18499e648c1920fca43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstIcon: {x: -0.05, y: -0.11, z: 0}
+  OffsetIcon: 0.04
 --- !u!1 &7371917002680359284
 GameObject:
   m_ObjectHideFlags: 0
