@@ -143,8 +143,8 @@ MonoBehaviour:
   doEffectWhenConcocted: 1
   type: none
   cardPorpuse: 1
-  BaseDamage: 15
-  BaseShield: 0
+  BaseDamage: 0
+  BaseShield: 15
   BaseHeal: 0
   AddValue: 0
   SubtractValue: 0

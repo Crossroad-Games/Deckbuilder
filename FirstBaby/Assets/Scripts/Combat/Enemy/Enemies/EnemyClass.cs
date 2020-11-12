@@ -6,6 +6,7 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 public abstract class EnemyClass : MonoBehaviour
 {
@@ -20,7 +21,9 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
     [SerializeField] protected float RandomValue;// This random value is rolled every end of turn and at start
     [SerializeField] public bool Incapacitated=false;// Is this enemy able to act?
+    private List<Image> WardOverloadList = new List<Image>();
     private Image HPBarFill;
+    private Image WardBarFill = null;
     public IEnumerator CheckIntentionCoroutine;
     [Range(0,1)][SerializeField] public float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
     #endregion
@@ -136,7 +139,16 @@ public abstract class EnemyClass : MonoBehaviour
         HPBarFill = hpUI.transform.Find("Bar Fill").GetComponent<Image>();
         HPBarFill.fillAmount = (float)myData.EnemyHP / myData.EnemyMaxHP;
         #endregion
-
+        #region Ward Bar Setup
+        GameObject WardUI = Instantiate(Resources.Load("UI/EnemyUI/Ward Bar Anchor"), EnemyManager.HPPositions[myData.Position], Quaternion.identity) as GameObject;
+        WardUI.transform.SetParent(transform.Find("Enemy Canvas"), false);
+        WardOverloadList = WardUI.transform.Find("Ward Overloads").GetComponentsInChildren<Image>().ToList();// Converts all images on the children to a list of images
+        foreach (Image Overload in WardOverloadList)// For each ward overload attached to the enemy
+            if (Overload != null)// Check if null
+                Overload.enabled = false;// Disable it
+        WardBarFill = WardUI.transform.Find("Bar Fill").GetComponent<Image>();
+        UpdateShield();// Update this enemy's shield information
+        #endregion
         #region UI Update
         UpdateShield();
         #endregion
@@ -239,7 +251,22 @@ public abstract class EnemyClass : MonoBehaviour
     #region UI Update
     public void UpdateShield()
     {
-        ShieldAmount.text = "Shield : " + myData.EnemyShield;
+        if (myData.EnemyShield >= 100)// If there is more than 100 Ward
+        {
+            WardBarFill.fillAmount = (myData.EnemyShield % 100) != 0 ? ((myData.EnemyShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
+            ShieldAmount.text = (myData.EnemyShield % 100) != 0 ? $"{(myData.EnemyShield % 100)}" : "100";// Uses the variable as a string
+            for (var iterator = 0; iterator < 9; iterator++)// Go through all ward overload charges
+                WardOverloadList[iterator].enabled = iterator + 1 <= (Mathf.FloorToInt(myData.EnemyShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
+        }
+        else
+        {
+            WardBarFill.fillAmount = (float)myData.EnemyShield / 100f;// If there is less than 100 shield, convert it directly to %
+            ShieldAmount.text = $"{myData.EnemyShield}";// Uses the variable as a string
+            foreach (Image OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
+                if (OverloadCharge != null)// If it is not null
+                    OverloadCharge.enabled = false;// Disable it
+        }
+
     }
     #endregion
 
