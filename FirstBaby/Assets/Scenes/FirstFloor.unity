@@ -3321,6 +3321,22 @@ PrefabInstance:
       propertyPath: Scene
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: CopiesTextFont
+      value: 
+      objectReference: {fileID: 12800000, guid: 5a589d1990334ec45ae9118e38c6f462, type: 3}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: isShowingGallery
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: TextPosition.x
+      value: 225
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: TextPosition.y
+      value: -100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
 --- !u!1001 &943587661139503541

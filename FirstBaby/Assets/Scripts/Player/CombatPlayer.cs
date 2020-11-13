@@ -28,6 +28,7 @@ public class CombatPlayer : MonoBehaviour
     [SerializeField] private Image HPBarFill=null;
     [SerializeField] private Image WardBarFill = null;
     [SerializeField] private TMP_Text HPBarValue = null;
+    [SerializeField] private TMP_Text ArmorValue = null;
     [SerializeField] private GameObject WardOverloadAnchor = null;
     private List<Image> WardOverloadList = new List<Image>();
     private int InitialHP;// HP at the start of combat
@@ -431,6 +432,11 @@ public class CombatPlayer : MonoBehaviour
                     OverloadCharge.enabled = false;// Disable it
         }
         
+    }
+    public void ArmorUpdate(int Amount)
+    {
+        myData.PlayerDefense += Amount;// Increases or decreases the player's Armor value
+        ArmorValue.text= $"{myData.PlayerDefense}";// Uses the variable as a string
     }
     #endregion
 }

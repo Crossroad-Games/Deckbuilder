@@ -755,6 +755,10 @@ PrefabInstance:
       propertyPath: Scene
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: CopiesTextFont
+      value: 
+      objectReference: {fileID: 12800000, guid: 5a589d1990334ec45ae9118e38c6f462, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
 --- !u!1001 &2650834549500106638
@@ -1300,10 +1304,6 @@ PrefabInstance:
     - target: {fileID: 8940200078548064851, guid: 82b8a8c25805f0d42b07317487e9bffc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8940200079388879091, guid: 82b8a8c25805f0d42b07317487e9bffc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82b8a8c25805f0d42b07317487e9bffc, type: 3}

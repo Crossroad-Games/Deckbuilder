@@ -220,6 +220,7 @@ MonoBehaviour:
   HPBarFill: {fileID: 4548694749161831750}
   WardBarFill: {fileID: 5848303907565411441}
   HPBarValue: {fileID: 6885731664888308233}
+  ArmorValue: {fileID: 4951535287640742888}
   WardOverloadAnchor: {fileID: 4049025368611773553}
   CombatManager: {fileID: 0}
   isHoveringCard: 0
@@ -360,7 +361,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8940200079388879084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: -2.5, z: 0}
+  m_LocalPosition: {x: 4.5, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8940200078548064851}
@@ -537,3 +538,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8903127428221826316, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
   m_PrefabInstance: {fileID: 4881695455850047869}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4951535287640742888 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 506698092489732757, guid: 4445e6e9ef9665e4381d6bcab12f7767, type: 3}
+  m_PrefabInstance: {fileID: 4881695455850047869}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -44,6 +44,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scene: 0
-  CardGallery: {fileID: 0}
-  DrawPileGallery: {fileID: 0}
+  DeckGallery: {fileID: 0}
+  CombatTempGallery: {fileID: 0}
   DrawPileUI: {fileID: 0}
+  CD0UI: {fileID: 0}
+  CD1UI: {fileID: 0}
+  CD2UI: {fileID: 0}
+  CD3plusUI: {fileID: 0}
+  ReturnButton: {fileID: 0}
+  drawPileButton: {fileID: 0}
+  CD0_Button: {fileID: 0}
+  CD1_Button: {fileID: 0}
+  CD2_Button: {fileID: 0}
+  CD3plus_Button: {fileID: 0}
+  ShowCollection: {fileID: 0}
+  CopiesTextFont: {fileID: 0}
+  cardsSelected: []
+  isShowingGallery: 0
