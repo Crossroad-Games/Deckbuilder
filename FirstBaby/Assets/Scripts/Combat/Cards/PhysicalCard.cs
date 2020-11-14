@@ -44,6 +44,7 @@ public abstract class PhysicalCard : MonoBehaviour
     public int BaseHeal = 0; //Value to heal directly in life
     public int AddValue = 0, SubtractValue = 0;// Values that modify the base value
     public float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
+    public int CardLevel = 0;
     #endregion
 
     public bool followCardPositionToFollow; //true if we want card to follow target
@@ -67,7 +68,7 @@ public abstract class PhysicalCard : MonoBehaviour
     {
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
     }
-
+    public abstract void LevelRanks();
     public virtual void Start()
     {
         foreach (CardExtension Keyword in GetComponents<CardExtension>())// For each Keyword attached to this card
@@ -79,6 +80,7 @@ public abstract class PhysicalCard : MonoBehaviour
         selectable = true;
         selected = false;
     }
+    
     public virtual IEnumerator ExecuteAction()
     {
         if (CardExtensions.ContainsKey("Unstable"))// If this card has an Overflow effect

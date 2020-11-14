@@ -5,7 +5,7 @@ using UnityEngine;
 public class GentleBreezeOverflow : OverflowKeyword
 {
     private Hand myHand;// Hand class will be accessed to draw cards when this overflows
-    [SerializeField] private int DrawAmount = 3;// Draw X cards when overflowing
+    [SerializeField] public int DrawAmount = 3;// Draw X cards when overflowing
     protected override void Awake()
     {
         base.Awake();

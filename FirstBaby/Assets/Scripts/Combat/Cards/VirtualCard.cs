@@ -24,6 +24,7 @@ public class VirtualCard : MonoBehaviour
     public int BaseHeal = 0; //Value to heal directly in life
     public int AddValue = 0, SubtractValue = 0;// Values that modify the base value
     public float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
+    public int CardLevel = 0;
     #endregion
     [SerializeField] private int currentCooldownTime;  //Current cooldown time
     public int CurrentCooldownTime

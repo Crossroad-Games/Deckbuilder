@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RiptideOverflow : OverflowKeyword
 {
-    [SerializeField] private int ExtraDamage = 5;
+    [SerializeField] public int ExtraDamage = 5;
     public override void OverflowEffect()
     {
         myCard.PhysicalCardBehaviour.AddValue += ExtraDamage;// Increases this card's damage

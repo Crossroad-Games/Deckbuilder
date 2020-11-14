@@ -96,7 +96,7 @@ public class SaveLoad : MonoBehaviour
                 CombatGameData.Current.CardsinCD.Add(Card.GetComponent<VirtualCard>().cardInfo.ID);// Acquire that card's ID and store it in the save file
                 CombatGameData.Current.CardsCD.Add(Card.GetComponent<VirtualCard>().CurrentCooldownTime);// Acquire that card's CD and store it
             }
-        CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this lis
+        CombatGameData.Current.EnemyData = EnemyManager.EnemyData;// Copies this list
         /*CombatGameData.Current.TurnCount = TurnMaster.TurnCount;// Stores the current turn count
         CombatGameData.Current.whichCombatState = TurnManager.State;// Stores the current turn state*/
         CombatGameData.Current.CombatScene = SceneManager.GetActiveScene().name;// Store the name of the active scene
@@ -159,6 +159,9 @@ public class SaveLoad : MonoBehaviour
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
+        while (DungeonGameData.Current.PlayerData.CardLevels.Count < GetComponent<CardDatabase>().GameCards.Count)// If the save has less ID's than the Database
+            DungeonGameData.Current.PlayerData.CardLevels.Add(0);// Add a 0 LVL version of that
+        Debug.Log(DungeonGameData.Current.PlayerData.CardLevels.Count);
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + "." + SceneManager.GetActiveScene().name);// Locate that dungeon's save
         if (File.Exists(dataPath))// If there is a dungeon scene attached to this save
                 JSONString = File.ReadAllText(dataPath);// Read the dungeon scene objects save

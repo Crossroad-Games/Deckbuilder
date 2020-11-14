@@ -5,7 +5,7 @@ using UnityEngine;
 public class HastenKeyword : CardExtension
 {
     protected CDPile myCDPile;
-    [SerializeField] protected int HastenAmount;// Number of cards that will have their CD reduced
+    [SerializeField] public int HastenAmount;// Number of cards that will have their CD reduced
     protected override void Awake()
     {
         base.Awake();

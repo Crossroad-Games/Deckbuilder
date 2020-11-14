@@ -5,6 +5,8 @@ using UnityEngine;
 public class AlchemistFireCard : TargetCard
 {
     // This effect deals damage to a single enemy
+    [SerializeField] private int AmountofStacks=1;// How many agony stacks will be applied
+    [SerializeField] private int StackConversionRate = 2;// How many agony stacks get converted into 1 damage
     public override IEnumerator CardEffect()
     {
         Debug.Log("alchemist fire effect");
@@ -13,17 +15,36 @@ public class AlchemistFireCard : TargetCard
         {
             Agony effectToAdd = TargetEnemy.gameObject.AddComponent<Agony>() as Agony;
 
-            effectToAdd.InitializeEffect(0, 0, 0, 0, 0, 1);
+            effectToAdd.InitializeEffect(0, 0, 0, 0, 0, AmountofStacks);
         }
         else
         {
-            if(preExistentAgony.turnCounter % 2 ==0)
-            {
-                AddValue = preExistentAgony.turnCounter / 2;
-            }
-            preExistentAgony.AddStacks(1);
+            AddValue = preExistentAgony.turnCounter / StackConversionRate;
+            preExistentAgony.AddStacks(AmountofStacks);
         }
         effectFinished = true;
         yield return StartCoroutine(base.CardEffect());
+    }
+    public override void LevelRanks()
+    {
+        Debug.Log(CardLevel);
+        switch (CardLevel)
+        {
+            case 0:// Starting Level, regular values
+                AmountofStacks = 1;// Apply 1 stack per use
+                BaseDamage = 5;// Deal 5 damage
+                StackConversionRate = 2;// +1 Damage per 2 Agony
+                break;
+            case 1:// One LVL higher than base
+                AmountofStacks = 2;// Aplies 2 stacks per use
+                BaseDamage = 7;// Deals 7 damage
+                StackConversionRate = 2;// +1 Damage per 2 Agony
+                break;
+            case 2:// Two LVLs higher than base
+                AmountofStacks = 2;// Applies 2 stacks per use
+                BaseDamage = 7;// Deals 7 damage
+                StackConversionRate = 1;// +1 damage per stack
+                break;
+        }
     }
 }

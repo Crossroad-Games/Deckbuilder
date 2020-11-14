@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SeismicStrikeOverflow : OverflowKeyword
 {
-    [SerializeField] private float DamagePercentage=1f;// How much of the base damage will this overflow deal?
+    [SerializeField] public float DamagePercentage=1f;// How much of the base damage will this overflow deal?
     public override void OverflowEffect()
     {
         //Deal area damage

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class AlchemistBarrierCard : ConcoctCardDefense
 {
+    [SerializeField] private float ConcoctMultiplier=.5f;// Used to determine how strong the concoct effect is
     public override void BringConcoctInfo(List<PhysicalCard> cardsConcocted) //Get the info from concocted cards
     {
         foreach (PhysicalCard card in cardsConcocted)
         {
-            BaseShield += card.BaseShield + Mathf.CeilToInt(0.5f * card.BaseShield); // Add the base shield of the Alchemist barrier for each concocted cards with their own base shields
+            BaseShield += card.BaseShield + Mathf.CeilToInt(ConcoctMultiplier * card.BaseShield); // Add the base shield of the Alchemist barrier for each concocted cards with their own base shields
             Debug.Log(BaseShield);
         }
     }
@@ -22,5 +23,21 @@ public class AlchemistBarrierCard : ConcoctCardDefense
     public override void DoEffects(List<PhysicalCard> cardsConcocted) // Implement if we want this card to call the concocted cards effects
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void LevelRanks()
+    {
+        switch(CardLevel)
+        {
+            case 0:// Starting Level, regular values
+                ConcoctMultiplier = .5f;
+                break;
+            case 1:// One LVL higher than base
+                ConcoctMultiplier = .75f;
+                break;
+            case 2:// Two LVLs higher than base
+                ConcoctMultiplier = 1;
+                break;
+        }
     }
 }

@@ -5,11 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Concoct))]
 public class AlchemistBladeCard : ConcoctCardAttack
 {
+    [SerializeField] private float ConcoctMultiplier = .5f;
     public override void BringConcoctInfo(List<PhysicalCard> cardsConcocted) // Bring info from the concocted cards
     {
         foreach(PhysicalCard card in cardsConcocted)
         {
-            BaseDamage += card.BaseDamage + Mathf.CeilToInt(0.5f * card.BaseDamage); //Update this card's Attack based on the concocted cards' baseDamages
+            BaseDamage += card.BaseDamage + Mathf.CeilToInt(ConcoctMultiplier * card.BaseDamage); //Update this card's Attack based on the concocted cards' baseDamages
             Debug.Log(BaseDamage);
         }
     }
@@ -34,6 +35,21 @@ public class AlchemistBladeCard : ConcoctCardAttack
                     card.TargetEnemy = TargetEnemy;
                 StartCoroutine(card.CardEffect());
             }
+        }
+    }
+    public override void LevelRanks()
+    {
+        switch (CardLevel)
+        {
+            case 0:// Starting Level, regular values
+                ConcoctMultiplier = .5f;
+                break;
+            case 1:// One LVL higher than base
+                ConcoctMultiplier = .75f;
+                break;
+            case 2:// Two LVLs higher than base
+                ConcoctMultiplier = 1;
+                break;
         }
     }
 }

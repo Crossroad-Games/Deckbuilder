@@ -210,8 +210,13 @@ public class CDPile : CardPile
             {
                 CardToReceive = TemporaryList[ID];// Cardinfo is chosen based on its ID
                 GameObject cardInstance = GameObject.Instantiate(CardToReceive.cardPrefab, CardOffCDPosition); // Creates an instance of that card prefab
-                cardInstance.GetComponent<VirtualCard>()?.TurnVirtual();
-                cardInstance.GetComponent<VirtualCard>().CurrentCooldownTime = CombatGameData.Current.CardsCD[iterator];// Pairs the card info to its CD
+                cardInstance.GetComponent<PhysicalCard>().CardLevel = DungeonGameData.Current.PlayerData.CardLevels[ID];// Sets the card level based on ID
+                var VirtualCard = cardInstance.GetComponent<VirtualCard>();
+                VirtualCard.CardLevel = DungeonGameData.Current.PlayerData.CardLevels[ID];// Sets the card level based on ID
+                VirtualCard.PhysicalCardBehaviour.CardLevel = VirtualCard.CardLevel;// Sets the card level based on ID
+                VirtualCard.PhysicalCardBehaviour.LevelRanks();// Apply the LVL updates
+                VirtualCard?.TurnVirtual();
+                VirtualCard.CurrentCooldownTime = CombatGameData.Current.CardsCD[iterator];// Pairs the card info to its CD
                 cardsList.Add(cardInstance);// Add it to the list of card infos
                 iterator++;// Increment the iterator
             }

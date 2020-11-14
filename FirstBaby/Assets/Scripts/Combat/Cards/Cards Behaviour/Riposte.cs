@@ -16,7 +16,21 @@ public class Riposte : NonTargetCard
     {
         base.Start();
     }
+    public override void LevelRanks()
+    {
+        switch (CardLevel)
+        {
+            case 0:// Starting Level, regular values
+                BaseShield = 0;
+                break;
+            case 1:// One LVL higher than base
+                BaseShield = 0;
+                break;
+            case 2:// Two LVLs higher than base
+                BaseShield = 0;
+                break;
+        }
+    }
 
 
-    
 }

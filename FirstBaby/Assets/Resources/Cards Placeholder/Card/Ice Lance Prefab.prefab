@@ -183,6 +183,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   followCardPositionToFollow: 0
 --- !u!114 &2280117738075678222
 MonoBehaviour:
@@ -201,13 +202,14 @@ MonoBehaviour:
   Player: {fileID: 0}
   isVirtual: 0
   isPhysical: 0
-  BaseDamage: 0
+  BaseDamage: 15
   BaseShield: 0
   BaseHeal: 0
   AddValue: 0
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   currentCooldownTime: 0
 --- !u!114 &-5489029563871453949
 MonoBehaviour:
