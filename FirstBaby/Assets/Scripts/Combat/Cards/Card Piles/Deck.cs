@@ -48,8 +48,13 @@ public class Deck : CardPile
             {
                 CardToReceive = TemporaryList[ID];// Cardinfo is chosen based on its ID
                 GameObject cardInstance = GameObject.Instantiate(CardToReceive.cardPrefab, hand.CardDrawPosition); // Creates an instance of that card prefab
+                cardInstance.GetComponent<PhysicalCard>().CardLevel = DungeonGameData.Current.PlayerData.CardLevels[ID];// Sets the card level based on ID
+                var VirtualCard = cardInstance.GetComponent<VirtualCard>();
+                VirtualCard.CardLevel = DungeonGameData.Current.PlayerData.CardLevels[ID];// Sets the card level based on ID
+                VirtualCard.PhysicalCardBehaviour.CardLevel = VirtualCard.CardLevel;// Sets the card level based on ID
+                VirtualCard.PhysicalCardBehaviour.LevelRanks();// Apply the LVL updates
                 cardsList.Add(cardInstance);// Add it to the list of card infos
-                cardInstance.GetComponent<VirtualCard>()?.TurnVirtual();
+                VirtualCard?.TurnVirtual();
             }
         }
         

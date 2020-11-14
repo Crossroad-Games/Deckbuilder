@@ -355,6 +355,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   followCardPositionToFollow: 0
 --- !u!114 &8580478824678199342
 MonoBehaviour:
@@ -369,6 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 11400000, guid: dd117b0d792056049848a1aabfefe9ef, type: 2}
+  PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
   isVirtual: 0
   isPhysical: 0
@@ -379,6 +381,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   currentCooldownTime: 0
 --- !u!114 &7068136696857161655
 MonoBehaviour:
@@ -407,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Keyword: 
-  DrawAmount: 3
+  DrawAmount: 2
 --- !u!1 &8788589570749216310
 GameObject:
   m_ObjectHideFlags: 0

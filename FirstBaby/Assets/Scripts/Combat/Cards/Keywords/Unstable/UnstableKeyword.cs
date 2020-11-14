@@ -6,7 +6,7 @@ public class UnstableKeyword : CardExtension
 {
     protected Deck mydeck;
     protected CDPile myCDPile;
-    [SerializeField]private int UnstableIntensity=1;// Mill X cards
+    [SerializeField]public int UnstableIntensity=1;// Mill X cards
     protected override void Awake()
     {
         base.Awake();

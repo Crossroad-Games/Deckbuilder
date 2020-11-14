@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireballOverflow : OverflowKeyword
 {
-    [SerializeField] private float DamagePercentage = .33f;// Deals 33% of the base damage
+    [SerializeField] public float DamagePercentage = .33f;// Deals 33% of the base damage
     public override void OverflowEffect()
     {
         Debug.Log("Overflowing");

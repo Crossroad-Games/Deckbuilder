@@ -39,7 +39,7 @@ public class CardsGallery : MonoBehaviour
 
     #region Temporary Lists of Cards
     private List<GameObject> cardsDisplayed = new List<GameObject>();
-    private Dictionary<GameObject,Button> cardsDisplayedAsButtons = new Dictionary<GameObject, Button>();
+    public Dictionary<GameObject,Button> cardsDisplayedAsButtons = new Dictionary<GameObject, Button>();
     public List<GameObject> cardsSelected = new List<GameObject>();
     #endregion
 
@@ -142,6 +142,7 @@ public class CardsGallery : MonoBehaviour
                     {
                         Sequence = 1;// Not equal to the previous, restart counting
                         tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
+                        tempCard.name = $"{card}";
                         cardsDisplayed.Add(tempCard);
                         cardsDisplayedAsButtons.Add(tempCard, tempCard.GetComponent<Button>());
                         Debug.Log("instanciou card UI");
@@ -164,6 +165,7 @@ public class CardsGallery : MonoBehaviour
                 {
                     Sequence = 1;// Not equal to the previous, restart counting
                     tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
+                    tempCard.name = $"{card}";
                     cardsDisplayed.Add(tempCard);
                     cardsDisplayedAsButtons.Add(tempCard, tempCard.GetComponent<Button>());
                     Debug.Log("instanciou card UI");

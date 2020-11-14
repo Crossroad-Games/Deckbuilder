@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetCard : PhysicalCard
+public abstract class TargetCard : PhysicalCard
 {
-
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     private void OnEnable()
     {
         this.type = "TargetCard";
@@ -14,5 +17,4 @@ public class TargetCard : PhysicalCard
     {
         yield return StartCoroutine(base.CardEffect());
     }
-
 }

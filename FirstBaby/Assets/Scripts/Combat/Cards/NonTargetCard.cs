@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NonTargetCard : PhysicalCard
+public abstract class NonTargetCard : PhysicalCard
 {
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     private void OnEnable()
     {
         this.type = "NonTargetCard";

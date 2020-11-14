@@ -11,6 +11,7 @@ public abstract class PhysicalCard : MonoBehaviour
     public CardInfo cardInfo;
     public Hand playerHand;
     public EnemyClass TargetEnemy;
+    public VirtualCard thisVirtualCard;
     [SerializeField] private CombatProperties combatProperties=null;
     public Dictionary<string, CardExtension> CardExtensions = new Dictionary<string, CardExtension>();
     public CombatProperties CombatProperties { get { return combatProperties; } }
@@ -44,6 +45,7 @@ public abstract class PhysicalCard : MonoBehaviour
     public int BaseHeal = 0; //Value to heal directly in life
     public int AddValue = 0, SubtractValue = 0;// Values that modify the base value
     public float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
+    public int CardLevel = 0;
     #endregion
 
     public bool followCardPositionToFollow; //true if we want card to follow target
@@ -66,8 +68,9 @@ public abstract class PhysicalCard : MonoBehaviour
     protected virtual void Awake()
     {
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
+        thisVirtualCard = GetComponent<VirtualCard>();
     }
-
+    public abstract void LevelRanks();
     public virtual void Start()
     {
         foreach (CardExtension Keyword in GetComponents<CardExtension>())// For each Keyword attached to this card
@@ -79,6 +82,7 @@ public abstract class PhysicalCard : MonoBehaviour
         selectable = true;
         selected = false;
     }
+    
     public virtual IEnumerator ExecuteAction()
     {
         if (CardExtensions.ContainsKey("Unstable"))// If this card has an Overflow effect
@@ -115,11 +119,11 @@ public abstract class PhysicalCard : MonoBehaviour
         }
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
+        StartCoroutine(CardEffect()); // Execute the card's effect
         if (cardPorpuse == CardPorpuse.Attack)
             StartCoroutine(DealDamage());
         else if (cardPorpuse == CardPorpuse.Defense)
-            StartCoroutine(GainShield_Health());
-        StartCoroutine(CardEffect()); // Execute the card's effect
+            StartCoroutine(GainShield_Health());     
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the supplied delegate evaluates to true
         //Send it to the CD pile
         Debug.Log("vai mandar pro cdPile");
@@ -148,6 +152,7 @@ public abstract class PhysicalCard : MonoBehaviour
 
     public virtual IEnumerator DealDamage()
     {
+        Debug.Log(AddValue);
         TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
         yield return new WaitUntil(() => dealDamageFinished == true);
         EndDealDamage();

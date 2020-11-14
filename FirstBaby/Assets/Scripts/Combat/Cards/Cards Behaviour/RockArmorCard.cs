@@ -20,4 +20,22 @@ public class RockArmorCard : NonTargetCard
             preExistantEffect.AddStacks(AmountofStacks);// Add more stacks
         yield return StartCoroutine(base.CardEffect());
     }
+    public override void LevelRanks()
+    {
+        switch (CardLevel)
+        {
+            case 0:// Starting Level, regular values
+                BaseShield = 15;// Gain X ward
+                AmountofStacks = 3;// Gain X stacks of Defense
+                break;
+            case 1:// One LVL higher than base
+                BaseShield = 30;// Gain X Ward
+                AmountofStacks = 4;// Gain X stacks of Defense
+                break;
+            case 2:// Two LVLs higher than base
+                BaseShield = 45;// Gain X Ward
+                AmountofStacks = 5;// Gain X stacks of Defense
+                break;
+        }
+    }
 }
