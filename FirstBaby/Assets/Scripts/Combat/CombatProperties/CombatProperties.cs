@@ -13,5 +13,5 @@ public class CombatProperties : ScriptableObject
     public float cardHighlightScale = 0.5f;
     public float cardNormalScale = 0.4f;
     public float zAxisOffsetWhenCardDrag = -1f;
-    public float HighlightHeight = 1f;
+    public float HighlightHeight = -2f;
 }

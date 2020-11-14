@@ -21,14 +21,17 @@ public class FireballCard : TargetCard
         {
             case 0:// Starting Level, regular values
                 BaseDamage = 18;// Deal damage
+                thisVirtualCard.BaseDamage = 18;
                 myOverflow.DamagePercentage = .33f;// Deal % of base damage
                 break;
             case 1:// One LVL higher than base
                 BaseDamage = 28;// Deal damage
+                thisVirtualCard.BaseDamage = 28;
                 myOverflow.DamagePercentage = .33f;// Deal % of base damage
                 break;
             case 2:// Two LVLs higher than base
                 BaseDamage = 36;// Deal damage
+                thisVirtualCard.BaseDamage = 36;
                 myOverflow.DamagePercentage = .5f;// Deal % of base damage
                 break;
         }

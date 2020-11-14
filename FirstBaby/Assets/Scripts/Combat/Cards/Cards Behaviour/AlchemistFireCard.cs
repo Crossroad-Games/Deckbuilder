@@ -20,6 +20,7 @@ public class AlchemistFireCard : TargetCard
         else
         {
             AddValue = preExistentAgony.turnCounter / StackConversionRate;
+            Debug.Log(AddValue);
             preExistentAgony.AddStacks(AmountofStacks);
         }
         effectFinished = true;

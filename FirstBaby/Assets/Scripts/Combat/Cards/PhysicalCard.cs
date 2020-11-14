@@ -11,6 +11,7 @@ public abstract class PhysicalCard : MonoBehaviour
     public CardInfo cardInfo;
     public Hand playerHand;
     public EnemyClass TargetEnemy;
+    public VirtualCard thisVirtualCard;
     [SerializeField] private CombatProperties combatProperties=null;
     public Dictionary<string, CardExtension> CardExtensions = new Dictionary<string, CardExtension>();
     public CombatProperties CombatProperties { get { return combatProperties; } }
@@ -67,6 +68,7 @@ public abstract class PhysicalCard : MonoBehaviour
     protected virtual void Awake()
     {
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
+        thisVirtualCard = GetComponent<VirtualCard>();
     }
     public abstract void LevelRanks();
     public virtual void Start()
@@ -117,11 +119,11 @@ public abstract class PhysicalCard : MonoBehaviour
         }
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
+        StartCoroutine(CardEffect()); // Execute the card's effect
         if (cardPorpuse == CardPorpuse.Attack)
             StartCoroutine(DealDamage());
         else if (cardPorpuse == CardPorpuse.Defense)
-            StartCoroutine(GainShield_Health());
-        StartCoroutine(CardEffect()); // Execute the card's effect
+            StartCoroutine(GainShield_Health());     
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the supplied delegate evaluates to true
         //Send it to the CD pile
         Debug.Log("vai mandar pro cdPile");
@@ -150,6 +152,7 @@ public abstract class PhysicalCard : MonoBehaviour
 
     public virtual IEnumerator DealDamage()
     {
+        Debug.Log(AddValue);
         TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
         yield return new WaitUntil(() => dealDamageFinished == true);
         EndDealDamage();
