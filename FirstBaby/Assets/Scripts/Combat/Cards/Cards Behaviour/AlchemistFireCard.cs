@@ -26,6 +26,11 @@ public class AlchemistFireCard : TargetCard
         effectFinished = true;
         yield return StartCoroutine(base.CardEffect());
     }
+    protected override void TooltipListDefinition()
+    {
+        base.TooltipListDefinition();
+        InstantiateTooltip("Agony");
+    }
     public override void LevelRanks()
     {
         Debug.Log(CardLevel);

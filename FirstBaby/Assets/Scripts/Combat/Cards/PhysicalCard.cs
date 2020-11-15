@@ -15,6 +15,7 @@ public abstract class PhysicalCard : MonoBehaviour
     [SerializeField] private CombatProperties combatProperties=null;
     public Dictionary<string, CardExtension> CardExtensions = new Dictionary<string, CardExtension>();
     public CombatProperties CombatProperties { get { return combatProperties; } }
+    public List<GameObject> Tooltips;// List of which tooltips this card will show
     #endregion
 
     #region Booleans
@@ -22,7 +23,19 @@ public abstract class PhysicalCard : MonoBehaviour
     public bool concocted = false; //When card is being concocted by another card
     public bool isConcoct = false; //Wether card is a concoct card or not
     public bool selectable = true; //Determines wether card is selectable or not
-    public bool highlighted; // when card is being highlighted
+    private bool Highlighted;
+    public bool highlighted// when card is being highlighted
+    {
+        get { return Highlighted; }
+        set
+        {
+            foreach (GameObject Tooltip in Tooltips)// Cycle through all tooltips on this card
+                if(Tooltip!=null)// Check if null
+                    Tooltip.SetActive(value);// Activate or deactivate based on the value being passed
+            Highlighted = value;
+        }
+    }
+    
     public float highlightPreviousHeight; // When the card will be highlighted, stores the height of the card of when it wasn't highlighted
     public Quaternion highlightPreviousRotation; // When the card will be highlighted, stores the rotation of the card of when it wasn't highlighted
     public bool hoverEffectsEnabled = true; //wether hover effects are enabled for this card
@@ -46,6 +59,7 @@ public abstract class PhysicalCard : MonoBehaviour
     public int AddValue = 0, SubtractValue = 0;// Values that modify the base value
     public float Multiplier = 1, Divider = 1;// Values that multiply or divide the modified base value
     public int CardLevel = 0;
+    private Vector3 TooltipFirstPosition = new Vector3(7,5.5f,0);
     #endregion
 
     public bool followCardPositionToFollow; //true if we want card to follow target
@@ -67,14 +81,53 @@ public abstract class PhysicalCard : MonoBehaviour
 
     protected virtual void Awake()
     {
+        Tooltips = new List<GameObject>();
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
         thisVirtualCard = GetComponent<VirtualCard>();
+        
+
     }
     public abstract void LevelRanks();
+    #region Instantiate Keyword Tooltips
+    protected virtual void TooltipListDefinition()// Method used to cycle through all the keyword tooltips
+    {
+        #region Extensions
+        foreach (string keyword in CardExtensions.Keys)// Cycle through the physical keywords
+            if (keyword != string.Empty)// Check if null
+                InstantiateTooltip(keyword);// Instantiate a tooltip based on its keyword name
+        foreach (string keyword in thisVirtualCard.virtualCardExtensions.Keys)// Cycle through the virtual keywords
+            if (keyword != string.Empty)// Check if null
+                InstantiateTooltip(keyword);// Instantiate a tooltip based on its keyword name
+        #endregion
+        if (cardPorpuse == CardPorpuse.Attack)// If this is an attack card
+            InstantiateTooltip("Damage");// Add a Damage tooltip
+        else if (cardPorpuse == CardPorpuse.Defense)// If this is a defense card
+            InstantiateTooltip("Ward");// Add a Ward tooltip
+    }
+    protected void InstantiateTooltip(string keyword)// Instantiates a tooltip based on the string argument
+    {
+        GameObject TooltipObj = null;// Temp game object to handle position, parent, active status...
+        TooltipObj = Instantiate(Resources.Load("UI/Tooltip/" + keyword + " Tooltip")) as GameObject;// Access the tooltip folder and acquire the appropriate gameobject 
+        TooltipObj.transform.SetParent(this.transform);// Set this card as its parent
+        if (Tooltips.Count != 0)
+            TooltipFirstPosition.y -= TooltipObj.transform.Find("Box").localScale.y * 1.4f;// Move the next tooltip down based on this size
+        else
+        {
+
+            Debug.Log("Tooltip name: "+keyword+"\n"+(TooltipObj.transform.Find("Box").localScale.y - .5f) * 1.4f);
+            TooltipFirstPosition.y -= (TooltipObj.transform.Find("Box").localScale.y - .5f) * 1.4f;// Move the next tooltip down based on this size
+        }
+        TooltipObj.transform.localPosition = new Vector3(TooltipFirstPosition.x, TooltipFirstPosition.y, TooltipFirstPosition.z);// Move it to its position
+        TooltipFirstPosition.y -= TooltipObj.transform.Find("Box").localScale.y*1.4f;// Move the next tooltip down based on this size
+        Tooltips.Add(TooltipObj);// Add the tooltip object to the list
+        TooltipObj.SetActive(false);// Disables all 
+    }
+    #endregion
     public virtual void Start()
     {
         foreach (CardExtension Keyword in GetComponents<CardExtension>())// For each Keyword attached to this card
             CardExtensions.Add(Keyword.Keyword, Keyword);// Store its reference
+        TooltipListDefinition();
         gameObject.transform.localScale = new Vector3(1f, 1f, 1f) * combatProperties.cardNormalScale;
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();
         playerHand = Player.GetComponent<Hand>();

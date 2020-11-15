@@ -75,6 +75,9 @@ public class VirtualCard : MonoBehaviour
             cardRenderer.enabled = false; // Disable card behaviour
         else
             throw new NullReferenceException("no card renderer");
+        foreach (GameObject Tooltip in PhysicalCardBehaviour.Tooltips)//Cycle through all the tooltips
+            if (Tooltip != null)// Check if null
+                Tooltip.SetActive(false);// Deactivates the tooltip
         isPhysical = false;
         isVirtual = true;
     }
