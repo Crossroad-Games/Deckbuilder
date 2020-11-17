@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum Scene { Dungeon, Combat};
-public enum CardPileToShow { DrawPile, CD0, CD1, CD2, CD3plus, Hand};
+public enum CardPileToShow { DrawPile, CD, CD1, CD2, CD3plus, Hand};
 public class CardsGallery : MonoBehaviour
 {
     [SerializeField] Scene Scene;
@@ -14,16 +14,10 @@ public class CardsGallery : MonoBehaviour
     public GameObject DeckGallery;
     public GameObject CombatTempGallery;
     public GameObject DrawPileUI;
-    public GameObject CD0UI;
-    public GameObject CD1UI;
-    public GameObject CD2UI;
-    public GameObject CD3plusUI;
+    public GameObject CDUI;
     public Button ReturnButton;
     public Button drawPileButton;
-    public Button CD0_Button;
-    public Button CD1_Button;
-    public Button CD2_Button;
-    public Button CD3plus_Button;
+    public Button CD_Button;
     public Button ShowCollection;
     private CombatPlayer combatPlayer;
     private DungeonPlayer dungeonPlayer;
@@ -49,6 +43,7 @@ public class CardsGallery : MonoBehaviour
 
     CardCollectionComparer comparerInt = new CardCollectionComparer();
     CardGalleryComparer comparerCardGameobject = new CardGalleryComparer();
+    CDGalleryComparer compareCD = new CDGalleryComparer();
 
     private void Awake()
     {
@@ -64,14 +59,8 @@ public class CardsGallery : MonoBehaviour
             DrawPileUI = GameObject.Find("Draw Pile");
             drawPileButton = GameObject.Find("Draw Pile").GetComponent<Button>();
             //CD UI buttons
-            CD0UI = GameObject.Find("CD0");
-            CD1UI = GameObject.Find("CD1");
-            CD2UI = GameObject.Find("CD2");
-            CD3plusUI = GameObject.Find("CD3+");
-            CD0_Button = GameObject.Find("CD0").GetComponent<Button>();
-            CD1_Button = GameObject.Find("CD1").GetComponent<Button>();
-            CD2_Button = GameObject.Find("CD2").GetComponent<Button>();
-            CD3plus_Button = GameObject.Find("CD3+").GetComponent<Button>();
+            CDUI = GameObject.Find("CD");
+            CD_Button = CDUI.GetComponent<Button>();
             #endregion
             //------------
             
@@ -97,18 +86,22 @@ public class CardsGallery : MonoBehaviour
         Debug.Log("ui manager start");
         if (Scene == Scene.Combat)
         {
-            drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList); });
-            CD0_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD0); });
-            CD1_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD1); });
-            CD2_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD2); });
-            CD3plus_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.CD3plus); });
+            drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList,true,false); });
+            CD_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.cardsList,false,true); });
+            drawPileButton.onClick.AddListener(delegate { AddReturnFunction(drawPileButton, CD_Button); });// Button will also act as a return button
+            CD_Button.onClick.AddListener(delegate { AddReturnFunction(CD_Button, drawPileButton); });// Button will also act as a return button
         }
         else
         {
             ShowCollection.onClick.AddListener(delegate { ShowDeckGallery(dungeonPlayer.myData.CardCollectionID); });
         }
     }
-
+    public void AddReturnFunction(Button thisButton, Button otherButton)
+    {
+        thisButton.onClick.RemoveAllListeners();// Remove listeners when this button is clicked
+        thisButton.onClick.AddListener(delegate { CloseDrawPileGallery(thisButton, otherButton); });// When the button is clicked again, close the gallery
+        otherButton.interactable = false;// Does not allow the user to interact with the other gallery button
+    }
     public void ShowDeckGallery(List<int> cardsToShow)
     {
         if (!isShowingGallery)
@@ -128,8 +121,6 @@ public class CardsGallery : MonoBehaviour
                     throw new Exception("nothing on OnGalleryOpen");
             }
             DeckGallery.SetActive(true);
-            ReturnButton.gameObject.SetActive(true);
-            ReturnButton.onClick.AddListener(CloseCollectionGallery);
             cardsToShow.Sort(comparerInt);
             var iterator = 0;
             var Sequence = 0;// How many cards are equal to each other
@@ -175,7 +166,7 @@ public class CardsGallery : MonoBehaviour
             //--------------------------------------//
         }
     }
-    public void ShowTempGallery(List<GameObject> cardsToShow)
+    public void ShowTempGallery(List<GameObject> cardsToShow, bool SortbyID, bool SortbyCD)
     {
         if (!isShowingGallery)
         {
@@ -191,14 +182,17 @@ public class CardsGallery : MonoBehaviour
             else
                 throw new Exception("nothing on OnGalleryOpen");
             CombatTempGallery.SetActive(true);
-            ReturnButton.gameObject.SetActive(true);
-            ReturnButton.onClick.AddListener(CloseDrawPileGallery);
             foreach (GameObject card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
                 tempCard.name = Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID).name;
+
+                tempCard.GetComponent<InfoHolderCardUI>().CurrentCardCD = card.GetComponent<VirtualCard>().CurrentCooldownTime;// Stores the card's current cd on the cardui info holder script
                 cardsDisplayed.Add(tempCard);
-                cardsDisplayed.Sort(comparerCardGameobject);
+                if (SortbyID)
+                    cardsDisplayed.Sort(comparerCardGameobject);
+                if(SortbyCD)
+                    cardsDisplayed.Sort(compareCD);
                 tempCard.transform.SetSiblingIndex(cardsDisplayed.IndexOf(tempCard));
                 cardsDisplayedAsButtons.Add(tempCard,tempCard.GetComponent<Button>());
                 Debug.Log("instanciou card UI");
@@ -222,8 +216,6 @@ public class CardsGallery : MonoBehaviour
                 }
             }
             CombatTempGallery.SetActive(true);
-            ReturnButton.gameObject.SetActive(true);
-            ReturnButton.onClick.AddListener(CloseDrawPileGallery);
             foreach (GameObject card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
@@ -255,8 +247,6 @@ public class CardsGallery : MonoBehaviour
                 }
             }
             CombatTempGallery.SetActive(true);
-            ReturnButton.gameObject.SetActive(true);
-            ReturnButton.onClick.AddListener(CloseDrawPileGallery);
             foreach (GameObject card in cardsToShow)
             {
                 GameObject tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card.GetComponent<VirtualCard>().cardInfo.ID), CombatTempGallery.transform.GetChild(0));
@@ -274,7 +264,7 @@ public class CardsGallery : MonoBehaviour
         }
     }
 
-    public void CloseDrawPileGallery()
+    public void CloseDrawPileGallery(Button thisButton, Button otherButton)
     {
         if (isShowingGallery)
         {
@@ -290,8 +280,20 @@ public class CardsGallery : MonoBehaviour
                 OnGalleryClose(card.gameObject);
             }
             playerHand.EnableCards();
-            ReturnButton.onClick.RemoveAllListeners();
-            ReturnButton.gameObject.SetActive(false);
+            thisButton.onClick.RemoveAllListeners();
+            #region Reassign Listeners
+            if (thisButton==CD_Button)
+            {
+                CD_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.cardsList, false, true); });
+                CD_Button.onClick.AddListener(delegate { AddReturnFunction(CD_Button, drawPileButton); });
+            }
+            else if(thisButton==drawPileButton)
+            {
+                drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList, true, false); });
+                drawPileButton.onClick.AddListener(delegate { AddReturnFunction(drawPileButton, CD_Button); });
+            }
+            otherButton.interactable = true;// Allows the user to interact with the other gallery buttons
+            #endregion
         }
     }
     public void CloseCollectionGallery()
@@ -399,6 +401,27 @@ public class CardGalleryComparer : IComparer<GameObject>
             return 1;
         }
         else if (int.Parse(card1.name) < int.Parse(card2.name))
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
+public class CDGalleryComparer : IComparer<GameObject>
+{
+    public int Compare(GameObject card1, GameObject card2)
+    {
+        var CD1 = card1.GetComponent<InfoHolderCardUI>().CurrentCardCD;
+        var CD2 = card2.GetComponent<InfoHolderCardUI>().CurrentCardCD;
+        Debug.Log("CD1 :"+CD1+"\n CD2: "+CD2);
+        if (CD1 > CD2)
+        {
+            return 1;
+        }
+        else if (CD1 < CD2)
         {
             return -1;
         }

@@ -36,6 +36,7 @@ public class CDPile : CardPile
     }
     private void OnDisable()
     {
+        cardsCD_Completed.Clear();// Clear all cards from the CD Pile
         SaveLoad.LoadEvent -= LoadSave;// Subscribe to the load event from the saveload script
     }
     // Start is called before the first frame update
@@ -109,6 +110,7 @@ public class CDPile : CardPile
         if(!Player.Disrupted)// If not disrupted, card's CD's are updated 
             for(int i = cardsList.Count-1; i >= 0; i--)
             {
+                Debug.Log("Cards on CD: " + cardsList.Count + "\n i= " + i);
                 if (cardsList[i].GetComponent<VirtualCard>()?.CurrentCooldownTime > 0) // if card still on cooldown
                 {
                     #region Update CD lists
@@ -218,6 +220,7 @@ public class CDPile : CardPile
                 VirtualCard?.TurnVirtual();
                 VirtualCard.CurrentCooldownTime = CombatGameData.Current.CardsCD[iterator];// Pairs the card info to its CD
                 cardsList.Add(cardInstance);// Add it to the list of card infos
+                Debug.Log("Cards on CD: " + cardInstance);
                 iterator++;// Increment the iterator
             }
         }
