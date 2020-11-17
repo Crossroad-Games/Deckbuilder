@@ -19,7 +19,19 @@ public abstract class PhysicalCard : MonoBehaviour
     #endregion
 
     #region Booleans
-    public bool selected; //when card is being selected
+    private bool Selected;
+    public bool selected //when card is being selected
+    {
+        get { return Selected; }
+        set 
+        { 
+            if(value)// When card is selected
+                foreach (GameObject Tooltip in Tooltips)// Cycle through all tooltips on this card
+                    if (Tooltip != null)// Check if null
+                        Tooltip.SetActive(false);// Deactivate based on the value being passed
+            Selected = value;
+        }
+    }
     public bool concocted = false; //When card is being concocted by another card
     public bool isConcoct = false; //Wether card is a concoct card or not
     public bool selectable = true; //Determines wether card is selectable or not

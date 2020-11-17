@@ -39,4 +39,17 @@ public class TurnSubscriptions : MonoBehaviour
         TurnManager.EnemyStartTurn += TurnMaster.NextState;// Subscribe the method that will change the next state in line
         #endregion
     }
+    private void OnDisable()
+    {
+        TurnManager.CombatStart -= TurnMaster.NextState;// Subscribe the method that will change the next state in line
+        TurnManager.PlayerTurnStart -= TurnMaster.IncrementTurn;// Subscribe the turn count incrementation to be on the TurnStarts
+        TurnManager.PlayerTurnStart -= PlayerHand.DrawHand;
+        TurnManager.PlayerTurnStart -= PlayerCDPile.SendCardsBackToDeckAndShuffle;
+        TurnManager.PlayerTurnStart -= Player.StartTurn;// All data manipulation on the combat player is execute here
+        TurnManager.PlayerTurnStart -= TurnMaster.NextState;// Subscribe the method that will change the next state in line
+        TurnManager.PlayerTurnEnd -= PlayerCDPile.UpdateCooldown;
+        TurnManager.EnemyPhaseStart -= TurnMaster.NextState;// Subscribe the method that will change the next state in line
+        TurnManager.EnemyPhaseEnd -= TurnMaster.NextState;// Subscribe the method that will change the next state in line
+        TurnManager.EnemyStartTurn -= TurnMaster.NextState;// Subscribe the method that will change the next state in line 
+    }
 }
