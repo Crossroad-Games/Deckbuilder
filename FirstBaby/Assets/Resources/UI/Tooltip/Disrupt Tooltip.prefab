@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2644746870076982265}
   - component: {fileID: 4888891116996923183}
   - component: {fileID: 153323087191695679}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Tooltip Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 522644813064798865}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Disrupt Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 5328075046687623516}
   - component: {fileID: 2933631692317432508}
   - component: {fileID: 7663295775416250457}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Tooltip Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8517679606491422486}
   - component: {fileID: 4614694046100442981}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}

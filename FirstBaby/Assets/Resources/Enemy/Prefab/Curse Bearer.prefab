@@ -180,12 +180,12 @@ GameObject:
   - component: {fileID: 4577537696564339689}
   - component: {fileID: 4577537696564339688}
   - component: {fileID: 1514918253239559527}
-  - component: {fileID: 4577537696564339695}
   - component: {fileID: 4577537696564339690}
   - component: {fileID: -809013895096999080}
   - component: {fileID: 6285628939798467889}
   - component: {fileID: -1720066353965077432}
   - component: {fileID: -4327611666342568416}
+  - component: {fileID: 4580324823566531105}
   m_Layer: 10
   m_Name: Curse Bearer
   m_TagString: Untagged
@@ -294,32 +294,6 @@ MonoBehaviour:
   ShieldDecay: 0.5
   BreathCD: 5
   CurrentBreathCD: 0
---- !u!61 &4577537696564339695
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4577537696564339694}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
 --- !u!114 &4577537696564339690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +414,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstIcon: {x: -0.05, y: -0.11, z: 0}
   OffsetIcon: 0.04
+--- !u!65 &4580324823566531105
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4577537696564339694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7371917002680359284
 GameObject:
   m_ObjectHideFlags: 0

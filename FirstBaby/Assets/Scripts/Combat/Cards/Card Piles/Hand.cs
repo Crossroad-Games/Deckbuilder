@@ -34,6 +34,7 @@ public class Hand : CardPile
     [SerializeField] private int MaxCardsInHand = 10; // Limits the number of cards in hand from all sources
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
     private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
+    public Camera camera2;
 
     #endregion
 
@@ -477,10 +478,14 @@ public class Hand : CardPile
     private void AimAtTarget(PhysicalCard card, Vector2 mousePos2D)   //draws the arrow for when player is aiming at a target with TargetCard
     {
         isAiming = true; //To tell the game that the player is aiming a Target card at someone
+        Ray ray = camera2.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
         //Draw Arrow
         if(!createdArrow)
         {
             GameObject line = new GameObject();
+            line.layer = 14;
             line.transform.position = card.transform.position;
             line.AddComponent<LineRenderer>();
             arrowRenderer = line.GetComponent<LineRenderer>();
@@ -488,7 +493,7 @@ public class Hand : CardPile
             createdArrow = true;
         }
         arrowRenderer.SetPosition(0, card.transform.position); // sets the origin position of the line renderer to be the card transform position. TODO: put this origin position in the top of the card
-        arrowRenderer.SetPosition(1, new Vector3(mousePos2D.x, mousePos2D.y, 1f)); // sets the end position of the line renderer to be in the mouse pointer position.
+        arrowRenderer.SetPosition(1, hit.point); // sets the end position of the line renderer to be in the mouse pointer position.
     }
 
     private void UndoAimAtTarget(GameObject card) //Destroy the arrow

@@ -264,12 +264,12 @@ GameObject:
   - component: {fileID: 9168046795147252107}
   - component: {fileID: 3889993891153469365}
   - component: {fileID: 6355833944684188296}
-  - component: {fileID: 1813333774078704658}
   - component: {fileID: 4343844635240541117}
   - component: {fileID: 1231004964494564130}
   - component: {fileID: 5060628426692435844}
   - component: {fileID: -2016646832438071373}
   - component: {fileID: -138300793247177838}
+  - component: {fileID: 7776334578603124790}
   m_Layer: 10
   m_Name: Golem
   m_TagString: Untagged
@@ -380,32 +380,6 @@ MonoBehaviour:
   CurrentDisruptiveCD: 0
   Cocooned: 0
   CocoonDuration: 0
---- !u!61 &1813333774078704658
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2398455620489820319}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
 --- !u!114 &4343844635240541117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +497,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstIcon: {x: -0.05, y: -0.11, z: 0}
   OffsetIcon: 0.04
+--- !u!65 &7776334578603124790
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2398455620489820319}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4107114898037147732
 GameObject:
   m_ObjectHideFlags: 0

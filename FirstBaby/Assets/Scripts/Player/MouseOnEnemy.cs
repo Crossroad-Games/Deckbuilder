@@ -5,6 +5,7 @@ using UnityEngine;
 public class MouseOnEnemy : MonoBehaviour
 {
     [SerializeField] private LayerMask enemyLayer=0;
+    public Camera camera2;
     public bool mouseOverEnemy;
 
     
@@ -29,11 +30,14 @@ public class MouseOnEnemy : MonoBehaviour
 
     public EnemyClass isMouseOnEnemy()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        /*Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-        RaycastHit2D hitInfo = Physics2D.Raycast(mousePos2D, Vector2.zero, 15f, enemyLayer);
+        RaycastHit2D hitInfo = Physics2D.Raycast(mousePos2D, Vector2.zero, 15f, enemyLayer);*/
+        Ray ray = camera2.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        Physics.Raycast(ray, out hitInfo);
 
-        if(hitInfo.collider != null)
+        if (hitInfo.collider != null)
         {
             EnemyClass enemy = hitInfo.collider.gameObject.GetComponent<EnemyClass>();
             if (enemy != null)
