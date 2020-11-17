@@ -17,7 +17,7 @@ MonoBehaviour:
   offsetBetweenCards: 2
   cardsHeightDiff: 0.35
   angleBetweenCards: 5
-  cardHighlightScale: 0.5
-  cardNormalScale: 0.35
+  cardHighlightScale: 0.35
+  cardNormalScale: 0.3
   zAxisOffsetWhenCardDrag: -1
-  HighlightHeight: -2
+  HighlightHeight: 1

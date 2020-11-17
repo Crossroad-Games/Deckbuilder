@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4486612701906425692}
   - component: {fileID: 65781635221130113}
-  - component: {fileID: 6614251319278206741}
   - component: {fileID: -2620611694406709040}
   - component: {fileID: -6024973297880317213}
   - component: {fileID: -890433173412119043}
   - component: {fileID: 917238870123889863}
   - component: {fileID: 5757729321216291916}
+  - component: {fileID: 2638475935117070871}
   m_Layer: 10
   m_Name: Vengeful Spirit
   m_TagString: Untagged
@@ -94,32 +94,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6614251319278206741
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5075110614363377447}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
 --- !u!114 &-2620611694406709040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +210,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstIcon: {x: -0.05, y: -0.11, z: 0}
   OffsetIcon: 0.04
+--- !u!65 &2638475935117070871
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075110614363377447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5268102736899683337
 GameObject:
   m_ObjectHideFlags: 0

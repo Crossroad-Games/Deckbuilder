@@ -35,6 +35,7 @@ public class CombatPlayer : MonoBehaviour
     private Button EndTurnButton=null;
     private TurnManager TurnMaster;
     public CombatManager CombatManager;
+    public Camera camera2;
     #endregion
 
 
@@ -54,6 +55,7 @@ public class CombatPlayer : MonoBehaviour
     private GameObject previousHoverObject; //What mouse was pointing at when begin pointing somethingelse
     private PhysicalCard SelectedCard; //Currently selected card
     public RaycastHit2D hitInfo; //What mouse is pointing at
+    public RaycastHit hitInfo3D;
     #endregion
 
     #region Booleans

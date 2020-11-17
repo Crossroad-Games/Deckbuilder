@@ -625,7 +625,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4665355422919481837}
   - component: {fileID: 788602965795167468}
-  - component: {fileID: 2945747371841556704}
   - component: {fileID: 2859762275949821830}
   - component: {fileID: 5468103608223247822}
   - component: {fileID: 8327068827888078850}
@@ -633,6 +632,7 @@ GameObject:
   - component: {fileID: 7285438666102321212}
   - component: {fileID: 536637368990330580}
   - component: {fileID: 7284055967829795269}
+  - component: {fileID: 7447812988634103419}
   m_Layer: 10
   m_Name: Soul Maggot
   m_TagString: Untagged
@@ -711,32 +711,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2945747371841556704
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8273353822081955733}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
 --- !u!114 &2859762275949821830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,6 +877,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstIcon: {x: -0.05, y: -0.11, z: 0}
   OffsetIcon: 0.04
+--- !u!65 &7447812988634103419
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273353822081955733}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8371884809921228484
 GameObject:
   m_ObjectHideFlags: 0

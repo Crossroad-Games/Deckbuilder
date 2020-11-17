@@ -20,9 +20,9 @@ TagManager:
   - Enemy
   - Player
   - View_Blocker
-  - 
-  - 
-  - 
+  - 3DEnvironment
+  - Arrow
+  - Tooltip
   - 
   - 
   - 
