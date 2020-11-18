@@ -36,6 +36,7 @@ public class CombatPlayer : MonoBehaviour
     private TurnManager TurnMaster;
     public CombatManager CombatManager;
     public Camera camera2;
+    public Shield playerShield;
     #endregion
 
 
@@ -78,6 +79,8 @@ public class CombatPlayer : MonoBehaviour
         OnMouseExitCard += MouseStoppedPointingToCard;
         OnPlayerGainShield += UpdateShield;
         OnPlayerSpendShield += UpdateShield;
+        playerShield = GetComponentInChildren<Shield>();
+        UpdateShield();
         SaveLoad.LoadEvent += LoadSaveData;// Subscribes this method to the load event so that the player data is synced to the save file
         PauseGame.PauseEvent += FlipEndButton;
         isHoveringCard = false;
@@ -422,16 +425,27 @@ public class CombatPlayer : MonoBehaviour
         {
             WardBarFill.fillAmount = (myData.PlayerShield % 100) != 0 ? ((myData.PlayerShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
             ShieldAmount.text = (myData.PlayerShield % 100) != 0 ? $"{(myData.PlayerShield % 100)}" : "100";// Uses the variable as a string
+            playerShield.gameObject.SetActive(true);
             for (var iterator = 0; iterator < 9; iterator++)// Go through all ward overload charges
                 WardOverloadList[iterator].enabled = iterator+1 <= (Mathf.FloorToInt(myData.PlayerShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
         }
-        else
+        else if(myData.PlayerShield > 0 && myData.PlayerShield < 100)
         {
             WardBarFill.fillAmount = (float)myData.PlayerShield / 100f;// If there is less than 100 shield, convert it directly to %
             ShieldAmount.text = $"{myData.PlayerShield}";// Uses the variable as a string
+            playerShield.gameObject.SetActive(true);
+            Color color = playerShield.shieldMaterial.GetColor("shieldColor");
+            float intensity = myData.PlayerShield / 50 * 4;
+            float factor = Mathf.Pow(2, intensity);
+            Color newColor = new Color(color.r * factor, color.g * factor, color.b * factor);
+            playerShield.shieldMaterial.SetColor("shieldColor", newColor);
             foreach (Image OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
                 if (OverloadCharge != null)// If it is not null
                     OverloadCharge.enabled = false;// Disable it
+        }
+        else
+        {
+            playerShield.gameObject.SetActive(false);
         }
         
     }
