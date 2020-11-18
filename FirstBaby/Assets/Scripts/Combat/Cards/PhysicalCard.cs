@@ -213,16 +213,16 @@ public abstract class PhysicalCard : MonoBehaviour
     {
         Debug.Log(AddValue);
         TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
+        //EndDealDamage();
         yield return new WaitUntil(() => dealDamageFinished == true);
-        EndDealDamage();
     }
 
     public virtual IEnumerator GainShield_Health()
     {
         Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
         Player.GainLife((BaseHeal + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
+        //EndGainShield_Health();
         yield return new WaitUntil(() => gainShield_HealthFinished == true);
-        EndGainShield_Health();
     }
 
     public virtual void DealEffect()

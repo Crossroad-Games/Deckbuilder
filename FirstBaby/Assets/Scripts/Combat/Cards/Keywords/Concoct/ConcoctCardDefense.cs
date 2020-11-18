@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class ConcoctCardDefense : NonTargetCard
 {
-    protected Concoct myConcoct;
+    public Concoct myConcoct;
     public bool canceledConcoct = false;
     public bool doEffects = true;
+    public bool doEffectsFinished = false;
 
     protected override void Awake()
     {
@@ -14,6 +15,12 @@ public abstract class ConcoctCardDefense : NonTargetCard
         myConcoct = GetComponent<Concoct>();
         isConcoct = true;
         BaseShield = 0;
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        type = "ConcoctCardDefense";
     }
 
     public override IEnumerator CardEffect()
@@ -48,9 +55,15 @@ public abstract class ConcoctCardDefense : NonTargetCard
 
     public abstract void BringConcoctInfo(List<PhysicalCard> cardsConcocted);
 
-    public abstract void GainShield_Health(List<PhysicalCard> cardsConcocted);
+    public virtual IEnumerator GainShield_Health(List<PhysicalCard> cardsConcocted)
+    {
+        yield return new WaitUntil(() => gainShield_HealthFinished == true);
+    }
 
-    public abstract void DoEffects(List<PhysicalCard> cardsConcocted);
+    public virtual IEnumerator DoEffects(List<PhysicalCard> cardsConcocted)
+    {
+        yield return new WaitUntil(() => doEffectsFinished == true);
+    }
 
 
 }

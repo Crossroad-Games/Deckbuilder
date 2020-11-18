@@ -12,9 +12,19 @@ public class WindBladeCard : TargetCard
     }
     public override IEnumerator CardEffect()
     {
-        effectFinished = true;
+        Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
+        GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/Test2/Test2"), playerSpriteTransform.position, Quaternion.identity) as GameObject;
+        visualEffect.GetComponent<VisualEffectTest2>().targetTransform = this.TargetEnemy.transform;
+        visualEffect.GetComponent<VisualEffectTest2>().card = this;
+        visualEffect.GetComponent<VisualEffectTest2>().dealEffect = true;
         yield return StartCoroutine(base.CardEffect());
     }
+
+    public override void DealEffect()
+    {
+        effectFinished = true;
+    }
+
     public override void LevelRanks()
     {
         switch (CardLevel)

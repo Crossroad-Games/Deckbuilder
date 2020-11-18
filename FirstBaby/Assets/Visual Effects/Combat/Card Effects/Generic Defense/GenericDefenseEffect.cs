@@ -9,6 +9,7 @@ public class GenericDefenseEffect : MonoBehaviour
     private VisualEffect visualEffect;
     private Animator anim;
     private bool actuated;
+    public bool dealEffect;
 
     private void Update()
     {
@@ -24,13 +25,22 @@ public class GenericDefenseEffect : MonoBehaviour
     {
         if (card.cardPorpuse == CardPorpuse.Attack)
         {
-            StartCoroutine(card.DealDamage());
+            throw new MissingReferenceException("This effect is defense only");
         }
         else
         {
             StartCoroutine(card.GainShield_Health());
+            card.EndGainShield_Health();
+            if (card.type == "ConcoctCardDefense")
+            {
+                ConcoctCardDefense concoctCard = card as ConcoctCardDefense;
+                StartCoroutine(concoctCard.GainShield_Health(concoctCard.myConcoct.cardsToConcoct));
+                concoctCard.EndGainShield_Health();
+                Debug.Log("chamou dealDamage");
+            }
         }
-        card.DealEffect();
+        if(dealEffect)
+            card.DealEffect();
     }
 
     public void ByeBye()

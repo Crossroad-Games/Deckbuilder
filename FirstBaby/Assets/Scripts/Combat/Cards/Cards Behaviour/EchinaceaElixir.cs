@@ -6,9 +6,17 @@ public class EchinaceaElixir : NonTargetCard
 {
     public override IEnumerator CardEffect()
     {
-        effectFinished = true;
+        Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
+        GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/GenericDefense/GenericDefense"), new Vector3(-1.92f, 0.25f, -0.23f), Quaternion.identity) as GameObject;
+        visualEffect.GetComponent<GenericDefenseEffect>().card = this;
         return base.CardEffect();
     }
+
+    public override void DealEffect()
+    {
+        effectFinished = true;
+    }
+
     public override void LevelRanks()
     {
         switch (CardLevel)

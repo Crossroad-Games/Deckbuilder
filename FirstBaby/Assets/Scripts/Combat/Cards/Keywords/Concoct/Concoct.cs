@@ -12,7 +12,7 @@ public class Concoct : CardExtension
     #endregion
     public bool isConcocting = false; 
     public CardPorpuse concoctPorpuse;
-    private List<PhysicalCard> cardsToConcoct = new List<PhysicalCard>();
+    public List<PhysicalCard> cardsToConcoct = new List<PhysicalCard>();
     [SerializeField] Vector3 concoctCardPosition;
 
 
@@ -115,7 +115,11 @@ public class Concoct : CardExtension
                     {
                         myConcoctAttackCard.BringConcoctInfo(cardsToConcoct);
                         //TODO: Call animation here, and make an animation event that will call the DealDamage function
-                        myConcoctAttackCard.DealDamage(cardsToConcoct);
+                        Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
+                        GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/Test2/Test2"), playerSpriteTransform.position, Quaternion.identity) as GameObject;
+                        visualEffect.GetComponent<VisualEffectTest2>().targetTransform = myConcoctAttackCard.TargetEnemy.transform;
+                        visualEffect.GetComponent<VisualEffectTest2>().card = myConcoctAttackCard;
+                        visualEffect.GetComponent<VisualEffectTest2>().dealEffect = false;
                         FinishConcoct();
                     }
                     break;
@@ -125,7 +129,10 @@ public class Concoct : CardExtension
                     {
                         myConcoctDefenseCard.BringConcoctInfo(cardsToConcoct);
                         //TODO: Call animation here, and make an animation event that will call the GainShield/health function
-                        myConcoctDefenseCard.GainShield_Health(cardsToConcoct);
+                        Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
+                        GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/GenericDefense/GenericDefense"), new Vector3(-1.92f, 0.25f, -0.23f), Quaternion.identity) as GameObject;
+                        visualEffect.GetComponent<GenericDefenseEffect>().card = myConcoctDefenseCard;
+                        visualEffect.GetComponent<GenericDefenseEffect>().dealEffect = true;
                         FinishConcoct();
                     }
                     break;

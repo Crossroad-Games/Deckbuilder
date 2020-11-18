@@ -13,6 +13,7 @@ public class AlchemistFireCard : TargetCard
         GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/Test2/Test2"),playerSpriteTransform.position,Quaternion.identity) as GameObject;
         visualEffect.GetComponent<VisualEffectTest2>().targetTransform = this.TargetEnemy.transform;
         visualEffect.GetComponent<VisualEffectTest2>().card = this;
+        visualEffect.GetComponent<VisualEffectTest2>().dealEffect = true;
         yield return StartCoroutine(base.CardEffect());
     }
 

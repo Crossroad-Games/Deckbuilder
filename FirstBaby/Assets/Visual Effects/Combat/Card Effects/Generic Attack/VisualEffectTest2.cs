@@ -9,6 +9,7 @@ public class VisualEffectTest2 : MonoBehaviour
     private Animator anim;
     private bool moveToTarget;
     private bool actuated;
+    public bool dealEffect;
     public float orbMovementSpeed;
 
     // Start is called before the first frame update
@@ -23,18 +24,28 @@ public class VisualEffectTest2 : MonoBehaviour
     {
         if(moveToTarget)
         {
-            transform.position = Vector3.Lerp(transform.position, targetTransform.position, orbMovementSpeed * Time.deltaTime); // Move the orb to enemy position
+            if(targetTransform != null)
+                transform.position = Vector3.Lerp(transform.position, targetTransform.position, orbMovementSpeed * Time.deltaTime); // Move the orb to enemy position
             if((transform.position - targetTransform.position).magnitude <= 0.2f && !actuated)
             {
                 actuated = true;
-                card.DealEffect();
+                if(dealEffect)
+                    card.DealEffect();
                 if (card.cardPorpuse == CardPorpuse.Attack)
                 {
                     StartCoroutine(card.DealDamage());
+                    card.EndDealDamage();
+                    if(card.type == "ConcoctCardAttack")
+                    {
+                        ConcoctCardAttack concoctCard = card as ConcoctCardAttack;
+                        StartCoroutine(concoctCard.DealDamage(concoctCard.myConcoct.cardsToConcoct));
+                        concoctCard.EndDealDamage();
+                        Debug.Log("chamou dealDamage");
+                    }
                 }
                 else
                 {
-                    StartCoroutine(card.GainShield_Health());
+                    throw new MissingReferenceException("This effect is attack only");
                 }
                 anim.SetTrigger("ActivateExplosion");
             }
