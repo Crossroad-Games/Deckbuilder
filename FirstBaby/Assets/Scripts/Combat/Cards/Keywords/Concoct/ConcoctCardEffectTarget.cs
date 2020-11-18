@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ConcoctCardEffectTarget : TargetCard
 {
-    protected Concoct myConcoct;
+    public Concoct myConcoct;
     public bool canceledConcoct = false;
 
     protected override void Awake()
@@ -12,6 +12,12 @@ public abstract class ConcoctCardEffectTarget : TargetCard
         base.Awake();
         myConcoct = GetComponent<Concoct>();
         isConcoct = true;
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        type = "ConcoctCardEffectTarget";
     }
 
     public override IEnumerator CardEffect()

@@ -434,7 +434,7 @@ public class Hand : CardPile
         {
             if(card.selected)
             {
-                if (card.type == "TargetCard")
+                if (card.type == "TargetCard" || card.type == "ConcoctCardAttack" || card.type == "ConcoctCardEffectTarget")
                 {
                     if (combatPlayer.IsMouseInHandZone() && !createdArrow)  //if card is of type TargetCard and is not aiming at target yet, just drag card
                     {
@@ -452,7 +452,7 @@ public class Hand : CardPile
                         
                     }
                 }
-                else if(card.type == "NonTargetCard")
+                else if(card.type == "NonTargetCard" || card.type == "ConcoctCardDefense" || card.type == "ConcoctCardEffectNonTarget")
                 {
                     if(combatPlayer.IsMouseInHandZone()) //When Non Target Card is inside hand zone , just drag
                     {
@@ -498,7 +498,7 @@ public class Hand : CardPile
 
     private void UndoAimAtTarget(GameObject card) //Destroy the arrow
     {
-        if (card.GetComponent<PhysicalCard>().type == "TargetCard")
+        if (card.GetComponent<PhysicalCard>().type == "TargetCard" || card.GetComponent<PhysicalCard>().type == "ConcoctCardAttack" || card.GetComponent<PhysicalCard>().type == "ConcoctCardEffectTarget")
         {
             if (arrowRenderer != null)
             {

@@ -8,6 +8,15 @@ public class RockArmorCard : NonTargetCard
     // This effect creates a shield that will protect the player by this amount
     public override IEnumerator CardEffect()
     {
+        Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
+        GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/GenericDefense/GenericDefense"), new Vector3(-1.92f, 0.25f, -0.23f), Quaternion.identity) as GameObject;
+        visualEffect.GetComponent<GenericDefenseEffect>().card = this;
+        visualEffect.GetComponent<GenericDefenseEffect>().dealEffect = true;
+        yield return StartCoroutine(base.CardEffect());
+    }
+
+    public override void DealEffect()
+    {
         effectFinished = true;
         PlayerDefenseUpEffect preExistantEffect = Player.GetComponent<PlayerDefenseUpEffect>();// Get the player's Decay Effect
         if (preExistantEffect == null)// If there is no decay effect yet
@@ -18,8 +27,8 @@ public class RockArmorCard : NonTargetCard
         }
         else// If there is a decay effect
             preExistantEffect.AddStacks(AmountofStacks);// Add more stacks
-        yield return StartCoroutine(base.CardEffect());
     }
+
     public override void LevelRanks()
     {
         switch (CardLevel)

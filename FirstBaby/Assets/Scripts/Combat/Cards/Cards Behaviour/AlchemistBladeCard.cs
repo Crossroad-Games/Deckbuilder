@@ -15,27 +15,30 @@ public class AlchemistBladeCard : ConcoctCardAttack
         }
     }
 
-    public override void DealDamage(List<PhysicalCard> cardsConcocted) 
+    public override IEnumerator DealDamage(List<PhysicalCard> cardsConcocted) 
     {
         TargetEnemy.ProcessDamage((BaseDamage + AddValue - SubtractValue) * ((int)(Multiplier / Divider))); //Call the damange after got the info with BringConcoctInfo()
         Debug.Log("alchemist blade deal damage");
         if (doEffects)
             DoEffects(cardsConcocted); //if should do the card's effects, then execute them
         effectFinished = true;
+        Debug.Log("effect finished true");
+        yield return StartCoroutine(base.DealDamage(cardsConcocted));
     }
 
-    public override void DoEffects(List<PhysicalCard> cardsConcocted)
+    public override IEnumerator DoEffects(List<PhysicalCard> cardsConcocted)
     {
         Debug.Log("alchemsit blade do effects");
         foreach(PhysicalCard card in cardsConcocted) //this calls the CardEffect() of every concocted card that has the doEffectWhenConcocted flag set to true
         {
             if(card.doEffectWhenConcocted)
             {
-                if (card.type == "TargetCard")
+                if (card.type == "TargetCard" || card.type == "ConcoctCardAttack" || card.type == "ConcoctCardEffectTarget")
                     card.TargetEnemy = TargetEnemy;
                 StartCoroutine(card.CardEffect());
             }
         }
+        yield return StartCoroutine(base.DoEffects(cardsConcocted));
     }
     public override void LevelRanks()
     {

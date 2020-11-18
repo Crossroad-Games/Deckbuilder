@@ -267,7 +267,7 @@ public class CombatPlayer : MonoBehaviour
         //Once Selected Card, be able to unselect Card or Select enemy
         else if(SelectedCard != null)
         {
-            if(SelectedCard.type == "TargetCard")
+            if(SelectedCard.type == "TargetCard" || SelectedCard.type == "ConcoctCardAttack" || SelectedCard.type == "ConcoctCardEffectTarget")
             {
                 if(!releasedMouseNotOnEnemy) //if didn't release mouse not on enemy
                 {
@@ -330,7 +330,7 @@ public class CombatPlayer : MonoBehaviour
                 
 
             }
-            else if(SelectedCard.type == "NonTargetCard")
+            else if(SelectedCard.type == "NonTargetCard" || SelectedCard.type == "ConcoctCardDefense" || SelectedCard.type == "ConcoctCardEffectNonTarget")
             {
                 if (Input.GetMouseButtonUp(0))
                 {

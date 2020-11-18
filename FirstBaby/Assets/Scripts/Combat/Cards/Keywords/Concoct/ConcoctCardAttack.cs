@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class ConcoctCardAttack : TargetCard
 {
-    protected Concoct myConcoct;
+    public Concoct myConcoct;
     public bool canceledConcoct = false;
     public bool doEffects = true;
+    public bool doEffectsFinished = false;
 
     protected override void Awake()
     {
@@ -14,6 +15,13 @@ public abstract class ConcoctCardAttack : TargetCard
         myConcoct = GetComponent<Concoct>();
         isConcoct = true;
         BaseDamage = 0; //Sets the initial baseDamage to zero, so the only damage it does is based on concocted cards
+        doEffectsFinished = false;
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        type = "ConcoctCardAttack";
     }
 
     public override IEnumerator CardEffect()
@@ -48,7 +56,14 @@ public abstract class ConcoctCardAttack : TargetCard
 
     public abstract void BringConcoctInfo(List<PhysicalCard> cardsConcocted);
 
-    public abstract void DealDamage(List<PhysicalCard> cardsConcocted);
 
-    public abstract void DoEffects(List<PhysicalCard> cardsConcocted);
+    public virtual IEnumerator DealDamage(List<PhysicalCard> cardsConcocted)
+    {
+        yield return new WaitUntil(() => dealDamageFinished == true);
+    }
+
+    public virtual IEnumerator DoEffects(List<PhysicalCard> cardsConcocted)
+    {
+        yield return new WaitUntil(() => doEffectsFinished == true);
+    }
 }

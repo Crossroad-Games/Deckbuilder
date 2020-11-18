@@ -14,15 +14,16 @@ public class AlchemistBarrierCard : ConcoctCardDefense
         }
     }
 
-    public override void GainShield_Health(List<PhysicalCard> cardsConcocted) //Gain shield based on BringConcoctInfo method
+    public override IEnumerator GainShield_Health(List<PhysicalCard> cardsConcocted) //Gain shield based on BringConcoctInfo method
     {
         Player.GainShield((BaseShield + AddValue - SubtractValue) * ((int)(Multiplier / Divider))); //GainShield method called on player
         effectFinished = true;
+        yield return StartCoroutine(base.GainShield_Health(cardsConcocted));
     }
 
-    public override void DoEffects(List<PhysicalCard> cardsConcocted) // Implement if we want this card to call the concocted cards effects
+    public override IEnumerator DoEffects(List<PhysicalCard> cardsConcocted) // Implement if we want this card to call the concocted cards effects
     {
-        throw new System.NotImplementedException();
+        yield return StartCoroutine(base.DoEffects(cardsConcocted));
     }
 
     public override void LevelRanks()
