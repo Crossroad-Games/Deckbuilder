@@ -9,6 +9,15 @@ public class AlchemistFireCard : TargetCard
     [SerializeField] private int StackConversionRate = 2;// How many agony stacks get converted into 1 damage
     public override IEnumerator CardEffect()
     {
+        Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
+        GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/Test2/Test2"),playerSpriteTransform.position,Quaternion.identity) as GameObject;
+        visualEffect.GetComponent<VisualEffectTest2>().targetTransform = this.TargetEnemy.transform;
+        visualEffect.GetComponent<VisualEffectTest2>().card = this;
+        yield return StartCoroutine(base.CardEffect());
+    }
+
+    public override void DealEffect()
+    {
         Debug.Log("alchemist fire effect");
         Agony preExistentAgony = TargetEnemy.GetComponent<Agony>();
         if (preExistentAgony == null)
@@ -24,8 +33,10 @@ public class AlchemistFireCard : TargetCard
             preExistentAgony.AddStacks(AmountofStacks);
         }
         effectFinished = true;
-        yield return StartCoroutine(base.CardEffect());
     }
+
+
+
     protected override void TooltipListDefinition()
     {
         base.TooltipListDefinition();

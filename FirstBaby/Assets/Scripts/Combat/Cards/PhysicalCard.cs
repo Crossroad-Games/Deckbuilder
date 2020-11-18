@@ -161,8 +161,6 @@ public abstract class PhysicalCard : MonoBehaviour
             CardExtensions["Hasten"].ExtensionEffect();// Execute its overflow effect
         }
         Debug.Log("chamou executeAction coroutine");
-        if (cardPorpuse == CardPorpuse.Defense)
-            StartCoroutine(GainShield_Health());
         StartCoroutine(CardEffect());// Execute the card's effect
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the canGoToCDPile flag is set to true
         //Send it to the CD pile
@@ -185,10 +183,6 @@ public abstract class PhysicalCard : MonoBehaviour
         this.TargetEnemy = targetEnemy;
         Debug.Log("chamou executeAction coroutine");
         StartCoroutine(CardEffect()); // Execute the card's effect
-        if (cardPorpuse == CardPorpuse.Attack)
-            StartCoroutine(DealDamage());
-        else if (cardPorpuse == CardPorpuse.Defense)
-            StartCoroutine(GainShield_Health());     
         yield return new WaitUntil(() => canGotoCDPile == true); //Suspends the coroutine execution until the supplied delegate evaluates to true
         //Send it to the CD pile
         Debug.Log("vai mandar pro cdPile");
@@ -229,6 +223,11 @@ public abstract class PhysicalCard : MonoBehaviour
         Player.GainLife((BaseHeal + AddValue - SubtractValue) * ((int)(Multiplier / Divider)));
         yield return new WaitUntil(() => gainShield_HealthFinished == true);
         EndGainShield_Health();
+    }
+
+    public virtual void DealEffect()
+    {
+
     }
 
     #region Utilities
