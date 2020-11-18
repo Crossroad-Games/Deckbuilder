@@ -18,12 +18,13 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private GameObject AttackIcon=null;// Icon that will display that this enemy will attack
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
-    [SerializeField] private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
+    private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
     [SerializeField] protected float RandomValue;// This random value is rolled every end of turn and at start
     [SerializeField] public bool Incapacitated=false;// Is this enemy able to act?
-    private List<Image> WardOverloadList = new List<Image>();
-    private Image HPBarFill;
-    private Image WardBarFill = null;
+    private List<SpriteRenderer> WardOverloadList = new List<SpriteRenderer>();
+    private Vector3 UIPosition = new Vector3(-.07f,-.09f,0f);
+    private GameObject HPBarFill;
+    private GameObject WardBarFill = null;
     public IEnumerator CheckIntentionCoroutine;
     [Range(0,1)][SerializeField] public float ShieldDecay=.5f;// The amount of shield lost at the start of every turn
     #endregion
@@ -66,7 +67,8 @@ public abstract class EnemyClass : MonoBehaviour
     {
         myData.EnemyHP -= Amount;// Reduce enemy's HP by a given Amount
         myData.EnemyHP = myData.EnemyHP <= 0 ? 0 : myData.EnemyHP;// Check if HP is below zero
-        HPBarFill.fillAmount = (float) myData.EnemyHP / myData.EnemyMaxHP;
+        var X= (float)myData.EnemyHP / myData.EnemyMaxHP;
+        HPBarFill.transform.localScale = new Vector3(X, HPBarFill.transform.localScale.y, HPBarFill.transform.localScale.z);
         DeathConditionCheck();// Check if the enemy is dead;
     }
     protected virtual void GainLife(int Amount) => myData.EnemyHP += Amount;// Raises enemy HP
@@ -133,24 +135,31 @@ public abstract class EnemyClass : MonoBehaviour
 
     protected virtual void Start()
     {
+        var TempObj = new GameObject();// Instantiates a new empty gameobject
+        TempObj.name = "WardTextAnchor";// Rename it
+        TempObj.transform.SetParent(this.transform);// Set its parent to be the enemy object
+        var ChildTempObj = new GameObject();// Instantiates a new empty gameobject
+        ChildTempObj.name = "WardValue";// Rename it
+        ShieldAmount = ChildTempObj.AddComponent<TextMeshPro>();// Add a TMP_Text Asset and set its reference to be manipulated at a later time
+        ShieldAmount.fontSize = 2;
+        ChildTempObj.transform.SetParent(TempObj.transform);// Set its parent to be the Temp Obj
+        TempObj.transform.localPosition = new Vector3(.985f, -.35f, 0);// Text position
+        
         #region HP Bar Setup
-        GameObject hpUI = Instantiate(Resources.Load("UI/EnemyUI/HP Bar Anchor"), EnemyManager.HPPositions[myData.Position], Quaternion.identity) as GameObject;
-        hpUI.transform.SetParent(transform.Find("Enemy Canvas"),false);
-        HPBarFill = hpUI.transform.Find("Bar Fill").GetComponent<Image>();
-        HPBarFill.fillAmount = (float)myData.EnemyHP / myData.EnemyMaxHP;
+        GameObject hpUI = Instantiate(Resources.Load("UI/EnemyUI/HP Bar Anchor"), UIPosition, Quaternion.identity) as GameObject;
+        hpUI.transform.SetParent(this.transform, false);
+        HPBarFill = hpUI.transform.Find("Bar Fill").gameObject;
+        HPBarFill.transform.localScale = new Vector3((float)myData.EnemyHP / myData.EnemyMaxHP, HPBarFill.transform.localScale.y, HPBarFill.transform.localScale.z);
         #endregion
         #region Ward Bar Setup
-        GameObject WardUI = Instantiate(Resources.Load("UI/EnemyUI/Ward Bar Anchor"), EnemyManager.HPPositions[myData.Position], Quaternion.identity) as GameObject;
-        WardUI.transform.SetParent(transform.Find("Enemy Canvas"), false);
-        WardOverloadList = WardUI.transform.Find("Ward Overloads").GetComponentsInChildren<Image>().ToList();// Converts all images on the children to a list of images
-        foreach (Image Overload in WardOverloadList)// For each ward overload attached to the enemy
+        GameObject WardUI = Instantiate(Resources.Load("UI/EnemyUI/Ward Bar Anchor"), UIPosition, Quaternion.identity) as GameObject;
+        WardUI.transform.SetParent(this.transform, false);
+        WardOverloadList = WardUI.transform.Find("Ward Overloads").GetComponentsInChildren<SpriteRenderer>().ToList();// Converts all images on the children to a list of images
+        foreach (SpriteRenderer Overload in WardOverloadList)// For each ward overload attached to the enemy
             if (Overload != null)// Check if null
                 Overload.enabled = false;// Disable it
-        WardBarFill = WardUI.transform.Find("Bar Fill").GetComponent<Image>();
+        WardBarFill = WardUI.transform.Find("Bar Fill").gameObject;
         UpdateShield();// Update this enemy's shield information
-        #endregion
-        #region UI Update
-        UpdateShield();
         #endregion
 
         RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns 
@@ -251,18 +260,22 @@ public abstract class EnemyClass : MonoBehaviour
     #region UI Update
     public void UpdateShield()
     {
+        var X = 0f;
         if (myData.EnemyShield >= 100)// If there is more than 100 Ward
         {
-            WardBarFill.fillAmount = (myData.EnemyShield % 100) != 0 ? ((myData.EnemyShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
+            
+            X = (myData.EnemyShield % 100) != 0 ? ((myData.EnemyShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
+            WardBarFill.transform.localScale = new Vector3(X, WardBarFill.transform.localScale.y, WardBarFill.transform.localScale.z);
             ShieldAmount.text = (myData.EnemyShield % 100) != 0 ? $"{(myData.EnemyShield % 100)}" : "100";// Uses the variable as a string
             for (var iterator = 0; iterator < WardOverloadList.Count; iterator++)// Go through all ward overload charges
                 WardOverloadList[iterator].enabled = iterator + 1 <= (Mathf.FloorToInt(myData.EnemyShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
         }
         else
         {
-            WardBarFill.fillAmount = (float)myData.EnemyShield / 100f;// If there is less than 100 shield, convert it directly to %
+            X = (float)myData.EnemyShield / 100f;// If there is less than 100 shield, convert it directly to %
+            WardBarFill.transform.localScale = new Vector3(X, WardBarFill.transform.localScale.y, WardBarFill.transform.localScale.z);
             ShieldAmount.text = $"{myData.EnemyShield}";// Uses the variable as a string
-            foreach (Image OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
+            foreach (SpriteRenderer OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
                 if (OverloadCharge != null)// If it is not null
                     OverloadCharge.enabled = false;// Disable it
         }

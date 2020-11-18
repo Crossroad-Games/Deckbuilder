@@ -18,7 +18,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] public List<EnemyClass> EnemiesToAct;// A copy of the CombatEnemies that will be used to determine which enemies can act
     [SerializeField] public List<EnemyData> EnemyData;// List of enemy datas
     [SerializeField] public List<Vector3> EnemyPositions;// List of enemy positions based on how many enemies there are on scene
-    [SerializeField] public List<Vector3> HPPositions;// List of enemy positions based on how many enemies there are on scene
+    //[SerializeField] public List<Vector3> HPPositions;// List of enemy positions based on how many enemies there are on scene
     private TurnManager TurnMaster;// Reference to the TurnManager script to access its methods
     private CombatManager combatManager;// Reference to the combat manager
     #endregion
