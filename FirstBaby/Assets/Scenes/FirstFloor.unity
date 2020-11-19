@@ -3422,7 +3422,7 @@ PrefabInstance:
     - target: {fileID: 190408893223895206, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: CardSelectionUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1392669008}
     - target: {fileID: 793910360670374471, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1
@@ -3498,11 +3498,11 @@ PrefabInstance:
     - target: {fileID: 7003142736139218419, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: CardSelectionUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1392669008}
     - target: {fileID: 9146917694343301546, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
       propertyPath: CardSelectionUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1392669008}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2dbbe0db0dac934a8748d2e2e77b413, type: 3}
 --- !u!114 &943587661139503542 stripped

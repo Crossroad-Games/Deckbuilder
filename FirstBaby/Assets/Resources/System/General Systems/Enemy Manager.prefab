@@ -47,8 +47,8 @@ MonoBehaviour:
   EnemiesToAct: []
   EnemyData: []
   EnemyPositions:
-  - {x: 5, y: 1, z: 0}
-  - {x: 6.75, y: 1, z: 2}
-  - {x: 8.5, y: 1, z: 0}
-  - {x: 10.25, y: 1, z: 2}
-  - {x: 12, y: 1, z: 0}
+  - {x: 4.5, y: 1, z: 0}
+  - {x: 6.5, y: 1, z: 2.5}
+  - {x: 7.25, y: 1, z: 0}
+  - {x: 10, y: 1, z: 2.5}
+  - {x: 10.25, y: 1, z: 0}

@@ -14,9 +14,9 @@ public class BuckthornPowder : TargetCard
     {
         Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
         GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/Test2/Test2"), playerSpriteTransform.position, Quaternion.identity) as GameObject;
-        visualEffect.GetComponent<VisualEffectTest2>().targetTransform = this.TargetEnemy.transform;
-        visualEffect.GetComponent<VisualEffectTest2>().card = this;
-        visualEffect.GetComponent<VisualEffectTest2>().dealEffect = true;
+        visualEffect.GetComponent<GenericAttackEffect>().targetTransform = this.TargetEnemy.transform;
+        visualEffect.GetComponent<GenericAttackEffect>().card = this;
+        visualEffect.GetComponent<GenericAttackEffect>().dealEffect = true;
         return base.CardEffect();
     }
 
