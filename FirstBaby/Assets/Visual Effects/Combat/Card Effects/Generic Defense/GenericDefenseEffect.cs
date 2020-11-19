@@ -10,7 +10,13 @@ public class GenericDefenseEffect : MonoBehaviour
     private Animator anim;
     private bool actuated;
     public bool dealEffect;
-
+    private Vector3 UsingPosition= new Vector3(0,6,0);// Position the card is held when executing its animation
+    private void Start()
+    {
+        card.selectable = false;// No longer selectable
+        card.followCardPositionToFollow = false;// No longer follows
+        card.transform.localPosition = UsingPosition;// Fixates the card at this position
+    }
     private void Update()
     {
         

@@ -260,26 +260,28 @@ public abstract class EnemyClass : MonoBehaviour
     #region UI Update
     public void UpdateShield()
     {
-        var X = 0f;
-        if (myData.EnemyShield >= 100)// If there is more than 100 Ward
+        if (WardBarFill != null)
         {
-            
-            X = (myData.EnemyShield % 100) != 0 ? ((myData.EnemyShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
-            WardBarFill.transform.localScale = new Vector3(X, WardBarFill.transform.localScale.y, WardBarFill.transform.localScale.z);
-            ShieldAmount.text = (myData.EnemyShield % 100) != 0 ? $"{(myData.EnemyShield % 100)}" : "100";// Uses the variable as a string
-            for (var iterator = 0; iterator < WardOverloadList.Count; iterator++)// Go through all ward overload charges
-                WardOverloadList[iterator].enabled = iterator + 1 <= (Mathf.FloorToInt(myData.EnemyShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
-        }
-        else
-        {
-            X = (float)myData.EnemyShield / 100f;// If there is less than 100 shield, convert it directly to %
-            WardBarFill.transform.localScale = new Vector3(X, WardBarFill.transform.localScale.y, WardBarFill.transform.localScale.z);
-            ShieldAmount.text = $"{myData.EnemyShield}";// Uses the variable as a string
-            foreach (SpriteRenderer OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
-                if (OverloadCharge != null)// If it is not null
-                    OverloadCharge.enabled = false;// Disable it
-        }
+            var X = 0f;
+            if (myData.EnemyShield >= 100)// If there is more than 100 Ward
+            {
 
+                X = (myData.EnemyShield % 100) != 0 ? ((myData.EnemyShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
+                WardBarFill.transform.localScale = new Vector3(X, WardBarFill.transform.localScale.y, WardBarFill.transform.localScale.z);
+                ShieldAmount.text = (myData.EnemyShield % 100) != 0 ? $"{(myData.EnemyShield % 100)}" : "100";// Uses the variable as a string
+                for (var iterator = 0; iterator < WardOverloadList.Count; iterator++)// Go through all ward overload charges
+                    WardOverloadList[iterator].enabled = iterator + 1 <= (Mathf.FloorToInt(myData.EnemyShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
+            }
+            else
+            {
+                X = (float)myData.EnemyShield / 100f;// If there is less than 100 shield, convert it directly to %
+                WardBarFill.transform.localScale = new Vector3(X, WardBarFill.transform.localScale.y, WardBarFill.transform.localScale.z);
+                ShieldAmount.text = $"{myData.EnemyShield}";// Uses the variable as a string
+                foreach (SpriteRenderer OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
+                    if (OverloadCharge != null)// If it is not null
+                        OverloadCharge.enabled = false;// Disable it
+            }
+        }
     }
     #endregion
 

@@ -7,7 +7,7 @@ using System;
 public class SoulMaggot : EnemyClass
 {
     [SerializeField] private float ConsumeThreshold=.25f;// How much %HP is required to consume another enemy
-    private bool ConsumedEnemy = false, Cocooned=false;
+    [SerializeField] private bool ConsumedEnemy = false, Cocooned=false;
     private int ConsumedEnemyDuration = 0;
     private int CocoonDuration=0;
     public override void EnemyIntention()
@@ -32,11 +32,11 @@ public class SoulMaggot : EnemyClass
     }
     public override void EndTurn()
     {
+        
+        base.EndTurn();
         ConsumedEnemyDuration = ConsumedEnemyDuration >= 1 ? ConsumedEnemyDuration - 1 : 0;// Countdown
-        ConsumedEnemy = ConsumedEnemyDuration <= 0;// True if Consumed enemy is equal or less than 0
-        Debug.Log("Cocoon Duration: " + CocoonDuration);
+        ConsumedEnemy = ConsumedEnemyDuration > 0;// True if Consumed enemy is more than 0
         CocoonDuration = CocoonDuration >= 1 ? CocoonDuration - 1 : 0;// Countdown
-        Debug.Log("Cocoon Duration: " + CocoonDuration);
         if (CocoonDuration <= 0 && Cocooned)// When the cocoon duration is over
         {
             Debug.Log("Incapacitated: " + Incapacitated);
@@ -44,12 +44,13 @@ public class SoulMaggot : EnemyClass
                 StartCoroutine(ActionList["Enemy Transformation"].Effect());// Use this action
             Cocooned = false;// No longer cocooned
         }
-        base.EndTurn();
     }
     private bool CheckForLowHP()
     {
         if (EnemyManager.CombatEnemies.Count == 1)// If this is the last enemy
+        {
             return false;// Return false
+        }
         var AlliesHP = new Dictionary<float, EnemyClass>();
         foreach (EnemyClass Allies in EnemyManager.CombatEnemies)// Go through all enemies in the scene
         {

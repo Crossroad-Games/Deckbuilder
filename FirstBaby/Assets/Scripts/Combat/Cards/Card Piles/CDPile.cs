@@ -110,7 +110,6 @@ public class CDPile : CardPile
         if(!Player.Disrupted)// If not disrupted, card's CD's are updated 
             for(int i = cardsList.Count-1; i >= 0; i--)
             {
-                Debug.Log("Cards on CD: " + cardsList.Count + "\n i= " + i);
                 if (cardsList[i].GetComponent<VirtualCard>()?.CurrentCooldownTime > 0) // if card still on cooldown
                 {
                     #region Update CD lists
