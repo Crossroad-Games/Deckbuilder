@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 45478f6ea8622e04f91cdbfd6b288472, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b0743355e598444b8806ce243ec7978, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10, y: 14.545455}
+    oldSize: {x: 8.181818, y: 12.727273}
     newSize: {x: 2.75, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: faf538c9e40c9de4c8e56b11cdebc890, type: 2}
   PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
+  cardExtensions: []
   isVirtual: 0
   isPhysical: 0
   BaseDamage: 0
@@ -137,6 +138,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   currentCooldownTime: 0
 --- !u!114 &6669601196988938533
 MonoBehaviour:
@@ -154,12 +156,12 @@ MonoBehaviour:
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
+  thisVirtualCard: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
-  selected: 0
+  Tooltips: []
   concocted: 0
   isConcoct: 0
   selectable: 1
-  highlighted: 0
   highlightPreviousHeight: 0
   highlightPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
   hoverEffectsEnabled: 1
@@ -176,6 +178,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   followCardPositionToFollow: 0
 --- !u!114 &-2621084337781649941
 MonoBehaviour:

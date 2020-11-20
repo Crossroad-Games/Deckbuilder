@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5811547901f9f1b4fa4f89042f094294, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8c1ebf10bab56c4689ded81f42d4c0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.466666, y: 12.422222}
+    oldSize: {x: 8.181818, y: 12.727273}
     newSize: {x: 6.91, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -169,6 +169,7 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: c93d56be7004cb84a9e1ed80da769edc, type: 2}
   PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
+  cardExtensions: []
   isVirtual: 0
   isPhysical: 0
   BaseDamage: 18
@@ -192,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34ec014a3c29de44fb26ce787565628e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keywordCardUIPosition: {x: 0, y: 0, z: 0}
   Keyword: 
   DamagePercentage: 0.33
 --- !u!1 &4140866221860028910
