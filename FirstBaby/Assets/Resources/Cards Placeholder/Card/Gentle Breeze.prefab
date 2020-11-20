@@ -333,12 +333,12 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: dd117b0d792056049848a1aabfefe9ef, type: 2}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
+  thisVirtualCard: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
-  selected: 0
+  Tooltips: []
   concocted: 0
   isConcoct: 0
   selectable: 1
-  highlighted: 0
   highlightPreviousHeight: 0
   highlightPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
   hoverEffectsEnabled: 1
@@ -357,6 +357,8 @@ MonoBehaviour:
   Divider: 1
   CardLevel: 0
   followCardPositionToFollow: 0
+  myOverflow: {fileID: 0}
+  myHasten: {fileID: 0}
 --- !u!114 &8580478824678199342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +374,7 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: dd117b0d792056049848a1aabfefe9ef, type: 2}
   PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
+  cardExtensions: []
   isVirtual: 0
   isPhysical: 0
   BaseDamage: 20
@@ -409,6 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36fb01ed162250c4183e56ce2273ae1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keywordCardUIPosition: {x: 1650, y: 425, z: 0}
   Keyword: 
   DrawAmount: 2
 --- !u!1 &8788589570749216310
