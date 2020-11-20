@@ -30,20 +30,6 @@ public class RewardManager : MonoBehaviour
         //Initialization
         cardDatabase = GameObject.Find("Game Master").GetComponent<CardDatabase>();
         thisSceneSaveLoad = GameObject.Find("Game Master").GetComponent<SaveLoad>();
-
-        Button[] cardSelectionButtonsUI = CardSelectionUI.GetComponentsInChildren<Button>();
-        TMP_Text[] cardSelectionTextsUI = CardSelectionUI.GetComponentsInChildren<TMP_Text>();
-
-        foreach(Button button in cardSelectionButtonsUI)
-        {
-            if(button.tag == "Card Selection Button")
-                cardOptionsButtons.Add(button);
-        }
-        foreach(TMP_Text text in cardSelectionTextsUI)
-        {
-            if (text.tag == "Card Selection Button")
-                cardOptionsCosts.Add(text);
-        }
         //--------------------
     }
 
@@ -67,15 +53,26 @@ public class RewardManager : MonoBehaviour
         for(int i = 0; i < 3; i++) //Fill with 3 cards, one per button
         {
             int r = UnityEngine.Random.Range(0, databaseCopy.Count);// r will be a random index for the database, this way we get a random card from the card available in the game
+            GameObject cardUI = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + r), CardSelectionUI.transform.GetChild(0));
             CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(databaseCopy[r]);//Creates an instance of the card that was randomized
+            cardOptionsButtons.Add(cardUI.GetComponent<Button>());
             cardOptions.Add(cardOptionsButtons[i], cardInfoInstance);// Adds the card instance to the cardOptions, so when the player selects it clicking the button, he will be buying that instance
-            cardOptionsButtons[i].image.sprite = cardInfoInstance.sprite;// Change the button image to be the card's image
-            cardOptionsCosts[i].text = "Cost: " + cardInfoInstance.ResourceCost;// Change the text UI to show the card's cost
-            if (combatPlayer.myData.PlayerLifeForce > cardInfoInstance.ResourceCost)// If the player has enough life/resource
+            cardOptionsButtons[i].onClick.RemoveAllListeners();
+        }
+
+        cardOptionsButtons[0].onClick.AddListener(() => { ChooseCard(0); });
+        cardOptionsButtons[1].onClick.AddListener(() => { ChooseCard(1); });
+        cardOptionsButtons[2].onClick.AddListener(() => { ChooseCard(2); });
+
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject costText = (GameObject)Instantiate(Resources.Load("UI/CardSelectionText/CostCard"), CardSelectionUI.transform.GetChild(0));
+            cardOptionsCosts.Add(costText.GetComponent<TMP_Text>());
+            cardOptionsCosts[i].text = "Cost: " + cardOptions[cardOptionsButtons[i]].ResourceCost;// Change the text UI to show the card's cost
+            if (combatPlayer.myData.PlayerLifeForce > cardOptions[cardOptionsButtons[i]].ResourceCost)// If the player has enough life/resource
                 cardOptionsCosts[i].color = Color.green; //turn the cost color green
             else
                 cardOptionsCosts[i].color = Color.red; //otherwise turn it red
-            databaseCopy.RemoveAt(r); // Remove the card instance from the available cards so you don't get repeated cards on the "shop"
         }
     }
 
@@ -86,38 +83,53 @@ public class RewardManager : MonoBehaviour
         List<CardInfo> databaseCopy = new List<CardInfo>(cardDatabase.GameCards); //Create a copy of the database to randomize cards to go to options of acquire new cards
         for (int i = 0; i < 3; i++) //Fill with 3 cards, one per button
         {
-            int r = UnityEngine.Random.Range(0, databaseCopy.Count);
-            CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(databaseCopy[r]);
-            cardOptions.Add(cardOptionsButtons[i], cardInfoInstance);
-            cardOptionsButtons[i].image.sprite = cardInfoInstance.sprite;
-            cardOptionsCosts[i].text = "Cost: " + cardInfoInstance.ResourceCost;
-            if (dungeonPlayer.myData.PlayerLifeForce > cardInfoInstance.ResourceCost)
-                cardOptionsCosts[i].color = Color.green;
+            int r = UnityEngine.Random.Range(0, databaseCopy.Count);// r will be a random index for the database, this way we get a random card from the card available in the game
+            GameObject cardUI = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + r), CardSelectionUI.transform.GetChild(0));
+            CardInfo cardInfoInstance = UnityEngine.Object.Instantiate(databaseCopy[r]);//Creates an instance of the card that was randomized
+            cardOptionsButtons.Add(cardUI.GetComponent<Button>());
+            cardOptions.Add(cardOptionsButtons[i], cardInfoInstance);// Adds the card instance to the cardOptions, so when the player selects it clicking the button, he will be buying that instance
+            cardOptionsButtons[i].onClick.RemoveAllListeners();
+        }
+
+        cardOptionsButtons[0].onClick.AddListener(() => { ChooseCard(0); });
+        cardOptionsButtons[1].onClick.AddListener(() => { ChooseCard(1); });
+        cardOptionsButtons[2].onClick.AddListener(() => { ChooseCard(2); });
+
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject costText = (GameObject)Instantiate(Resources.Load("UI/CardSelectionText/CostCard"), CardSelectionUI.transform.GetChild(0));
+            cardOptionsCosts.Add(costText.GetComponent<TMP_Text>());
+            cardOptionsCosts[i].text = "Cost: " + cardOptions[cardOptionsButtons[i]].ResourceCost;// Change the text UI to show the card's cost
+            if (dungeonPlayer.myData.PlayerLifeForce > cardOptions[cardOptionsButtons[i]].ResourceCost)// If the player has enough life/resource
+                cardOptionsCosts[i].color = Color.green; //turn the cost color green
             else
-                cardOptionsCosts[i].color = Color.red;
-            databaseCopy.RemoveAt(r);
+                cardOptionsCosts[i].color = Color.red; //otherwise turn it red
         }
     }
 
     public void ClearCardOptions()
     {
         cardOptions.Clear();
-        foreach(Button cardOptionButton in cardOptionsButtons)
-        {
-            cardOptionButton.image.sprite = null;
-        }
+        cardOptionsButtons.Clear();
+        cardOptionsCosts.Clear();
     }
 
     public void ChooseCard(int buttonIndex)
     {
         if (thisSceneSaveLoad.CombatScene) // If the player just won a battle
         {
+            Debug.Log("Nivel 0");
+            Debug.Log(buttonIndex);
             if (cardOptions[cardOptionsButtons[buttonIndex]] != null) // if the button is correctly filles with a card for the player to buy
             {
+                Debug.Log("nivel 1");
                 if (combatPlayer.myData.PlayerLifeForce > cardOptions[cardOptionsButtons[buttonIndex]].ResourceCost) //If the player can afford the card's cost
                 {
+                    Debug.Log("nivel 2");
                     DungeonGameData.Current.PlayerData.CardCollectionID.Add(cardOptions[cardOptionsButtons[buttonIndex]].ID); //Adds card to player's owned card
+                    Debug.Log("nivel 3");
                     combatPlayer.myData.PlayerLifeForce -= cardOptions[cardOptionsButtons[buttonIndex]].ResourceCost; // Effectvely remove the player's resource in exchange for the card
+                    Debug.Log("nivel 4");
                     cardOptions[cardOptionsButtons[buttonIndex]] = null; //There's no more card attached to the card option button
                     StopSelection(); // Stop the selection
                 }

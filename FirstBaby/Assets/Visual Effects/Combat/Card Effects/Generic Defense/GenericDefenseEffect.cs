@@ -45,6 +45,7 @@ public class GenericDefenseEffect : MonoBehaviour
             else
             {
                 StartCoroutine(card.GainShield_Health());
+                Debug.Log("ganhou shield");
                 card.EndGainShield_Health();
             }
         }
