@@ -37,14 +37,17 @@ public class GenericAttackEffect : MonoBehaviour
                         card.DealEffect();
                     if (card.cardPorpuse == CardPorpuse.Attack)
                     {
-                        StartCoroutine(card.DealDamage());
-                        card.EndDealDamage();
                         if (card.type == "ConcoctCardAttack")
                         {
                             ConcoctCardAttack concoctCard = card as ConcoctCardAttack;
                             StartCoroutine(concoctCard.DealDamage(concoctCard.myConcoct.cardsToConcoct));
                             concoctCard.EndDealDamage();
                             Debug.Log("chamou dealDamage");
+                        }
+                        else
+                        {
+                            StartCoroutine(card.DealDamage());
+                            card.EndDealDamage();
                         }
                     }
                     else

@@ -8,6 +8,7 @@ public class WallEfect : LastingEffect
 
     protected override void Awake()
     {
+        EffectLabel = "Wall";
         base.Awake();
         turnCounter = 0;
     }

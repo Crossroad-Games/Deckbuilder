@@ -11,7 +11,7 @@ public class VirtualCard : MonoBehaviour
     public PhysicalCard PhysicalCardBehaviour;
     private Collider2D cardCollider;
     public CombatPlayer Player;
-    private List<CardExtension> cardExtensions= new List<CardExtension>();
+    public List<CardExtension> cardExtensions= new List<CardExtension>();
     public Dictionary<string,VirtualCardExtension> virtualCardExtensions = new Dictionary<string, VirtualCardExtension>();
     private Renderer cardRenderer;
     private GameObject cardDescription;

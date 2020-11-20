@@ -435,9 +435,10 @@ public class CombatPlayer : MonoBehaviour
             ShieldAmount.text = $"{myData.PlayerShield}";// Uses the variable as a string
             playerShield.gameObject.SetActive(true);
             Color color = playerShield.shieldMaterial.GetColor("shieldColor");
-            float intensity = myData.PlayerShield / 50 * 4;
+            float intensity = ((float) myData.PlayerShield / 50) * 4;
+            Debug.Log(intensity);
             float factor = Mathf.Pow(2, intensity);
-            Color newColor = new Color(color.r * factor, color.g * factor, color.b * factor);
+            Color newColor = new Color(color.r * intensity, color.g * intensity, color.b * intensity);
             playerShield.shieldMaterial.SetColor("shieldColor", newColor);
             foreach (Image OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
                 if (OverloadCharge != null)// If it is not null

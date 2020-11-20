@@ -35,14 +35,17 @@ public class GenericDefenseEffect : MonoBehaviour
         }
         else
         {
-            StartCoroutine(card.GainShield_Health());
-            card.EndGainShield_Health();
             if (card.type == "ConcoctCardDefense")
             {
                 ConcoctCardDefense concoctCard = card as ConcoctCardDefense;
                 StartCoroutine(concoctCard.GainShield_Health(concoctCard.myConcoct.cardsToConcoct));
                 concoctCard.EndGainShield_Health();
                 Debug.Log("chamou dealDamage");
+            }
+            else
+            {
+                StartCoroutine(card.GainShield_Health());
+                card.EndGainShield_Health();
             }
         }
         if(dealEffect)

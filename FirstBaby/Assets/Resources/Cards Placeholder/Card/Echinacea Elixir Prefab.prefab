@@ -500,6 +500,7 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: b4efafbd61a5baa44a3167ff9fefa9b9, type: 2}
   PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
+  cardExtensions: []
   isVirtual: 0
   isPhysical: 0
   BaseDamage: 0
@@ -563,5 +564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f50659e8abe63e41be133927989aaef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keywordCardUIPosition: {x: 1650, y: 425, z: 0}
   Keyword: 
   AmountofStacks: 5
