@@ -12,10 +12,10 @@ public class Door : Interactable
     IEnumerator SlideDown()
     {
         float newHeight=transform.position.y;
-        while(transform.position.y>-4.5f)// If the door's height is not yet -20
+        while(transform.localPosition.y>-4.5f)// If the door's height is not yet -20
         {
             newHeight -= Time.deltaTime*SlideSpeed;// Slide down based on time
-            transform.position = new Vector3(transform.position.x, newHeight, transform.position.z);//  Update the transform
+            transform.localPosition = new Vector3(transform.localPosition.x, newHeight, transform.localPosition.z);//  Update the transform
             yield return null;// Return next frame
         }
         ExecuteTargetActions();// If there are any targets, execute their actions
@@ -25,6 +25,6 @@ public class Door : Interactable
     public override void LoadDungeonState()
     {
         if(Used)
-            transform.position = new Vector3(transform.position.x, -4.535f, transform.position.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, -4.535f, transform.localPosition.z);
     }
 }

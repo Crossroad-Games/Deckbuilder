@@ -67,6 +67,12 @@ public class SaveLoad : MonoBehaviour
         LevelGameData.Current.InterectablesUsed.Clear();// Clear the list before adding all the information
         foreach (Interactable inter in dungeonInteractables)
             LevelGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
+        /*LevelGameData.Current.ObjectsLayer = new List<ListWrapper>();
+        foreach (Door Door in dungeonInteractables)
+        {
+            if(Door.transform.parent.GetComponentInChildren<ChangeRoom>()!=null)
+                LevelGameData.Current.ObjectsLayer.Add(Door.transform.parent.GetComponentInChildren<ChangeRoom>().ListWrapper);
+        }*/
         jsonString = JsonUtility.ToJson(LevelGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
@@ -179,5 +185,9 @@ public class SaveLoad : MonoBehaviour
                 dungeonInteractables[i].Used = LevelGameData.Current.InterectablesUsed[i]; // Go through all interactables and scene and convert get from data file the used infos
             }
         }
+        if (LevelGameData.Current.whichDoor < dungeonInteractables.Count)
+            dungeonInteractables[LevelGameData.Current.whichDoor].transform.parent.GetComponentInChildren<ChangeRoom>()?.LoadList(LevelGameData.Current.ObjectsLayer);
+        else
+            Debug.Log("Door is beyong the interactables amount");
     }
 }

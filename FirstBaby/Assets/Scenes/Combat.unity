@@ -2053,6 +2053,11 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1307079704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6210013416706217822, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1334210213 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
@@ -3657,7 +3662,7 @@ PrefabInstance:
     - target: {fileID: 2650834548372594578, guid: 078389f6f9b897d4abbe44c8cbb586a6, type: 3}
       propertyPath: CardSelectionUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1307079704}
     - target: {fileID: 2650834548372594578, guid: 078389f6f9b897d4abbe44c8cbb586a6, type: 3}
       propertyPath: rewardManager
       value: 
@@ -3884,7 +3889,7 @@ PrefabInstance:
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: CardSelectionUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1307079704}
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: cardOptionsButtons.Array.data[0]
       value: 
