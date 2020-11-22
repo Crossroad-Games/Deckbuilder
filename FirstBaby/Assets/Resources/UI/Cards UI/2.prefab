@@ -70,7 +70,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5811547901f9f1b4fa4f89042f094294, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8c1ebf10bab56c4689ded81f42d4c0a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -184,7 +184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9000244, y: -71.099976}
+  m_AnchoredPosition: {x: -6, y: -71.099976}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6635285246051860301
@@ -215,7 +215,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: deal 20 dmg
+  m_text: 'Deal 18 Damage
+
+    Overflow:
+
+    Deal 6 damage'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 20d1abf7e24f47d4a9d7377a46dad097, type: 2}
   m_sharedMaterial: {fileID: -7226492615517420396, guid: 20d1abf7e24f47d4a9d7377a46dad097, type: 2}
@@ -278,7 +282,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -37.626263, y: -3.4461899, z: -52.55443, w: -28.454277}
+  m_margin: {x: -37.626263, y: -27.216187, z: -52.55443, w: -20.817017}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -318,7 +322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.700012, y: -71.099976}
+  m_AnchoredPosition: {x: -6.700012, y: -46}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6053136425913893968
@@ -412,7 +416,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -35.041607, y: -24.123356, z: -61.169884, w: 39.608047}
+  m_margin: {x: -38.433777, y: -24.123356, z: -52.690247, w: 39.608047}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
