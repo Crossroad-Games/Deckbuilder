@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5390041952622558380}
   - component: {fileID: 1397542842228636009}
   m_Layer: 8
-  m_Name: card placeholder
+  m_Name: Alchemist Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
