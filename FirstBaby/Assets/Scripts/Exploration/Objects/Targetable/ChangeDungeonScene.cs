@@ -14,6 +14,9 @@ public class ChangeDungeonScene : Targetable
     }
     IEnumerator LoadScene()
     {
+       
+        this.GetComponent<Door>().Used = false;// Set the used boolean to false so the player can keep going back and forth between scenes
+        GameObject.Find("Game Master").GetComponent<SaveLoad>().SaveGame();// Save the current state before changing scene
         DungeonGameData.Current.PlayerPosition = SpawnPosition;// Player will spawn at this position
         var jsonString = JsonUtility.ToJson(DungeonGameData.Current, true);// Transforms the Data to Json format
         var dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") + ".Dungeon");// Saves the information at this location

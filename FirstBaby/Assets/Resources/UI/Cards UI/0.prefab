@@ -70,7 +70,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4f68a1161891d1042ad2a628dc34a050, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ecd6e260aa5129408eab7309bf0b92b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -184,7 +184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.7, y: -71.1}
+  m_AnchoredPosition: {x: -12, y: -45}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6295147439992757882
@@ -320,7 +320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9, y: -71.1}
+  m_AnchoredPosition: {x: -7.0000243, y: -47.000023}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2371221569758768698
@@ -351,9 +351,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'deal 5 dmg
+  m_text: 'Deal 5 Damage
 
-    +1 agony'
+    Agony 1
+
+
+    Deal +1 Damage per Agony '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 20d1abf7e24f47d4a9d7377a46dad097, type: 2}
   m_sharedMaterial: {fileID: -7226492615517420396, guid: 20d1abf7e24f47d4a9d7377a46dad097, type: 2}
@@ -416,7 +419,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -37.626263, y: -3.4461899, z: -52.55443, w: -28.454277}
+  m_margin: {x: -37.626263, y: -3.4461899, z: -52.55443, w: -45.43457}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
