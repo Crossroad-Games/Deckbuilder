@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7963367926223209395}
   - component: {fileID: 6518870579228646112}
   m_Layer: 8
-  m_Name: card placeholder 2
+  m_Name: Ethereal Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

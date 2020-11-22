@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8580478824678199342}
   - component: {fileID: 2445951147442434167}
   m_Layer: 8
-  m_Name: card placeholder 1
+  m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
