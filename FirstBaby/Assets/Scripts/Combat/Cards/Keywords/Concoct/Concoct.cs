@@ -117,9 +117,9 @@ public class Concoct : CardExtension
                         //TODO: Call animation here, and make an animation event that will call the DealDamage function
                         Transform playerSpriteTransform = GameObject.Find("Player_Sprite").GetComponent<Transform>();
                         GameObject visualEffect = Instantiate(Resources.Load("Visual Effects/Test2/Test2"), playerSpriteTransform.position, Quaternion.identity) as GameObject;
-                        visualEffect.GetComponent<VisualEffectTest2>().targetTransform = myConcoctAttackCard.TargetEnemy.transform;
-                        visualEffect.GetComponent<VisualEffectTest2>().card = myConcoctAttackCard;
-                        visualEffect.GetComponent<VisualEffectTest2>().dealEffect = false;
+                        visualEffect.GetComponent<GenericAttackEffect>().targetTransform = myConcoctAttackCard.TargetEnemy.transform;
+                        visualEffect.GetComponent<GenericAttackEffect>().card = myConcoctAttackCard;
+                        visualEffect.GetComponent<GenericAttackEffect>().dealEffect = false;
                         FinishConcoct();
                     }
                     break;

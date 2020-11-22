@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5390041952622558380}
   - component: {fileID: 1397542842228636009}
   m_Layer: 8
-  m_Name: card placeholder
+  m_Name: Alchemist Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4f68a1161891d1042ad2a628dc34a050, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ecd6e260aa5129408eab7309bf0b92b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,12 +102,12 @@ MonoBehaviour:
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
+  thisVirtualCard: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
-  selected: 0
+  Tooltips: []
   concocted: 0
   isConcoct: 0
   selectable: 1
-  highlighted: 0
   highlightPreviousHeight: 0
   highlightPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
   hoverEffectsEnabled: 1
@@ -124,7 +124,10 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   followCardPositionToFollow: 0
+  AmountofStacks: 1
+  StackConversionRate: 2
 --- !u!61 &5390041952622558380
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -142,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.466666, y: 12.422222}
+    oldSize: {x: 8.181818, y: 12.727273}
     newSize: {x: 6.91, y: 10.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -164,7 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 11400000, guid: 1952d85342a757e409af185138558a2f, type: 2}
+  PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
+  cardExtensions: []
   isVirtual: 0
   isPhysical: 0
   BaseDamage: 0
@@ -174,6 +179,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   currentCooldownTime: 0
 --- !u!1 &5592698843469498785
 GameObject:

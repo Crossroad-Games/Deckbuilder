@@ -6,6 +6,14 @@ public class GentleBreezeCard : NonTargetCard
 {
     [SerializeField] private GentleBreezeOverflow myOverflow;// Reference to the overflow will be used on the Levelrank method to determine how many cards will be drawn
     [SerializeField] private HastenKeyword myHasten;// Reference to the Hasten keyword will be used on the LevelRanks method to determine how strong will the hasten effect be
+
+    protected override void Awake()
+    {
+        myOverflow = GetComponent<GentleBreezeOverflow>();
+        myHasten = GetComponent<HastenKeyword>();
+        base.Awake();
+    }
+
     public override IEnumerator CardEffect()
     {
         effectFinished = true;

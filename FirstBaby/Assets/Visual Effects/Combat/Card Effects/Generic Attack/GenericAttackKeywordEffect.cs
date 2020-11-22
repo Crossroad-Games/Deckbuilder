@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisualEffectTest2 : MonoBehaviour
+public class GenericAttackKeywordEffect : MonoBehaviour
 {
-    public PhysicalCard card;
+    public VirtualCard virtualCard;
     public Transform targetTransform;
     private Animator anim;
+    public GameObject cardUI;
     private bool moveToTarget;
     private bool actuated;
     public bool dealEffect;
@@ -22,30 +23,20 @@ public class VisualEffectTest2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(moveToTarget)
+        if (moveToTarget)
         {
-            if(targetTransform != null)
+            if (targetTransform != null)
                 transform.position = Vector3.Lerp(transform.position, targetTransform.position, orbMovementSpeed * Time.deltaTime); // Move the orb to enemy position
-            if((transform.position - targetTransform.position).magnitude <= 0.2f && !actuated)
+            if ((transform.position - targetTransform.position).magnitude <= 0.2f && !actuated)
             {
                 actuated = true;
-                if(dealEffect)
-                    card.DealEffect();
-                if (card.cardPorpuse == CardPorpuse.Attack)
+                if (dealEffect)
                 {
-                    StartCoroutine(card.DealDamage());
-                    card.EndDealDamage();
-                    if(card.type == "ConcoctCardAttack")
+                    foreach(KeyValuePair<string, VirtualCardExtension> extensionEffect in virtualCard.virtualCardExtensions)
                     {
-                        ConcoctCardAttack concoctCard = card as ConcoctCardAttack;
-                        StartCoroutine(concoctCard.DealDamage(concoctCard.myConcoct.cardsToConcoct));
-                        concoctCard.EndDealDamage();
-                        Debug.Log("chamou dealDamage");
+                        extensionEffect.Value.DealEffect();
                     }
-                }
-                else
-                {
-                    throw new MissingReferenceException("This effect is attack only");
+                    ByeByeCardUI();
                 }
                 anim.SetTrigger("ActivateExplosion");
             }
@@ -60,5 +51,10 @@ public class VisualEffectTest2 : MonoBehaviour
     public void ByeBye()
     {
         Destroy(this.gameObject);
+    }
+
+    public void ByeByeCardUI()
+    {
+        Destroy(cardUI);
     }
 }

@@ -171,7 +171,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a09d90dd541d6fb458d991b148183b71, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 851bb013b41999445a08d303a8314416, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -224,12 +224,12 @@ MonoBehaviour:
   cardInfo: {fileID: 0}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
+  thisVirtualCard: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
-  selected: 0
+  Tooltips: []
   concocted: 0
   isConcoct: 0
   selectable: 1
-  highlighted: 0
   highlightPreviousHeight: 0
   highlightPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
   hoverEffectsEnabled: 1
@@ -246,8 +246,11 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   followCardPositionToFollow: 0
+  myConcoct: {fileID: 0}
   canceledConcoct: 0
+  ExtraDraw: 0
 --- !u!114 &3905744974814689284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +263,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cff256ff389f3e48b4a307954abd8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Keyword: 
   isConcocting: 0
   concoctPorpuse: 3
+  cardsToConcoct: []
   concoctCardPosition: {x: 6.9, y: -0.8, z: 0.7}
 --- !u!114 &2241774614468026059
 MonoBehaviour:
@@ -276,4 +281,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardInfo: {fileID: 11400000, guid: ad21497832c51604586e5cee2274063d, type: 2}
+  PhysicalCardBehaviour: {fileID: 0}
+  Player: {fileID: 0}
+  cardExtensions: []
+  isVirtual: 0
+  isPhysical: 0
+  BaseDamage: 0
+  BaseShield: 0
+  BaseHeal: 0
+  AddValue: 0
+  SubtractValue: 0
+  Multiplier: 1
+  Divider: 1
+  CardLevel: 0
   currentCooldownTime: 0

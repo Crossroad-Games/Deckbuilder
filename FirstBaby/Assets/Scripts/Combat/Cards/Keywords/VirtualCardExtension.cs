@@ -9,7 +9,8 @@ public abstract class VirtualCardExtension : MonoBehaviour
     protected CombatPlayer combatPlayer;
     protected CombatManager combatManager;
     protected EnemyManager enemyManager;
-    protected EnemyClass targetEnemy;
+    protected List<EnemyClass> targetEnemies = new List<EnemyClass>();
+    [SerializeField] protected Vector3 keywordCardUIPosition;
     #endregion
     [HideInInspector] public string Keyword;// This extension's keyword
     public abstract void ExtensionEffect();// Each Keyword will have its own effect
@@ -20,4 +21,6 @@ public abstract class VirtualCardExtension : MonoBehaviour
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
         enemyManager = GameObject.Find("Enemy Manager").GetComponent<EnemyManager>();
     }
+
+    public abstract void DealEffect();
 }

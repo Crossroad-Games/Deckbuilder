@@ -110,7 +110,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f3449a0ffa8bc074493bfc3450ab6688, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd5c4275b3a79064f950107ade25ce2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -163,12 +163,12 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: cbf3c1893debb664ca4600def6ee6aed, type: 2}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
+  thisVirtualCard: {fileID: 0}
   combatProperties: {fileID: 11400000, guid: f0e08fadc186c8843a6c2449dc1ab9b7, type: 2}
-  selected: 0
+  Tooltips: []
   concocted: 0
   isConcoct: 0
   selectable: 1
-  highlighted: 0
   highlightPreviousHeight: 0
   highlightPreviousRotation: {x: 0, y: 0, z: 0, w: 0}
   hoverEffectsEnabled: 1
@@ -185,6 +185,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   followCardPositionToFollow: 0
 --- !u!114 &2280117738075678222
 MonoBehaviour:
@@ -201,6 +202,7 @@ MonoBehaviour:
   cardInfo: {fileID: 11400000, guid: cbf3c1893debb664ca4600def6ee6aed, type: 2}
   PhysicalCardBehaviour: {fileID: 0}
   Player: {fileID: 0}
+  cardExtensions: []
   isVirtual: 0
   isPhysical: 0
   BaseDamage: 0
@@ -210,6 +212,7 @@ MonoBehaviour:
   SubtractValue: 0
   Multiplier: 1
   Divider: 1
+  CardLevel: 0
   currentCooldownTime: 0
 --- !u!114 &4030297395475201171
 MonoBehaviour:
@@ -223,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41478dd4dc436114d8cbdfa2fddeedc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keywordCardUIPosition: {x: 1650, y: 425, z: 0}
   Keyword: 
   ExtraDamage: 5
 --- !u!114 &5556682235675943286

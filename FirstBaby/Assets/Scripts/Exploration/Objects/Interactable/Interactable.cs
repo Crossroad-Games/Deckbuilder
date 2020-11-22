@@ -11,6 +11,7 @@ public abstract class Interactable : MonoBehaviour
     protected GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
     [SerializeField] public List<Targetable> Targets;// Target objects reference
     [SerializeField] private bool Reusable = false;// Boolean to determine if this can be interacted with more than once
+    [HideInInspector]public bool CanInteract=true;// If this interactable can be interacted with
     public bool Used = false;// Boolean to determine if, if its not reusable, this has been actuated once or not
     private SaveLoad saveLoad;
     public virtual void Awake()
@@ -41,7 +42,7 @@ public abstract class Interactable : MonoBehaviour
             if ((Player.transform.position - transform.position).magnitude <= InteractableDistance)// If player is within interactable distance
             {
                 NearInteractable?.Invoke();// Calls all functions tied to  being near an interactable object
-                if (Input.GetButtonDown("Interact"))// If the player presses the interact button and is able to use it
+                if (Input.GetButtonDown("Interact")&&CanInteract)// If the player presses the interact button and is able to use it
                 {
                     Debug.Log("Interacted with it");
                     Interacting?.Invoke();// Calls all function subscribed to interacting with an object
@@ -49,7 +50,7 @@ public abstract class Interactable : MonoBehaviour
                     if (!Reusable)// If it is not reusable
                         Used = true;// Can't use it again
                 }
-                else if (Input.GetButtonUp("Interact"))// When the user lets go of the button
+                else if (Input.GetButtonUp("Interact")&&CanInteract)// When the user lets go of the button
                 {
                     OnUnActuation();// Function designed to deal with special cases when releasing the interactive object should do something
                 }

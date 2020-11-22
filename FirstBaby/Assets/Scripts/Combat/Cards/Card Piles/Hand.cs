@@ -432,7 +432,7 @@ public class Hand : CardPile
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
         foreach (PhysicalCard card in physicalCardsInHand)
         {
-            if(card.selected)
+            if(card.selected && TurnManager.State==CombatState.PlayerActionPhase)
             {
                 if (card.type == "TargetCard" || card.type == "ConcoctCardAttack" || card.type == "ConcoctCardEffectTarget")
                 {
