@@ -19,6 +19,7 @@ public abstract class EnemyClass : MonoBehaviour
     [SerializeField] private GameObject ShieldIcon=null;// Icon that will display taht this enemy will defend/gain shield
     [SerializeField] private GameObject SpecialIcon=null;// Icon that wiill display that this enemy will use a special effect
     private TMP_Text ShieldAmount = null;// Text that display the amount of shield the enemy has
+    private TMP_Text HPAmount = null;// Text that display the amount of health the enemy has
     [SerializeField] protected float RandomValue;// This random value is rolled every end of turn and at start
     [SerializeField] public bool Incapacitated=false;// Is this enemy able to act?
     private List<SpriteRenderer> WardOverloadList = new List<SpriteRenderer>();
@@ -94,6 +95,8 @@ public abstract class EnemyClass : MonoBehaviour
         Damage -= SpendShield(Damage);// Spend the shield pool to reduce the incoming damage
         Damage = Damage <= 0 ? 0 : Damage;// If the damage went beyond 0, set it to be 0, if not: keep the value
         LoseLife(Damage);// Apply damage to the enemy's HP
+        HPAmount.text = myData.EnemyHP.ToString();
+        //TODO:Update UI
     }
     #endregion
 
@@ -150,6 +153,8 @@ public abstract class EnemyClass : MonoBehaviour
         hpUI.transform.SetParent(this.transform, false);
         HPBarFill = hpUI.transform.Find("Bar Fill").gameObject;
         HPBarFill.transform.localScale = new Vector3((float)myData.EnemyHP / myData.EnemyMaxHP, HPBarFill.transform.localScale.y, HPBarFill.transform.localScale.z);
+        HPAmount = hpUI.GetComponentInChildren<TMP_Text>();
+        HPAmount.text = myData.EnemyHP.ToString();
         #endregion
         #region Ward Bar Setup
         GameObject WardUI = Instantiate(Resources.Load("UI/EnemyUI/Ward Bar Anchor"), UIPosition, Quaternion.identity) as GameObject;

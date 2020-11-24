@@ -33,8 +33,9 @@ public class Hand : CardPile
     [SerializeField] private int MaxHandDraw = 5;// Draw up to 5 cards every start of turn
     [SerializeField] private int MaxCardsInHand = 10; // Limits the number of cards in hand from all sources
     [SerializeField] private float DrawDelay = .15f;// Apply a small delay between each draw
-    private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
     public Camera camera2;
+    private LineRenderer arrowRenderer; // the renderer that will be used to draw the arrow of when player is aiming at target
+    private Bezier bezierArrowCurve;
 
     #endregion
 
@@ -94,6 +95,9 @@ public class Hand : CardPile
         CDPile = transform.Find("CDPile").GetComponent<CDPile>();
         Saver = GameObject.Find("Game Master").GetComponent<SaveLoad>();
         UIManager = GameObject.Find("UI Manager").GetComponent<CardsGallery>();
+        bezierArrowCurve = GetComponent<Bezier>();
+        arrowRenderer = bezierArrowCurve.lineRenderer;
+        arrowRenderer.enabled = false;
         //////////Initialization of event /////////////
         combatPlayer.OnMouseEnterCard += HighlightCard;
         combatPlayer.OnMouseExitCard += UnhighlightCard;
@@ -482,18 +486,15 @@ public class Hand : CardPile
         RaycastHit hit;
         Physics.Raycast(ray, out hit);
         //Draw Arrow
-        if(!createdArrow)
+        bezierArrowCurve.lineRenderer.enabled = true;
+        bezierArrowCurve.point0.position = card.transform.position;
+        bezierArrowCurve.point3.position = hit.point;
+        bezierArrowCurve.DrawCubicCurve();
+        Debug.Log("createdArrow");
+        if (!createdArrow)
         {
-            GameObject line = new GameObject();
-            line.layer = 14;
-            line.transform.position = card.transform.position;
-            line.AddComponent<LineRenderer>();
-            arrowRenderer = line.GetComponent<LineRenderer>();
-            Debug.Log("createdArrow");
             createdArrow = true;
         }
-        arrowRenderer.SetPosition(0, card.transform.position); // sets the origin position of the line renderer to be the card transform position. TODO: put this origin position in the top of the card
-        arrowRenderer.SetPosition(1, hit.point); // sets the end position of the line renderer to be in the mouse pointer position.
     }
 
     private void UndoAimAtTarget(GameObject card) //Destroy the arrow
@@ -502,9 +503,9 @@ public class Hand : CardPile
         {
             if (arrowRenderer != null)
             {
-                Debug.Log("destruiuArrow");
+                Debug.Log("dessativou Arrow");
                 Debug.Log(arrowRenderer.gameObject);
-                GameObject.Destroy(arrowRenderer.gameObject);
+                bezierArrowCurve.lineRenderer.enabled = false;
                 createdArrow = false;
             }
         }
