@@ -7,12 +7,13 @@ public class MouseOnEnemy : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer=0;
     public Camera camera2;
     public bool mouseOverEnemy;
+    private Bezier bezierArrowCurve;
 
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        bezierArrowCurve = GetComponent<Bezier>();
     }
 
     // Update is called once per frame
@@ -21,10 +22,14 @@ public class MouseOnEnemy : MonoBehaviour
         if(isMouseOnEnemy())
         {
             mouseOverEnemy = true;
+            bezierArrowCurve.lineRenderer.startColor = bezierArrowCurve.lineRenderer.startColor;
+            bezierArrowCurve.lineRenderer.endColor = new Color(255, 0, 0);
         }
         else
         {
             mouseOverEnemy = false;
+            bezierArrowCurve.lineRenderer.startColor = bezierArrowCurve.lineRenderer.startColor;
+            bezierArrowCurve.lineRenderer.endColor = new Color(220, 30, 30);
         }
     }
 

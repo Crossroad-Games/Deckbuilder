@@ -37,6 +37,7 @@ public class CombatPlayer : MonoBehaviour
     public CombatManager CombatManager;
     public Camera camera2;
     public Shield playerShield;
+    private Bezier bezierArrowCurve;
     #endregion
 
 
@@ -96,6 +97,7 @@ public class CombatPlayer : MonoBehaviour
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
         CombatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
         EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();
+        bezierArrowCurve = GetComponent<Bezier>();
     }
     #endregion
 

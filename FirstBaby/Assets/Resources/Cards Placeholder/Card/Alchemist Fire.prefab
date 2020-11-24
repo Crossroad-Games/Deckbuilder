@@ -127,7 +127,7 @@ MonoBehaviour:
   CardLevel: 0
   followCardPositionToFollow: 0
   AmountofStacks: 1
-  StackConversionRate: 2
+  StackConversionRate: 1
 --- !u!61 &5390041952622558380
 BoxCollider2D:
   m_ObjectHideFlags: 0
