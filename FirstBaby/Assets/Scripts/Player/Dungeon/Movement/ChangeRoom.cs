@@ -8,7 +8,9 @@ public class ChangeRoom : MonoBehaviour
     //[SerializeField] private List<GameObject> ControlFloors = new List<GameObject>();
     //[SerializeField] private List<GameObject> ControlObjects = new List<GameObject>();
     [SerializeField] private List<GameObject> ControlRooms = new List<GameObject>();
+    [SerializeField] private List<GameObject> ReverseControlRooms = new List<GameObject>();
     [SerializeField] private List<GameObject> LoadLayerStateList = new List<GameObject>();
+    private List<int> ReverseInitialLayerList = new List<int>();// List of the layers each object had before the flip
     private List<int> InitialLayerList = new List<int>();// List of the layers each object had before the flip
     public ListWrapper ListWrapper = new ListWrapper();
     private int iterator;// Used to sync each item to their respective on the previouslayer list when recursevely alternating their states
@@ -18,7 +20,10 @@ public class ChangeRoom : MonoBehaviour
         dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;
         foreach (GameObject Room in ControlRooms)// Cycle through all the objects this component will change layers
             if (Room != null)// If component not null
-                StoreLayerRecursively(Room);// Store its initial layer
+                StoreLayerRecursively(Room, false);// Store its initial layer
+        foreach (GameObject Room in ReverseControlRooms)// Cycle through all the objects this component will change layers
+            if (Room != null)// If component not null
+                StoreLayerRecursively(Room, true);// Store its initial layer
         ListWrapper.LayerList = new List<int>();
     }
     private void OnTriggerExit(Collider other)
@@ -26,27 +31,31 @@ public class ChangeRoom : MonoBehaviour
         if(other.tag=="Player")// If the player just triggered this door
         {
             var whichLayer = 0;
+            var reverseWhichLayer = 0;
             iterator = 0;// Reset the iterator value
             ListWrapper.LayerList.Clear();
-            Debug.Log(transform.parent.rotation.eulerAngles.y);
             if (transform.parent.rotation.eulerAngles.y == 180 || transform.parent.rotation.eulerAngles.y == -180 || transform.parent.rotation.eulerAngles.y == 0)
             {
-                Debug.Log((other.gameObject.transform.position.z - this.transform.position.z));
                 whichLayer = (other.gameObject.transform.position.z - this.transform.position.z) > 0 ? 29 : 0;// If the player has a higher Z value, wall is behind him, fade it
+                reverseWhichLayer = (other.gameObject.transform.position.z - this.transform.position.z) > 0 ? 0 : 29;
             }
             else
             {
-                Debug.Log((other.gameObject.transform.position.x - this.transform.position.x));
                 whichLayer = (other.gameObject.transform.position.x - this.transform.position.x) > 0 ? 0 : 29;// If the player has a higher Z value, wall is behind him, fade it
+                reverseWhichLayer = (other.gameObject.transform.position.x - this.transform.position.x) > 0 ? 29 : 0;
             }
             #region Ghost Room
             foreach (GameObject Room in ControlRooms)// For each Room gameRoom tied to this controller
                 if(Room!=null)
-                    SetLayerRecursively(Room, whichLayer);
+                    SetLayerRecursively(Room, whichLayer, false);
+            iterator = 0;
+            foreach (GameObject Room in ReverseControlRooms)
+                if (Room != null)
+                    SetLayerRecursively(Room, reverseWhichLayer, true);
             #endregion
             foreach (GameObject Room in LoadLayerStateList)
                 if (Room != null)
-                    StoreLayerRecursively(Room, true);
+                    StoreLayerRecursively(Room, false, true);
             LevelGameData.Current.ObjectsLayer = ListWrapper;// Copy this ListWrapper
             iterator = 0;
             foreach(Door Door in dungeonInteractables)// Go through each Door in the interactables list
@@ -102,8 +111,9 @@ public class ChangeRoom : MonoBehaviour
             */
         }
     }
-    void SetLayerRecursively(GameObject obj, int newLayer)
+    public void SetLayerRecursively(GameObject obj, int newLayer, bool isReverse)
     {
+        Debug.Log("Setting Layers");
         if (null == obj)
         {
             return;
@@ -112,7 +122,10 @@ public class ChangeRoom : MonoBehaviour
             obj.layer = newLayer;// Ghost this layer
         else
         {
-            obj.layer = InitialLayerList[iterator];
+            if (!isReverse)
+                obj.layer = InitialLayerList[iterator];
+            else
+                obj.layer = ReverseInitialLayerList[iterator];
             iterator++;
         }
 
@@ -122,7 +135,7 @@ public class ChangeRoom : MonoBehaviour
             {
                 continue;
             }
-            SetLayerRecursively(child.gameObject, newLayer);
+            SetLayerRecursively(child.gameObject, newLayer, isReverse);
         }
     }
     void SetLayerRecursively(GameObject obj)
@@ -145,23 +158,27 @@ public class ChangeRoom : MonoBehaviour
             SetLayerRecursively(child.gameObject);
         }
     }
-    void StoreLayerRecursively(GameObject obj)
+    void StoreLayerRecursively(GameObject obj, bool isReverse)
     {
         if (null == obj)
         {
             return;
         }
+        if (!isReverse)
             InitialLayerList.Add(obj.layer);// Store this object's layer
+        else
+            ReverseInitialLayerList.Add(obj.layer);// Store this object's layer
         foreach (Transform child in obj.transform)
         {
             if (null == child)
             {
                 continue;
             }
-            StoreLayerRecursively(child.gameObject);
+
+            StoreLayerRecursively(child.gameObject,isReverse);
         }
     }
-    void StoreLayerRecursively(GameObject obj, bool ToSave)
+    void StoreLayerRecursively(GameObject obj, bool isReverse, bool ToSave)
     {
         if (null == obj)
         {
@@ -174,7 +191,7 @@ public class ChangeRoom : MonoBehaviour
             {
                 continue;
             }
-            StoreLayerRecursively(child.gameObject, ToSave);
+            StoreLayerRecursively(child.gameObject,isReverse, ToSave);
         }
     }
     public void LoadList(ListWrapper LoadedList)
