@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum Scene { Dungeon, Combat};
+public enum GameScene { Dungeon, Combat};
 public enum CardPileToShow { DrawPile, CD, CD1, CD2, CD3plus, Hand};
 public class CardsGallery : MonoBehaviour
 {
-    [SerializeField] Scene Scene;
+    [SerializeField] GameScene Scene;
     [SerializeField] private Vector3 TextPosition;
     public GameObject DeckGallery;
     public GameObject CombatTempGallery;
@@ -48,7 +48,7 @@ public class CardsGallery : MonoBehaviour
     private void Awake()
     {
         #region Initialization
-        if (Scene == Scene.Combat)// If this is a combat scene
+        if (Scene == GameScene.Combat)// If this is a combat scene
         {
             combatPlayer = GameObject.Find("Combat Player").GetComponent<CombatPlayer>();
             playerHand = combatPlayer.GetComponent<Hand>();
@@ -84,7 +84,7 @@ public class CardsGallery : MonoBehaviour
     void Start()
     {
         Debug.Log("ui manager start");
-        if (Scene == Scene.Combat)
+        if (Scene == GameScene.Combat)
         {
             drawPileButton.onClick.AddListener(delegate { ShowTempGallery(playerDrawPile.cardsList,true,false); });
             CD_Button.onClick.AddListener(delegate { ShowTempGallery(playerCDPile.cardsList,false,true); });
@@ -108,7 +108,7 @@ public class CardsGallery : MonoBehaviour
         {
             // Show cards UI
             isShowingGallery = true;
-            if(Scene==Scene.Combat)
+            if(Scene==GameScene.Combat)
             {
                 if (OnGalleryOpen != null)
                 {
@@ -308,7 +308,7 @@ public class CardsGallery : MonoBehaviour
                 cardsDisplayed.RemoveAt(i);
             }
             DeckGallery.SetActive(false);
-            if(Scene==Scene.Combat)
+            if(Scene==GameScene.Combat)
             {
                 foreach (PhysicalCard card in playerHand.physicalCardsInHand)
                 {

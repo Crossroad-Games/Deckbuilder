@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 5, z: 0.5}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 3, y: 5, z: 0}
+  m_Center: {x: -0, y: 2, z: -0.077905595}
 --- !u!114 &8343278417451083798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,10 +57,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77adf28a942461b4ba41c02d93430538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControlWalls: []
-  ControlFloors: []
-  ControlObjects: []
   ControlRooms: []
+  ReverseControlRooms: []
+  LoadLayerStateList: []
+  ListWrapper:
+    LayerList: 
 --- !u!64 &6292837813529087412
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -90,6 +91,7 @@ MonoBehaviour:
   InteractableDistance: 1
   Targets: []
   Reusable: 0
+  CanInteract: 1
   Used: 0
   SlideSpeed: 2.5
 --- !u!64 &547915182791470481

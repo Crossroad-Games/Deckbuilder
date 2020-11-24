@@ -1305,7 +1305,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7702687395369633734, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
   m_PrefabInstance: {fileID: 3020901802590070375}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3020901802590070378}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32afbed2c69fb4b4183c7f94551e1d6d, type: 3}
@@ -11639,6 +11639,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1203767602922064141, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -35
+      objectReference: {fileID: 0}
     - target: {fileID: 2894922930624278693, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -19179,6 +19183,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -28
       objectReference: {fileID: 0}
+    - target: {fileID: 7702687395369633734, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
+      propertyPath: Targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7702687395369633734, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
+      propertyPath: Targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 3020901802590070379}
     - target: {fileID: 7702687396396831855, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
       propertyPath: Targets.Array.size
       value: 1
@@ -19212,6 +19224,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DungeonSceneName: SecondFloor
   SpawnPosition: {x: -20, y: 1, z: 31}
+--- !u!1 &3020901802590070378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4567902683335526275, guid: 43ddc20cc6500274c832ca2c16a2012a, type: 3}
+  m_PrefabInstance: {fileID: 3020901802590070375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3020901802590070379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3020901802590070378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0413845c56bd3c64fa80c1f300c9ae5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DungeonSceneName: ThirdFloor
+  SpawnPosition: {x: -36, y: 1, z: 22}
 --- !u!1001 &5613417913049617714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19241,7 +19272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5613417911982569501, guid: acd18cebc73df99418977ab13fd811f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00000029802322
+      value: -0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 5613417911982569501, guid: acd18cebc73df99418977ab13fd811f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -19306,7 +19337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7252507569881067103, guid: 4b75de770c3ce104a8336df06d67a539, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00000029802322
+      value: -0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 7252507569927191688, guid: 4b75de770c3ce104a8336df06d67a539, type: 3}
       propertyPath: m_Name
