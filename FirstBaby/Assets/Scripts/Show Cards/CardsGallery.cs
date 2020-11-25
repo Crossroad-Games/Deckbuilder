@@ -73,6 +73,7 @@ public class CardsGallery : MonoBehaviour
         {
             dungeonPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<DungeonPlayer>();// Reference to the dungeon player is set
             ShowCollection = GameObject.Find("Menu").transform.Find("ShowCollectionButton").GetComponent<Button>();// Button that will show the card collection
+            GameObject.Find("Menu").SetActive(false);
         }
         DeckGallery = GameObject.Find("Deck Gallery");
         ReturnButton = GameObject.Find("Return").GetComponent<Button>();
