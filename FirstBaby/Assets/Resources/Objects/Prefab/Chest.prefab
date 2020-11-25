@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858de3920983b5a48b1c09a1bd8fd022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableDistance: 2
+  InteractableDistance: 0.75
   Targets: []
   Reusable: 0
   CanInteract: 1
