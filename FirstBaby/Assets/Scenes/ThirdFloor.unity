@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3300778948872592442, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
   m_PrefabInstance: {fileID: 3300778948753083310}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3300778948753083311}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32afbed2c69fb4b4183c7f94551e1d6d, type: 3}
@@ -16935,6 +16935,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 255479482}
+    - target: {fileID: 3300778948872592442, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: Targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300778948872592442, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: Targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 3300778948753083312}
     - target: {fileID: 3300778948873122802, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -17477,3 +17485,22 @@ PrefabInstance:
       objectReference: {fileID: 360153753}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+--- !u!1 &3300778948753083311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3300778948732828945, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+  m_PrefabInstance: {fileID: 3300778948753083310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3300778948753083312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300778948753083311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0413845c56bd3c64fa80c1f300c9ae5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DungeonSceneName: FourthFloor
+  SpawnPosition: {x: -71, y: 0.5, z: 20}

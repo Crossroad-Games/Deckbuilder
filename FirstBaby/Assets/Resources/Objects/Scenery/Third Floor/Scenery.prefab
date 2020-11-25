@@ -42962,6 +42962,7 @@ GameObject:
   - component: {fileID: 3300778948732829036}
   - component: {fileID: 3300778948732829039}
   - component: {fileID: 3300778948872592442}
+  - component: {fileID: 3300778948753083312}
   m_Layer: 0
   m_Name: Bars
   m_TagString: Untagged
@@ -43059,11 +43060,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractableDistance: 1
-  Targets: []
+  Targets:
+  - {fileID: 3300778948753083312}
   Reusable: 0
   CanInteract: 1
   Used: 0
   SlideSpeed: 2.5
+--- !u!114 &3300778948753083312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3300778948732828945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0413845c56bd3c64fa80c1f300c9ae5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DungeonSceneName: FourthFloor
+  SpawnPosition: {x: -71, y: 0.5, z: 20}
 --- !u!1 &3300778948741630039
 GameObject:
   m_ObjectHideFlags: 0

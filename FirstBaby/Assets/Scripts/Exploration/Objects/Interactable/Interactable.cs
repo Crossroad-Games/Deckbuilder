@@ -11,7 +11,7 @@ public abstract class Interactable : MonoBehaviour
     protected GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
     [SerializeField] public List<Targetable> Targets;// Target objects reference
     [SerializeField] private bool Reusable = false;// Boolean to determine if this can be interacted with more than once
-    [HideInInspector]public bool CanInteract=true;// If this interactable can be interacted with
+    public bool CanInteract=true;// If this interactable can be interacted with
     public bool Used = false;// Boolean to determine if, if its not reusable, this has been actuated once or not
     private SaveLoad saveLoad;
     public virtual void Awake()
