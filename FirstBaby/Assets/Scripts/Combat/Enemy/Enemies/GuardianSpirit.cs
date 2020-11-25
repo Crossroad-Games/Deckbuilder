@@ -6,10 +6,6 @@ public class GuardianSpirit : EnemyClass
 {
    
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public override void EnemyIntention()
     {
         IntendedActions.Clear();

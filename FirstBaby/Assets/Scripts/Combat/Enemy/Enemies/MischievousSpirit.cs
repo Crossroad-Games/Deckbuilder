@@ -5,13 +5,6 @@ using UnityEngine;
 public class MischievousSpirit : EnemyClass
 {
     // Start is called before the first frame update
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public override void EnemyIntention()
     {
         IntendedActions.Clear();// Clears this enemy's intend action list

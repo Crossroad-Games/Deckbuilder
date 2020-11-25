@@ -8,7 +8,7 @@ public class PlayerStatusTray : MonoBehaviour
 {
     public Dictionary<string,GameObject> PlayerEffects;// List of effects currently on the player
     public Action<PlayerEffect> OnAddEffect;// Event called whenever a new status is added
-    [SerializeField] private Vector3 FirstIcon = new Vector3(-.75f,-1.7f,0);// Position of the first icon
+    [SerializeField] private Vector3 FirstIcon = new Vector3(-.75f,-1f,0);// Position of the first icon
     [SerializeField] private float OffsetIcon = .35f;// Distance from one icon to another
     private void Awake()
     {

@@ -48,6 +48,11 @@ public abstract class EnemyClass : MonoBehaviour
             myDeath();// Destroy this enemy
         }
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+            KillMe();
+    }
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
     public void KillMe()// Instantly kill this enemy
     {
