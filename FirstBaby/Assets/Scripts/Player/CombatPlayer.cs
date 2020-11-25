@@ -423,19 +423,18 @@ public class CombatPlayer : MonoBehaviour
     #region UI Update
     public void UpdateShield()
     {
+        playerShield.gameObject.SetActive(myData.PlayerShield > 0);
         if (myData.PlayerShield >= 100)// If there is more than 100 Ward
         {
             WardBarFill.fillAmount = (myData.PlayerShield % 100) != 0 ? ((myData.PlayerShield % 100) / 100f) : 1;// Check if it is a multiple of 100, because 200 should be 100 on the bar and 1 Charge
             ShieldAmount.text = (myData.PlayerShield % 100) != 0 ? $"{(myData.PlayerShield % 100)}" : "100";// Uses the variable as a string
-            playerShield.gameObject.SetActive(true);
             for (var iterator = 0; iterator < 9; iterator++)// Go through all ward overload charges
                 WardOverloadList[iterator].enabled = iterator+1 <= (Mathf.FloorToInt(myData.PlayerShield / 100));//  Enable all below the threshold(multiples of 100) and disable all above it
         }
-        else if(myData.PlayerShield > 0 && myData.PlayerShield < 100)
-        {
+        else if(myData.PlayerShield < 100)
+        {    
             WardBarFill.fillAmount = (float)myData.PlayerShield / 100f;// If there is less than 100 shield, convert it directly to %
             ShieldAmount.text = $"{myData.PlayerShield}";// Uses the variable as a string
-            playerShield.gameObject.SetActive(true);
             Color color = playerShield.shieldMaterial.GetColor("shieldColor");
             float intensity = ((float) myData.PlayerShield / 50) * 4;
             Debug.Log(intensity);
@@ -445,10 +444,6 @@ public class CombatPlayer : MonoBehaviour
             foreach (Image OverloadCharge in WardOverloadList)// Cycle through all overload charge sprites
                 if (OverloadCharge != null)// If it is not null
                     OverloadCharge.enabled = false;// Disable it
-        }
-        else
-        {
-            playerShield.gameObject.SetActive(false);
         }
         
     }

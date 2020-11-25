@@ -1294,6 +1294,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 270060053}
     - target: {fileID: 4878995191953954817, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: m_Name
       value: Reward Manager
@@ -2585,6 +2589,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+--- !u!1 &270060053 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 382036302012737704, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+  m_PrefabInstance: {fileID: 270060052}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &281039537
 Mesh:
   m_ObjectHideFlags: 0
@@ -4961,7 +4970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7252507569881067103, guid: 4b75de770c3ce104a8336df06d67a539, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00000059604645
+      value: -0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 7252507569927191688, guid: 4b75de770c3ce104a8336df06d67a539, type: 3}
       propertyPath: m_Name
@@ -7208,7 +7217,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5613417911982569501, guid: acd18cebc73df99418977ab13fd811f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9600006
+      value: -1.9600005
       objectReference: {fileID: 0}
     - target: {fileID: 5613417911982569501, guid: acd18cebc73df99418977ab13fd811f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16351,6 +16360,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1938128037}
+    - target: {fileID: 3300778947911370792, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 270060053}
     - target: {fileID: 3300778947916333251, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -16579,6 +16592,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1960893658}
+    - target: {fileID: 3300778948220228539, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 270060053}
     - target: {fileID: 3300778948225141989, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -16915,6 +16932,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1698603077}
+    - target: {fileID: 3300778948823275745, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 270060053}
     - target: {fileID: 3300778948832783544, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -16963,6 +16984,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 864067861}
+    - target: {fileID: 3300778948889316494, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 270060053}
     - target: {fileID: 3300778948896618201, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -17227,6 +17252,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 97530423}
+    - target: {fileID: 3300778949494086747, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: CardSelectionUI
+      value: 
+      objectReference: {fileID: 270060053}
     - target: {fileID: 3300778949540124102, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
