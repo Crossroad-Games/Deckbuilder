@@ -15,8 +15,8 @@ MonoBehaviour:
   thisID: 8
   thisName: Disruptive Blow
   thisDescription: Deals % shield damage and blocks CD Pile
-  isAttack: 0
+  isAttack: 1
   isShield: 0
-  isSpecial: 1
+  isSpecial: 0
   BaseDamage: 0
   BaseShield: 0
