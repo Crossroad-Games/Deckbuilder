@@ -215,7 +215,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hasten 1
+  m_text: 'Unstable 3
+
+    Hasten 1
 
     Deal 5 Damage
 

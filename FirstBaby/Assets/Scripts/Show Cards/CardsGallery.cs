@@ -123,6 +123,7 @@ public class CardsGallery : MonoBehaviour
             }
             DeckGallery.SetActive(true);
             cardsToShow.Sort(comparerInt);
+            Debug.Log("Showing Collection");
             var iterator = 0;
             var Sequence = 0;// How many cards are equal to each other
             Text newText = null;
@@ -134,6 +135,7 @@ public class CardsGallery : MonoBehaviour
                     {
                         Sequence = 1;// Not equal to the previous, restart counting
                         tempCard = (GameObject)Instantiate(Resources.Load("UI/Cards UI/" + card), DeckGallery.transform.GetChild(0));
+                        Debug.Log("New Card");
                         tempCard.name = $"{card}";
                         cardsDisplayed.Add(tempCard);
                         cardsDisplayedAsButtons.Add(tempCard, tempCard.GetComponent<Button>());
@@ -144,13 +146,15 @@ public class CardsGallery : MonoBehaviour
                         Sequence++;// Counting up all equal cards
                         if(tempCard.transform.Find("Amount of Copies")==null)// If there is no text yet
                         {
+                            Debug.Log("If there is no text, create one");
                             var tempObj = new GameObject("Amount of Copies");// Creates an empty game object
                             tempObj.transform.SetParent(tempCard.transform);// Set it as a child of the card
                             tempObj.transform.position = TextPosition;// Aligns the text with the card
                             tempObj.AddComponent<Text>();// Creates a text component
                             newText = tempObj.GetComponent<Text>();// Defines the reference to the text
                             newText.font = CopiesTextFont;// Sets the appropriate font
-                        }    
+                        }
+                        Debug.Log("Modify the text");
                         newText.text = $"x{Sequence}";// Shows a text to indicate how many copies of that card are currently on the collection
                     }
                 else
