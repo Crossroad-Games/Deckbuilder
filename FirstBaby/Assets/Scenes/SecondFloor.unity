@@ -1242,6 +1242,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 152519709441189544, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 542018943}
+    - target: {fileID: 152519709441189544, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SkipSelection
+      objectReference: {fileID: 0}
     - target: {fileID: 1174083995801703792, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2854,6 +2862,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+--- !u!114 &542018943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+  m_PrefabInstance: {fileID: 542018942}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b81092c6ceec041bb9dd69d7d79ca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &649303947
 Mesh:
   m_ObjectHideFlags: 0
@@ -8163,5 +8182,22 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 341011281}
+    - target: {fileID: 6674102139289847905, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
+      propertyPath: ReverseControlRooms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674102139289847905, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
+      propertyPath: ControlRooms.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6674102139289847905, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
+      propertyPath: ReverseControlRooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 3411031470176210601}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
+--- !u!1 &3411031470176210601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3411031470596446520, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
+  m_PrefabInstance: {fileID: 3411031470176210600}
+  m_PrefabAsset: {fileID: 0}
