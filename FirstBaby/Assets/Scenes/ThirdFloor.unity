@@ -17907,8 +17907,8 @@ MonoBehaviour:
     PlayerShield: 0
     Name: 
   Enemies:
-  - {fileID: 2398455620489820319, guid: b1b6a3f370c3f3f4ba486f80102ba8ed, type: 3}
   - {fileID: 5884808024575382391, guid: 8829fc04d910bb04986cd5927bc481d9, type: 3}
+  - {fileID: 2398455620489820319, guid: b1b6a3f370c3f3f4ba486f80102ba8ed, type: 3}
   - {fileID: 4577537696564339694, guid: d8542f9a9f1e611459ae868a7b2c899b, type: 3}
 --- !u!114 &3300778948753083327
 MonoBehaviour:

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InteractableDistance: 2
   Targets: []
-  Reusable: 1
+  Reusable: 0
   CanInteract: 1
   Used: 0
+  Test: 0

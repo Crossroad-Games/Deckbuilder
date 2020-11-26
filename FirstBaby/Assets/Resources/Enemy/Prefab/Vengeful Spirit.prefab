@@ -286,7 +286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.03, y: -0.03}
+  m_AnchoredPosition: {x: -0.15, y: 0.3}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1675714452013134875
@@ -432,15 +432,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2400729594399808691, guid: 02de88423a7640a43bef54135b481999, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.125
       objectReference: {fileID: 0}
     - target: {fileID: 2400729594399808691, guid: 02de88423a7640a43bef54135b481999, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 2400729594399808691, guid: 02de88423a7640a43bef54135b481999, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2400729594399808691, guid: 02de88423a7640a43bef54135b481999, type: 3}
       propertyPath: m_LocalRotation.x
@@ -478,6 +478,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackIntention
       objectReference: {fileID: 0}
+    - target: {fileID: 7767450711598144688, guid: 02de88423a7640a43bef54135b481999, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02de88423a7640a43bef54135b481999, type: 3}
 --- !u!1 &7136786830205415807 stripped
@@ -499,15 +503,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2400729594399808691, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.125
       objectReference: {fileID: 0}
     - target: {fileID: 2400729594399808691, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 2400729594399808691, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.02
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2400729594399808691, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -544,6 +548,10 @@ PrefabInstance:
     - target: {fileID: 7767450711598144688, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
       propertyPath: m_Name
       value: ShieldIntention
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767450711598144688, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc1c7a118ecf09141b1c5787a92ea4d9, type: 3}
