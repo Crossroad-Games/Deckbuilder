@@ -1963,6 +1963,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: TextPosition.x
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410425567695307654, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
+      propertyPath: TextPosition.y
+      value: -110
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd31ccd43ab959e40b874beb8c45f16d, type: 3}
 --- !u!43 &164720793
@@ -2483,6 +2491,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SkipSelection
       objectReference: {fileID: 0}
+    - target: {fileID: 827534177752047232, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1174083994335392408, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2582,6 +2594,10 @@ PrefabInstance:
     - target: {fileID: 1174083995801703795, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
       propertyPath: m_Name
       value: Dungeon Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5237933634611255317, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+      propertyPath: m_Name
+      value: Bottom Text
       objectReference: {fileID: 0}
     - target: {fileID: 9034810374144641165, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
       propertyPath: m_IsActive
@@ -16608,6 +16624,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 281039537}
+    - target: {fileID: 3300778948181108215, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: m_SelectedFaces.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300778948181108215, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: m_SelectedEdges.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300778948181108215, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
+      propertyPath: m_SelectedVertices.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3300778948181108215, guid: f2c112984d8b22f4bb9528299f19cfd9, type: 3}
       propertyPath: m_Mesh
       value: 
