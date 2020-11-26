@@ -1358,6 +1358,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9034810374144641165, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
   m_PrefabInstance: {fileID: 326055140}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &326055143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3786378840099693035, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+  m_PrefabInstance: {fileID: 326055140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &341011281
 Mesh:
   m_ObjectHideFlags: 0
@@ -2781,37 +2786,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsCosts.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsButtons.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsButtons.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsButtons.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: CardSelectionUI
       value: 
       objectReference: {fileID: 326055141}
     - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsCosts.Array.data[0]
+      propertyPath: cardSelectionPanel
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsCosts.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
-      propertyPath: cardOptionsCosts.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 326055143}
     - target: {fileID: 4878995191953954817, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: m_Name
       value: Reward Manager

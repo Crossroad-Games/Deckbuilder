@@ -4187,6 +4187,10 @@ PrefabInstance:
       propertyPath: cardOptionsCosts.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardSelectionPanel
+      value: 
+      objectReference: {fileID: 6210013416666511065}
     - target: {fileID: 4878995191953954817, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: m_Name
       value: Reward Manager
@@ -4638,6 +4642,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+--- !u!1 &6210013416666511065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7487461758300872221, guid: 733c40d7fa5cd88498d1e880859ca3a3, type: 3}
+  m_PrefabInstance: {fileID: 6210013416666511064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6641699175459290868
 PrefabInstance:
   m_ObjectHideFlags: 0

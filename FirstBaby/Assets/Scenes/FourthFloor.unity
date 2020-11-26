@@ -611,6 +611,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9034810374144641165, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
   m_PrefabInstance: {fileID: 117315227}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &117315230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3786378840099693035, guid: eff5994265f058a4da47b9ca90da51a4, type: 3}
+  m_PrefabInstance: {fileID: 117315227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &151103455
 Mesh:
   m_ObjectHideFlags: 0
@@ -1933,6 +1938,10 @@ PrefabInstance:
       propertyPath: CardSelectionUI
       value: 
       objectReference: {fileID: 117315228}
+    - target: {fileID: 4878995191953954816, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
+      propertyPath: cardSelectionPanel
+      value: 
+      objectReference: {fileID: 117315230}
     - target: {fileID: 4878995191953954817, guid: 3bdc95b79332ffe4e86a949310fb3e3b, type: 3}
       propertyPath: m_Name
       value: Reward Manager
