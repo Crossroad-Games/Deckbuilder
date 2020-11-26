@@ -27,9 +27,11 @@ public class BarrierCard : NonTargetCard
                 break;
             case 1:// One LVL higher than base
                 BaseShield = 16;// Gains 16 Ward
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseShield = 25;// Gains 25 Ward
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

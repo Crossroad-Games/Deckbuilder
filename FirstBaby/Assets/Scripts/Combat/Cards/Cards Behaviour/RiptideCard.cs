@@ -40,11 +40,13 @@ public class RiptideCard : TargetCard
                 BaseDamage = 5;// Deal damage
                 myHasten.HastenAmount = 2;// Hasten X
                 myOverflow.ExtraDamage = 7;// Deal +X Damage
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseDamage = 5;// Deal damage
                 myHasten.HastenAmount = 3;// Hasten X
                 myOverflow.ExtraDamage = 10;// Deal +X Damage
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

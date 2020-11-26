@@ -48,11 +48,13 @@ public class SeismicStrikeCard : TargetCard
                 BaseDamage = 8;// Deal damage
                 thisVirtualCard.BaseDamage = 8;
                 myOverflow.DamagePercentage = 1.5f;// Deal X% damage
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseDamage = 12;// Deal damage
                 thisVirtualCard.BaseDamage = 12;
                 myOverflow.DamagePercentage = 2;// Deal X% damage
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

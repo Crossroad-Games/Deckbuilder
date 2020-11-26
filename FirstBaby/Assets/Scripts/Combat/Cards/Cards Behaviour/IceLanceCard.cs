@@ -40,12 +40,14 @@ public class IceLanceCard : TargetCard
                 myWildCast.IncapacitatedDuration = 1;// Apply X incapacitate effects
                 thisVirtualCard.BaseDamage = 35;
                 myWildCast.DamagePercentage = .2f;// Deal X% base damage
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseDamage = 40;// Deal damage
                 thisVirtualCard.BaseDamage = 40;
                 myWildCast.IncapacitatedDuration = 2;// Apply X incapacitate effects
                 myWildCast.DamagePercentage = .25f;// Deal X% base damage
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

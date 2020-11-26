@@ -38,11 +38,13 @@ public class FireballCard : TargetCard
                 BaseDamage = 28;// Deal damage
                 thisVirtualCard.BaseDamage = 28;
                 myOverflow.DamagePercentage = .33f;// Deal % of base damage
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseDamage = 36;// Deal damage
                 thisVirtualCard.BaseDamage = 36;
                 myOverflow.DamagePercentage = .5f;// Deal % of base damage
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

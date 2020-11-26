@@ -30,10 +30,12 @@ public class GentleBreezeCard : NonTargetCard
             case 1:// One LVL higher than base
                 myOverflow.DrawAmount = 2;// Draw X cards
                 myHasten.HastenAmount = 5;// Hasten X
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 myOverflow.DrawAmount = 3;// Draw X cards
                 myHasten.HastenAmount = 6;// Hasten X
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }
