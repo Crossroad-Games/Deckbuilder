@@ -25,9 +25,11 @@ public class Riposte : NonTargetCard
                 break;
             case 1:// One LVL higher than base
                 BaseShield = 0;
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseShield = 0;
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

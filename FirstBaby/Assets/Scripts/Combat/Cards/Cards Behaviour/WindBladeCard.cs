@@ -36,10 +36,12 @@ public class WindBladeCard : TargetCard
             case 1:// One LVL higher than base
                 BaseDamage = 25;// Deal damage
                 myUnstable.UnstableIntensity = 3;// Unstable X
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseDamage = 40;// Deal damage
                 myUnstable.UnstableIntensity = 4;// Unstable X
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

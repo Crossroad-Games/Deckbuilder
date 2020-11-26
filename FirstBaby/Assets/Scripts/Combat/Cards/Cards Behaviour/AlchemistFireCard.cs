@@ -64,7 +64,7 @@ public class AlchemistFireCard : TargetCard
                 AmountofStacks = 2;// Applies 2 stacks per use
                 BaseDamage = 7;// Deals 7 damage
                 StackConversionRate = 1;// +1 damage per stack
-                thisVirtualCard.CardName.text = string.Concat(thisVirtualCard.CardName.text, "++");
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

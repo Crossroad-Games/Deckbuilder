@@ -38,11 +38,13 @@ public class BuckthornPowder : TargetCard
                 myFallout.AmountofStacks = 6;// How many agony stacks this card will use
                 myFallout.DamageMultiplier = 2f;// Damage multiplier when agony threshold is met
                 BaseDamage = 12;// Base Damage
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 myFallout.AmountofStacks = 6;// How many agony stacks this card will use
                 myFallout.DamageMultiplier = 3f;// Damage multiplier when agony threshold is met
                 BaseDamage = 15;// Base Damage
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

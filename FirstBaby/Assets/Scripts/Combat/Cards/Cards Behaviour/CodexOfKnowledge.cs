@@ -20,9 +20,11 @@ public class CodexOfKnowledge : NonTargetCard
                 break;
             case 1:// One LVL higher than base
                 AmountToDraw = 3;
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 AmountToDraw = 4;
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

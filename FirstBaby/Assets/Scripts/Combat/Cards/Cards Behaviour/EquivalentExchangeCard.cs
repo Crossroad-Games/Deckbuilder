@@ -31,9 +31,11 @@ public class EquivalentExchangeCard : ConcoctCardEffectNonTarget
                 break;
             case 1:// One LVL higher than base
                 ExtraDraw = 1;
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 ExtraDraw = 2;
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }

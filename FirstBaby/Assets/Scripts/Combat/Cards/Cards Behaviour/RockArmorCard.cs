@@ -40,10 +40,12 @@ public class RockArmorCard : NonTargetCard
             case 1:// One LVL higher than base
                 BaseShield = 30;// Gain X Ward
                 AmountofStacks = 4;// Gain X stacks of Defense
+                thisVirtualCard.CardName.text += "+";
                 break;
             case 2:// Two LVLs higher than base
                 BaseShield = 45;// Gain X Ward
                 AmountofStacks = 5;// Gain X stacks of Defense
+                thisVirtualCard.CardName.text += "++";
                 break;
         }
     }
