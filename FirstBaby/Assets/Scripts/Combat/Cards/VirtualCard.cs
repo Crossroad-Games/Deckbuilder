@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class VirtualCard : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class VirtualCard : MonoBehaviour
     private GameObject cardDescription;
     public bool isVirtual = false;
     public bool isPhysical = false;
-
+    [HideInInspector]public TMP_Text CardName;
+    [HideInInspector]public TMP_Text CardText;
     #region Virtual Card Value
     public int BaseDamage = 0;// Damage value that will be applied to the Enemy
     public int BaseShield = 0; //Value of shield to gain
@@ -34,7 +36,7 @@ public class VirtualCard : MonoBehaviour
     }
     public int CalculateAction(int ActionValue)
     {
-        return ((ActionValue + AddValue - SubtractValue) * Mathf.CeilToInt(Multiplier / Divider));
+        return ((ActionValue + AddValue - SubtractValue) * Mathf.CeilToInt(Multiplier / Divider));// Calculate how much damage/ward this effect is outputting
     }
     private void Awake()
     {
@@ -44,6 +46,8 @@ public class VirtualCard : MonoBehaviour
         cardExtensions = GetComponents<CardExtension>().ToList();
         cardRenderer = GetComponent<Renderer>();
         cardDescription = transform.Find("Description").gameObject;// Reference to the child that holds both text and name
+        CardName = cardDescription.transform.Find("Name").GetComponent<TMP_Text>();// Reference to the TMP component on the child that represents its name
+        CardText = cardDescription.transform.Find("Text").GetComponent<TMP_Text>();// Reference to the TMP Component on the child that represents its text
         #endregion
     }
     private void Start()

@@ -32,5 +32,8 @@ public class Riposte : NonTargetCard
         }
     }
 
-
+    protected override void UpdateCardText()
+    {
+        Debug.LogWarning("Riposte needs a major rework");
+    }
 }

@@ -56,4 +56,9 @@ public class SeismicStrikeCard : TargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Unstable 3\nDeal {thisVirtualCard.CalculateAction(BaseDamage)} damage\nIncapacitate 3\nOverflow:\nDeal {thisVirtualCard.CalculateAction(BaseDamage)*myOverflow.DamagePercentage} damage to ALL enemies";
+    }
 }

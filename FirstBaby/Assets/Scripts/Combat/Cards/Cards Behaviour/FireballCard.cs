@@ -46,4 +46,9 @@ public class FireballCard : TargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Deal {thisVirtualCard.CalculateAction(BaseDamage)} damage\nOverflow:\nDeal {Mathf.CeilToInt(thisVirtualCard.CalculateAction(BaseDamage)*myOverflow.DamagePercentage)} damage";
+    }
 }

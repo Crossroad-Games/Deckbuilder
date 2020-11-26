@@ -55,4 +55,9 @@ public class AlchemistBladeCard : ConcoctCardAttack
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = "Transmute Offensive Energy";
+    }
 }

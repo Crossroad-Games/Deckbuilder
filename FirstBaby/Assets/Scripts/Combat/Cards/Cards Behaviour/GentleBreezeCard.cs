@@ -37,4 +37,9 @@ public class GentleBreezeCard : NonTargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Hasten {myHasten.HastenAmount}\nOverflow:\nDraw {myOverflow.DrawAmount} cards";
+    }
 }

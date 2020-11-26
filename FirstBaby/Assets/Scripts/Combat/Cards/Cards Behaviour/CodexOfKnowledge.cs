@@ -26,4 +26,9 @@ public class CodexOfKnowledge : NonTargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Draw {AmountToDraw} cards";
+    }
 }

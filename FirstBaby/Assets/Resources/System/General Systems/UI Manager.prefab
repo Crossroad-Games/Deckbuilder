@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scene: 0
-  TextPosition: {x: -1, y: -2, z: 0}
+  TextPosition: {x: 220, y: -110, z: 0}
   DeckGallery: {fileID: 0}
   CombatTempGallery: {fileID: 0}
   DrawPileUI: {fileID: 0}

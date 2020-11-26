@@ -57,12 +57,20 @@ public class AlchemistFireCard : TargetCard
                 AmountofStacks = 2;// Aplies 2 stacks per use
                 BaseDamage = 7;// Deals 7 damage
                 StackConversionRate = 2;// +1 Damage per 2 Agony
+                thisVirtualCard.CardName.text += "+";
+                Debug.Log(thisVirtualCard.CardName.text);
                 break;
             case 2:// Two LVLs higher than base
                 AmountofStacks = 2;// Applies 2 stacks per use
                 BaseDamage = 7;// Deals 7 damage
                 StackConversionRate = 1;// +1 damage per stack
+                thisVirtualCard.CardName.text = string.Concat(thisVirtualCard.CardName.text, "++");
                 break;
         }
+    }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Deal {thisVirtualCard.CalculateAction(BaseDamage)} Damage\nAgony {AmountofStacks}\nDeal + 1 Damage per {StackConversionRate} Agony";
     }
 }

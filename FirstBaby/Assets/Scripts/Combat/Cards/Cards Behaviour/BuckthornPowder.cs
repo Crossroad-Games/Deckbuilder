@@ -46,4 +46,9 @@ public class BuckthornPowder : TargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Deal {thisVirtualCard.CalculateAction(BaseDamage)} Damage\nFallout:\n        Agonizing 4: \nDeal {thisVirtualCard.CalculateAction(BaseDamage)*myFallout.DamageMultiplier} damage\nIf not Agonizing:\nAgony {myFallout.AmountofStacks}";
+    }
 }

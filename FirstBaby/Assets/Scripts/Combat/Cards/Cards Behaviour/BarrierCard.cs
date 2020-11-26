@@ -33,4 +33,9 @@ public class BarrierCard : NonTargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Ward {thisVirtualCard.CalculateAction(BaseShield)}";
+    }
 }

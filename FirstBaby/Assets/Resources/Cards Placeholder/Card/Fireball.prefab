@@ -172,6 +172,8 @@ MonoBehaviour:
   cardExtensions: []
   isVirtual: 0
   isPhysical: 0
+  CardName: {fileID: 0}
+  CardText: {fileID: 0}
   BaseDamage: 18
   BaseShield: 0
   BaseHeal: 0

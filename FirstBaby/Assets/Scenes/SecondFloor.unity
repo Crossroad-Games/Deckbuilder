@@ -7803,6 +7803,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 788632060}
+    - target: {fileID: 3411031470176210605, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
+      propertyPath: CombatSceneName
+      value: Combat
+      objectReference: {fileID: 0}
     - target: {fileID: 3411031470212790224, guid: 11210a36cad30514b8e16feac25aa714, type: 3}
       propertyPath: m_Mesh
       value: 
