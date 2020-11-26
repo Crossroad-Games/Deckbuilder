@@ -447,7 +447,7 @@ public class CombatPlayer : MonoBehaviour
         }
         else if(myData.PlayerShield <=0)
         {
-            //playerShield.gameObject.SetActive(false);
+            playerShield.gameObject.SetActive(false);
         }
         
     }
