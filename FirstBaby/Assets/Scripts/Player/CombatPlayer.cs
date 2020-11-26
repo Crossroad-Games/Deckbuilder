@@ -445,6 +445,10 @@ public class CombatPlayer : MonoBehaviour
                 if (OverloadCharge != null)// If it is not null
                     OverloadCharge.enabled = false;// Disable it
         }
+        else if(myData.PlayerShield <=0)
+        {
+            //playerShield.gameObject.SetActive(false);
+        }
         
     }
     public void ArmorUpdate(int Amount)
