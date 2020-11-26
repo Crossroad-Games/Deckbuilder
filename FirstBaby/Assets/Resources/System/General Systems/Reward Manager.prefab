@@ -44,9 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardSelectionUI: {fileID: 0}
+  cardSelectionPanel: {fileID: 0}
   cardOptionsButtons:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  cardOptionsCosts: []
+  cardOptionsCosts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   AnimaGain: 20

@@ -12,6 +12,7 @@ public class RewardManager : MonoBehaviour
     private CardDatabase cardDatabase;
     [Header("UI elements")]
     [SerializeField] private GameObject CardSelectionUI = null;
+    [SerializeField] private GameObject cardSelectionPanel = null;
     [SerializeField] private List<Button> cardOptionsButtons = null;
     [SerializeField] private List<TMP_Text> cardOptionsCosts = null;// Text that will show the card's cost in resources
     [Space(5)]
@@ -114,13 +115,13 @@ public class RewardManager : MonoBehaviour
         cardOptionsCosts.Clear();
 
         GameObject[] tempGO = new GameObject[6];
-
-        GameObject cardSelectionPanel = GameObject.Find("CardSelectionPanel");
+        Debug.Log(cardSelectionPanel);
         int count = 0;
         if (cardSelectionPanel != null)
         {
             foreach (Transform child in cardSelectionPanel.transform)
             {
+                Debug.Log(child);
                 if (null == child)
                 {
                     continue;
@@ -129,6 +130,8 @@ public class RewardManager : MonoBehaviour
                 {
                     count++;
                     tempGO[count - 1] = child.gameObject;
+                    Debug.Log("count :" + count);
+                    Debug.Log(tempGO[count - 1]);
                 }
             }
         }
