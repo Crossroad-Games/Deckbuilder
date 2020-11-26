@@ -30,23 +30,31 @@ public class IceLanceCard : TargetCard
         switch (CardLevel)
         {
             case 0:// Starting Level, regular values
-                BaseDamage = 15;// Deal damage
-                thisVirtualCard.BaseDamage = 15;
+                BaseDamage = 25;// Deal damage
+                thisVirtualCard.BaseDamage = 25;
                 myWildCast.IncapacitatedDuration = 1;// Apply X incapacitate effects
                 myWildCast.DamagePercentage = 0;// Deal X% base damage
                 break;
             case 1:// One LVL higher than base
-                BaseDamage = 25;// Deal damage
+                BaseDamage = 32;// Deal damage
                 myWildCast.IncapacitatedDuration = 1;// Apply X incapacitate effects
-                thisVirtualCard.BaseDamage = 25;
+                thisVirtualCard.BaseDamage = 35;
                 myWildCast.DamagePercentage = .2f;// Deal X% base damage
                 break;
             case 2:// Two LVLs higher than base
-                BaseDamage = 36;// Deal damage
-                thisVirtualCard.BaseDamage = 36;
+                BaseDamage = 40;// Deal damage
+                thisVirtualCard.BaseDamage = 40;
                 myWildCast.IncapacitatedDuration = 2;// Apply X incapacitate effects
                 myWildCast.DamagePercentage = .25f;// Deal X% base damage
                 break;
         }
+    }
+
+    protected override void UpdateCardText()
+    {
+        if(myWildCast.DamagePercentage==0)
+            thisVirtualCard.CardText.text = $"Deal {thisVirtualCard.CalculateAction(BaseDamage)} damage\nWildcast:\nIncapacitate {myWildCast.IncapacitatedDuration}";
+        else
+            thisVirtualCard.CardText.text = $"Deal {thisVirtualCard.CalculateAction(BaseDamage)} damage\nWildcast:\n Deal {thisVirtualCard.CalculateAction(BaseDamage)*myWildCast.DamagePercentage}\nIncapacitate {myWildCast.IncapacitatedDuration}";
     }
 }

@@ -48,4 +48,9 @@ public class RiptideCard : TargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Unstable 3\nHasten {myHasten.HastenAmount}\nDeal {thisVirtualCard.CalculateAction(BaseDamage)} damage\nOverflow:\n+{myOverflow.ExtraDamage} damage";
+    }
 }

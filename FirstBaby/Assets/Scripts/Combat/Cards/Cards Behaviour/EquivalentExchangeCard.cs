@@ -37,4 +37,12 @@ public class EquivalentExchangeCard : ConcoctCardEffectNonTarget
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        if (ExtraDraw == 0)
+            thisVirtualCard.CardText.text = $"Apply X CD:\nDraw X cards";
+        else
+            thisVirtualCard.CardText.text = $"Apply X CD:\nDraw X+{ExtraDraw} cards";
+    }
 }

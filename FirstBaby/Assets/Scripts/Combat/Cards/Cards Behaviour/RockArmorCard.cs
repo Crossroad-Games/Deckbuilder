@@ -47,4 +47,9 @@ public class RockArmorCard : NonTargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Ward {thisVirtualCard.CalculateAction(BaseShield)}\nArmor Up {AmountofStacks}";
+    }
 }

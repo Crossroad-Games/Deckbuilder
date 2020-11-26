@@ -99,7 +99,12 @@ public abstract class PhysicalCard : MonoBehaviour
         
 
     }
+    protected virtual void Update()
+    {
+        UpdateCardText();
+    }
     public abstract void LevelRanks();
+    protected abstract void UpdateCardText();// Method called to determine each card text component current text 
     #region Instantiate Keyword Tooltips
     protected virtual void TooltipListDefinition()// Method used to cycle through all the keyword tooltips
     {

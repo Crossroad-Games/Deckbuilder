@@ -41,4 +41,9 @@ public class AlchemistBarrierCard : ConcoctCardDefense
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = "Transmute Defensive Energy";
+    }
 }

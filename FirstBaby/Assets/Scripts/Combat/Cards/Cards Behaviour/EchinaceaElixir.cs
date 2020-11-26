@@ -32,4 +32,10 @@ public class EchinaceaElixir : NonTargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Ward {thisVirtualCard.CalculateAction(BaseShield)}\n\nFallout:\n        Ward 8\nWall 5";
+        Debug.LogWarning("Needs to rework Echinaceas Fallout to change its lvl up and text");
+    }
 }

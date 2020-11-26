@@ -43,4 +43,9 @@ public class WindBladeCard : TargetCard
                 break;
         }
     }
+
+    protected override void UpdateCardText()
+    {
+        thisVirtualCard.CardText.text = $"Unstable 2\nDeal {thisVirtualCard.CalculateAction(BaseDamage)} damage";
+    }
 }
