@@ -150,6 +150,7 @@ public class SaveLoad : MonoBehaviour
         else
         {
             TextAsset myFile = null;
+#if Unity_Editor
             switch(PlayerPrefs.GetString("Name"))
             {
                 case "Alchemist":
@@ -162,6 +163,10 @@ public class SaveLoad : MonoBehaviour
                     myFile = Resources.Load<TextAsset>("Text/DefaultSave");
                     break;
             }
+#endif
+#if !Unity_Editor
+            myFile = Resources.Load<TextAsset>("Text/DefaultSave");
+#endif
             JSONString = myFile.text;
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);

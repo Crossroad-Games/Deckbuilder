@@ -50,8 +50,10 @@ public abstract class EnemyClass : MonoBehaviour
     }
     private void Update()
     {
+#if Unity_Editor
         if (Input.GetKeyDown(KeyCode.K))
             KillMe();
+#endif
     }
     protected virtual void myDeath() => Destroy(this.gameObject);// When killed, destroy this gameobject
     public void KillMe()// Instantly kill this enemy
@@ -66,9 +68,9 @@ public abstract class EnemyClass : MonoBehaviour
         this.EnemyManager.RemoveEnemy(this);
         myDeath();
     }
-    #endregion
+#endregion
 
-    #region Generic Combat Methods
+#region Generic Combat Methods
     protected virtual void LoseLife(int Amount)// Reduce enemy HP 
     {
         myData.EnemyHP -= Amount;// Reduce enemy's HP by a given Amount
@@ -103,9 +105,9 @@ public abstract class EnemyClass : MonoBehaviour
         HPAmount.text = myData.EnemyHP.ToString();
         //TODO:Update UI
     }
-    #endregion
+#endregion
 
-    #region References
+#region References
     private EnemyManager enemymanager;
     public EnemyManager EnemyManager
     {
@@ -124,9 +126,9 @@ public abstract class EnemyClass : MonoBehaviour
             return combatplayer;
         }
     }
-    #endregion
+#endregion
 
-    #region Enemy Behaviour
+#region Enemy Behaviour
     public abstract void EnemyIntention(); // Logic used by the enemy to determine its actions
 
     protected virtual void Awake()
@@ -153,15 +155,15 @@ public abstract class EnemyClass : MonoBehaviour
         ChildTempObj.transform.SetParent(TempObj.transform);// Set its parent to be the Temp Obj
         TempObj.transform.localPosition = new Vector3(.985f, -.35f, 0);// Text position
         
-        #region HP Bar Setup
+#region HP Bar Setup
         GameObject hpUI = Instantiate(Resources.Load("UI/EnemyUI/HP Bar Anchor"), UIPosition, Quaternion.identity) as GameObject;
         hpUI.transform.SetParent(this.transform, false);
         HPBarFill = hpUI.transform.Find("Bar Fill").gameObject;
         HPBarFill.transform.localScale = new Vector3((float)myData.EnemyHP / myData.EnemyMaxHP, HPBarFill.transform.localScale.y, HPBarFill.transform.localScale.z);
         HPAmount = hpUI.GetComponentInChildren<TMP_Text>();
         HPAmount.text = myData.EnemyHP.ToString();
-        #endregion
-        #region Ward Bar Setup
+#endregion
+#region Ward Bar Setup
         GameObject WardUI = Instantiate(Resources.Load("UI/EnemyUI/Ward Bar Anchor"), UIPosition, Quaternion.identity) as GameObject;
         WardUI.transform.SetParent(this.transform, false);
         WardOverloadList = WardUI.transform.Find("Ward Overloads").GetComponentsInChildren<SpriteRenderer>().ToList();// Converts all images on the children to a list of images
@@ -170,7 +172,7 @@ public abstract class EnemyClass : MonoBehaviour
                 Overload.enabled = false;// Disable it
         WardBarFill = WardUI.transform.Find("Bar Fill").gameObject;
         UpdateShield();// Update this enemy's shield information
-        #endregion
+#endregion
 
         RandomValue = UnityEngine.Random.value;// Initializes the RandomValue when this enemy spawns 
         CheckIntentionCoroutine = CheckIntention();
@@ -228,7 +230,7 @@ public abstract class EnemyClass : MonoBehaviour
             yield return new WaitForSeconds(.5f);// Hold for .5 seconds
         }
     }
-    #endregion
+#endregion
     public virtual IEnumerator ActionPhaseCoroutine()
     {
         var ActionDone = false;
@@ -267,7 +269,7 @@ public abstract class EnemyClass : MonoBehaviour
             EndTurn();// End its turn
         }
     }
-    #region UI Update
+#region UI Update
     public void UpdateShield()
     {
         if (WardBarFill != null)
@@ -293,6 +295,6 @@ public abstract class EnemyClass : MonoBehaviour
             }
         }
     }
-    #endregion
+#endregion
 
 }

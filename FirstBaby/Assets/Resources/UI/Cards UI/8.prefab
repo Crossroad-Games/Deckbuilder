@@ -199,10 +199,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'gain 16 shield
+  m_text: 'Ward 16
 
 
-    fallout: +5 wall'
+    Fallout:
+
+    Ward 8
+
+    Wall 5'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 20d1abf7e24f47d4a9d7377a46dad097, type: 2}
   m_sharedMaterial: {fileID: -7226492615517420396, guid: 20d1abf7e24f47d4a9d7377a46dad097, type: 2}
