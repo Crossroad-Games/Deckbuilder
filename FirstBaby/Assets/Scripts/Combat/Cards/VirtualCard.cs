@@ -16,6 +16,7 @@ public class VirtualCard : MonoBehaviour
     public Dictionary<string,VirtualCardExtension> virtualCardExtensions = new Dictionary<string, VirtualCardExtension>();
     private Renderer cardRenderer;
     private GameObject cardDescription;
+    private GameObject cardCooldown;
     public bool isVirtual = false;
     public bool isPhysical = false;
     [HideInInspector]public TMP_Text CardName;
@@ -46,6 +47,7 @@ public class VirtualCard : MonoBehaviour
         cardExtensions = GetComponents<CardExtension>().ToList();
         cardRenderer = GetComponent<Renderer>();
         cardDescription = transform.Find("Description").gameObject;// Reference to the child that holds both text and name
+        cardCooldown = transform.Find("Cooldown").gameObject;
         CardName = cardDescription.transform.Find("Name").GetComponent<TMP_Text>();// Reference to the TMP component on the child that represents its name
         CardText = cardDescription.transform.Find("Text").GetComponent<TMP_Text>();// Reference to the TMP Component on the child that represents its text
         #endregion
@@ -64,6 +66,8 @@ public class VirtualCard : MonoBehaviour
             throw new NullReferenceException("no card collider");
         if (cardDescription != null)
             cardDescription.SetActive(false); // Disable card description
+        if (cardCooldown != null)
+            cardCooldown.SetActive(false); // Disable card coodlown
         if (PhysicalCardBehaviour != null)
             PhysicalCardBehaviour.enabled = false; // Disable card behaviour
         else
@@ -94,6 +98,8 @@ public class VirtualCard : MonoBehaviour
             throw new NullReferenceException("no card collider");
         if (cardDescription != null)
             cardDescription.SetActive(true); // Enable card description
+        if (cardCooldown != null)
+            cardCooldown.SetActive(true); // Disable card coodlown
         if (PhysicalCardBehaviour != null)
             PhysicalCardBehaviour.enabled = true; // Enable card behaviour
         else
