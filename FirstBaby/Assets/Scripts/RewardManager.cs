@@ -112,6 +112,35 @@ public class RewardManager : MonoBehaviour
         cardOptions.Clear();
         cardOptionsButtons.Clear();
         cardOptionsCosts.Clear();
+
+        GameObject[] tempGO = new GameObject[6];
+
+        GameObject cardSelectionPanel = GameObject.Find("CardSelectionPanel");
+        int count = 0;
+        if (cardSelectionPanel != null)
+        {
+            foreach (Transform child in cardSelectionPanel.transform)
+            {
+                if (null == child)
+                {
+                    continue;
+                }
+                else
+                {
+                    count++;
+                    tempGO[count - 1] = child.gameObject;
+                }
+            }
+        }
+
+        if(count > 0)
+        {
+            for(int i = tempGO.Length-1; i>=0; i--)
+            {
+                Destroy(tempGO[i]);
+            }
+        }
+
     }
 
     public void ChooseCard(int buttonIndex)
