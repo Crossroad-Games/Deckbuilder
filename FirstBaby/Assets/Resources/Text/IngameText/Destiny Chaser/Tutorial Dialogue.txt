@@ -1,0 +1,12 @@
+#Begin 1
+<alpha=#44>Greetings...<alpha=#FF>
+                <alpha=#66> You want out of this cell...?
+<alpha=#44>That's...<alpha=#FF>
+                   <color="red"> Achievable
+#End
+#Begin 2
+<alpha=#22>Well...<alpha=#FF>
+<alpha=#66> Have a token of mine...
+                             <alpha=#44>Go ahead and<alpha=#FF>
+           <color="red"> Open the Chest
+#End

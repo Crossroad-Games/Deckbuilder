@@ -95,6 +95,7 @@ public class CardsGallery : MonoBehaviour
         else
         {
             ShowCollection.onClick.AddListener(delegate { ShowDeckGallery(dungeonPlayer.myData.CardCollectionID); });
+            
         }
     }
     public void AddReturnFunction(Button thisButton, Button otherButton)
@@ -107,6 +108,8 @@ public class CardsGallery : MonoBehaviour
     {
         if (!isShowingGallery)
         {
+            ReturnButton.gameObject.SetActive(true);
+            ReturnButton.onClick.AddListener(delegate { CloseCollectionGallery(); });
             // Show cards UI
             isShowingGallery = true;
             if(Scene==GameScene.Combat)
