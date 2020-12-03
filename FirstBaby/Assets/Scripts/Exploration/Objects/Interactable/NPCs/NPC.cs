@@ -47,14 +47,15 @@ public class NPC : Interactable
             Debug.LogError("Can't find the file");
         foreach (string Line in ListofLines)// Go through each Line
         {
-            if (Line == "#End")// If there is an End mark, stop recording
+            if (Line.Contains("#End"))// If there is an End mark, stop recording
                 BeginRecording = false;// Stop recording
             if (BeginRecording)// If recording
                 TMPText.text += (Line + '\n');// Add this line to the dialogue box
-            if (Line == $"#Begin {DialogueStateList[whichDialogue]}")// Start recording at this part of the text
+            if (Line.Contains($"#Begin {DialogueStateList[whichDialogue]}"))// Start recording at this part of the text
                 BeginRecording = true;// Start recording
 
         }
+        
     }
     public override void Actuated()
     {
