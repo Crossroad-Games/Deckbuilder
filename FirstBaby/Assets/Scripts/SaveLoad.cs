@@ -166,6 +166,7 @@ public class SaveLoad : MonoBehaviour
             myFile = Resources.Load<TextAsset>("Text/DefaultSave");
 #endif
             JSONString = myFile.text;
+            Debug.Log(JSONString);
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
         while (DungeonGameData.Current.PlayerData.CardLevels.Count < GetComponent<CardDatabase>().GameCards.Count)// If the save has less ID's than the Database

@@ -8,5 +8,6 @@ public class UIStateControl : MonoBehaviour
     void Start()
     {
         GameObject.Find("Dialogue").SetActive(false);// Turns off this gameobject
+        GameObject.Find("Confirm Single Card Button").SetActive(false);// Turn off this gameobject
     }
 }

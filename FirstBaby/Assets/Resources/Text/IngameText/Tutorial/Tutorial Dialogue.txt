@@ -1,0 +1,6 @@
+#Begin 1
+You found a <color="green"> Grimoire</color>!
+#End
+#Begin 2
+You flip the book's <color="yellow">brittle yellow parchment pages</color>...
+#End
