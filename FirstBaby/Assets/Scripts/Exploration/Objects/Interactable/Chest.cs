@@ -17,7 +17,8 @@ public class Chest : Interactable
         Debug.Log("Get some rewards");
         Player.GetComponent<PlayerMovement>().canMove = false; //Disable player movement
         rewardManager.FillDungeonCardSelection();
-        CardSelectionUI.SetActive(true);
+        //CardSelectionUI.SetActive(true);
+        ExecuteTargetActions();
     }
 
     public override void LoadDungeonState()

@@ -21,7 +21,7 @@ public class CombatVictory : MonoBehaviour
 
     void Start()
     {
-        EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();// Reference to the end button is set
+        EndTurnButton = GameObject.Find("Combat Canvas").transform.Find("End Turn").GetComponent<Button>();// Reference to the end button is set
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayer>();// Reference to the player is set
         rewardManager = GameObject.Find("Reward Manager").GetComponent<RewardManager>();// Reference to the reward manager
         combatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();// Reference to the combat manager

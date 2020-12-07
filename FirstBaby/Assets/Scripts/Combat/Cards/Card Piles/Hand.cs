@@ -47,6 +47,7 @@ public class Hand : CardPile
     private CDPile CDPile;
     private SaveLoad Saver;
     private CardsGallery UIManager;
+    private TurnManager TurnMaster;
     #endregion
 
     //-------------------------------------------------
@@ -56,6 +57,7 @@ public class Hand : CardPile
     public bool isDragging { get; set; } = false;
     private bool createdArrow = false; //if arrow is created right now
     public bool isAiming = false; //if player is aiming with a TargetCard
+    public bool Tutorial;
     #endregion
 
    
@@ -87,14 +89,17 @@ public class Hand : CardPile
     {
         base.Awake();
         SaveLoad.LoadEvent += LoadHand;// Subscribes this method to the event to load the hand state stored on the save file
+        TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();// Reference is defined
+        Deck = GetComponent<Deck>();// Reference is defined
     }
     void Start()
     {
         combatPlayer = GetComponent<CombatPlayer>();
-        Deck = GetComponent<Deck>();// Reference is defined
+        
         CDPile = transform.Find("CDPile").GetComponent<CDPile>();
         Saver = GameObject.Find("Game Master").GetComponent<SaveLoad>();
         UIManager = GameObject.Find("UI Manager").GetComponent<CardsGallery>();
+        
         bezierArrowCurve = GetComponent<Bezier>();
         arrowRenderer = bezierArrowCurve.lineRenderer;
         arrowRenderer.enabled = false;
@@ -157,8 +162,30 @@ public class Hand : CardPile
     }
     public void DrawCards(int Amount)
     {
-        if(Amount + physicalCardsInHand.Count <= MaxCardsInHand)
-            StartCoroutine(DrawCardDelay(Amount)); // Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards
+        if (!Tutorial)
+        {
+            if (Amount + physicalCardsInHand.Count <= MaxCardsInHand)
+                StartCoroutine(DrawCardDelay(Amount)); // Call the coroutine that will add the cards to the hand and apply some delay// Draw a given Amount of cards
+        }
+        else
+        {
+            List<GameObject> TempGoList = new List<GameObject>();// Creates a temporary list of GO
+            var TutorialInfo = GetComponent<TutorialDrawOrder>();// Gets access to the draw order
+            for (var i = 0; i < TutorialInfo.DrawAmount[TurnMaster.TurnCount - 1]; i++)// Repeat this process X times, once for each card to be drawn
+                foreach (GameObject Card in Deck.cardsList)// Access the cards in the deck
+                    if (Card != null)// Card exists
+                        if (Card.GetComponent<PhysicalCard>().cardInfo != null)
+                        {
+                            if (Card.GetComponent<PhysicalCard>().cardInfo.ID == TutorialInfo.CardsIDToDraw[i])// If this card is the same as the one that needs to be drawn
+                            {
+                                TempGoList.Add(Card);// Add the card
+                                break;// Stop checking
+                            }
+                        }
+            TutorialInfo.CardsIDToDraw.RemoveRange(0, TutorialInfo.DrawAmount[0]);
+            TutorialInfo.DrawAmount.RemoveAt(0);// Remove this item from the list
+            StartCoroutine(DrawCardDelay(TempGoList.Count, TempGoList.ToArray()));
+        }
     }
     IEnumerator DrawCardDelay(int Amount)// Add card has a small delay between each card to ensure a visual effec
     {
@@ -168,6 +195,28 @@ public class Hand : CardPile
             isDrawing = true;
             if(Deck.cardsList.Count>0)// If there are cards in deck
                 Deck.SendCard(Deck.cardsList[0], this);// Draw the first card on the deck card list
+            Amount--;
+            yield return new WaitForSeconds(DrawDelay);// Apply delay
+        }
+        isDrawing = false;
+        yield break;
+    }
+    IEnumerator DrawCardDelay(int Amount, GameObject[] Cards)// Add card has a small delay between each card to ensure a visual effec
+    {
+        yield return null;
+        while (Amount > 0)// While there are cards to be drawn
+        {
+            isDrawing = true;
+            if (Deck.cardsList.Count > 0)// If there are cards in deck
+                foreach (GameObject Card in Cards)
+                    if (Card != null)
+                        foreach (GameObject DeckCard in Deck.cardsList)
+                            if (DeckCard != null)
+                                if (DeckCard == Card)
+                                {
+                                    Deck.SendCard(DeckCard, this);// Draw the first card on the deck card list
+                                    break;
+                                }
             Amount--;
             yield return new WaitForSeconds(DrawDelay);// Apply delay
         }

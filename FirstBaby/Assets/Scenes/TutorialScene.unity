@@ -4792,10 +4792,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7252507569881067103, guid: 4b75de770c3ce104a8336df06d67a539, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00000047683716
-      objectReference: {fileID: 0}
     - target: {fileID: 7252507569927191688, guid: 4b75de770c3ce104a8336df06d67a539, type: 3}
       propertyPath: m_Name
       value: Dungeon Player

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6487272288881843916}
   - component: {fileID: 9071266214564162054}
   - component: {fileID: 5027948893434200202}
-  m_Layer: 0
-  m_Name: EdgeFloorHorizontal2
+  m_Layer: 31
+  m_Name: EdgeFloorForward2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

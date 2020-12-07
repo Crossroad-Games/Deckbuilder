@@ -63,16 +63,14 @@ public class SaveLoad : MonoBehaviour
         #endregion
         #region Current Scene Objects save
         dataPath = Path.Combine(Application.persistentDataPath, PlayerPrefs.GetString("Name") +"."+ DungeonGameData.Current.DungeonScene);// Type of file for each dungeon scene
-        Debug.Log("Save file path: " + dataPath);
         LevelGameData.Current.InterectablesUsed.Clear();// Clear the list before adding all the information
+        LevelGameData.Current.NPCDialogueState.Clear();// Clear the list before adding all the information
         foreach (Interactable inter in dungeonInteractables)
-            LevelGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
-        /*LevelGameData.Current.ObjectsLayer = new List<ListWrapper>();
-        foreach (Door Door in dungeonInteractables)
         {
-            if(Door.transform.parent.GetComponentInChildren<ChangeRoom>()!=null)
-                LevelGameData.Current.ObjectsLayer.Add(Door.transform.parent.GetComponentInChildren<ChangeRoom>().ListWrapper);
-        }*/
+            LevelGameData.Current.InterectablesUsed.Add(inter.Used); //Go through all interactables in current scene and change the data file to contain the used infos
+            if(inter is NPC)// If the interactable is a NPC
+                LevelGameData.Current.NPCDialogueState.Add(inter.GetComponent<NPC>().whichDialogue);// Store its Dialogue state
+        }
         jsonString = JsonUtility.ToJson(LevelGameData.Current, true);// Transforms the Data to Json format
         using (StreamWriter streamWriter = File.CreateText(dataPath))// Creates a text file with that path
         {
@@ -168,6 +166,7 @@ public class SaveLoad : MonoBehaviour
             myFile = Resources.Load<TextAsset>("Text/DefaultSave");
 #endif
             JSONString = myFile.text;
+            Debug.Log(JSONString);
         }
         DungeonGameData.Current = JsonUtility.FromJson<DungeonGameData>(JSONString);
         while (DungeonGameData.Current.PlayerData.CardLevels.Count < GetComponent<CardDatabase>().GameCards.Count)// If the save has less ID's than the Database
@@ -185,14 +184,21 @@ public class SaveLoad : MonoBehaviour
         List<Interactable> dungeonInteractables = GameObject.Find("Game Master").GetComponent<InteractableDatabase>().InsteractablesInScene;// Reference to the list of interactables on that scene
         if (dungeonInteractables.Count == LevelGameData.Current.InterectablesUsed.Count)// Verify if information matches
         {
+            var iterator=0;
             for (int i = 0; i < dungeonInteractables.Count; i++)// Updates all values
             {
                 dungeonInteractables[i].Used = LevelGameData.Current.InterectablesUsed[i]; // Go through all interactables and scene and convert get from data file the used infos
+                if (dungeonInteractables[i] is NPC)// If this interactable is an NPC, load its dialogue state
+                    if (iterator < LevelGameData.Current.NPCDialogueState.Count)
+                    {
+                        dungeonInteractables[i].GetComponent<NPC>().whichDialogue=LevelGameData.Current.NPCDialogueState[iterator];// Assign its dialogue state
+                        iterator++;// Ready the next dialogue state
+                    }
             }
         }
         if (LevelGameData.Current.whichDoor < dungeonInteractables.Count)
             dungeonInteractables[LevelGameData.Current.whichDoor].transform.parent.GetComponentInChildren<ChangeRoom>()?.LoadList(LevelGameData.Current.ObjectsLayer);
         else
-            Debug.Log("Door is beyong the interactables amount");
+            Debug.Log("Door is beyond the interactables amount");
     }
 }
