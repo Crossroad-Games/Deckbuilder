@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  cardInfo: {fileID: 0}
+  cardInfo: {fileID: 11400000, guid: 0be9ccd4fc8c0c64fb424fb463d96af4, type: 2}
   playerHand: {fileID: 0}
   TargetEnemy: {fileID: 0}
   thisVirtualCard: {fileID: 0}

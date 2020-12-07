@@ -1,18 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class TutorialCardExplanation : MonoBehaviour
+public class TutorialCardExplanation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<GameObject> OtherTutorialBoxes;
+    private GameObject Explanation;// Reference to the extended explanation text
+    void Awake()
     {
-        
+        Explanation = transform.Find("Extended Explanation").gameObject;// Reference is defined
     }
-
-    // Update is called once per frame
-    void Update()
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        foreach (GameObject Box in OtherTutorialBoxes)// Cycle through each other tutorial box
+            if (Box != null)// If box is not null
+                Box.SetActive(false);// Deactivate it
+        Explanation.SetActive(true);
     }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        foreach (GameObject Box in OtherTutorialBoxes)// Cycle through each other tutorial box
+            if (Box != null)// If box is not null
+                Box.SetActive(true);// Activate it
+        Explanation.SetActive(false);
+    }
+    
 }

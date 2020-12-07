@@ -6,7 +6,7 @@ using System;
 public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] private float InteractableDistance = .5f;// Defines the distance from which the player can interact with this
-    public Action NearInteractable;// Event that is called when the player is near this interactable
+    public Action<Interactable> NearInteractable;// Event that is called when the player is near this interactable
     public Action Interacting;// Event that is called when the player is interacting with this object
     public Action LeavingInteractable;// Event that is called when the player leaves the range of interaction from an interactable
     protected GameObject Player;// Player Reference will be used to determine distance from this object and possibly other methods
@@ -51,7 +51,7 @@ public abstract class Interactable : MonoBehaviour
             if ((Player.transform.position - transform.position).magnitude <= InteractableDistance)// If player is within interactable distance
             {
                 PlayerNearby = true;// Player is nearby
-                NearInteractable?.Invoke();// Calls all functions tied to  being near an interactable object
+                NearInteractable?.Invoke(this);// Calls all functions tied to  being near an interactable object
                 if (Input.GetButtonDown("Interact") && CanInteract)// If the player presses the interact button and is able to use it
                 {
                     Interacting?.Invoke();// Calls all function subscribed to interacting with an object
@@ -60,6 +60,7 @@ public abstract class Interactable : MonoBehaviour
                     {
                         Used = true;// Can't use it again
                         Player.transform.Find("Interaction").gameObject.SetActive(false);// Deactivates the Interaction Icon
+                        Player.transform.Find("CantInteract").gameObject.SetActive(false);// Deactivates the Interaction Icon
                     }
                 }
                 else if (Input.GetButtonUp("Interact") && CanInteract)// When the user lets go of the button

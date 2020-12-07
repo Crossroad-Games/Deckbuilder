@@ -96,7 +96,7 @@ public class CombatPlayer : MonoBehaviour
     {
         TurnMaster = GameObject.Find("Turn Master").GetComponent<TurnManager>();
         CombatManager = GameObject.Find("Combat Manager").GetComponent<CombatManager>();
-        EndTurnButton = GameObject.Find("Canvas").transform.Find("End Turn").GetComponent<Button>();
+        EndTurnButton = GameObject.Find("Combat Canvas").transform.Find("End Turn").GetComponent<Button>();
         bezierArrowCurve = GetComponent<Bezier>();
     }
     #endregion

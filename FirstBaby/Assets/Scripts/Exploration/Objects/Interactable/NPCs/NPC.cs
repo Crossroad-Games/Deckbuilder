@@ -17,13 +17,15 @@ public class NPC : Interactable
         base.Update();
         if (DialogueBoxUI.activeSelf && Input.GetButtonDown("Dialogue Confirm") && InteractingWithThis)// If the dialogue box is open and the player presses C
         {
-            if (whichDialogue + 1 >= DialogueStateList.Count)// If all the dialogue was exhausted
+            if (whichDialogue >= DialogueStateList.Count)// If all the dialogue was exhausted
             {
                 Player.GetComponent<PlayerMovement>().canMove = true;// Player can move if there is no more dialogue
                 DialogueBoxUI.SetActive(false);// Deactivate the dialogue
                 Reusable = false;// Dialogue was exhausted
                 Used = true;// Can't use it anymore
                 Player.transform.Find("Interaction").gameObject.SetActive(false);// Deactivates the Interaction Icon
+                Player.transform.Find("CantInteract").gameObject.SetActive(false);// Deactivates the Interaction Icon
+                transform.Find("Graphic").GetComponent<SpriteRenderer>().enabled = false;
                 InteractingWithThis = false;
                 ExecuteTargetActions();// Execute whatever actions are supposed to happen
             }
@@ -55,6 +57,7 @@ public class NPC : Interactable
                 BeginRecording = true;// Start recording
 
         }
+        whichDialogue++;
         
     }
     public override void Actuated()

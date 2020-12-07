@@ -13,13 +13,13 @@ public class ShowCardUI : Targetable
     private void Awake()
     {
         CardData = GameObject.Find("Game Master").GetComponent<CardDatabase>();// Reference is defined
-        NextCardButton = GameObject.Find("Dungeon Canvas").transform.Find("Confirm Single Card Button").GetComponent<Button>();// Reference to the button is defined
+        NextCardButton = GameObject.Find("Dungeon Canvas").transform.Find("Confirm Single Card Button").Find("Confirm Button").GetComponent<Button>();// Reference to the button is defined
         
     }
     public override void ExecuteAction()
     {
         CardData.ShowCard(CardsIDtoShow[whichCard]);// Show a card
-        NextCardButton.gameObject.SetActive(true);// Turn on this game object
+        NextCardButton.transform.parent.gameObject.SetActive(true);// Turn off this game object
         NextCardButton.onClick.AddListener(delegate { NextCard(); });// Add a listener to this button to go to the next card when pressed
         whichCard++;// Prepare to show the next card
     }
@@ -34,7 +34,7 @@ public class ShowCardUI : Targetable
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().canMove = true;// Allow the player to move
             Destroy(CardData.CardUIGO);// Destroy the GO
-            NextCardButton.gameObject.SetActive(false);// Turn off this game object
+            NextCardButton.transform.parent.gameObject.SetActive(false);// Turn off this game object
         }
     }
     private void OnDisable()

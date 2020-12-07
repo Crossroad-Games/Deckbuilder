@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sewers Entrance.unity
     guid: 662c4c5905bee1e46a13b8220f896683
+  - enabled: 1
+    path: Assets/Scenes/TutorialCombat.unity
+    guid: afc47c200229a54458866c9511c0703b
   m_configObjects: {}
